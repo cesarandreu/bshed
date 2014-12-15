@@ -1,0 +1,13 @@
+# Logs
+logs
+*.log
+
+# Dependency directory
+node_modules
+bower_components
+
+# Stuff
+coverage
+
+# OS X
+.DS_Store
