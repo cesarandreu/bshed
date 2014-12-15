@@ -263,7 +263,7 @@ describe('Request:Bikeshed', function () {
         type: 'image/png',
         path: imagePath
       };
-      images = yield Image.bulkCreateAndUpload([image, image], s3);
+      images = yield Image.bulkCreateAndUpload([image, image]);
 
       url = _.template('/api/bikesheds/<%=bikeshed%>/votes')({bikeshed: bikeshed.id});
       body = {votes: {}};
@@ -347,7 +347,7 @@ describe('Request:Bikeshed', function () {
         type: 'image/png',
         path: imagePath
       };
-      images = yield Image.bulkCreateAndUpload([image, image, image], s3);
+      images = yield Image.bulkCreateAndUpload([image, image, image]);
       votes = yield images.map(function (image, idx) {
         return Vote.create({
           value: idx,

@@ -4,30 +4,10 @@
 var Sequelize = require('sequelize'),
   path = require('path'),
   fs = require('fs'),
-  debug = require('debug');
-
-// TODO: refactor this to accept config~ DI is good~
-var config = require('../../config').database,
+  debug = require('debug'),
   log = debug('app:log:models');
 
 // Sequelize extensions~
-
-// /**
-//  * Model.safeBuild()
-//  * Returns model.build using only safe attributes
-//  */
-// Sequelize.prototype.Model.prototype.safeBuild = function safeBuild (attributes) {
-//   attributes = attributes || {};
-
-//   var instanceAttributes = {};
-//   (this.safeAttributes || [])
-//   .forEach(function (name) {
-//     if (attributes.hasOwnProperty(name)) {
-//       instanceAttributes[name] = attributes[name];
-//     }
-//   });
-//   return this.build(instanceAttributes);
-// };
 
 /**
  * Instance.toPublicJSON()
@@ -44,30 +24,38 @@ Sequelize.prototype.Instance.prototype.toPublicJSON = function toPublicJSON () {
   return instanceJSON;
 };
 
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+module.exports = function models (opts) {
+  var dbConfig = opts.config.database;
+  var sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 
-// Load models
-var db = {};
-fs.readdirSync(__dirname)
-.filter(function (file) {
-  return (file.indexOf('.') !== 0) && (file !== 'index.js');
-})
-.forEach(function (file) {
-  var modelPath = path.join(__dirname, file);
-  var model = sequelize.import(modelPath);
-  db[model.name] = model;
-  log('%s loaded from file %s', model.name, modelPath);
-});
+  // Load models
+  var db = {};
+  fs.readdirSync(__dirname)
+  .filter(function (file) {
+    return (file.indexOf('.') !== 0) && (file !== 'index.js');
+  })
+  .forEach(function (file) {
+    var modelPath = path.join(__dirname, file);
+    var model = sequelize.import(modelPath);
+    db[model.name] = model;
+    log('%s loaded from file %s', model.name, modelPath);
+  });
 
-// Associate models
-Object.keys(db)
-.forEach(function (modelName) {
-  if ('associate' in db[modelName]) {
-    db[modelName].associate(db);
-  }
-});
+  // Associate models
+  Object.keys(db)
+  .forEach(function (modelName) {
+    if ('associate' in db[modelName]) {
+      log('calling associate on %s', modelName);
+      db[modelName].associate(db);
+    }
+    if ('initialize' in db[modelName]) {
+      log('calling initialize on %s', modelName);
+      db[modelName].initialize(opts);
+    }
+  });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+  db.sequelize = sequelize;
+  db.Sequelize = Sequelize;
 
-module.exports = db;
+  return db;
+};

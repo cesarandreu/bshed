@@ -143,7 +143,7 @@ function* upload () {
   try {
     bikeshed = yield this.models.Bikeshed.find(bikeshed.id, {transaction: t, lock: t.LOCK.UPDATE});
     bikeshed = yield bikeshed.publish({transaction: t});
-    images = yield this.models.Image.bulkCreateAndUpload(files, this.helpers.s3, {transaction: t});
+    images = yield this.models.Image.bulkCreateAndUpload(files, {transaction: t});
   } catch (err) {
     yield t.rollback();
     if (err.name === 'SequelizeDatabaseError') {

@@ -31,13 +31,16 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     classMethods: {
+      initialize: function initialize (opts) {
+        Image.s3 = opts.helpers.s3;
+      },
       associate: function associate (models) {
         models.Image.belongsTo(models.Bikeshed);
         models.Image.hasMany(models.Vote);
       },
 
       // creates images and uploads them to s3
-      bulkCreateAndUpload: function* createAndUploadFiles (files, s3, opts) {
+      bulkCreateAndUpload: function* createAndUploadFiles (files, opts) {
         var images = files.map(function (file) {
           return Image.build({BikeshedId: file.BikeshedId, type: file.type});
         });
@@ -52,7 +55,7 @@ module.exports = function (sequelize, DataTypes) {
         }
 
         var uploadFile = function uploadFile (image, idx) {
-          return s3.uploadFilePromise({
+          return Image.s3.uploadFilePromise({
             localFile: files[idx].path,
             s3Params: {
               ACL: 'public-read',
@@ -63,7 +66,7 @@ module.exports = function (sequelize, DataTypes) {
           });
         };
         var deleteFiles = function deleteFile (objects) {
-          return s3.deleteObjectsPromise({
+          return Image.s3.deleteObjectsPromise({
             Bucket: 'BikeshedImages',
             Delete: {Objects: objects}
           });

@@ -2,15 +2,12 @@
 
 var helper = require('../helper'),
   Bluebird = require('bluebird'),
-  path = require('path'),
-  _ = require('lodash');
+  path = require('path');
 
 var models = helper.models,
-  Vote = models.Vote,
-  Bikeshed = models.Bikeshed,
   Image = models.Image;
 
-var image, images, error, s3;
+var image, images, error, s3, _s3;
 
 describe('Model:Image', function () {
 
@@ -37,6 +34,7 @@ describe('Model:Image', function () {
     describe('bulkCreateAndUpload', function () {
 
       beforeEach(function () {
+        _s3 = Image.s3;
         image = {
           type: 'image/png',
           BikeshedId: 1,
@@ -50,11 +48,15 @@ describe('Model:Image', function () {
             return Bluebird.resolve();
           }
         };
+      });
 
+      afterEach(function () {
+        Image.s3 = _s3;
       });
 
       it('should return all instances on success', function* () {
-        images = yield Image.bulkCreateAndUpload([image, image], s3);
+        Image.s3 = s3;
+        images = yield Image.bulkCreateAndUpload([image, image]);
         expect(images).to.have.length(2);
         images.forEach(function (img) {
           expect(img).to.be.an('object');
@@ -78,8 +80,9 @@ describe('Model:Image', function () {
         s3.uploadFilePromise = function uploadFilePromise () {
           return Bluebird.reject(new Error('failed upload'));
         };
+        Image.s3 = s3;
         try {
-          yield Image.bulkCreateAndUpload([image, image], s3);
+          yield Image.bulkCreateAndUpload([image, image]);
         } catch (err) {
           error = err;
         } finally {

@@ -21,12 +21,12 @@ fs.readdirSync(__dirname)
 });
 
 // initialize helpers
-module.exports = function initializeHelpers (config) {
+module.exports = function initializeHelpers (opts) {
   log('%initializing helpers');
   var helpers = {}, helper, name;
   for (name in helperModules) {
     helper = helperModules[name];
-    helpers[name] = (typeof helper === 'function') ? helper(config) : helper;
+    helpers[name] = (typeof helper === 'function') ? helper(opts.config) : helper;
     log('%s helper initialized', name);
   }
   return helpers;

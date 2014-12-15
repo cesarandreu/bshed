@@ -7,7 +7,8 @@ var debug = require('debug'),
   config = require('../config'),
   models = require('./models'),
   controllers = require('./controllers'),
-  helpers = require('./helpers')(config);
+  helpers = require('./helpers')({config: config}),
+  models = require('./models')({config: config, helpers: helpers});
 
 /**
  * KOA MODULES
