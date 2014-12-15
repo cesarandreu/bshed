@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
     paranoid: true,
     getterMethods: {
       path: function path () {
-        return '/BikeshedImages/' + this.key;
+        return Image.s3.endpoint.href + 'BikeshedImages/' + this.key;
       },
       key: function key () {
         return this.BikeshedId + '/' + this.name;

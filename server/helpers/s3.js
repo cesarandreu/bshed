@@ -26,5 +26,7 @@ module.exports = function s3 (config) {
     });
   };
 
+  s3Client.endpoint = config.aws.endpoint;
+
   return s3Client;
 };
