@@ -55,7 +55,9 @@ module.exports = function (sequelize, DataTypes) {
           return s3.uploadFilePromise({
             localFile: files[idx].path,
             s3Params: {
+              ACL: 'public-read',
               Bucket: 'BikeshedImages',
+              ContentType: files[idx].type,
               Key: image.key
             }
           });
