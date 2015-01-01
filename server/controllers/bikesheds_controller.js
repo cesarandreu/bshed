@@ -45,18 +45,18 @@ function* index () {
     page = _.parseInt(query.page),
     per = _.parseInt(query.per),
     sortBy = query.sortBy,
-    direction = (query.direction || '').toLowerCase();
+    direction = (query.direction || '').toUpperCase();
 
   page = page >= 1 ? page : 1;
   per = per >= 1 ? (per < 96 ? per : 96) : 12;
-  direction = _.contains(['asc', 'desc'], direction) ? direction : 'desc';
+  direction = _.contains(['ASC', 'DESC'], direction) ? direction : 'DESC';
   sortBy = _.contains(_.keys(Bikeshed.tableAttributes), sortBy) ? sortBy : 'id';
 
   var result = yield Bikeshed.findAndCountAll({
     where: {published: true},
     limit: per,
     offset: (page - 1) * per,
-    order: sortBy + ' ' + direction
+    order: [[sortBy, direction]]
   });
 
   this.body = {
