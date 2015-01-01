@@ -9,7 +9,7 @@ var app = require('../../server'),
   s3 = app.helpers.s3;
 
 exports.expect = global.expect = require('chai').expect;
-exports.request = supertest(app.init());
+exports.request = supertest(app.callback());
 exports.fixtures = path.resolve(__dirname, './fixtures');
 exports.app = app;
 exports.config = config;
