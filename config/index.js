@@ -1,53 +1,47 @@
 'use strict';
 
-var path = require('path'),
-  _ = require('lodash');
+var debug = require('debug')('bshed:config'),
+  fs = require('fs');
 
-/**
- * GLOBAL CONFIGURATION
- */
+// Base config
 var config = {
-  name: 'bshed',
-  env: (process.env.NODE_ENV || 'development').toLowerCase(),
-
-  middleware: {
-    // koa-compress
-    compress: {},
-
-    // koa-send
-    send: {
-      root: path.resolve(__dirname, '../public')
-    }
-  }
+  env: (process.env.NODE_ENV || 'development').toLowerCase()
 };
+debug('using %s env', config.env);
+
+// Get configs and load them
+debug('loader:start');
+fs.readdirSync(__dirname)
+.filter(function (file) {
+  return file.indexOf('.') !== 0 && file !== 'index.js';
+})
+.forEach(function (name) {
+  name = name.split('.js').shift();
+  config[name] = load(name);
+});
+debug('loader:end');
+module.exports = config;
 
 /**
- * ENVIRONMENTS
+ * Configuration loader
+ * - loads './${name}'
+ *
+ * Loading strategies in order of execution:
+ *  - use nameConfig[env] if env is in nameConfig
+ *  - pass env to nameConfig if nameConfig is a function
+ *  - keep nameConfig as is
  */
-var environments = {};
-
-// development
-environments.development = {
-  port: 3000,
-  secret: 'secret',
-};
-
-// test
-environments.test = {
-  port: 4000,
-  secret: 'secret'
-};
-
-// production
-environments.production = {
-  port: process.env.PORT || 3000,
-  secret: 'secret'
-};
-
-// Database config
-config.database = require('./database')[config.env];
-
-// AWS config
-config.aws = require('./aws')[config.env];
-
-module.exports = _.merge(config, environments[config.env]);
+function load (name) {
+  debug('loading %s', name);
+  var configuration = require('./' + name);
+  if (config.env in configuration) {
+    debug('using %s env from %s', config.env, name);
+    configuration = configuration[config.env];
+  } else if (typeof configuration === 'function') {
+    debug('using %s env to initialize %s', config.env, name);
+    configuration = configuration(config.env);
+  } else {
+    debug('using %s directly', name);
+  }
+  return configuration;
+}
