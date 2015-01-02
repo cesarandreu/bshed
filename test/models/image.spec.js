@@ -4,7 +4,6 @@ var helper = require('./helper'),
   fixtures = helper.fixtures,
   models = helper.models,
   Image = models.Image,
-  Bluebird = require('bluebird'),
   path = require('path');
 
 var image, images, error, s3, _s3;
@@ -42,10 +41,10 @@ describe('Model:Image', function () {
         };
         s3 = {
           uploadFilePromise: function uploadFilePromise () {
-            return Bluebird.resolve();
+            return Promise.resolve();
           },
           deleteObjectsPromise: function deleteObjectsPromise () {
-            return Bluebird.resolve();
+            return Promise.resolve();
           }
         };
       });
@@ -78,7 +77,7 @@ describe('Model:Image', function () {
 
       it('should throw when it fails to upload', function* () {
         s3.uploadFilePromise = function uploadFilePromise () {
-          return Bluebird.reject(new Error('failed upload'));
+          return Promise.reject(new Error('failed upload'));
         };
         Image.s3 = s3;
         try {

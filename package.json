@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "aws-sdk": "^2.0.30",
-    "bluebird": "^2.3.11",
     "co": "^4.0.0",
     "co-fs": "^1.2.0",
     "debug": "^2.1.1",
