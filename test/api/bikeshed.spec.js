@@ -4,7 +4,7 @@ var path = require('path'),
   qs = require('querystring'),
   _ = require('lodash');
 
-var helper = require('../helper'),
+var helper = require('./helper'),
   config = helper.config,
   request = helper.request,
   models = helper.models,
