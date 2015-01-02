@@ -1,11 +1,11 @@
 'use strict';
 
-var helper = require('../helper'),
+var helper = require('./helper'),
+  fixtures = helper.fixtures,
+  models = helper.models,
+  Image = models.Image,
   Bluebird = require('bluebird'),
   path = require('path');
-
-var models = helper.models,
-  Image = models.Image;
 
 var image, images, error, s3, _s3;
 
@@ -38,7 +38,7 @@ describe('Model:Image', function () {
         image = {
           type: 'image/png',
           BikeshedId: 1,
-          path: path.join(helper.fixtures, 'puppy_01.jpg')
+          path: path.join(fixtures, 'puppy_01.jpg')
         };
         s3 = {
           uploadFilePromise: function uploadFilePromise () {

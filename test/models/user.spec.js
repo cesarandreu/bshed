@@ -1,6 +1,6 @@
 'use strict';
 
-var helper = require('../helper');
+var helper = require('./helper');
 
 var User = helper.models.User;
 

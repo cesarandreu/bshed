@@ -1,8 +1,8 @@
 'use strict';
 
-var helper = require('../helper');
-
-var Bikeshed = helper.models.Bikeshed;
+var helper = require('./helper'),
+  models = helper.models,
+  Bikeshed = models.Bikeshed;
 
 var bikeshed;
 
@@ -23,6 +23,5 @@ describe('Model:Bikeshed', function () {
     });
 
   });
-
 
 });
