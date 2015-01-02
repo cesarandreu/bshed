@@ -31,9 +31,9 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     classMethods: {
-      initialize: function initialize (opts) {
-        Image.s3 = opts.helpers.s3;
-      },
+      // initialize: function initialize (opts) {
+      //   Image.s3 = opts.helpers.s3;
+      // },
       associate: function associate (models) {
         models.Image.belongsTo(models.Bikeshed);
         models.Image.hasMany(models.Vote);
@@ -94,9 +94,6 @@ module.exports = function (sequelize, DataTypes) {
           return image.save(opts);
         });
       }
-    },
-    instanceMethods: function () {
-
     }
   });
 

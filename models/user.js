@@ -31,7 +31,6 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     paranoid: true,
     classMethods: {
-      jsonAttributes: ['administrator',  'deletedAt', 'createdAt', 'email', 'id', 'name', 'timesVoted', 'updatedAt'],
       associate: function associate (models) {
         models.User.hasMany(models.Bikeshed);
         models.User.hasMany(models.Vote);
@@ -39,9 +38,15 @@ module.exports = function (sequelize, DataTypes) {
     },
     instanceMethods: {
       token: function token (opts) {
+        var user = {
+          id: this.id,
+          name: this.name,
+          email: this.email
+        };
+
         opts = opts || {};
         opts.expiresInMinutes = opts.expiresInMinutes || 60 * 24 * 7;
-        return jwt.sign(this.toPublicJSON(), opts.secret, opts);
+        return jwt.sign(user, opts.secret, opts);
       }
     }
   });

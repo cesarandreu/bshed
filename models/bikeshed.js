@@ -24,7 +24,6 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     paranoid: true,
     classMethods: {
-      jsonAttributes: ['title',  'deletedAt', 'createdAt', 'id', 'published', 'publishedAt', 'updatedAt', 'UserId'],
       associate: function associate (models) {
         models.Bikeshed.hasMany(models.Image);
         models.Bikeshed.hasMany(models.Vote);
