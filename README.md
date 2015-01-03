@@ -100,7 +100,7 @@ Check coverage by running `NODE_ENV=test npm run test:coverage`
 Run specific set of tests with:
 
 * `npm run test:models`
-* `npm run test:requests`
+* `npm run test:api`
 
 
 Drop the testing database with:
