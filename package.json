@@ -49,6 +49,7 @@
     "pg": "^4.1.0",
     "s3": "^4.3.1",
     "sequelize": "^2.0.0-rc4",
+    "sequelize-cli": "^1.0.2",
     "sequelize-migration-pg-extras": "^1.0.0",
     "thunkify": "^2.1.2",
     "uuid": "^2.0.1"
