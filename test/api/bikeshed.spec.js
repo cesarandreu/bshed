@@ -22,6 +22,90 @@ describe('Request:Bikeshed', function () {
     headers = helper.buildHeaders({user: {id: user.id}});
   });
 
+  // index
+  describe('GET /api/bikesheds', function () {
+
+    beforeEach(function* () {
+      url = '/api/bikesheds';
+      schema = {
+        title: 'GET /api/bikesheds response',
+        type: 'object',
+        properties: {
+          sortBy: { type: 'string', required: true,
+            enum: ['id', 'name', 'createdAt', 'updatedAt']
+          },
+          direction: { type: 'string', required: true, enum: ['ASC', 'DESC'] },
+          per: { type: 'number', required: true, minimum: 1, maximum: 96 },
+          pages: { type: 'number', required: true, minimum: 1 },
+          page: { type: 'number', required: true, minimum: 1 },
+          count: { type: 'number', required: true },
+          list: { type: 'array', required: true,
+            items: { type: 'object',
+              properties: {
+                id: { type: 'number', required: true, minimum: 1 },
+                name: { type: 'string', required: true, minLength: 1 },
+                body: { type: 'string', required: true, minLength: 1 },
+                updatedAt: { type: 'string', required: true },
+                createdAt: { type: 'string', required: true },
+                status: { type: 'string', required: true,
+                  enum: ['processing', 'open', 'closed']
+                }
+              }
+            }
+          }
+        }
+      };
+
+      _.assign(attributes, body);
+      yield Bikeshed.destroy();
+      yield _.times(30, function (n) {
+        attributes.name = 'bikeshed ' + n;
+        attributes.status = ['incomplete', 'processing', 'open', 'closed'][n % 4];
+        return Bikeshed.create(attributes);
+      });
+    });
+
+    it('returns expected schema', function* () {
+      res = yield request.get(url);
+      expect(res.body).to.be.jsonSchema(schema);
+    });
+
+    it('sets defaults', function* () {
+      res = yield request.get(url);
+      _.forIn({
+        page: 1, pages: 2, per: 12, count: 22, sortBy: 'id', direction: 'DESC'
+      }, function (value, key) {
+        expect(res.body[key]).to.equal(value);
+      });
+      expect(res.body.list).to.be.an('array').with.length(12);
+      _.pluck(res.body.list, 'id').sort().reverse().forEach(function (id) {
+        expect(id).to.equal(res.body.list.shift().id);
+      });
+    });
+
+    it('paginates', function* () {
+      res = yield request.get(url).query({page: 2});
+      expect(res.body).to.be.jsonSchema(schema);
+      expect(res.body.page).to.equal(2);
+      expect(res.body.list).to.be.an('array').with.length(10);
+    });
+
+    it('allows changing per page value', function* () {
+      res = yield request.get(url).query({per: 1});
+      expect(res.body.page).to.equal(1);
+      expect(res.body.pages).to.equal(22);
+      expect(res.body.list).to.be.an('array').with.length(1);
+    });
+
+    it('allows ASC sorting by name field', function* () {
+      res = yield request.get(url).query({direction: 'ASC', sortBy: 'name'});
+      _.pluck(res.body.list, 'name').sort().forEach(function (name) {
+        expect(name).to.equal(res.body.list.shift().name);
+      });
+    });
+
+  });
+
   // create
   describe('POST /api/bikesheds', function () {
     beforeEach(function () {
@@ -86,7 +170,7 @@ describe('Request:Bikeshed', function () {
     it('returns a bikeshed', function* () {
       url = url({bikeshed: bikeshed.id});
       res = yield request.get(url).expect(200);
-      expect(res.body).to.have.jsonSchema(schema);
+      expect(res.body).to.be.jsonSchema(schema);
     });
 
     it('returns 404 when not found', function* () {
@@ -94,67 +178,6 @@ describe('Request:Bikeshed', function () {
       yield request.get(url).expect(404);
     });
   });
-
-  // index
-  // xdescribe('GET /api/bikesheds', function () {
-
-  //   beforeEach(function* () {
-  //     url = '/api/bikesheds?';
-  //     yield Bikeshed.destroy();
-  //     yield _.times(30, function (n) {
-  //       return Bikeshed.create({
-  //         title: 'Bikeshed #' + n,
-  //         UserId: user.id,
-  //         published: n % 2 === 0,
-  //         publishedAt: n % 2 === 0 ? new Date() : null
-  //       });
-  //     });
-
-  //   });
-
-  //   it('returns bikesheds, count, direction, page, pages, per, and sortBy', function* () {
-  //     res = yield request.get(url);
-  //     body = res.body;
-  //     expect(body).to.be.an('object');
-  //     expect(body.page).to.equal(1);
-  //     expect(body.pages).to.equal(2);
-  //     expect(body.per).to.equal(12);
-  //     expect(body.count).to.equal(15);
-  //     expect(body.sortBy).to.equal('id');
-  //     expect(body.direction).to.equal('desc');
-  //     expect(body.bikesheds).to.be.an('array').with.length(12);
-  //     _.pluck(body.bikesheds, 'id').sort().reverse()
-  //     .forEach(function (id) {
-  //       expect(id).to.equal(body.bikesheds.shift().id);
-  //     });
-  //   });
-
-  //   it('allows paginating', function* () {
-  //     res = yield request.get(url+qs.stringify({page: 2}));
-  //     body = res.body;
-  //     expect(body).to.be.an('object');
-  //     expect(body.page).to.equal(2);
-  //     expect(body.bikesheds).to.be.an('array').with.length(3);
-  //   });
-
-  //   it('allows changing bikesheds per page', function* () {
-  //     res = yield request.get(url+qs.stringify({per: 1}));
-  //     body = res.body;
-  //     expect(body).to.be.an('object');
-  //     expect(body.page).to.equal(1);
-  //     expect(body.pages).to.equal(15);
-  //     expect(body.bikesheds).to.be.an('array').with.length(1);
-  //   });
-
-  //   it('allows ascending sorting by title column', function* () {
-  //     res = yield request.get(url+qs.stringify({sortBy: 'title', direction: 'asc'}));
-  //     body = res.body;
-  //     _.pluck(body.bikesheds, 'title').sort()
-  //     .forEach(function (title) {
-  //       expect(title).to.equal(body.bikesheds.shift().title);
-  //     });
-  //   });
-  // });
 
   // // upload
   // xdescribe('POST /api/bikesheds/:bikeshed', function () {

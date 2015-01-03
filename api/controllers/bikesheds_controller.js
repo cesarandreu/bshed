@@ -34,10 +34,10 @@ module.exports = function BikeshedsController (helpers) {
  * GET /bikesheds
  * Public
  * Parameters: sortBy, direction, page, per
- *  per: default 12, minimum 1, maximum 96
- *  page: default 1, minimum 1
- *  sortBy: default id
- *  direction: default desc
+ *  per: default 12, [1..96]
+ *  page: default 1, [1..]
+ *  sortBy: default id, [id, name, createdAt, updatedAt]
+ *  direction: default DESC, [DESC, ASC]
  */
 function* index () {
   var Bikeshed = this.models.Bikeshed,
@@ -50,20 +50,20 @@ function* index () {
   page = page >= 1 ? page : 1;
   per = per >= 1 ? (per < 96 ? per : 96) : 12;
   direction = _.contains(['ASC', 'DESC'], direction) ? direction : 'DESC';
-  sortBy = _.contains(_.keys(Bikeshed.tableAttributes), sortBy) ? sortBy : 'id';
+  sortBy = _.contains(['id', 'name', 'createdAt', 'updatedAt'], sortBy) ? sortBy : 'id';
 
   var result = yield Bikeshed.findAndCountAll({
-    where: {published: true},
-    limit: per,
+    where: {status: {ne: 'incomplete'}},
+    order: [[sortBy, direction]],
     offset: (page - 1) * per,
-    order: [[sortBy, direction]]
+    limit: per
   });
 
   this.body = {
-    bikesheds: result.rows,
+    list: result.rows,
     count: result.count,
     page: page,
-    pages: Math.ceil(result.count / per),
+    pages: Math.ceil(result.count / per) || 1,
     per: per,
     sortBy: sortBy,
     direction: direction
