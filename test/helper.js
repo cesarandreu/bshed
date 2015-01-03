@@ -1,6 +1,9 @@
 'use strict';
 
-global.expect = require('chai').expect;
+var chai = require('chai');
+chai.use(require('chai-json-schema'));
+
+global.expect = chai.expect;
 
 var path = require('path'),
   base = path.resolve(__dirname, '..'),
