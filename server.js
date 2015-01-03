@@ -2,8 +2,10 @@
 
 // modules
 var koa = require('koa'),
+  csrf = require('koa-csrf'),
   mount = require('koa-mount'),
   serve = require('koa-static'),
+  session = require('koa-session'),
   compress = require('koa-compress'),
   debug = require('debug')('bshed:server'),
   responseTime = require('koa-response-time');
@@ -44,6 +46,14 @@ if (server.env === 'development') {
 server.use(responseTime()); // x-response-time
 server.use(compress()); // compression
 server.use(serve(config.server.assets, config.server.middleware.serve)); // assets
+server.use(session(config.server.middleware.session, server)); // sessions
+server.use(csrf()); // csrf
+
+// set csrf cookie token
+server.use(function* setCsrfCookie (next) {
+  this.cookies.set('XSRF-TOKEN', this.csrf);
+  yield next;
+});
 
 /**
  * APPLICATIONS

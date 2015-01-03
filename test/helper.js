@@ -7,7 +7,7 @@ var path = require('path'),
   fixtures = path.join(base, '/test/fixtures'),
   config = require(path.join(base, 'config')),
   models = require(path.join(base, 'models')),
-  api =  require(path.join(base, 'api')),
+  server = require(path.join(base, 'server')),
   buildHeaders = require('./buildHeaders');
 
 // initialize stuff
@@ -18,16 +18,12 @@ buildHeaders = buildHeaders({
 models = models({
   database: config.database
 });
-api = api({
-  config: config.api,
-  models: models
-});
 
 module.exports = {
-  api: api,
   base: base,
   config: config,
   models: models,
+  server: server,
   fixtures: fixtures,
   buildHeaders: buildHeaders
 };
