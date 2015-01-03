@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 var helper = require('./helper'),
   request = helper.request,
   models = helper.models;
@@ -9,12 +11,14 @@ var Bikeshed = models.Bikeshed,
   Bike = models.Bike,
   Vote = models.Vote;
 
-var user, bikeshed, res, url, headers, body, schema;
+var user, bikeshed, attributes, res, url, headers, body, schema;
 
 describe('Request:Bikeshed', function () {
 
   beforeEach(function* () {
     user = yield User.create();
+    attributes = {UserId: user.id};
+    body = { name: 'bikeshed', body: 'description' };
     headers = helper.buildHeaders({user: {id: user.id}});
   });
 
@@ -32,11 +36,9 @@ describe('Request:Bikeshed', function () {
           status: { type: 'string', required: true }
         }
       };
-
     });
 
     it('creates and returns a bikeshed', function* () {
-      body = { name: 'bikeshed', body: 'description' };
       res = yield request.post(url).set(headers).send(body).expect(201);
       expect(res.body).to.be.jsonSchema(schema);
     });
@@ -56,6 +58,37 @@ describe('Request:Bikeshed', function () {
       yield request.post(url).expect(403);
     });
 
+  });
+
+  // show
+  describe('GET /api/bikesheds/:bikeshed', function () {
+
+    beforeEach(function* () {
+      url = _.template('/api/bikesheds/<%=bikeshed%>');
+      schema = {
+        title: 'GET /api/bikesheds/:bikeshed response',
+        type: 'object',
+        properties: {
+          id: { type: 'number', required: true },
+          name: { type: 'string', required: true },
+          body: { type: 'string', required: true },
+          status: { type: 'string', required: true }
+        }
+      };
+      attributes = _.assign(attributes, body);
+      bikeshed = yield Bikeshed.create(attributes);
+    });
+
+    it('returns a bikeshed', function* () {
+      url = url({bikeshed: bikeshed.id});
+      res = yield request.get(url).expect(200);
+      expect(res.body).to.have.jsonSchema(schema);
+    });
+
+    it('returns 404 when not found', function* () {
+      url = url({bikeshed: 0});
+      yield request.get(url).expect(404);
+    });
   });
 
   // index
@@ -116,27 +149,6 @@ describe('Request:Bikeshed', function () {
   //     .forEach(function (title) {
   //       expect(title).to.equal(body.bikesheds.shift().title);
   //     });
-  //   });
-  // });
-
-  // // show
-  // xdescribe('GET /api/bikesheds/:bikeshed', function () {
-  //   beforeEach(function* () {
-  //     bikeshed = yield Bikeshed.create({
-  //       title: 'bikeshed',
-  //       UserId: user.id
-  //     });
-  //     url = _.template('/api/bikesheds/<%=bikeshed%>')({bikeshed: bikeshed.id});
-  //   });
-
-  //   it('returns a bikeshed', function* () {
-  //     var keys = Bikeshed.jsonAttributes;
-  //     res = yield request.get(url).expect(200);
-  //     expect(res.body).to.be.an('object').and.to.have.keys(keys);
-  //   });
-
-  //   it('returns 404 when not found', function* () {
-  //     yield request.get(url.replace(bikeshed.id, 0)).expect(404);
   //   });
   // });
 

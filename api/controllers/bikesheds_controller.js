@@ -95,9 +95,6 @@ function* create () {
  * Public
  */
 function* get () {
-  if (!this.state.bikeshed) {
-    this.throw(404, 'bikeshed not found');
-  }
   this.body = this.state.bikeshed;
 }
 
