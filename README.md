@@ -15,6 +15,7 @@ Requires running Postgres. For OSX you can install and run [Postgres.app](http:/
 * `NODE_ENV=(development|test|production) npm run db:create`
 * `NODE_ENV=(development|test|production) npm run db:drop`
 * `NODE_ENV=(development|test|production) npm run db:migrate`
+* `NODE_ENV=(development|test|production) npm run db:refresh` - runs drop, create, migrate
 
 ### Relations
 

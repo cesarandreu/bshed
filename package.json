@@ -25,7 +25,8 @@
     "fakes3": "fakes3 --root test/fakes3 -p 10001",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:create": "node_modules/.bin/create_database",
-    "db:drop": "node_modules/.bin/drop_database"
+    "db:drop": "node_modules/.bin/drop_database",
+    "db:refresh": "npm run db:drop && npm run db:create && npm run db:migrate"
   },
   "dependencies": {
     "aws-sdk": "^2.0.30",
