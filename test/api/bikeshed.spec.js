@@ -5,10 +5,8 @@ var path = require('path'),
   _ = require('lodash');
 
 var helper = require('./helper'),
-  config = helper.config,
   request = helper.request,
-  models = helper.models,
-  s3 = helper.s3;
+  models = helper.models;
 
 var Bikeshed = models.Bikeshed,
   User = models.User,
@@ -24,9 +22,7 @@ describe('Request:Bikeshed', function () {
       name: 'Bob',
       email: 'bob@example.com'
     });
-    headers = {
-      authorization: 'Bearer ' + user.token({secret: config.secret})
-    };
+    headers = helper.buildHeaders({user: {id: user.id}});
   });
 
   // index
