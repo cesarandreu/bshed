@@ -3,9 +3,7 @@
 var helper = require('./helper');
 
 var models = helper.models,
-  Vote = models.Vote,
-  Bikeshed = models.Bikeshed,
-  Image = models.Image;
+  Vote = models.Vote;
 
 var vote;
 

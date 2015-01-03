@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    ImageId: {
+    BikeId: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
@@ -23,9 +23,8 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     paranoid: true,
     classMethods: {
-      safeAttributes: ['value'],
       associate: function associate (models) {
-        models.Vote.belongsTo(models.Image);
+        models.Vote.belongsTo(models.Bike);
         models.Vote.belongsTo(models.Bikeshed);
         models.Vote.belongsTo(models.User);
       }

@@ -24,7 +24,7 @@ module.exports = {
         allowNull: true,
         type: DataTypes.INTEGER
       },
-      ImageId: {
+      BikeId: {
         allowNull: true,
         type: DataTypes.INTEGER
       },

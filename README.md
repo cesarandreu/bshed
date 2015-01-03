@@ -75,12 +75,14 @@ Bike {
 Vote {
   id:integer:pk,
   value:integer,
-  BikeshedId:integer,
-  ImageId:integer,
-  UserId:integer,
 
   createdAt:date,
-  updatedAt:date
+  updatedAt:date,
+  deletedAt:date,
+
+  BikeshedId:integer,
+  BikeId:integer,
+  UserId:integer
 }
 ```
 
