@@ -73,14 +73,14 @@ function* index () {
 /**
  * POST /bikesheds
  * Protected
- * Body: {title: string}
+ * Body: {name: string, body: string}
  */
 function* create () {
-  var bikeshed = this.models.Bikeshed.build({
-    title: (this.request.body.fields || {}).title,
-    UserId: this.state.user.id
-  });
-  var bikeshedValidation = yield bikeshed.validate();
+  var fields = _.assign({UserId: this.state.user.id},
+    _.pick(this.request.body.fields, ['name', 'body']));
+
+  var bikeshed = this.models.Bikeshed.build(fields),
+    bikeshedValidation = yield bikeshed.validate();
   if (bikeshedValidation) {
     this.body = bikeshedValidation;
     this.status = 422;
