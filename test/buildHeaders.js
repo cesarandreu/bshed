@@ -22,8 +22,6 @@ module.exports = function buildHeadersHelper (opts) {
     tokens = csrf();
 
   return function buildHeaders (session) {
-    assert(session);
-
     // _expire and _maxAge are used by koa-session
     session = _.assign({
       _expire: maxAge + Date.now(),
