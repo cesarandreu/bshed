@@ -19,7 +19,7 @@ module.exports = {
  *
  * param resource - model name
  * param opts.name - param and state value to use. default: resource.toLowerCase()
- * param opts.authorize - check instance UserId matches session user.id. default: true
+ * param opts.auth - check instance UserId matches session user.id. default: true
  *
  * example load('Bikeshed') - uses Bikeshed model, :bikeshed param, and sets ctx.state.bikeshed
  */
@@ -27,14 +27,14 @@ function load (resource, opts) {
   assert(resource);
   opts = _.assign({
     name: resource.toLowerCase(),
-    authorize: true
+    auth: true
   }, opts);
 
   var name = opts.name;
   return function* loadMiddleware (next) {
     try {
       var instance = this.state[name] = yield this.models[resource].find(this.params[name]);
-      if (!instance || (opts.authorize && instance.UserId !== this.session.user.id)) {
+      if (!instance || (opts.auth && instance.UserId !== this.session.user.id)) {
         throw new Error(resource + ' not found');
       }
     } catch (err) {
