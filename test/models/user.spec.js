@@ -27,14 +27,4 @@ describe('Model:User', function () {
 
   });
 
-  describe('attributes', function () {
-
-    it('has jsonAttributes', function () {
-      var keys = ['administrator', 'createdAt', 'email', 'id', 'name', 'updatedAt'];
-      expect(User.jsonAttributes).to.be.an('array').and.to.include.members(keys);
-    });
-
-  });
-
-
 });
