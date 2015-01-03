@@ -2,8 +2,12 @@
 
 module.exports = function (sequelize, DataTypes) {
   var Bikeshed = sequelize.define('Bikeshed', {
-    title: {
+    name: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    body: {
+      type: DataTypes.TEXT,
       allowNull: false
     },
     published: {
@@ -25,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
     paranoid: true,
     classMethods: {
       associate: function associate (models) {
-        models.Bikeshed.hasMany(models.Image);
+        models.Bikeshed.hasMany(models.Bike);
         models.Bikeshed.hasMany(models.Vote);
         models.Bikeshed.belongsTo(models.User);
       }

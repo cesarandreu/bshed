@@ -8,9 +8,13 @@ module.exports = {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      title: {
+      name: {
         allowNull: false,
         type: DataTypes.STRING
+      },
+      body: {
+        allowNull: false,
+        type: DataTypes.TEXT
       },
       published: {
         allowNull: false,
@@ -29,13 +33,13 @@ module.exports = {
         allowNull: false,
         type: DataTypes.DATE
       },
-      UserId: {
-        allowNull: true,
-        type: DataTypes.INTEGER
-      },
       deletedAt: {
         allowNull: true,
         type: DataTypes.DATE
+      },
+      UserId: {
+        allowNull: true,
+        type: DataTypes.INTEGER
       }
     }).done(done);
   },

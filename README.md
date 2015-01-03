@@ -46,12 +46,16 @@ User {
 
 Bikeshed {
   id:integer:pk,
-  title:string,
+  name:string,
+  body:text,
   published:boolean,
   publishedAt:date,
 
   createdAt:date,
-  updatedAt:date
+  updatedAt:date,
+  deletedAt:date,
+
+  UserId:integer
 }
 
 Bike {
