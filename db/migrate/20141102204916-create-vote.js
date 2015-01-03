@@ -20,6 +20,10 @@ module.exports = {
         allowNull: false,
         type: DataTypes.DATE
       },
+      deletedAt: {
+        allowNull: true,
+        type: DataTypes.DATE
+      },
       BikeshedId: {
         allowNull: true,
         type: DataTypes.INTEGER
@@ -31,10 +35,6 @@ module.exports = {
       UserId: {
         allowNull: true,
         type: DataTypes.INTEGER
-      },
-      deletedAt: {
-        allowNull: true,
-        type: DataTypes.DATE
       }
     }).done(done);
   },
