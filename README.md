@@ -21,12 +21,12 @@ Requires running Postgres. For OSX you can install and run [Postgres.app](http:/
 * User has many Bikesheds
 * User has many Votes
 * Bikeshed has one User
-* Bikeshed has many Images
+* Bikeshed has many Bikes
 * Bikeshed has many Votes
-* Image has many Votes
-* Image belongs to Bikeshed
+* Bike has many Votes
+* Bike belongs to Bikeshed
 * Vote belongs to Bikeshed
-* Vote belongs to Image
+* Vote belongs to Bike
 * Vote belongs to User
 
 ### Schema
