@@ -18,14 +18,10 @@ module.exports = {
         type: DataTypes.TEXT,
         defaultValue: '',
       },
-      published: {
+      status: {
         allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
-      publishedAt: {
-        allowNull: true,
-        type: DataTypes.DATE
+        type: DataTypes.STRING,
+        defaultValue: 'incomplete'
       },
       createdAt: {
         allowNull: false,

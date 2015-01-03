@@ -49,8 +49,7 @@ Bikeshed {
   id:integer:pk,
   name:string,
   body:text,
-  published:boolean,
-  publishedAt:date,
+  status:string,
 
   createdAt:date,
   updatedAt:date,

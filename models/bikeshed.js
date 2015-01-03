@@ -18,14 +18,13 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: true
       }
     },
-    published: {
-      type: DataTypes.BOOLEAN,
+    status: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: false
-    },
-    publishedAt: {
-      type: DataTypes.DATE,
-      allowNull: true
+      defaultValue: 'incomplete',
+      validate: {
+        isIn: [['incomplete', 'processing', 'open', 'closed']]
+      }
     },
 
     // associations
@@ -43,11 +42,6 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     instanceMethods: {
-      publish: function* publish (opts) {
-        this.published = true;
-        this.publishedAt = new Date();
-        return yield this.save(opts);
-      }
     }
   });
 
