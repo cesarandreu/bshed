@@ -8,7 +8,8 @@ var Router = require('koa-router'),
 module.exports = function BikeshedsController (helpers) {
   var middleware = helpers.middleware,
     auth = middleware.auth(),
-    loadBikeshed = middleware.load('Bikeshed');
+    authLoadBikeshed = middleware.load('Bikeshed'),
+    loadBikeshed = middleware.load('Bikeshed', {auth: false});
 
   var jsonBody = body(),
     multipartBody = body({multipart: true});
@@ -22,9 +23,9 @@ module.exports = function BikeshedsController (helpers) {
 
     // private
     .post('/bikesheds', auth, jsonBody, create)
-    .del('/bikesheds/:bikeshed', auth, loadBikeshed, destroy)
-    .post('/bikesheds/:bikeshed', auth, loadBikeshed, multipartBody, upload)
-    .post('/bikesheds/:bikeshed/votes', auth, loadBikeshed, jsonBody, vote);
+    .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
+    .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multipartBody, upload)
+    .post('/bikesheds/:bikeshed/votes', auth, authLoadBikeshed, jsonBody, vote);
 
   return bikeshedRoutes.middleware();
 };
@@ -67,7 +68,6 @@ function* index () {
     sortBy: sortBy,
     direction: direction
   };
-
 }
 
 /**
