@@ -18,10 +18,10 @@
     "node": ">=0.11.14"
   },
   "scripts": {
-    "test": "NODE_ENV=test node --harmony node_modules/.bin/_mocha --require co-mocha test/server/**/*.spec.js",
-    "test:models": "NODE_ENV=test node --harmony node_modules/.bin/_mocha --require co-mocha test/server/models/*.spec.js",
-    "test:requests": "NODE_ENV=test node --harmony node_modules/.bin/_mocha --require co-mocha test/server/requests/*.spec.js",
     "test:coverage": "NODE_ENV=test node --harmony node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -u exports --require co-mocha test/server/**/*.spec.js",
+    "test": "NODE_ENV=test node_modules/.bin/mocha --harmony test/**/*.spec.js",
+    "test:models": "NODE_ENV=test node_modules/.bin/mocha --harmony test/models/*.spec.js",
+    "test:api": "NODE_ENV=test node_modules/.bin/mocha --harmony test/api/*.spec.js",
     "fakes3": "fakes3 --root test/fakes3 -p 10001",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:create": "node_modules/.bin/create_database",
