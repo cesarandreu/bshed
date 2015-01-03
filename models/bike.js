@@ -4,11 +4,13 @@ module.exports = function (sequelize, DataTypes) {
   var Bike = sequelize.define('Bike', {
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: '',
     },
     body: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      defaultValue: '',
     },
     imageLink: {
       type: DataTypes.STRING,

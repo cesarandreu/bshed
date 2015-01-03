@@ -10,18 +10,20 @@ module.exports = {
       },
       name: {
         allowNull: false,
-        type: DataTypes.TEXT
+        type: DataTypes.STRING,
+        defaultValue: ''
       },
       body: {
         allowNull: false,
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        defaultValue: '',
       },
       imageLink: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING
       },
       imageType: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING
       },
       createdAt: {
