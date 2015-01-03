@@ -30,10 +30,14 @@ describe('Request:Bikeshed', function () {
         title: 'POST /api/bikesheds response',
         type: 'object',
         properties: {
-          id: { type: 'number', required: true },
-          name: { type: 'string', required: true },
-          body: { type: 'string', required: true },
-          status: { type: 'string', required: true }
+          id: { type: 'number', required: true, minimum: 1 },
+          name: { type: 'string', required: true, minLength: 1 },
+          body: { type: 'string', required: true, minLength: 1 },
+          updatedAt: { type: 'string', required: true },
+          createdAt: { type: 'string', required: true },
+          status: { type: 'string', required: true,
+            enum: ['incomplete', 'processing', 'open', 'closed']
+          },
         }
       };
     });
