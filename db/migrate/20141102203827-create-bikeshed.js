@@ -10,11 +10,13 @@ module.exports = {
       },
       name: {
         allowNull: false,
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        defaultValue: '',
       },
       body: {
         allowNull: false,
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        defaultValue: '',
       },
       published: {
         allowNull: false,

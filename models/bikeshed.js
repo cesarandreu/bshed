@@ -4,11 +4,13 @@ module.exports = function (sequelize, DataTypes) {
   var Bikeshed = sequelize.define('Bikeshed', {
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: '',
     },
     body: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      defaultValue: '',
     },
     published: {
       type: DataTypes.BOOLEAN,
