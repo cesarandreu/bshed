@@ -19,7 +19,7 @@ Requires running Postgres. For OSX you can install and run [Postgres.app](http:/
 ### Relations
 
 * User has many Bikesheds
-* User has many votes
+* User has many Votes
 * Bikeshed has one User
 * Bikeshed has many Images
 * Bikeshed has many Votes
@@ -36,11 +36,12 @@ User {
   id:integer:pk,
   administrator:boolean,
   name:string,
+  email:string,
   hashedPassword:string,
-  timesVoted:integer,
 
   createdAt:date,
-  updateAt:date
+  updateAt:date,
+  deletedAt:date
 }
 
 Bikeshed {

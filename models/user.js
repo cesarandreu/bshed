@@ -1,7 +1,5 @@
 'use strict';
 
-var jwt = require('koa-jwt');
-
 module.exports = function (sequelize, DataTypes) {
   var User = sequelize.define('User', {
     administrator: {
@@ -22,11 +20,6 @@ module.exports = function (sequelize, DataTypes) {
     hashedPassword: {
       type: DataTypes.STRING,
       allowNull: true
-    },
-    timesVoted: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
     }
   }, {
     paranoid: true,
@@ -37,17 +30,6 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     instanceMethods: {
-      token: function token (opts) {
-        var user = {
-          id: this.id,
-          name: this.name,
-          email: this.email
-        };
-
-        opts = opts || {};
-        opts.expiresInMinutes = opts.expiresInMinutes || 60 * 24 * 7;
-        return jwt.sign(user, opts.secret, opts);
-      }
     }
   });
 

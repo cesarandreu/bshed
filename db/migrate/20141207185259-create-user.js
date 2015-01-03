@@ -23,11 +23,6 @@ module.exports = {
         type: DataTypes.STRING,
         defaultValue: ''
       },
-      timesVoted: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        defaultValue: 0
-      },
       hashedPassword: {
         allowNull: true,
         type: DataTypes.STRING
