@@ -28,8 +28,5 @@
     "describe": false,
     "xdescribe": false,
     "expect": false
-  },
-  "predef": [
-    "-Image"
-  ]
+  }
 }

@@ -54,14 +54,18 @@ Bikeshed {
   updatedAt:date
 }
 
-Image {
+Bike {
   id:integer:pk,
   name:string,
-  link:string,
-  type:string,
+  body:text,
+  imageLink:string,
+  imageType:string,
 
   createdAt:date,
-  updatedAt:date
+  updatedAt:date,
+  deletedAt:date
+
+  BikeshedId:integer
 }
 
 Vote {

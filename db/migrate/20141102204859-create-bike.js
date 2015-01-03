@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: function (migration, DataTypes, done) {
-    migration.createTable('Images', {
+    migration.createTable('Bikes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,10 +10,17 @@ module.exports = {
       },
       name: {
         allowNull: false,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        type: DataTypes.TEXT
       },
-      type: {
+      body: {
+        allowNull: false,
+        type: DataTypes.TEXT
+      },
+      imageLink: {
+        allowNull: false,
+        type: DataTypes.STRING
+      },
+      imageType: {
         allowNull: false,
         type: DataTypes.STRING
       },
@@ -25,17 +32,17 @@ module.exports = {
         allowNull: false,
         type: DataTypes.DATE
       },
-      BikeshedId: {
-        allowNull: true,
-        type: DataTypes.INTEGER
-      },
       deletedAt: {
         allowNull: true,
         type: DataTypes.DATE
+      },
+      BikeshedId: {
+        allowNull: true,
+        type: DataTypes.INTEGER
       }
     }).done(done);
   },
   down: function (migration, DataTypes, done) {
-    migration.dropTable('Images').done(done);
+    migration.dropTable('Bikes').done(done);
   }
 };
