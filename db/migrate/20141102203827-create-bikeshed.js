@@ -23,6 +23,11 @@ module.exports = {
         type: DataTypes.STRING,
         defaultValue: 'incomplete'
       },
+      size: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

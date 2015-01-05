@@ -50,6 +50,7 @@ Bikeshed {
   name:string,
   body:text,
   status:string,
+  size:integer,
 
   createdAt:date,
   updatedAt:date,

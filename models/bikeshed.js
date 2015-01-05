@@ -26,6 +26,11 @@ module.exports = function (sequelize, DataTypes) {
         isIn: [['incomplete', 'processing', 'open', 'closed']]
       }
     },
+    size: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
 
     // associations
     UserId: {
