@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: '',
     },
-    imageLink: {
+    imageName: {
       type: DataTypes.STRING,
       allowNull: true
     },

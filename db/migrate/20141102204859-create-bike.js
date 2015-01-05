@@ -18,7 +18,7 @@ module.exports = {
         type: DataTypes.TEXT,
         defaultValue: '',
       },
-      imageLink: {
+      imageName: {
         allowNull: true,
         type: DataTypes.STRING
       },
