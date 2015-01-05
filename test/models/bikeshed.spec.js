@@ -10,7 +10,8 @@ describe('Model:Bikeshed', function () {
 
   beforeEach(function* () {
     bikeshed = yield Bikeshed.create({
-      name: 'Foo'
+      name: 'bikeshed',
+      body: 'description'
     });
   });
 
@@ -19,7 +20,8 @@ describe('Model:Bikeshed', function () {
     it('should have a valid schema', function () {
       expect(bikeshed).to.be.an('object');
       expect(bikeshed.id).to.be.a('number');
-      expect(bikeshed.name).to.be.a('string').and.to.equal('Foo');
+      expect(bikeshed.name).to.be.a('string').and.to.equal('bikeshed');
+      expect(bikeshed.body).to.be.a('string').and.to.equal('description');
     });
 
   });
