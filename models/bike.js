@@ -6,11 +6,17 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: '',
+      validate: {
+        notEmpty: true
+      }
     },
     body: {
       type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: '',
+      validate: {
+        notEmpty: true
+      }
     },
     imageName: {
       type: DataTypes.STRING,
@@ -18,7 +24,10 @@ module.exports = function (sequelize, DataTypes) {
     },
     imageType: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      validate: {
+        isIn: [['image/png', 'image/jpeg']]
+      }
     },
 
     // associations

@@ -4,13 +4,14 @@ var helper = require('./helper'),
   models = helper.models,
   Bike = models.Bike;
 
-var bike, error;
+var bike;
 
 describe('Model:Bike', function () {
 
   beforeEach(function* () {
-    error = null;
     bike = yield Bike.create({
+      name: 'bike',
+      body: 'description'
     });
   });
 
