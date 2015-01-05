@@ -48,6 +48,7 @@
     "koa-session": "^3.1.0",
     "koa-static": "^1.4.8",
     "lodash": "^2.4.1",
+    "node-uuid": "^1.4.2",
     "pg": "^4.1.0",
     "s3": "^4.3.1",
     "sequelize": "^2.0.0-rc4",

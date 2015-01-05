@@ -1,6 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash'),
+  path = require('path');
 
 var helper = require('./helper'),
   request = helper.request,
@@ -11,7 +12,10 @@ var Bikeshed = models.Bikeshed,
   Bike = models.Bike,
   Vote = models.Vote;
 
-var user, bikeshed, attributes, res, url, headers, body, schema;
+var svgPath = path.join(helper.fixtures, 'invalid.svg'),
+  jpgPath = path.join(helper.fixtures, 'puppy_01.jpg');
+
+var user, bikeshed, fixture, attributes, res, url, headers, body, schema;
 
 describe('Request:Bikeshed', function () {
 
@@ -160,7 +164,9 @@ describe('Request:Bikeshed', function () {
           id: { type: 'number', required: true },
           name: { type: 'string', required: true },
           body: { type: 'string', required: true },
-          status: { type: 'string', required: true }
+          status: { type: 'string', required: true,
+            enum: ['incomplete', 'processing', 'open', 'closed']
+          }
         }
       };
       attributes = _.assign(attributes, body);
@@ -176,6 +182,88 @@ describe('Request:Bikeshed', function () {
     it('returns 404 when not found', function* () {
       url = url({bikeshed: 0});
       yield request.get(url).expect(404);
+    });
+  });
+
+  // add bike
+  describe('POST /api/bikesheds/:bikeshed', function () {
+    beforeEach(function* () {
+      url = _.template('/api/bikesheds/<%=bikeshed%>');
+      schema = {
+        title: 'POST /api/bikesheds/:bikeshed response',
+        type: 'object',
+        properties: {
+          id: { type: 'number', required: true },
+          name: { type: 'string', required: true },
+          body: { type: 'string', required: true },
+          imageName: { type: ['string', 'null'], required: true },
+          imageType: { type: ['string', 'null'], required: true }
+        }
+      };
+      attributes = _.assign(attributes, body);
+      bikeshed = yield Bikeshed.create(attributes);
+      body = {name: 'bike', body: 'description'};
+      url = url({bikeshed: bikeshed.id});
+    });
+
+    it('allows you to add a bike without image', function* () {
+      res = yield request.post(url).set(headers).send(body).expect(201);
+      expect(res.body).to.be.jsonSchema(schema);
+    });
+
+    it('allows you to add a bike with image', function* () {
+      res = yield request.post(url).set(headers)
+        .field('name', 'bike').field('body', 'description')
+        .attach('image', jpgPath).expect(201);
+      expect(res.body).to.be.jsonSchema(schema);
+    });
+
+    it('returns 403 when at limit', function* () {
+      body.BikeshedId = bikeshed.id;
+      yield _.times(5, function () {
+        return Bike.create(body);
+      });
+
+      yield request.post(url).set(headers)
+        .field('name', 'bike').field('body', 'description')
+        .attach('image', jpgPath).expect(403);
+    });
+
+    it('returns 403 when not incomplete', function* () {
+      var statuses = ['processing', 'open', 'closed'];
+      while (statuses.length) {
+        bikeshed.status = statuses.pop();
+        yield bikeshed.save();
+        yield request.post(url).set(headers).attach('image', jpgPath).expect(403);
+      }
+    });
+
+    it('returns 404 when not owner', function* () {
+      bikeshed.UserId = 0;
+      yield bikeshed.save();
+      yield request.post(url).set(headers).expect(404);
+    });
+
+    it('returns 409 on conflicts', function* () {
+      res = (yield _.times(10, function () {
+        return request.post(url).set(headers)
+          .field('name', 'bike').field('body', 'description')
+          .attach('image', jpgPath);
+      }));
+
+      var count = _.countBy(res, 'statusCode');
+      expect(count[201]).to.satisfy(function (num) {
+        return num <= 5;
+      });
+      expect(count[409]).to.satisfy(function (num) {
+        return num > 0;
+      });
+    });
+
+    it('returns 415 on invalid file format', function* () {
+      yield request.post(url).set(headers)
+        .field('name', 'bike').field('body', 'description')
+        .attach('image', svgPath).expect(415);
     });
   });
 

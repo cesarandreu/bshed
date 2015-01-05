@@ -38,6 +38,12 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     paranoid: true,
     getterMethods: {
+      bucket: function () {
+        return 'bikesheds';
+      },
+      key: function () {
+        return this.BikeshedId + '/' + this.imageName;
+      }
     },
     classMethods: {
       associate: function associate (models) {

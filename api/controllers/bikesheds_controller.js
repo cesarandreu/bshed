@@ -1,6 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash'),
+  uuid = require('node-uuid');
 
 var Router = require('koa-router'),
   body = require('koa-better-body');
@@ -12,7 +13,12 @@ module.exports = function BikeshedsController (helpers) {
     loadBikeshed = middleware.load('Bikeshed', {auth: false});
 
   var jsonBody = body(),
-    multipartBody = body({multipart: true});
+    multipartBody = body({
+      multipart: true,
+      formidable: {
+        multiples: false
+      }
+    });
 
   var bikeshedRoutes = new Router()
 
@@ -24,7 +30,7 @@ module.exports = function BikeshedsController (helpers) {
     // private
     .post('/bikesheds', auth, jsonBody, create)
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
-    .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multipartBody, upload)
+    .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multipartBody, add)
     .post('/bikesheds/:bikeshed/votes', auth, authLoadBikeshed, jsonBody, vote);
 
   return bikeshedRoutes.middleware();
@@ -117,43 +123,66 @@ function* score () {
  * POST /bikesheds/:bikeshed
  * Protected
  */
-function* upload () {
-  var bikeshed = this.state.bikeshed, user = this.state.user;
-  if (bikeshed.published || bikeshed.UserId !== user.id) {
-    this.throw(403, 'must be unpublished and owned by current user');
+function* add () {
+  var bikeshed = this.state.bikeshed;
+  if (bikeshed.status !== 'incomplete') {
+    this.throw(403, 'can only add bikes to incomplete bikeshed');
+  } else if (bikeshed.size >= 5) {
+    this.throw(403, 'cannot insert over 5 bikes per bikeshed');
   }
 
-  // TODO: add file cleanup
-  var files = _.values(this.request.body.files).map(function (file) {
-    file.BikeshedId = bikeshed.id;
-    return file;
-  });
-  if (files.length < 2) {
-    this.throw(422, 'must have at least two files');
-  } else if (files.length > 10) {
-    this.throw(422, 'cannot have over ten files');
+  var image = _.chain(this.request.body.files).values().first().value(),
+    fields = _.assign({
+      BikeshedId: this.state.bikeshed.id, imageType: image && image.type
+    }, _.pick(this.request.body.fields, ['name', 'body']));
+
+  var bike = this.models.Bike.build(fields),
+    bikeValidation = yield bike.validate();
+  if (bikeValidation) {
+    this.body = bikeValidation;
+    if (_.where(bikeValidation.errors, {path: 'imageType'})) {
+      this.throw(415);
+    } else {
+      this.throw(422);
+    }
   }
 
-  // TODO: make this safe~
-  var images, t = yield this.models.sequelize.transaction();
+  var s3Options = {};
+  if (image) {
+    bike.imageName = uuid.v4();
+    s3Options.upload = {
+      localFile: image.path,
+      s3Params: {
+        ACL: 'public-read',
+        ContentType: bike.imageType,
+        Bucket: bike.bucket,
+        Key: bike.key
+      }
+    };
+    s3Options.destroy = {
+      Delete: {Objects: [{Key: bike.key}]},
+      Bucket: bike.bucket
+    };
+  }
+
+  var t = yield this.models.sequelize.transaction();
   try {
-    bikeshed = yield this.models.Bikeshed.find(bikeshed.id, {transaction: t, lock: t.LOCK.UPDATE});
-    bikeshed = yield bikeshed.publish({transaction: t});
-    images = yield this.models.Image.bulkCreateAndUpload(files, {transaction: t});
+    bike = yield bike.save({transaction: t});
+    if (image) {
+      yield this.s3.attemptUpload(s3Options);
+    }
   } catch (err) {
     yield t.rollback();
-    if (err.name === 'SequelizeDatabaseError') {
-      this.throw(409, 'image upload conflict');
-    } else if (!_.isArray(err)) {
-      this.throw(400);
+    if (err.message === 'cannot insert over 5 bikes per bikeshed') {
+      this.throw(403, err.message);
+    } else if (err.message === 'could not serialize access due to concurrent update') {
+      this.throw(409, err.message);
     } else {
-      this.body = err;
-      this.status = 422;
-      return;
+      this.throw(503);
     }
   }
   yield t.commit();
-  this.body = images;
+  this.body = bike;
   this.status = 201;
 }
 
