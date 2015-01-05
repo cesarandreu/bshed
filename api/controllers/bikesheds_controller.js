@@ -131,7 +131,7 @@ function* add () {
     this.throw(403, 'cannot insert over 5 bikes per bikeshed');
   }
 
-  var image = _.chain(this.request.body.files).values().first().value(),
+  var image = _.values(this.request.body.files)[0],
     fields = _.assign({
       BikeshedId: this.state.bikeshed.id, imageType: image && image.type
     }, _.pick(this.request.body.fields, ['name', 'body']));
