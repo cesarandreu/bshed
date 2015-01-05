@@ -122,6 +122,7 @@ function* score () {
 /**
  * POST /bikesheds/:bikeshed
  * Protected
+ * Body: {name: string, body: string, image: file}
  */
 function* add () {
   var bikeshed = this.state.bikeshed;
