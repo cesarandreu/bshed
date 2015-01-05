@@ -17,6 +17,7 @@ var controllers = require('./controllers'),
  */
 module.exports = function apiLoader (opts) {
   assert(opts);
+  assert(opts.s3);
   assert(opts.config);
   assert(opts.models);
   debug('loader:start');
@@ -27,11 +28,12 @@ module.exports = function apiLoader (opts) {
   api.keys = opts.config.secret;
   api.config = opts.config;
   api.models = opts.models;
+  api.s3 = opts.s3;
   api.controllers = controllers;
   api.helpers = helpers;
 
   var middleware = compose([
-    addToContext({models: api.models}),
+    addToContext({models: api.models, s3: api.s3}),
     controllers(helpers)
   ]);
 
@@ -44,6 +46,7 @@ module.exports = function apiLoader (opts) {
 function addToContext (opts) {
   return function* addToContextMiddleware (next) {
     this.models = opts.models;
+    this.s3 = opts.s3;
     yield next;
   };
 }

@@ -14,16 +14,19 @@ var koa = require('koa'),
 debug('loading modules');
 var config = require('./config'),
   models = require('./models'),
+  s3 = require('./lib/s3'),
   api = require('./api');
 
 // initialization
 debug('initializing modules');
+s3 = s3(config.aws);
 models = models({
   database: config.database
 });
 api = api({
   config: config.api,
-  models: models
+  models: models,
+  s3: s3
 });
 
 /**

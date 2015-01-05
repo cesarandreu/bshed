@@ -22,6 +22,6 @@ module.exports = {
     secretAccessKey: '',
     apiVersion: '2014-11-23',
     s3ForcePathStyle: true,
-    endpoint: new AWS.Endpoint('localhost:10001')
+    endpoint: new AWS.Endpoint('http://localhost:10001')
   }
 };
