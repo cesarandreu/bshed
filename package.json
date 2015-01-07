@@ -29,6 +29,7 @@
     "db:refresh": "npm run db:drop && npm run db:create && npm run db:migrate"
   },
   "dependencies": {
+    "6to5": "^2.7.1",
     "aws-sdk": "^2.0.30",
     "chai-json-schema": "^1.1.0",
     "co": "^4.0.0",
