@@ -10,6 +10,7 @@ module.exports = function BikeshedsController (helpers) {
   var middleware = helpers.middleware,
     auth = middleware.auth(),
     loadBikeshed = middleware.load('Bikeshed'),
+    authLoadBike = middleware.load('Bike', {parent: 'Bikeshed'}),
     authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'});
 
   var jsonBody = body(),
@@ -25,13 +26,14 @@ module.exports = function BikeshedsController (helpers) {
     // public
     .get('/bikesheds', index)
     .get('/bikesheds/:bikeshed', loadBikeshed, get)
-    .get('/bikesheds/:bikeshed/votes', loadBikeshed, score)
+    .get('/bikesheds/:bikeshed/bikes', loadBikeshed, score)
 
     // private
     .post('/bikesheds', auth, jsonBody, create)
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multipartBody, add)
-    .post('/bikesheds/:bikeshed/votes', auth, authLoadBikeshed, jsonBody, vote);
+    .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove)
+    .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate);
 
   return bikeshedRoutes.middleware();
 };
@@ -105,18 +107,12 @@ function* get () {
 }
 
 /**
- * GET /bikesheds/:bikeshed/votes
- * Public
+ * DELETE /bikeshed/:bikeshed
+ * Protected
  */
-function* score () {
-  var images = yield this.models.Image.findAll({where: {BikeshedId: this.state.bikeshed.id}});
-  var result = [], image;
-  for (var i = 0, len = images.length; i < len; i++) {
-    image = images[i].toJSON();
-    image.score = yield this.models.Vote.sum('value', {where: {ImageId: image.id}});
-    result.push(image);
-  }
-  this.body = result;
+function* destroy () {
+  yield this.state.bikeshed.destroy();
+  this.status = 204;
 }
 
 /**
@@ -188,12 +184,33 @@ function* add () {
 }
 
 /**
- * POST /bikesheds/:bikeshed/votes
+ * GET /bikesheds/:bikeshed/bikes
+ * Public
+ */
+function* score () {
+  this.body = yield this.models.Bikes.findAll({where: {BikeshedId: this.state.bikeshed.id}});
+}
+
+/**
+ * DELETE /bikesheds/:bikeshed/bikes/:bike
+ * Protected
+ */
+function* remove () {
+  if (this.state.bikeshed.status !== 'incomplete') {
+    this.throw(403, 'can only remove bikes from incomplete bikesheds');
+  }
+
+  yield this.state.bike.destroy();
+  this.status = 204;
+}
+
+/**
+ * POST /bikesheds/:bikeshed/bikes
  * Protected
  * Body {votes: {ImageId: value}}
  * Example: {votes: {1: 0, 2: 1}}
  */
-function* vote () {
+function* rate () {
   var Vote = this.models.Vote,
     Image = this.models.Image,
     User = this.models.User;
@@ -282,17 +299,4 @@ function* vote () {
 
   this.body = userVotes;
   this.status = 201;
-}
-
-/**
- * DELETE /bikeshed/:bikeshed
- * Protected
- */
-function* destroy () {
-  var bikeshed = this.state.bikeshed;
-  if (bikeshed.UserId !== this.state.user.id) {
-    this.throw(403, 'must be owner to delete bikeshed');
-  }
-  yield bikeshed.destroy();
-  this.status = 204;
 }
