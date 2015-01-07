@@ -185,7 +185,7 @@ describe('Request:Bikeshed', function () {
     });
   });
 
-  // add bike
+  // add
   describe('POST /api/bikesheds/:bikeshed', function () {
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>');
@@ -265,6 +265,31 @@ describe('Request:Bikeshed', function () {
         .field('name', 'bike').field('body', 'description')
         .attach('image', svgPath).expect(415);
     });
+  });
+
+  // update
+  describe('PUT /api/biksheds/:bikeshed', function () {
+
+  });
+
+  // destroy
+  describe('DELETE /api/bikesheds/:bikeshed', function () {
+
+  });
+
+  // score
+  describe('GET /api/bikesheds/:bikeshed/bikes', function () {
+
+  });
+
+  // rate
+  describe('POST /api/bikesheds/:bikeshed/bikes', function () {
+
+  });
+
+  // remove
+  describe('DELETE /api/biksheds/:bikeshed/bikes/:bike', function () {
+
   });
 
   // // vote
