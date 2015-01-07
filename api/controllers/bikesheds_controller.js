@@ -9,8 +9,8 @@ var Router = require('koa-router'),
 module.exports = function BikeshedsController (helpers) {
   var middleware = helpers.middleware,
     auth = middleware.auth(),
-    authLoadBikeshed = middleware.load('Bikeshed'),
-    loadBikeshed = middleware.load('Bikeshed', {auth: false});
+    loadBikeshed = middleware.load('Bikeshed'),
+    authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'});
 
   var jsonBody = body(),
     multipartBody = body({
