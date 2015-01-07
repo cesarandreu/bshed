@@ -30,10 +30,12 @@ module.exports = function BikeshedsController (helpers) {
 
     // private
     .post('/bikesheds', auth, jsonBody, create)
+    .put('/bikesheds/:bikeshed', auth, authLoadBikeshed, update)
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multipartBody, add)
-    .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove)
-    .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate);
+    .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
+    .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
+
 
   return bikeshedRoutes.middleware();
 };
@@ -104,6 +106,16 @@ function* create () {
  */
 function* get () {
   this.body = this.state.bikeshed;
+}
+
+
+/**
+ * PUT /biksheds/:bikeshed
+ * Protected
+ * Body: {status: string}
+ */
+function* update () {
+  this.body = 503;
 }
 
 /**
@@ -202,6 +214,15 @@ function* remove () {
 
   yield this.state.bike.destroy();
   this.status = 204;
+}
+
+/**
+ * PUT /bikesheds/:bikeshed/bikes
+ * Protected
+ * Body: {}
+ */
+function* change () {
+  this.body = 503;
 }
 
 /**
