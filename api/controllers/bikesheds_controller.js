@@ -168,6 +168,7 @@ function* add () {
     if (image) {
       yield this.s3.attemptUpload(s3Options);
     }
+    yield t.commit();
   } catch (err) {
     yield t.rollback();
     if (err.message === 'cannot insert over 5 bikes per bikeshed') {
@@ -178,7 +179,6 @@ function* add () {
       this.throw(503);
     }
   }
-  yield t.commit();
   this.body = bike;
   this.status = 201;
 }
