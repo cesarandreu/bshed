@@ -228,96 +228,49 @@ function* change () {
 /**
  * POST /bikesheds/:bikeshed/bikes
  * Protected
- * Body {votes: {ImageId: value}}
- * Example: {votes: {1: 0, 2: 1}}
+ * Body: {[BikeId]: {score: number}}
+ * Example: {1:{score:0}, 2:{score:1}, 3:{score:2}}
  */
 function* rate () {
-  var Vote = this.models.Vote,
-    Image = this.models.Image,
-    User = this.models.User;
+  var {Vote, Bike} = this.models, {bikeshed, user} = this.state;
 
-  var bikeshed = this.state.bikeshed,
-    user = this.state.user;
-
-  // bikeshed must be published
-  if (!bikeshed.published) {
-    this.throw(403, 'bikeshed must be published');
+  if (bikeshed.status !== 'open') {
+    this.throw(403, 'bikeshed must be open');
+  } else if (yield Vote.count({where: {BikeshedId: bikeshed.id, UserId: user.id}})) {
+    this.throw(403, 'already voted');
   }
 
-  // cannot have already voted
-  var voteCount = yield Vote.count({
-    where: {BikeshedId: bikeshed.id, UserId: user.id}
+  var bikes = yield Bike.findAll({where: {BikeshedId: bikeshed.id}});
+  var votes = _.pairs(this.request.body.fields)
+  .map(function (pair) {
+    var BikeId = _.parseInt(pair[0]), {score} = _.pick(pair[1], ['score']),
+      BikeshedId = bikeshed.id, UserId = user.id;
+    return Vote.build({BikeshedId, UserId, BikeId, score});
   });
-  if (voteCount) {
-    this.throw(403, 'you already voted');
+
+  if (bikes.length !== votes.length) {
+    this.throw(422, 'must vote for each bike');
+  } else if (_.difference(_.pluck(votes, 'BikeId'), _.pluck(bikes, 'id')).length) {
+    this.throw(422, 'can only vote once per bike');
+  } else if (_.difference(_.pluck(votes, 'score'), _.range(votes.length)).length) {
+    this.throw(422, 'must have unique score per bike');
   }
 
-  if (!this.request.body.fields || !this.request.body.fields.votes) {
-    this.throw(422, 'body must submit votes');
-  }
-
-  var votes = this.request.body.fields.votes;
-  var images = yield Image.findAll({
-    where: {BikeshedId: bikeshed.id}
-  });
-
-  // check for repeated or incomplete values
-  var voteValues = _.values(votes).sort(),
-    imageCount = images.length;
-  while (imageCount--) {
-    if (voteValues[imageCount] !== imageCount) {
-      this.throw(422, 'must have unique value per image');
-    }
-  }
-
-  // check that all vote ImageIds match ImageIds
-  var voteImageIds = _.keys(votes);
-  var imageIds = _.map(images, function (image) {
-    return image.id.toString();
-  });
-  if (_.difference(voteImageIds, imageIds).length) {
-    this.throw(422, 'must vote on all images');
-  }
-
-  var userVotes = _.map(images, function (image) {
-    return Vote.build({
-      UserId: user.id,
-      BikeshedId: bikeshed.id,
-      ImageId: image.id,
-      value: votes[image.id]
-    });
-  });
-
-  // perform validation on all votes
-  var validations = (yield userVotes.map(function (userVote) {
-    return userVote.validate();
-  })).filter(function (validation) {
-    return validation;
-  });
+  var validations = yield votes.map(vote => vote.validate()).filter(vote => vote);
   if (validations.length) {
-    this.status = 422;
     this.body = validations;
-    return;
+    this.throw(422);
   }
 
-  // TODO: make this safe~
-  // TODO: add score to images and update here?
   var t = yield this.models.sequelize.transaction();
   try {
-    user = yield User.find(user.id, {transaction: t, lock: t.LOCK.UPDATE});
-    user = yield user.increment('timesVoted', {transaction: t});
-    userVotes = yield userVotes.map(function (userVote) {
-      return userVote.save({transaction: t});
-    });
-    if (this.state.user.timesVoted + 1 !== user.timesVoted) {
-      throw new Error('voting conflict');
-    }
+    votes = yield votes.map(vote => vote.save({transaction: t}));
+    yield t.commit();
   } catch (err) {
     yield t.rollback();
     this.throw(409, 'voting conflict');
   }
-  yield t.commit();
 
-  this.body = userVotes;
+  this.body = votes;
   this.status = 201;
 }
