@@ -18,23 +18,46 @@ module.exports = {
  * Throws 404 if authorization or search fails
  *
  * param resource - model name
- * param opts.name - param and state value to use. default: resource.toLowerCase()
- * param opts.auth - check instance UserId matches session user.id. default: true
+ * param opts.name - param value to use. default: resource.toLowerCase()
+ * param opts.key - searching value to use. default: id
+ * param opts.parent - include parent in where, like resource
+ * param opts.parent.resource - model name
+ * param opts.parent.name - param value to use. default: parent.resource.toLowerCase()
+ * param opts.parent.through - association key to use. default: ${parent.resource}Id
+ * param opts.parent.key - parent.use key to check. default: id
  *
  * example load('Bikeshed') - uses Bikeshed model, :bikeshed param, and sets ctx.state.bikeshed
  */
-function load (resource, opts) {
+function load (resource, opts={}) {
   assert(resource);
   opts = _.assign({
-    name: resource.toLowerCase(),
-    auth: true
+    key: 'id',
+    name: resource.toLowerCase()
   }, opts);
 
-  var name = opts.name;
+  if (opts.parent) {
+    if (_.isString(opts.parent)) {
+      opts.parent = {resource: opts.parent};
+    }
+    opts.parent = _.assign({
+      name: opts.parent.resource.toLowerCase(),
+      through: `${opts.parent.resource}Id`,
+      key: 'id'
+    }, opts.parent);
+  }
+
   return function* loadMiddleware (next) {
+    // inside of try-catch in case any key is incorrect
     try {
-      var instance = this.state[name] = yield this.models[resource].find(this.params[name]);
-      if (!instance || (opts.auth && instance.UserId !== this.session.user.id)) {
+      var params = {
+        where: {[opts.key]: this.params[opts.name]}
+      };
+      if (opts.parent) {
+        params.where[opts.parent.through] = this.state[opts.parent.name][opts.parent.key];
+      }
+
+      this.state[opts.name] = yield this.models[resource].find(params);
+      if (!this.state[opts.name]) {
         throw new Error(resource + ' not found');
       }
     } catch (err) {
