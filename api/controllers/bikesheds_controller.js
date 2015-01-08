@@ -14,7 +14,7 @@ module.exports = function BikeshedsController (helpers) {
     authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'});
 
   var jsonBody = body(),
-    multipartBody = body({
+    multiBody = body({
       multipart: true,
       formidable: {
         multiples: false
@@ -32,7 +32,7 @@ module.exports = function BikeshedsController (helpers) {
     .post('/bikesheds', auth, jsonBody, create)
     .put('/bikesheds/:bikeshed', auth, authLoadBikeshed, update)
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
-    .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multipartBody, add)
+    .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
     .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
     .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
 
