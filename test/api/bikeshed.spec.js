@@ -52,7 +52,7 @@ describe('Request:Bikeshed', function () {
                 updatedAt: { type: 'string', required: true },
                 createdAt: { type: 'string', required: true },
                 status: { type: 'string', required: true,
-                  enum: ['processing', 'open', 'closed']
+                  enum: ['open', 'closed']
                 }
               }
             }
@@ -64,7 +64,7 @@ describe('Request:Bikeshed', function () {
       yield Bikeshed.destroy();
       yield _.times(30, function (n) {
         attributes.name = 'bikeshed ' + n;
-        attributes.status = ['incomplete', 'processing', 'open', 'closed'][n % 4];
+        attributes.status = ['incomplete', 'open', 'closed'][n % 3];
         return Bikeshed.create(attributes);
       });
     });
@@ -77,7 +77,7 @@ describe('Request:Bikeshed', function () {
     it('sets defaults', function* () {
       res = yield request.get(url);
       _.forIn({
-        page: 1, pages: 2, per: 12, count: 22, sortBy: 'id', direction: 'DESC'
+        page: 1, pages: 2, per: 12, count: 20, sortBy: 'id', direction: 'DESC'
       }, function (value, key) {
         expect(res.body[key]).to.equal(value);
       });
@@ -91,13 +91,13 @@ describe('Request:Bikeshed', function () {
       res = yield request.get(url).query({page: 2});
       expect(res.body).to.be.jsonSchema(schema);
       expect(res.body.page).to.equal(2);
-      expect(res.body.list).to.be.an('array').with.length(10);
+      expect(res.body.list).to.be.an('array').with.length(8);
     });
 
     it('allows changing per page value', function* () {
       res = yield request.get(url).query({per: 1});
       expect(res.body.page).to.equal(1);
-      expect(res.body.pages).to.equal(22);
+      expect(res.body.pages).to.equal(20);
       expect(res.body.list).to.be.an('array').with.length(1);
     });
 
@@ -124,7 +124,7 @@ describe('Request:Bikeshed', function () {
           updatedAt: { type: 'string', required: true },
           createdAt: { type: 'string', required: true },
           status: { type: 'string', required: true,
-            enum: ['incomplete', 'processing', 'open', 'closed']
+            enum: ['incomplete', 'open', 'closed']
           },
         }
       };
@@ -165,7 +165,7 @@ describe('Request:Bikeshed', function () {
           name: { type: 'string', required: true },
           body: { type: 'string', required: true },
           status: { type: 'string', required: true,
-            enum: ['incomplete', 'processing', 'open', 'closed']
+            enum: ['incomplete', 'open', 'closed']
           }
         }
       };
@@ -230,9 +230,9 @@ describe('Request:Bikeshed', function () {
     });
 
     it('returns 403 when not incomplete', function* () {
-      var statuses = ['processing', 'open', 'closed'];
+      var statuses = ['open', 'closed'];
       while (statuses.length) {
-        bikeshed.status = statuses.pop();
+        bikeshed.status = statuses.shift();
         yield bikeshed.save();
         yield request.post(url).set(headers).attach('image', jpgPath).expect(403);
       }

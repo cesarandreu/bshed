@@ -23,7 +23,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: 'incomplete',
       validate: {
-        isIn: [['incomplete', 'processing', 'open', 'closed']]
+        isIn: [['incomplete', 'open', 'closed']]
       }
     },
     size: {
@@ -47,6 +47,15 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     instanceMethods: {
+    },
+    validate: {
+      statusTransition: function statusProgression () {
+        var changes = {incomplete: 'open', open: 'closed'},
+          previous = this.previous('status'), status = this.get('status');
+        if (this.changed('status') && previous && status !== changes[previous]) {
+          throw new Error(`unexpected status transition ${status}`);
+        }
+      }
     }
   });
 
