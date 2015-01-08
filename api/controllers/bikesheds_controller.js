@@ -25,7 +25,7 @@ module.exports = function BikeshedsController (helpers) {
 
     // public
     .get('/bikesheds', index)
-    .get('/bikesheds/:bikeshed', loadBikeshed, get)
+    .get('/bikesheds/:bikeshed', loadBikeshed, show)
     .get('/bikesheds/:bikeshed/bikes', loadBikeshed, score)
 
     // private
@@ -35,7 +35,6 @@ module.exports = function BikeshedsController (helpers) {
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
     .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
     .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
-
 
   return bikeshedRoutes.middleware();
 };
@@ -104,7 +103,7 @@ function* create () {
  * GET /bikesheds/:bikeshed
  * Public
  */
-function* get () {
+function* show () {
   this.body = this.state.bikeshed;
 }
 
