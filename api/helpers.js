@@ -57,9 +57,7 @@ function load (resource, opts={}) {
       }
 
       this.state[opts.name] = yield this.models[resource].find(params);
-      if (!this.state[opts.name]) {
-        throw new Error(resource + ' not found');
-      }
+      if (!this.state[opts.name]) throw new Error(resource + ' not found');
     } catch (err) {
       this.throw(404, resource + ' not found');
     }

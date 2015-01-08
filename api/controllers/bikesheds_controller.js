@@ -177,9 +177,7 @@ function* add () {
   var t = yield this.models.sequelize.transaction();
   try {
     bike = yield bike.save({transaction: t});
-    if (image) {
-      yield this.s3.attemptUpload(s3Options);
-    }
+    if (image) yield this.s3.attemptUpload(s3Options);
     yield t.commit();
   } catch (err) {
     yield t.rollback();
