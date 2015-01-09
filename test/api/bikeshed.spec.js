@@ -321,6 +321,31 @@ describe('Request:Bikeshed', function () {
 
   // destroy
   describe('DELETE /api/bikesheds/:bikeshed', function () {
+    beforeEach(function* () {
+      url = _.template('/api/bikesheds/<%=bikeshed%>');
+      attributes = _.assign(attributes, body);
+      bikeshed = yield Bikeshed.create(attributes);
+      url = url({bikeshed: bikeshed.id});
+    });
+
+    it('should allow deleting incomplete bikesheds', function* () {
+      yield request.del(url).set(headers).expect(204);
+    });
+
+    it('should allow deleting open bikesheds', function* () {
+      yield bikeshed.updateAttributes({status: 'open'}, {validate: false});
+      yield request.del(url).set(headers).expect(204);
+    });
+
+    it('should allow deleting closed bikesheds', function* () {
+      yield bikeshed.updateAttributes({status: 'closed'}, {validate: false});
+      yield request.del(url).set(headers).expect(204);
+    });
+
+    it('should not allow deleting non-owned bikesheds', function* () {
+      yield bikeshed.updateAttributes({UserId: user.id + 1});
+      yield request.del(url).set(headers).expect(404);
+    });
 
   });
 
