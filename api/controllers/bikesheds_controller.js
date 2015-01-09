@@ -32,7 +32,7 @@ module.exports = function BikeshedsController (helpers) {
     .post('/bikesheds', auth, jsonBody, create)
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
-    .put('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, update)
+    .patch('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, patch)
     .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
     .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change)
     .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
@@ -175,11 +175,11 @@ function* add () {
 }
 
 /**
- * PUT /biksheds/:bikeshed
+ * PATCH /biksheds/:bikeshed
  * Protected
  * Body: {name: string, body: string, status: string}
  */
-function* update () {
+function* patch () {
   if (!this.request.body.fields) {
     this.throw(400, 'empty body');
   }
