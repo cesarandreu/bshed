@@ -267,29 +267,17 @@ describe('Request:Bikeshed', function () {
     });
   });
 
-  // update
-  describe('PUT /api/biksheds/:bikeshed', function () {
+  // patch
+  describe('PATCH /api/biksheds/:bikeshed', function () {
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>');
-      schema = {
-        title: 'POST /api/bikesheds/:bikeshed response',
-        type: 'object',
-        properties: {
-          id: { type: 'number', required: true },
-          name: { type: 'string', required: true },
-          body: { type: 'string', required: true },
-          imageName: { type: ['string', 'null'], required: true },
-          imageType: { type: ['string', 'null'], required: true }
-        }
-      };
       attributes = _.assign(attributes, body);
       bikeshed = yield Bikeshed.create(attributes);
-      body = {name: 'bike', body: 'description'};
       url = url({bikeshed: bikeshed.id});
     });
 
     it('should let you update name and body', function* () {
-      res = yield request.put(url).set(headers).send({name: 'name', body: 'body'}).expect(200);
+      res = yield request.patch(url).set(headers).send({name: 'name', body: 'body'}).expect(200);
       bikeshed = yield Bikeshed.find(bikeshed.id);
       expect(bikeshed.name).to.equal('name');
       expect(bikeshed.body).to.equal('body');
@@ -297,36 +285,36 @@ describe('Request:Bikeshed', function () {
 
     it('should not let you update name and body when open', function* () {
       yield bikeshed.updateAttributes({status: 'open'});
-      yield request.put(url).set(headers).send({name: 'name', body: 'body'}).expect(422);
+      yield request.patch(url).set(headers).send({name: 'name', body: 'body'}).expect(422);
     });
 
     it('should let you open the bikeshed', function* () {
-      yield request.put(url).set(headers).send({status: 'open'}).expect(200);
+      yield request.patch(url).set(headers).send({status: 'open'}).expect(200);
     });
 
     it('should let you open and then close bikesheds', function* () {
-      yield request.put(url).set(headers).send({status: 'open'}).expect(200);
-      yield request.put(url).set(headers).send({status: 'closed'}).expect(200);
+      yield request.patch(url).set(headers).send({status: 'open'}).expect(200);
+      yield request.patch(url).set(headers).send({status: 'closed'}).expect(200);
     });
 
     it('should not let you close an incomplete bikeshed', function* () {
-      yield request.put(url).set(headers).send({status: 'closed'}).expect(422);
+      yield request.patch(url).set(headers).send({status: 'closed'}).expect(422);
     });
 
     it('should not let you transition to an invalid state', function* () {
       yield bikeshed.updateAttributes({status: 'closed'}, {validate: false});
-      yield request.put(url).set(headers).send({status: 'incomplete'}).expect(422);
-      yield request.put(url).set(headers).send({status: 'open'}).expect(422);
+      yield request.patch(url).set(headers).send({status: 'incomplete'}).expect(422);
+      yield request.patch(url).set(headers).send({status: 'open'}).expect(422);
     });
 
     it('should respond with 400 to empty body', function* () {
-      yield request.put(url).set(headers).expect(400);
+      yield request.patch(url).set(headers).expect(400);
     });
 
     it('should respond with 422 to invalid update', function* () {
-      yield request.put(url).set(headers).send({name: ''}).expect(422);
-      yield request.put(url).set(headers).send({body: ''}).expect(422);
-      yield request.put(url).set(headers).send({name: '', body: ''}).expect(422);
+      yield request.patch(url).set(headers).send({name: ''}).expect(422);
+      yield request.patch(url).set(headers).send({body: ''}).expect(422);
+      yield request.patch(url).set(headers).send({name: '', body: ''}).expect(422);
     });
 
   });
