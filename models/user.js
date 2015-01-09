@@ -22,7 +22,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    paranoid: true,
+    // paranoid: true,
     classMethods: {
       associate: function associate (models) {
         models.User.hasMany(models.Bikeshed);

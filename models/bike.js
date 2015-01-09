@@ -36,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    paranoid: true,
+    // paranoid: true,
     getterMethods: {
       bucket: function () {
         return 'bikesheds';
