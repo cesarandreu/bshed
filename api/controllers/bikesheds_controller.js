@@ -30,9 +30,9 @@ module.exports = function BikeshedsController (helpers) {
 
     // private
     .post('/bikesheds', auth, jsonBody, create)
-    .put('/bikesheds/:bikeshed', auth, authLoadBikeshed, update)
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
+    .put('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, update)
     .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
     .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change)
     .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
@@ -183,7 +183,7 @@ function* update () {
   var bikeshed = this.state.bikeshed,
     {name, body, status} = _.pick(this.request.body.fields, ['name', 'body', 'status']);
 
-  if (name || body && bikeshed.status !== 'incomplete')
+  if ((name || body) && bikeshed.status !== 'incomplete')
     this.throw(422, 'can only update name and body on incomplete bikeshed');
 
   if (bikeshed.status === 'incomplete') {
