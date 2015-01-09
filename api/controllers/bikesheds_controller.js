@@ -34,6 +34,7 @@ module.exports = function BikeshedsController (helpers) {
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
     .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
+    .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change)
     .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
 
   return bikeshedRoutes.middleware();
@@ -107,25 +108,6 @@ function* show () {
   this.body = this.state.bikeshed;
 }
 
-
-/**
- * PUT /biksheds/:bikeshed
- * Protected
- * Body: {status: string}
- */
-function* update () {
-  this.body = 503;
-}
-
-/**
- * DELETE /bikeshed/:bikeshed
- * Protected
- */
-function* destroy () {
-  yield this.state.bikeshed.destroy();
-  this.status = 204;
-}
-
 /**
  * POST /bikesheds/:bikeshed
  * Protected
@@ -193,33 +175,49 @@ function* add () {
 }
 
 /**
+ * PUT /biksheds/:bikeshed
+ * Protected
+ * Body: {name: string, body: string, status: string}
+ */
+function* update () {
+  var bikeshed = this.state.bikeshed,
+    {name, body, status} = _.pick(this.request.body.fields, ['name', 'body', 'status']);
+
+  if (name || body && bikeshed.status !== 'incomplete')
+    this.throw(422, 'can only update name and body on incomplete bikeshed');
+
+  if (bikeshed.status === 'incomplete') {
+    if (name) bikeshed.name = name;
+    if (body) bikeshed.body = body;
+  }
+
+  if (status) bikeshed.status = status;
+
+  var validation = yield bikeshed.validate();
+  if (validation) {
+    this.body = validation;
+    this.throw(422);
+  }
+
+  this.body = yield bikeshed.save();
+  this.status = 200;
+}
+
+/**
+ * DELETE /bikeshed/:bikeshed
+ * Protected
+ */
+function* destroy () {
+  yield this.state.bikeshed.destroy();
+  this.status = 204;
+}
+
+/**
  * GET /bikesheds/:bikeshed/bikes
  * Public
  */
 function* score () {
   this.body = yield this.models.Bikes.findAll({where: {BikeshedId: this.state.bikeshed.id}});
-}
-
-/**
- * DELETE /bikesheds/:bikeshed/bikes/:bike
- * Protected
- */
-function* remove () {
-  if (this.state.bikeshed.status !== 'incomplete') {
-    this.throw(403, 'can only remove bikes from incomplete bikesheds');
-  }
-
-  yield this.state.bike.destroy();
-  this.status = 204;
-}
-
-/**
- * PUT /bikesheds/:bikeshed/bikes
- * Protected
- * Body: {}
- */
-function* change () {
-  this.body = 503;
 }
 
 /**
@@ -270,4 +268,26 @@ function* rate () {
 
   this.body = votes;
   this.status = 201;
+}
+
+/**
+ * PUT /bikesheds/:bikeshed/bikes
+ * Protected
+ * Body: {}
+ */
+function* change () {
+  this.body = 503;
+}
+
+/**
+ * DELETE /bikesheds/:bikeshed/bikes/:bike
+ * Protected
+ */
+function* remove () {
+  if (this.state.bikeshed.status !== 'incomplete') {
+    this.throw(403, 'can only remove bikes from incomplete bikesheds');
+  }
+
+  yield this.state.bike.destroy();
+  this.status = 204;
 }
