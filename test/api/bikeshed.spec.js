@@ -319,8 +319,9 @@ describe('Request:Bikeshed', function () {
       yield request.put(url).set(headers).send({status: 'open'}).expect(422);
     });
 
-    it('should respond with 200 to empty body', function* () {
-      yield request.put(url).set(headers).expect(200);
+    it('should respond with 400 to empty body', function* () {
+      yield request.put(url).set(headers).expect(400);
+    });
     });
 
   });
