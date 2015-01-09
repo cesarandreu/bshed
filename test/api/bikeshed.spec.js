@@ -322,6 +322,11 @@ describe('Request:Bikeshed', function () {
     it('should respond with 400 to empty body', function* () {
       yield request.put(url).set(headers).expect(400);
     });
+
+    it('should respond with 422 to invalid update', function* () {
+      yield request.put(url).set(headers).send({name: ''}).expect(422);
+      yield request.put(url).set(headers).send({body: ''}).expect(422);
+      yield request.put(url).set(headers).send({name: '', body: ''}).expect(422);
     });
 
   });

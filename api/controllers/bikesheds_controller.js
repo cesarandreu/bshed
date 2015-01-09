@@ -191,11 +191,11 @@ function* update () {
     this.throw(422, 'can only update name and body on incomplete bikeshed');
 
   if (bikeshed.status === 'incomplete') {
-    if (name) bikeshed.name = name;
-    if (body) bikeshed.body = body;
+    if (_.isString(name)) bikeshed.name = name;
+    if (_.isString(body)) bikeshed.body = body;
   }
 
-  if (status) bikeshed.status = status;
+  if (_.isString(status)) bikeshed.status = status;
 
   var validation = yield bikeshed.validate();
   if (validation) {
