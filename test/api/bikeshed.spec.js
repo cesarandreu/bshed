@@ -497,32 +497,4 @@ describe('Request:Bikeshed', function () {
   //   });
   // });
 
-  // xdescribe('DELETE /api/bikesheds/:bikeshed', function () {
-  //   beforeEach(function* () {
-  //     bikeshed = yield Bikeshed.create({
-  //       title: 'bikeshed',
-  //       UserId: user.id
-  //     });
-  //     url = _.template('/api/bikesheds/<%=bikeshed%>');
-  //   });
-
-  //   it('should be soft deleted on success', function* () {
-  //     yield request.del(url({bikeshed: bikeshed.id})).set(headers);
-  //     expect(yield Bikeshed.find(bikeshed.id)).to.equal(null);
-  //   });
-
-  //   it('returns 204 when it\'s successful', function* () {
-  //     yield request.del(url({bikeshed: bikeshed.id})).set(headers).expect(204);
-  //   });
-
-  //   it('returns 403 when not the owner', function* () {
-  //     bikeshed = yield Bikeshed.create({
-  //       title: 'bikeshed',
-  //       UserId: user.id + 1
-  //     });
-  //     yield request.del(url({bikeshed: bikeshed.id})).set(headers)
-  //       .expect(403, 'must be owner to delete bikeshed');
-  //   });
-  // });
-
 });
