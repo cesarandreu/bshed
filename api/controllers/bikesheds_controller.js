@@ -164,6 +164,8 @@ function* add () {
     yield t.rollback();
     if (err.message === 'cannot insert over 5 bikes per bikeshed') {
       this.throw(403, err.message);
+    } else if (err.message === 'can only add bikes to incomplete bikeshed') {
+      this.throw(403, err.message);
     } else if (err.message === 'could not serialize access due to concurrent update') {
       this.throw(409, err.message);
     } else {
