@@ -7,13 +7,16 @@ module.exports = {
         'DECLARE',
           'max_bikeshed_size INTEGER := 5;',
           'bikeshed_size INTEGER;',
+          'bikeshed_status VARCHAR(255);',
         'BEGIN',
           'PERFORM 1 FROM "Bikesheds" WHERE id = NEW."BikeshedId" FOR UPDATE;',
-          'SELECT count(*) INTO bikeshed_size FROM "Bikes" WHERE "BikeshedId" = NEW."BikeshedId";',
-          'IF bikeshed_size <= max_bikeshed_size THEN',
-            'UPDATE "Bikesheds" SET "size" = bikeshed_size WHERE "id" = NEW."BikeshedId";',
-          'ELSE',
+          'SELECT count(*), status INTO bikeshed_size, bikeshed_status FROM "Bikes" WHERE "BikeshedId" = NEW."BikeshedId";',
+          'IF bikeshed_status != "incomplete" THEN',
+            'RAISE EXCEPTION \'can only add bikes to incomplete bikeshed\';',
+          'ELSIF bikeshed_size > max_bikeshed_size THEN',
             'RAISE EXCEPTION \'cannot insert over % bikes per bikeshed\', max_bikeshed_size;',
+          'ELSE',
+            'UPDATE "Bikesheds" SET "size" = bikeshed_size WHERE "id" = NEW."BikeshedId";',
           'END IF;',
         'RETURN NEW;',
         'END;',
@@ -53,14 +56,17 @@ CREATE OR REPLACE FUNCTION bikeshed_size() RETURNS trigger as $bikeshed_size$
   DECLARE
     max_bikeshed_size INTEGER := 5;
     bikeshed_size INTEGER;
+    bikeshed_status VARCHAR(255);
   BEGIN
     PERFORM 1 FROM "Bikesheds" WHERE id = NEW."BikeshedId" FOR UPDATE;
-    SELECT count(*) INTO bikeshed_size FROM "Bikes" WHERE "BikeshedId" = NEW."BikeshedId";
+    SELECT count(*), status INTO bikeshed_size, bikeshed_status FROM "Bikes" WHERE "BikeshedId" = NEW."BikeshedId";
 
-    IF bikeshed_size <= max_bikeshed_size THEN
-      UPDATE "Bikesheds" SET "size" = bikeshed_size WHERE "id" = NEW."BikeshedId";
-    ELSE
+    IF bikeshed_status != "incomplete" THEN
+      RAISE EXCEPTION 'can only add bikes to incomplete bikeshed';
+    ELSIF bikeshed_size > max_bikeshed_size THEN
       RAISE EXCEPTION 'cannot insert over % bikes per bikeshed', max_bikeshed_size;
+    ELSE
+      UPDATE "Bikesheds" SET "size" = bikeshed_size WHERE "id" = NEW."BikeshedId";
     END IF;
     RETURN NEW;
   END;
