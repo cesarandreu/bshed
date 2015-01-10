@@ -15,7 +15,8 @@ var Bikeshed = models.Bikeshed,
 var svgPath = path.join(helper.fixtures, 'invalid.svg'),
   jpgPath = path.join(helper.fixtures, 'puppy_01.jpg');
 
-var user, bikeshed, fixture, attributes, res, url, headers, body, schema;
+var user, bikeshed, bikes, attributes, res, url, headers, body, schema;
+var UserId, BikeshedId;
 
 describe('Request:Bikeshed', function () {
 
@@ -356,6 +357,66 @@ describe('Request:Bikeshed', function () {
 
   // rate
   describe('POST /api/bikesheds/:bikeshed/bikes', function () {
+    beforeEach(function* () {
+      url = _.template('/api/bikesheds/<%=bikeshed%>/bikes');
+      attributes = _.assign(attributes, body);
+      bikeshed = yield Bikeshed.create(attributes);
+      url = url({bikeshed: bikeshed.id});
+      body = {};
+      BikeshedId = bikeshed.id;
+      UserId = user.id;
+      bikes = yield _.times(5, (n) =>
+        Bike.create({name: `name ${n}`, body: `body ${n}`, BikeshedId})
+      );
+      yield bikeshed.updateAttributes({status: 'open'});
+    });
+
+    it('allows you to vote on bikes', function* () {
+      bikes.forEach((bike, value) => body[bike.id] = {value});
+      yield request.post(url).set(headers).send(body).expect(201);
+    });
+
+    // TODO: add trigger to handle conflict
+    // it('returns 409 on conflict', function* () {
+    // });
+
+    it('returns 422 if you repeat value', function* () {
+      bikes.forEach((bike, value) => body[bike.id] = {value});
+      body[bikes[0].id].value = body[bikes[1].id].value;
+      yield request.post(url).set(headers).send(body)
+        .expect(422, 'must have unique value per bike');
+    });
+
+    it('should return 422 if you send invalid key', function* () {
+      body = {bike: {value: 0}};
+      bikes.forEach((bike, value) => body[bike.id] = {value});
+      delete body[bikes[0].id];
+      yield request.post(url).set(headers).send(body).expect(422, 'must vote on bikes');
+    });
+
+    it('returns 422 if bikes and votes length do not match', function* () {
+      bikes.forEach((bike, value) => body[bike.id] = {value});
+      delete body[bikes[0].id];
+      yield request.post(url).set(headers).send(body).expect(422, 'must vote for each bike');
+
+      body = {0: {value: 0}};
+      bikes.forEach((bike, value) => body[bike.id] = {value});
+      yield request.post(url).set(headers).send(body).expect(422, 'must vote for each bike');
+    });
+
+    it('should 403 when you have already voted', function* () {
+      yield bikes.map((bike, value) => Vote.create({BikeId: bike.id, BikeshedId, UserId, value}));
+      yield request.post(url).set(headers).expect(403, 'already voted');
+    });
+
+    it('should 403 when bikeshed is not open', function* () {
+      yield bikeshed.updateAttributes({status: 'closed'}, {validate: false});
+      yield request.post(url).set(headers).expect(403, 'bikeshed must be open');
+
+      yield bikeshed.updateAttributes({status: 'incomplete'}, {validate: false});
+      yield request.post(url).set(headers).expect(403, 'bikeshed must be open');
+    });
+
 
   });
 
