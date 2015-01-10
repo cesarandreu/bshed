@@ -18,6 +18,15 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: true
       }
     },
+    score: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+      validate: {
+        isInt: true,
+        min: 0
+      }
+    },
     imageName: {
       type: DataTypes.STRING,
       allowNull: true

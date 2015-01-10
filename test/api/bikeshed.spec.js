@@ -197,6 +197,7 @@ describe('Request:Bikeshed', function () {
           id: { type: 'number', required: true },
           name: { type: 'string', required: true },
           body: { type: 'string', required: true },
+          score: { type: 'number', required: true },
           imageName: { type: ['string', 'null'], required: true },
           imageType: { type: ['string', 'null'], required: true }
         }
