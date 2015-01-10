@@ -359,8 +359,8 @@ describe('Request:Bikeshed', function () {
 
   });
 
-  // remove
-  describe('DELETE /api/biksheds/:bikeshed/bikes/:bike', function () {
+  // change
+  describe('PUT /api/biksheds/:bikeshed/bikes', function () {
 
   });
 
