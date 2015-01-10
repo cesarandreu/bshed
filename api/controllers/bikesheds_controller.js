@@ -229,35 +229,36 @@ function* score () {
 /**
  * POST /bikesheds/:bikeshed/bikes
  * Protected
- * Body: {[BikeId]: {score: number}}
- * Example: {1:{score:0}, 2:{score:1}, 3:{score:2}}
+ * Body: {[BikeId]: {value: number}}
+ * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
  */
 function* rate () {
-  var {Vote, Bike} = this.models, {bikeshed, user} = this.state;
+  var {Vote, Bike} = this.models,
+    {bikeshed, user} = this.state,
+    BikeshedId = bikeshed.id, UserId = user.id;
 
   if (bikeshed.status !== 'open') {
     this.throw(403, 'bikeshed must be open');
-  } else if (yield Vote.count({where: {BikeshedId: bikeshed.id, UserId: user.id}})) {
+  } else if (yield Vote.count({where: {BikeshedId, UserId}})) {
     this.throw(403, 'already voted');
   }
 
-  var bikes = yield Bike.findAll({where: {BikeshedId: bikeshed.id}});
+  var bikes = yield Bike.findAll({where: {BikeshedId}});
   var votes = _.pairs(this.request.body.fields)
   .map(function (pair) {
-    var BikeId = _.parseInt(pair[0]), {score} = _.pick(pair[1], ['score']),
-      BikeshedId = bikeshed.id, UserId = user.id;
-    return Vote.build({BikeshedId, UserId, BikeId, score});
+    var BikeId = _.parseInt(pair[0]), {value} = _.pick(pair[1], ['value']);
+    return Vote.build({BikeshedId, UserId, BikeId, value});
   });
 
   if (bikes.length !== votes.length) {
     this.throw(422, 'must vote for each bike');
   } else if (_.difference(_.pluck(votes, 'BikeId'), _.pluck(bikes, 'id')).length) {
-    this.throw(422, 'can only vote once per bike');
-  } else if (_.difference(_.pluck(votes, 'score'), _.range(votes.length)).length) {
-    this.throw(422, 'must have unique score per bike');
+    this.throw(422, 'must vote on bikes');
+  } else if (_.difference(_.range(votes.length), _.pluck(votes, 'value')).length) {
+    this.throw(422, 'must have unique value per bike');
   }
 
-  var validations = yield votes.map(vote => vote.validate()).filter(vote => vote);
+  var validations = (yield votes.map(vote => vote.validate())).filter(vote => vote);
   if (validations.length) {
     this.body = validations;
     this.throw(422);
