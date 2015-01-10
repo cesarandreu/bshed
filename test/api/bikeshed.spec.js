@@ -364,6 +364,12 @@ describe('Request:Bikeshed', function () {
 
   });
 
+
+  // TODO: add trigger to make this work
+  // // remove
+  // describe('DELETE /api/biksheds/:bikeshed/bikes/:bike', function () {
+  // });
+
   // // vote
   // xdescribe('POST /api/bikesheds/:bikeshed/votes', function () {
   //   beforeEach(function* () {

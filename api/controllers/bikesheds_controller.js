@@ -10,7 +10,7 @@ module.exports = function BikeshedsController (helpers) {
   var middleware = helpers.middleware,
     auth = middleware.auth(),
     loadBikeshed = middleware.load('Bikeshed'),
-    authLoadBike = middleware.load('Bike', {parent: 'Bikeshed'}),
+    // authLoadBike = middleware.load('Bike', {parent: 'Bikeshed'}),
     authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'});
 
   var jsonBody = body(),
@@ -34,8 +34,8 @@ module.exports = function BikeshedsController (helpers) {
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
     .patch('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, patch)
     .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
-    .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change)
-    .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
+    .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change);
+    // .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
 
   return bikeshedRoutes.middleware();
 };
@@ -283,15 +283,16 @@ function* change () {
   this.body = 503;
 }
 
-/**
- * DELETE /bikesheds/:bikeshed/bikes/:bike
- * Protected
- */
-function* remove () {
-  if (this.state.bikeshed.status !== 'incomplete') {
-    this.throw(403, 'can only remove bikes from incomplete bikesheds');
-  }
+// TODO: add trigger for this to work
+// /**
+//  * DELETE /bikesheds/:bikeshed/bikes/:bike
+//  * Protected
+//  */
+// function* remove () {
+//   if (this.state.bikeshed.status !== 'incomplete') {
+//     this.throw(403, 'can only remove bikes from incomplete bikesheds');
+//   }
 
-  yield this.state.bike.destroy();
-  this.status = 204;
-}
+//   yield this.state.bike.destroy();
+//   this.status = 204;
+// }
