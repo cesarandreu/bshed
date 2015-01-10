@@ -1,3 +1,6 @@
+-- keeps bikeshed.size in sync with bike count
+-- raises exception when bikeshed is not incomplete
+-- raises exception when bikeshed size passes max_bikeshed_size
 CREATE OR REPLACE FUNCTION bikeshed_size() RETURNS trigger as $bikeshed_size$
   DECLARE
     max_bikeshed_size INTEGER := 5;
