@@ -86,6 +86,8 @@ function* index () {
  * Body: {name: string, body: string}
  */
 function* create () {
+  if (!this.request.body.fields) this.throw(400, 'empty body');
+
   var fields = _.assign({UserId: this.state.user.id},
     _.pick(this.request.body.fields, ['name', 'body']));
 
@@ -114,6 +116,8 @@ function* show () {
  * Body: {name: string, body: string, image: file}
  */
 function* add () {
+  if (!this.request.body.fields) this.throw(400, 'empty body');
+
   var bikeshed = this.state.bikeshed;
   if (bikeshed.status !== 'incomplete') {
     this.throw(403, 'can only add bikes to incomplete bikeshed');
@@ -232,6 +236,8 @@ function* score () {
  * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
  */
 function* rate () {
+  if (!this.request.body.fields) this.throw(400, 'empty body');
+
   var {Vote, Bike} = this.models,
     {bikeshed, user} = this.state,
     BikeshedId = bikeshed.id, UserId = user.id;

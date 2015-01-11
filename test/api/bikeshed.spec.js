@@ -136,10 +136,13 @@ describe('Request:Bikeshed', function () {
       expect(res.body).to.be.jsonSchema(schema);
     });
 
+    it('returns 400 on empty body', function* () {
+      yield request.post(url).set(headers).send().expect(400, 'empty body');
+      yield request.post(url).set(headers).expect(400, 'empty body');
+    });
+
     it('returns 422 when invalid', function* () {
       yield request.post(url).set(headers).send({}).expect(422);
-      yield request.post(url).set(headers).send().expect(422);
-      yield request.post(url).set(headers).expect(422);
     });
 
     it('returns 401 when not authorized', function* () {
@@ -218,6 +221,11 @@ describe('Request:Bikeshed', function () {
         .field('name', 'bike').field('body', 'description')
         .attach('image', jpgPath).expect(201);
       expect(res.body).to.be.jsonSchema(schema);
+    });
+
+    it('returns 400 on empty body', function* () {
+      yield request.post(url).set(headers).send().expect(400, 'empty body');
+      yield request.post(url).set(headers).expect(400, 'empty body');
     });
 
     it('returns 403 when at limit', function* () {
@@ -450,17 +458,22 @@ describe('Request:Bikeshed', function () {
       yield request.post(url).set(headers).send(body).expect(422, 'must vote for each bike');
     });
 
+    it('returns 400 on empty body', function* () {
+      yield request.post(url).set(headers).send().expect(400, 'empty body');
+      yield request.post(url).set(headers).expect(400, 'empty body');
+    });
+
     it('should 403 when you have already voted', function* () {
       yield bikes.map((bike, value) => Vote.create({BikeId: bike.id, BikeshedId, UserId, value}));
-      yield request.post(url).set(headers).expect(403, 'already voted');
+      yield request.post(url).set(headers).send({}).expect(403, 'already voted');
     });
 
     it('should 403 when bikeshed is not open', function* () {
       yield bikeshed.updateAttributes({status: 'closed'}, {validate: false});
-      yield request.post(url).set(headers).expect(403, 'bikeshed must be open');
+      yield request.post(url).set(headers).send({}).expect(403, 'bikeshed must be open');
 
       yield bikeshed.updateAttributes({status: 'incomplete'}, {validate: false});
-      yield request.post(url).set(headers).expect(403, 'bikeshed must be open');
+      yield request.post(url).set(headers).send({}).expect(403, 'bikeshed must be open');
     });
 
 
