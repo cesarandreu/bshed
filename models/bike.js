@@ -47,11 +47,9 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     // paranoid: true,
     getterMethods: {
-      bucket: function () {
-        return 'bikesheds';
-      },
+      bucket: () => 'bikesheds',
       key: function () {
-        return this.BikeshedId + '/' + this.imageName;
+        return !this.imageName ? null : this.BikeshedId + '/' + this.imageName;
       }
     },
     classMethods: {
