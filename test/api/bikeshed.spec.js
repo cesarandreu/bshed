@@ -377,9 +377,12 @@ describe('Request:Bikeshed', function () {
       yield request.post(url).set(headers).send(body).expect(201);
     });
 
-    // TODO: add trigger to handle conflict
-    // it('returns 409 on conflict', function* () {
-    // });
+    it('allows multiple users to vote at the same time', function* () {
+      bikes.forEach((bike, value) => body[bike.id] = {value});
+      yield (yield _.times(5, () => User.create()))
+        .map(user => helper.buildHeaders({user: {id: user.id}}))
+        .map(headers => request.post(url).set(headers).send(body).expect(201));
+    });
 
     it('returns 422 if you repeat value', function* () {
       bikes.forEach((bike, value) => body[bike.id] = {value});
