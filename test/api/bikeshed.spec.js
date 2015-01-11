@@ -29,7 +29,6 @@ describe('Request:Bikeshed', function () {
 
   // index
   describe('GET /api/bikesheds', function () {
-
     beforeEach(function* () {
       url = '/api/bikesheds';
       schema = {
@@ -475,7 +474,6 @@ describe('Request:Bikeshed', function () {
       yield bikeshed.updateAttributes({status: 'incomplete'}, {validate: false});
       yield request.post(url).set(headers).send({}).expect(403, 'bikeshed must be open');
     });
-
 
   });
 
