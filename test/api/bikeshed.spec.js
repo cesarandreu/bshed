@@ -352,6 +352,7 @@ describe('Request:Bikeshed', function () {
   });
 
   // score
+  // TODO: add schema
   describe('GET /api/bikesheds/:bikeshed/bikes', function () {
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>/bikes');
@@ -387,7 +388,6 @@ describe('Request:Bikeshed', function () {
       res = yield request.get(url).set(headers).expect(200);
       res.body.forEach((bike) => expect(bike.score).to.equal(body[bike.id]));
     });
-
 
   });
 
