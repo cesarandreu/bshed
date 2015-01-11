@@ -33,8 +33,8 @@ module.exports = function BikeshedsController (helpers) {
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
     .patch('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, patch)
-    .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
-    .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change);
+    .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate);
+    // .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change);
     // .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
 
   return bikeshedRoutes.middleware();
@@ -290,14 +290,16 @@ function* rate () {
   this.status = 201;
 }
 
-/**
- * PUT /bikesheds/:bikeshed/bikes
- * Protected
- * Body: {}
- */
-function* change () {
-  this.body = 503;
-}
+
+// *
+//  * PUT /bikesheds/:bikeshed/bikes
+//  * Protected
+//  * Body: {[BikeId]: {value: number}}
+//  * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
+
+// function* change () {
+//   this.body = 503;
+// }
 
 // TODO: add trigger for this to work
 // /**

@@ -477,10 +477,10 @@ describe('Request:Bikeshed', function () {
 
   });
 
-  // change
-  describe('PUT /api/biksheds/:bikeshed/bikes', function () {
-
-  });
+  // // TODO: implement this
+  // // change
+  // describe('PUT /api/biksheds/:bikeshed/bikes', function () {
+  // });
 
 
   // TODO: add trigger to make this work
