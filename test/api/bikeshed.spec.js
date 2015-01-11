@@ -357,6 +357,7 @@ describe('Request:Bikeshed', function () {
   });
 
   // rate
+  // TODO: add schema
   describe('POST /api/bikesheds/:bikeshed/bikes', function () {
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>/bikes');
