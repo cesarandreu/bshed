@@ -264,13 +264,21 @@ function* rate () {
     this.throw(422);
   }
 
-  var t = yield this.models.sequelize.transaction();
   try {
-    votes = yield votes.map(vote => vote.save({transaction: t}));
-    yield t.commit();
+    votes = yield this.helpers.retry(function* saveVotes () {
+      var t = yield this.models.sequelize.transaction();
+      try {
+        var result = yield votes.map(vote => vote.save({transaction: t}));
+        yield t.commit();
+        return result;
+      } catch (err) {
+        yield t.rollback();
+        throw err;
+      }
+    }.bind(this));
   } catch (err) {
-    yield t.rollback();
-    this.throw(409, 'voting conflict');
+    console.error('ERROR SAVING VOTES', err);
+    this.throw(503);
   }
 
   this.body = votes;
