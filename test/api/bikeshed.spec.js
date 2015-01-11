@@ -353,6 +353,41 @@ describe('Request:Bikeshed', function () {
 
   // score
   describe('GET /api/bikesheds/:bikeshed/bikes', function () {
+    beforeEach(function* () {
+      url = _.template('/api/bikesheds/<%=bikeshed%>/bikes');
+      attributes = _.assign(attributes, body);
+      bikeshed = yield Bikeshed.create(attributes);
+      url = url({bikeshed: bikeshed.id});
+      body = {};
+      BikeshedId = bikeshed.id;
+      UserId = user.id;
+      bikes = yield _.times(5, n =>
+        Bike.create({name: `name ${n}`, body: `body ${n}`, BikeshedId})
+      );
+      yield bikeshed.updateAttributes({status: 'open'});
+      yield bikes.map((bike) => bike.id)
+        .map((BikeId, value) => Vote.create({UserId, BikeshedId, BikeId, value}));
+    });
+
+    it('returns bikes list', function* () {
+      bikes.forEach((bike, value) => body[bike.id] = value);
+      res = yield request.get(url).set(headers).expect(200);
+      res.body.forEach((bike) => expect(bike.score).to.equal(body[bike.id]));
+    });
+
+    it('gets updated when someone votes', function* () {
+      bikes.forEach((bike, value) => body[bike.id] = value);
+      res = yield request.get(url).set(headers).expect(200);
+      res.body.forEach((bike) => expect(bike.score).to.equal(body[bike.id]));
+
+      UserId = (yield User.create()).id;
+      yield bikes.map((bike) => bike.id)
+        .map((BikeId, value) => Vote.create({UserId, BikeshedId, BikeId, value}));
+        bikes.forEach((bike, value) => body[bike.id] = (value * 2));
+      res = yield request.get(url).set(headers).expect(200);
+      res.body.forEach((bike) => expect(bike.score).to.equal(body[bike.id]));
+    });
+
 
   });
 
