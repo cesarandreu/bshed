@@ -366,7 +366,7 @@ describe('Request:Bikeshed', function () {
       body = {};
       BikeshedId = bikeshed.id;
       UserId = user.id;
-      bikes = yield _.times(5, (n) =>
+      bikes = yield _.times(5, n =>
         Bike.create({name: `name ${n}`, body: `body ${n}`, BikeshedId})
       );
       yield bikeshed.updateAttributes({status: 'open'});
