@@ -182,9 +182,7 @@ function* add () {
  * Body: {name: string, body: string, status: string}
  */
 function* patch () {
-  if (!this.request.body.fields) {
-    this.throw(400, 'empty body');
-  }
+  if (!this.request.body.fields) this.throw(400, 'empty body');
 
   var bikeshed = this.state.bikeshed,
     {name, body, status} = _.pick(this.request.body.fields, ['name', 'body', 'status']);
