@@ -33,7 +33,7 @@ module.exports = function apiLoader (opts) {
   api.helpers = helpers;
 
   var middleware = compose([
-    addToContext({models: api.models, s3: api.s3}),
+    addToContext({models: api.models, s3: api.s3, helpers: api.helpers}),
     controllers(helpers)
   ]);
 
@@ -47,6 +47,7 @@ function addToContext (opts) {
   return function* addToContextMiddleware (next) {
     this.models = opts.models;
     this.s3 = opts.s3;
+    this.helpers = opts.helpers;
     yield next;
   };
 }
