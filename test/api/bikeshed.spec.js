@@ -370,6 +370,12 @@ describe('Request:Bikeshed', function () {
         .map((BikeId, value) => Vote.create({UserId, BikeshedId, BikeId, value}));
     });
 
+    it('returns 200 without session', function* () {
+      bikes.forEach((bike, value) => body[bike.id] = value);
+      res = yield request.get(url).expect(200);
+      res.body.forEach((bike) => expect(bike.score).to.equal(body[bike.id]));
+    });
+
     it('returns bikes list', function* () {
       bikes.forEach((bike, value) => body[bike.id] = value);
       res = yield request.get(url).set(headers).expect(200);
