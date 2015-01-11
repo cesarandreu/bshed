@@ -35,6 +35,7 @@
     "chai-json-schema": "^1.1.0",
     "co": "^4.0.0",
     "co-fs": "^1.2.0",
+    "co-wait": "0.0.0",
     "debug": "^2.1.1",
     "koa": "koajs/koa",
     "koa-better-body": "^1.0.7",
