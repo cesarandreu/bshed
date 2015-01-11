@@ -20,8 +20,8 @@ module.exports = {
 function* retry (fn, opts={}) {
   var {attempts, interval, delta} = opts;
   attempts = attempts || 3;
-  interval = interval || 500;
-  delta = delta || 250;
+  interval = interval || 300;
+  delta = delta || 150;
 
   while (true) {
     try {
