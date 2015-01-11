@@ -7,10 +7,7 @@ var helper = require('./helper'),
   request = helper.request,
   models = helper.models;
 
-var Bikeshed = models.Bikeshed,
-  User = models.User,
-  Bike = models.Bike,
-  Vote = models.Vote;
+var {Bikeshed, User, Bike, Vote} = models;
 
 var svgPath = path.join(helper.fixtures, 'invalid.svg'),
   jpgPath = path.join(helper.fixtures, 'puppy_01.jpg');
