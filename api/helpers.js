@@ -1,15 +1,37 @@
 'use strict';
 
 var assert = require('assert'),
+  wait = require('co-wait'),
   _ = require('lodash');
 
 module.exports = {
+  retry: retry,
   noop: noop,
   middleware: {
     load: load,
     auth: auth
   }
 };
+
+/**
+ * retry
+ * ripped off from co-retry
+ */
+function* retry (fn, opts={}) {
+  var {attempts, interval, delta} = opts;
+  attempts = attempts || 3;
+  interval = interval || 500;
+  delta = delta || 250;
+
+  while (true) {
+    try {
+      return yield fn();
+    } catch (err) {
+      if (!(attempts--)) throw err;
+      yield wait(_.random(interval - delta, interval + delta));
+    }
+  }
+}
 
 /**
  * load
