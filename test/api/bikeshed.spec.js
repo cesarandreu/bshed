@@ -146,7 +146,7 @@ describe('Request:Bikeshed', function () {
       yield request.post(url).set(headers).expect(401);
     });
 
-    it('should return 403 when csrf fails', function* () {
+    it('returns 403 when csrf fails', function* () {
       yield request.post(url).expect(403);
     });
 
@@ -326,11 +326,11 @@ describe('Request:Bikeshed', function () {
       yield request.patch(url).set(headers).send({status: 'open'}).expect(422);
     });
 
-    it('should respond with 400 to empty body', function* () {
+    it('responds with 400 to empty body', function* () {
       yield request.patch(url).set(headers).expect(400);
     });
 
-    it('should respond with 422 to invalid update', function* () {
+    it('responds with 422 to invalid update', function* () {
       yield request.patch(url).set(headers).send({name: ''}).expect(422);
       yield request.patch(url).set(headers).send({body: ''}).expect(422);
       yield request.patch(url).set(headers).send({name: '', body: ''}).expect(422);
@@ -450,7 +450,7 @@ describe('Request:Bikeshed', function () {
         .expect(422, 'must have unique value per bike');
     });
 
-    it('should return 422 if you send invalid key', function* () {
+    it('returns 422 if you send invalid key', function* () {
       body = {bike: {value: 0}};
       bikes.forEach((bike, value) => body[bike.id] = {value});
       delete body[bikes[0].id];
@@ -472,12 +472,12 @@ describe('Request:Bikeshed', function () {
       yield request.post(url).set(headers).expect(400, 'empty body');
     });
 
-    it('should 403 when you have already voted', function* () {
+    it('returns 403 when you have already voted', function* () {
       yield bikes.map((bike, value) => Vote.create({BikeId: bike.id, BikeshedId, UserId, value}));
       yield request.post(url).set(headers).send({}).expect(403, 'already voted');
     });
 
-    it('should 403 when bikeshed is not open', function* () {
+    it('returns 403 when bikeshed is not open', function* () {
       yield bikeshed.updateAttributes({status: 'closed'}, {validate: false});
       yield request.post(url).set(headers).send({}).expect(403, 'bikeshed must be open');
 
