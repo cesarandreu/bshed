@@ -10,7 +10,6 @@ module.exports = function BikeshedsController (helpers) {
   var middleware = helpers.middleware,
     auth = middleware.auth(),
     loadBikeshed = middleware.load('Bikeshed'),
-    // authLoadBike = middleware.load('Bike', {parent: 'Bikeshed'}),
     authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'});
 
   var jsonBody = body(),
@@ -34,7 +33,8 @@ module.exports = function BikeshedsController (helpers) {
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
     .patch('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, patch)
     .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
-    .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change);
+    .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change)
+    .get('/bikesheds/:bikeshed/bikes/votes', auth, loadBikeshed, votes);
     // .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
 
   return bikeshedRoutes.middleware();
@@ -343,6 +343,19 @@ function* change () {
 
   this.body = yield retry(saveVotes);
   this.status = 200;
+}
+
+/**
+ * GET /bikesheds/:bikeshed/bikes/votes
+ * Protected
+ */
+function* votes () {
+  var {Vote} = this.models,
+    {bikeshed, user} = this.state,
+    BikeshedId = bikeshed.id, UserId = user.id;
+
+  var list = yield Vote.findAll({where: {BikeshedId, UserId}});
+  this.body = Vote.asObject(list);
 }
 
 // TODO: add trigger for this to work
