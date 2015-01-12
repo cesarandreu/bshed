@@ -549,6 +549,43 @@ describe('Request:Bikeshed', function () {
 
   });
 
+  describe('GET /bikesheds/:bikeshed/bikes/votes', function () {
+    beforeEach(function* () {
+      url = _.template('/api/bikesheds/<%=bikeshed%>/bikes/votes');
+      attributes = _.assign(attributes, body);
+      bikeshed = yield Bikeshed.create(attributes);
+      url = url({bikeshed: bikeshed.id});
+      bikesIndex = {};
+      BikeshedId = bikeshed.id;
+      UserId = user.id;
+      bikes = yield _.times(5, n => Bike.create({name: `${n}`, body: `${n}`, BikeshedId}));
+      yield bikeshed.updateAttributes({status: 'open'}, {validate: false});
+      votes = yield bikes.map(bike => bike.id)
+        .map((BikeId, value) => Vote.create({UserId, BikeshedId, BikeId, value}));
+    });
+
+    it('shows your votes when logged in', function* () {
+      bikes.forEach((bike, value) => bikesIndex[bike.id] = value);
+      res = yield request.get(url).set(headers);
+      expect(_.size(res.body)).to.equal(bikes.length);
+      _.pairs(res.body).forEach((pair) => {
+        expect(pair[1].value).to.equal(bikesIndex[pair[0]]);
+      });
+    });
+
+    it('does not allow you to view other votes when logged out', function* () {
+      yield request.get(url).expect(401);
+    });
+
+    it('does not allow you to view other votes when logged in', function* () {
+      user = yield User.create();
+      headers = helper.buildHeaders({user: {id: user.id}});
+      res = request.get(url).set(headers);
+      expect(_.size(res.body)).to.equal(0);
+    });
+
+  });
+
   // TODO: add trigger to make this work
   // // remove
   // describe('DELETE /api/biksheds/:bikeshed/bikes/:bike', function () {
