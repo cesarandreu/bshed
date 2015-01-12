@@ -33,8 +33,8 @@ module.exports = function BikeshedsController (helpers) {
     .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
     .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
     .patch('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, patch)
-    .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate);
-    // .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change);
+    .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
+    .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change);
     // .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
 
   return bikeshedRoutes.middleware();
@@ -287,16 +287,61 @@ function* rate () {
   this.status = 201;
 }
 
+/**
+ * PUT /bikesheds/:bikeshed/bikes
+ * Protected
+ * Body: {[BikeId]: {value: number}}
+ * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
+ */
+function* change () {
+  if (!this.request.body.fields) {
+    this.throw(400, 'empty body');
+  } else if (this.state.bikeshed.status !== 'open') {
+    this.throw(403, 'bikeshed must be open');
+  }
 
-// *
-//  * PUT /bikesheds/:bikeshed/bikes
-//  * Protected
-//  * Body: {[BikeId]: {value: number}}
-//  * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
+  var {retry} = this.helpers,
+    {Vote, sequelize} = this.models,
+    {bikeshed, user} = this.state,
+    BikeshedId = bikeshed.id,
+    UserId = user.id;
 
-// function* change () {
-//   this.body = 503;
-// }
+  var fields = _.mapValues(this.request.body.fields, (field) => _.pick(field, 'value')),
+    votes = yield Vote.findAll({where: {BikeshedId, UserId}});
+
+  if (!votes.length) {
+    this.throw(403, 'must vote first');
+  } else if (votes.length !== _.keys(fields).length) {
+    this.throw(422, 'must vote on bikeshed bikes');
+  } else if (_.difference(votes.map(vote => vote.BikeId.toString()), _.keys(fields)).length) {
+    this.throw(422, 'must vote on each bike');
+  } else if (_.difference(_.range(votes.length), _.pluck(fields, 'value')).length) {
+    this.throw(422, 'must use unique value per bike');
+  }
+
+  votes.forEach(vote => vote.value = fields[vote.BikeId].value);
+
+  var validations = (yield votes.map(vote => vote.validate())).filter(vote => vote);
+  if (validations.length) {
+    this.body = validations;
+    this.throw(422);
+  }
+
+  var saveVotes = function* saveVotes () {
+    var result, transaction = yield sequelize.transaction();
+    try {
+      result = yield votes.map(vote => vote.save({transaction}));
+      yield transaction.commit();
+    } catch (err) {
+      yield transaction.rollback();
+      throw err;
+    }
+    return result;
+  };
+
+  this.body = yield retry(saveVotes);
+  this.status = 200;
+}
 
 // TODO: add trigger for this to work
 // /**
