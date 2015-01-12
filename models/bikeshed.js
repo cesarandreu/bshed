@@ -49,7 +49,12 @@ module.exports = function (sequelize, DataTypes) {
     instanceMethods: {
     },
     validate: {
-      statusTransition: function statusProgression () {
+      statusSize: function statusSize () {
+        if (this.get('status') === 'open' && this.get('size') < 2) {
+          throw new Error('must have at least two bikes');
+        }
+      },
+      statusTransition: function statusTransition () {
         var changes = {incomplete: 'open', open: 'closed'},
           previous = this.previous('status'), status = this.get('status');
         if (this.changed('status') && previous && status !== changes[previous]) {
