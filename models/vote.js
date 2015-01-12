@@ -27,6 +27,11 @@ module.exports = function (sequelize, DataTypes) {
         models.Vote.belongsTo(models.Bike);
         models.Vote.belongsTo(models.Bikeshed);
         models.Vote.belongsTo(models.User);
+      },
+      asObject: function asObject (votes) {
+        var result = {};
+        votes.forEach(vote => result[vote.BikeId] = {value: vote.value});
+        return result;
       }
     }
   });
