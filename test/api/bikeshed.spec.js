@@ -578,7 +578,7 @@ describe('Request:Bikeshed', function () {
     it('does not allow you to view other votes when logged in', function* () {
       user = yield User.create();
       headers = helper.buildHeaders({user: {id: user.id}});
-      res = request.get(url).set(headers);
+      res = yield request.get(url).set(headers);
       expect(_.size(res.body)).to.equal(0);
     });
 
