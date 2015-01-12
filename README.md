@@ -12,9 +12,9 @@ Requires running Postgres. For OSX you can install and run [Postgres.app](http:/
 
 ### Commands
 
-* `NODE_ENV=(development|test|production) npm run db:create`
-* `NODE_ENV=(development|test|production) npm run db:drop`
-* `NODE_ENV=(development|test|production) npm run db:migrate`
+* `NODE_ENV=(development|test|production) npm run db:create` - creates database for NODE_ENV
+* `NODE_ENV=(development|test|production) npm run db:drop` - drops database for NODE_ENV
+* `NODE_ENV=(development|test|production) npm run db:migrate` - migrates database for NODE_ENV
 * `NODE_ENV=(development|test|production) npm run db:refresh` - runs drop, create, migrate
 
 ### Relations
@@ -63,8 +63,9 @@ Bike {
   id:integer:pk,
   name:string,
   body:text,
-  imageLink:string,
+  score:integer,
   imageType:string,
+  imageLink:string,
 
   createdAt:date,
   updatedAt:date,
@@ -173,7 +174,8 @@ Initially I didn't want users, but having users makes it really easy to apply co
 ### Bikeshed creation
 
 1. register / sign in
-2. create Bikeshed by declaring title
-3. add images (minimum of 2, maximum of 5) and publish
+2. create Bikeshed
+3. add Bikes (minimum of 2, maximum of 5)
+4. open Bikeshed
 
 
