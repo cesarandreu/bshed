@@ -226,7 +226,9 @@ function* destroy () {
  */
 function* score () {
   var BikeshedId = this.state.bikeshed.id;
-  this.body = yield this.models.Bike.findAll({where: {BikeshedId}});
+  this.body = yield this.models.Bike.findAll({
+    order: [['score', 'ASC']], where: {BikeshedId}
+  });
 }
 
 /**
