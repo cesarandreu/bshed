@@ -93,7 +93,7 @@ function load (resource, opts={}) {
  * Loads user to ctx.state.user using session user.id
  * Throws 401 if session is not set or user isn't found
  */
-function auth () {
+function auth (opts={}) {
   return function* authMiddleware (next) {
     try {
       this.state.user = yield this.models.User.find(this.session.user.id);
@@ -101,7 +101,7 @@ function auth () {
         throw new Error('user not found');
       }
     } catch (err) {
-      this.throw(401);
+      if (!opts.skippable) this.throw(401);
     }
     yield next;
   };
