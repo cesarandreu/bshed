@@ -18,6 +18,11 @@ module.exports = {
         type: DataTypes.TEXT,
         defaultValue: '',
       },
+      score: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
       imageName: {
         allowNull: true,
         type: DataTypes.STRING
@@ -25,11 +30,6 @@ module.exports = {
       imageType: {
         allowNull: true,
         type: DataTypes.STRING
-      },
-      score: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
