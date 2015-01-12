@@ -62,7 +62,7 @@ describe('Request:Bikeshed', function () {
       yield _.times(30, function (n) {
         attributes.name = 'bikeshed ' + n;
         attributes.status = ['incomplete', 'open', 'closed'][n % 3];
-        return Bikeshed.create(attributes);
+        return Bikeshed.create(attributes, {validate: false});
       });
     });
 
@@ -239,7 +239,7 @@ describe('Request:Bikeshed', function () {
       var statuses = ['open', 'closed'];
       while (statuses.length) {
         bikeshed.status = statuses.shift();
-        yield bikeshed.save();
+        yield bikeshed.save({validate: false});
         yield request.post(url).set(headers).attach('image', jpgPath).expect(403);
       }
     });
@@ -279,6 +279,7 @@ describe('Request:Bikeshed', function () {
       url = _.template('/api/bikesheds/<%=bikeshed%>');
       attributes = _.assign(attributes, body);
       bikeshed = yield Bikeshed.create(attributes);
+      body = {name: 'name', body: 'body', BikeshedId: bikeshed.id};
       url = url({bikeshed: bikeshed.id});
     });
 
@@ -290,20 +291,32 @@ describe('Request:Bikeshed', function () {
     });
 
     it('should not let you update name and body when open', function* () {
-      yield bikeshed.updateAttributes({status: 'open'});
+      yield bikeshed.updateAttributes({status: 'open'}, {validate: false});
       yield request.patch(url).set(headers).send({name: 'name', body: 'body'}).expect(422);
     });
 
-    it('should let you open the bikeshed', function* () {
+    it('should let you open bikeshed with two bikes', function* () {
+      yield _.times(2, () => Bike.create(body));
       yield request.patch(url).set(headers).send({status: 'open'}).expect(200);
     });
 
+    it('should not let you open bikeshed with zero bikes', function* () {
+      yield request.patch(url).set(headers).send({status: 'open'}).expect(422);
+    });
+
+    it('should not let you open bikeshed with one bike', function* () {
+      yield Bike.create(body);
+      yield request.patch(url).set(headers).send({status: 'open'}).expect(422);
+    });
+
     it('should let you open and then close bikesheds', function* () {
+      yield _.times(2, () => Bike.create(body));
       yield request.patch(url).set(headers).send({status: 'open'}).expect(200);
       yield request.patch(url).set(headers).send({status: 'closed'}).expect(200);
     });
 
     it('should not let you close an incomplete bikeshed', function* () {
+      yield _.times(2, () => Bike.create(body));
       yield request.patch(url).set(headers).send({status: 'closed'}).expect(422);
     });
 
@@ -369,7 +382,7 @@ describe('Request:Bikeshed', function () {
       bikes = yield _.times(5, n =>
         Bike.create({name: `name ${n}`, body: `body ${n}`, BikeshedId})
       );
-      yield bikeshed.updateAttributes({status: 'open'});
+      yield bikeshed.updateAttributes({status: 'open'}, {validate: false});
       yield bikes.map((bike) => bike.id)
         .map((BikeId, value) => Vote.create({UserId, BikeshedId, BikeId, value}));
     });
@@ -415,7 +428,7 @@ describe('Request:Bikeshed', function () {
       bikes = yield _.times(5, n =>
         Bike.create({name: `name ${n}`, body: `body ${n}`, BikeshedId})
       );
-      yield bikeshed.updateAttributes({status: 'open'});
+      yield bikeshed.updateAttributes({status: 'open'}, {validate: false});
     });
 
     it('allows you to vote on bikes', function* () {
