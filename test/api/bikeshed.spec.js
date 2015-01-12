@@ -12,7 +12,7 @@ var {Bikeshed, User, Bike, Vote} = models;
 var svgPath = path.join(helper.fixtures, 'invalid.svg'),
   jpgPath = path.join(helper.fixtures, 'puppy_01.jpg');
 
-var user, bikeshed, bikes, attributes, res, url, headers, body, schema;
+var user, bikeshed, bikes, votes, attributes, res, url, headers, body, schema;
 var UserId, BikeshedId;
 
 describe('Request:Bikeshed', function () {
@@ -487,11 +487,67 @@ describe('Request:Bikeshed', function () {
 
   });
 
-  // // TODO: implement this
-  // // change
-  // describe('PUT /api/biksheds/:bikeshed/bikes', function () {
-  // });
+  // change
+  // TODO: add schema
+  describe('PUT /api/biksheds/:bikeshed/bikes', function () {
+    beforeEach(function* () {
+      url = _.template('/api/bikesheds/<%=bikeshed%>/bikes');
+      attributes = _.assign(attributes, body);
+      bikeshed = yield Bikeshed.create(attributes);
+      url = url({bikeshed: bikeshed.id});
+      body = {};
+      BikeshedId = bikeshed.id;
+      UserId = user.id;
+      bikes = yield _.times(5, n => Bike.create({name: `${n}`, body: `${n}`, BikeshedId}));
+      yield bikeshed.updateAttributes({status: 'open'}, {validate: false});
+      votes = yield bikes.map(bike => bike.id)
+        .map((BikeId, value) => Vote.create({UserId, BikeshedId, BikeId, value}));
+      bikes = yield bikes.map(bike => bike.reload());
+    });
 
+    it('should let you update votes', function* () {
+      bikes.forEach((bike, value) => expect(bike.score).to.equal(value));
+      bikes.forEach((bike, value) => body[bike.id] = {value: bikes.length - value - 1});
+      yield request.put(url).set(headers).send(body).expect(200);
+      bikes = yield bikes.map(bike => bike.reload());
+      bikes.forEach((bike, value) => expect(bike.score).to.equal(bikes.length - value - 1));
+    });
+
+    it('returns 422 when you send more votes', function* () {
+      body[0] = {value: 0};
+      bikes.forEach((bike, value) => body[bike.id] = {value});
+      yield request.put(url).set(headers).send(body).expect(422, 'must vote on bikeshed bikes');
+    });
+
+    it('returns 422 when you fail to vote on all bikes', function* () {
+      bikes.forEach((bike, value) => body[bike.id - 1] = {value});
+      yield request.put(url).set(headers).send(body).expect(422, 'must vote on each bike');
+    });
+
+    it('returns 422 when you give invalid values', function* () {
+      bikes.forEach((bike, value) => body[bike.id] = {value: bikes.length - value});
+      yield request.put(url).set(headers).send(body).expect(422, 'must use unique value per bike');
+    });
+
+    it('returns 400 on empty body', function* () {
+      yield request.put(url).set(headers).send().expect(400, 'empty body');
+      yield request.put(url).set(headers).expect(400, 'empty body');
+    });
+
+    it('returns 403 when bikeshed is not open', function* () {
+      yield bikeshed.updateAttributes({status: 'closed'}, {validate: false});
+      yield request.put(url).set(headers).send({}).expect(403, 'bikeshed must be open');
+
+      yield bikeshed.updateAttributes({status: 'incomplete'}, {validate: false});
+      yield request.put(url).set(headers).send({}).expect(403, 'bikeshed must be open');
+    });
+
+    it('returns 403 when you have not voted', function* () {
+      yield votes.map(vote => vote.destroy());
+      yield request.put(url).set(headers).send({}).expect(403, 'must vote first');
+    });
+
+  });
 
   // TODO: add trigger to make this work
   // // remove
