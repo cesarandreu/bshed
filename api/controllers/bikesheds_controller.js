@@ -238,9 +238,11 @@ function* score () {
 function* rate () {
   if (!this.request.body.fields) this.throw(400, 'empty body');
 
-  var {Vote, Bike} = this.models,
+  var {retry} = this.helpers,
+    {Vote, Bike, sequelize} = this.models,
     {bikeshed, user} = this.state,
-    BikeshedId = bikeshed.id, UserId = user.id;
+    BikeshedId = bikeshed.id,
+    UserId = user.id;
 
   if (bikeshed.status !== 'open') {
     this.throw(403, 'bikeshed must be open');
@@ -269,24 +271,19 @@ function* rate () {
     this.throw(422);
   }
 
-  try {
-    votes = yield this.helpers.retry(function* saveVotes () {
-      var t = yield this.models.sequelize.transaction();
-      try {
-        var result = yield votes.map(vote => vote.save({transaction: t}));
-        yield t.commit();
-        return result;
-      } catch (err) {
-        yield t.rollback();
-        throw err;
-      }
-    }.bind(this));
-  } catch (err) {
-    console.error('ERROR SAVING VOTES', err);
-    this.throw(503);
-  }
+  var saveVotes = function* saveVotes () {
+    var result, transaction = yield sequelize.transaction();
+    try {
+      result = yield votes.map(vote => vote.save({transaction}));
+      yield transaction.commit();
+    } catch (err) {
+      yield transaction.rollback();
+      throw err;
+    }
+    return result;
+  };
 
-  this.body = votes;
+  this.body = yield retry(saveVotes);
   this.status = 201;
 }
 
