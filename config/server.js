@@ -5,7 +5,7 @@ var path = require('path'),
 
 var server = {
   name: 'bshed-server',
-  assets: path.resolve('../public'),
+  assets: path.resolve(__dirname, '../public'),
   middleware: {
     serve: {},
     session: {
