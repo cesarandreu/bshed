@@ -19,6 +19,8 @@
   },
   "scripts": {
     "clean": "rm -r public/*",
+    "dev": "npm run dev:server && npm run dev:client",
+    "dev:client": "node_modules/.bin/webpack-dev-server --inline --hot",
     "dev:server": "node_modules/.bin/nodemon server.js",
     "test": "npm run test:base -- test/**/*spec.js",
     "test:api": "npm run test:base -- test/api/*.spec.js",
@@ -33,12 +35,15 @@
   },
   "dependencies": {
     "6to5": "^2.7.1",
+    "6to5-loader": "^2.0.0",
     "aws-sdk": "^2.0.30",
     "chai-json-schema": "^1.1.0",
     "co": "^4.0.0",
     "co-fs": "^1.2.0",
     "co-wait": "0.0.0",
+    "css-loader": "^0.9.1",
     "debug": "^2.1.1",
+    "extract-text-webpack-plugin": "^0.3.8",
     "koa": "koajs/koa",
     "koa-better-body": "^1.0.7",
     "koa-compose": "^2.3.0",
@@ -59,6 +64,7 @@
     "sequelize": "^2.0.0-rc4",
     "sequelize-cli": "^1.0.2",
     "sequelize-migration-pg-extras": "^1.0.0",
+    "style-loader": "^0.8.2",
     "thunkify": "^2.1.2",
     "uuid": "^2.0.1",
     "webpack": "^1.4.15"
