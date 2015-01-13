@@ -11,3 +11,6 @@ coverage
 
 # OS X
 .DS_Store
+
+# Builds
+public
