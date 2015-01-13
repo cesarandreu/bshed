@@ -18,10 +18,11 @@
     "node": ">=0.11.14"
   },
   "scripts": {
+    "build": "node_modules/.bin/webpack -p",
     "clean": "rm -rf public/*",
     "dev": "npm run dev:server && npm run dev:client",
-    "dev:client": "node_modules/.bin/webpack-dev-server --inline --hot",
-    "dev:server": "node_modules/.bin/nodemon server.js",
+    "dev:client": "node_modules/.bin/webpack -w",
+    "dev:server": "node_modules/.bin/nodemon -e js,jsx server.js",
     "test": "npm run test:base -- test/**/*spec.js",
     "test:api": "npm run test:base -- test/api/*.spec.js",
     "test:models": "npm run test:base -- test/models/*.spec.js",
