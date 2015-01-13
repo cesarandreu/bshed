@@ -1,7 +1,8 @@
 'use strict';
 
 // modules
-var koa = require('koa'),
+var fs = require('fs'),
+  koa = require('koa'),
   csrf = require('koa-csrf'),
   mount = require('koa-mount'),
   serve = require('koa-static'),
@@ -15,7 +16,33 @@ debug('loading modules');
 var config = require('./config'),
   models = require('./models'),
   s3 = require('./lib/s3'),
-  api = require('./api');
+  api = require('./api'),
+  client = require('./client/middleware');
+
+// assets
+var getScripts = function () {
+  return fs.readdirSync(`${config.server.assets}/assets/`)
+    .filter(file => file.indexOf('scripts.') !== -1)
+    .map(file => [file, fs.statSync(`${config.server.assets}/assets/${file}`)])
+    .map(pair => [`/assets/${pair[0]}`, pair[1]])
+    .sort((a, b) => b[1].ctime.getTime() - a[1].ctime.getTime())
+    .shift().shift();
+};
+
+var assets = function () {
+  return {
+    scripts: getScripts()
+  };
+};
+
+var getAssets = function (env) {
+  if (env === 'production') {
+    var result = assets();
+    return () => result;
+  } else {
+    return assets;
+  }
+};
 
 // initialization
 debug('initializing modules');
@@ -27,6 +54,9 @@ api = api({
   config: config.api,
   models: models,
   s3: s3
+});
+client = client({
+  getAssets: getAssets(config.server.env)
 });
 
 /**
@@ -63,6 +93,20 @@ server.use(function* setCsrfCookie (next) {
  */
 debug('mounting modules');
 server.use(mount(api));
+server.use(mount(client));
+
+// if (server.env === 'production') {
+//   var scripts = fs.readdirSync(`${config.server.assets}/assets/`)
+//     .filter(file => file.indexOf('scripts.') !== -1)
+//     .map(file => [file, fs.statSync(`${config.server.assets}/assets/${file}`)])
+//     .map(pair => [`/assets/${pair[0]}`, pair[1]])
+//     .sort((a, b) => b[1].ctime.getTime() - a[1].ctime.getTime())
+//     .shift().shift();
+
+
+// } else {
+//   // else body
+// }
 
 /**
  * SERVER INITIALIZER

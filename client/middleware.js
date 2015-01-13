@@ -2,9 +2,9 @@
 
 var _ = require('lodash'),
   React = require('react'),
+  assert = require('assert'),
   thunkify = require('thunkify'),
   request = require('supertest'),
-  compose = require('koa-compose'),
   serialize = require('serialize-javascript'),
   log = require('debug')('bshed:client:middleware'),
   navigateAction = require('flux-router-component').navigateAction;
@@ -13,44 +13,46 @@ var Html = React.createFactory(require('./components/Html.jsx')),
   routes = require('./configs/routes'),
   app = require('./app');
 
-module.exports = compose([checkRoute, client]);
+module.exports = function (opts={}) {
+  assert(opts.getAssets);
 
-function* client () {
-  var context = app.createContext({
-    request: request(this.app.callback())
-  });
+  return function* client () {
+    if (!isReactRoute({path: this.path, method: this.method}))
+      this.throw(400);
 
-  var executeAction = thunkify(context.getActionContext().executeAction);
-  try {
-    log('navigating');
-    yield executeAction(navigateAction, {url: this.url, method: this.method});
-  } catch (err) {
-    if (err && err.status) this.throw(err.status);
-    else this.throw(500);
-  }
+    var context = app.createContext({
+      request: request(this.app.callback())
+    });
 
-  log('exposing context state');
-  var exposed = `window.App=${serialize(app.dehydrate(context))};`;
+    var executeAction = thunkify(context.getActionContext().executeAction);
+    try {
+      log('navigating');
+      yield executeAction(navigateAction, {url: this.url, method: this.method});
+    } catch (err) {
+      if (err && err.status) this.throw(err.status);
+      else this.throw(500);
+    }
 
-  log('rendering application component into html');
-  var AppComponent = app.getAppComponent();
-  var html = React.renderToStaticMarkup(Html({
-    state: exposed,
-    context: context.getComponentContext(),
-    markup: React.renderToString(AppComponent({
-      context: context.getComponentContext()
-    }))
-  }));
+    log('exposing context state');
+    var exposed = `window.App=${serialize(app.dehydrate(context))};`;
 
-  log('sending markup');
-  this.type = 'html';
-  this.body = html;
-}
+    log('rendering application component into html');
+    var AppComponent = app.getAppComponent();
+    var html = React.renderToStaticMarkup(Html({
+      assets: opts.getAssets(),
+      state: exposed,
+      context: context.getComponentContext(),
+      markup: React.renderToString(AppComponent({
+        context: context.getComponentContext()
+      }))
+    }));
 
-function* checkRoute (next) {
-  if (isReactRoute({path: this.path, method: this.method}))
-    yield next;
-}
+    log('sending markup');
+    this.type = 'html';
+    this.body = html;
+  };
+
+};
 
 function isReactRoute (_route) {
   return _.some(routes, function (route) {
