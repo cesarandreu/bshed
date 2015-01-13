@@ -68,6 +68,7 @@
     "sequelize": "^2.0.0-rc4",
     "sequelize-cli": "^1.0.2",
     "sequelize-migration-pg-extras": "^1.0.0",
+    "serialize-javascript": "^1.0.0",
     "style-loader": "^0.8.2",
     "thunkify": "^2.1.2",
     "uuid": "^2.0.1",
@@ -88,7 +89,6 @@
     "nodemon": "^1.2.1",
     "should": "^4.3.1",
     "supertest": "^0.15.0",
-    "supertest-as-promised": "^1.0.0",
-    "webpack-dev-server": "^1.7.0"
+    "supertest-as-promised": "^1.0.0"
   }
 }
