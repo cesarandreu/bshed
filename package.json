@@ -18,7 +18,7 @@
     "node": ">=0.11.14"
   },
   "scripts": {
-    "clean": "rm -r public/*",
+    "clean": "rm -rf public/*",
     "dev": "npm run dev:server && npm run dev:client",
     "dev:client": "node_modules/.bin/webpack-dev-server --inline --hot",
     "dev:server": "node_modules/.bin/nodemon server.js",
