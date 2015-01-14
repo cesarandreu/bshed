@@ -20,7 +20,7 @@
   "scripts": {
     "build": "node_modules/.bin/webpack -p",
     "clean": "rm -rf public/*",
-    "dev": "npm run dev:client && npm run dev:server",
+    "dev": "npm run dev:client & npm run dev:server && fg",
     "dev:client": "node_modules/.bin/webpack -w",
     "dev:server": "node_modules/.bin/nodemon -e js,jsx server.js",
     "test": "npm run test:base -- test/**/*spec.js",
