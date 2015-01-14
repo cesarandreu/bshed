@@ -6,6 +6,12 @@ var React = require('react'),
   log = debug('bshed:client'),
   app = require('./app');
 
+// needed for onTouchTap
+require('react-tap-event-plugin')();
+
+// styles
+require('./assets/styles/index.less');
+
 var dehydratedState = window.App; // sent from server
 window.React = React; // For chrome dev tool support
 
