@@ -4,9 +4,9 @@ var path = require('path'),
   webpack = require('webpack'),
   ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
+var config = {
   resolve: {
-    extensions: ['', '.js' , '.jsx', '.css']
+    extensions: ['', '.js' , '.jsx']
   },
   entry: './client/index.js',
   output: {
@@ -16,8 +16,8 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.(jsx|js)$/, exclude: /node_modules/, loader: '6to5-loader?runtime=true'},
-      {test: /\.less$/, loader: ExtractTextPlugin.extract('css-loader!less-loader')},
+      {test: /\.(jsx|js)$/, exclude: /.*node_modules.*((?!\.jsx).{4}$)/, loader: '6to5-loader?runtime&experimental'},
+      {test: /\.less$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap!less-loader?sourceMap')},
       {test: /\.eot$/, loader: 'url-loader'}
     ]
   },
@@ -28,3 +28,9 @@ module.exports = {
     new ExtractTextPlugin('styles.[hash].css')
   ]
 };
+
+if (process.env.NODE_ENV !== 'production') {
+  config.devtool = 'sourcemap';
+}
+
+module.exports = config;
