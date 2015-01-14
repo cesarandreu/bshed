@@ -22,7 +22,7 @@ var config = require('./config'),
 // assets
 var get = function (type) {
   return fs.readdirSync(`${config.server.assets}/assets/`)
-    .filter(file => file.indexOf(type) !== -1)
+    .filter(file => file.indexOf(type) !== -1 && file.indexOf('.map') === -1)
     .map(file => [file, fs.statSync(`${config.server.assets}/assets/${file}`)])
     .map(pair => [`/assets/${pair[0]}`, pair[1]])
     .sort((a, b) => b[1].ctime.getTime() - a[1].ctime.getTime())
