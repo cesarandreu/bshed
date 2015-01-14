@@ -58,7 +58,7 @@ describe('Request:Bikeshed', function () {
       };
 
       _.assign(attributes, body);
-      yield Bikeshed.destroy();
+      yield Bikeshed.destroy({truncate: true});
       yield _.times(30, function (n) {
         attributes.name = 'bikeshed ' + n;
         attributes.status = ['incomplete', 'open', 'closed'][n % 3];
