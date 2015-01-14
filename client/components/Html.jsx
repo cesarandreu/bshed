@@ -16,9 +16,9 @@ var Html = React.createClass({
           <title>{title}</title>
         </head>
         <body>
-          <div id='bshed' dangerouslySetInnerHtml={{__html: this.props.markup}}></div>
+          <div id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
         </body>
-        <script dangerouslySetInnerHtml={{__html: this.props.state}}></script>
+        <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
         <script src={this.props.assets.scripts}></script>
       </html>
     );
