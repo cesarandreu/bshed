@@ -20,9 +20,9 @@ var config = require('./config'),
   client = require('./client/middleware');
 
 // assets
-var getScripts = function () {
+var get = function (type) {
   return fs.readdirSync(`${config.server.assets}/assets/`)
-    .filter(file => file.indexOf('scripts.') !== -1)
+    .filter(file => file.indexOf(type) !== -1)
     .map(file => [file, fs.statSync(`${config.server.assets}/assets/${file}`)])
     .map(pair => [`/assets/${pair[0]}`, pair[1]])
     .sort((a, b) => b[1].ctime.getTime() - a[1].ctime.getTime())
@@ -31,7 +31,8 @@ var getScripts = function () {
 
 var assets = function () {
   return {
-    scripts: getScripts()
+    scripts: get('scripts'),
+    styles: get('styles')
   };
 };
 
