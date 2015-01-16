@@ -33,7 +33,7 @@
     "db:create": "node_modules/.bin/create_database",
     "db:drop": "node_modules/.bin/drop_database",
     "db:refresh": "npm run db:drop && npm run db:create && npm run db:migrate",
-    "imagemin": "node_modules/.bin/imagemin ./client/assets/images/* ./client/assets/images"
+    "imagemin": "imagemin ./client/assets/images/* ./client/assets/images",
   },
   "dependencies": {
     "6to5": "^2.12.0",
