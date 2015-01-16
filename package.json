@@ -18,7 +18,7 @@
     "node": ">=0.11.14"
   },
   "scripts": {
-    "build": "node_modules/.bin/webpack -p",
+    "build:client": "webpack -p -c --progress",
     "clean": "rm -rf public/*",
     "dev": "npm run dev:client & npm run dev:server && fg",
     "dev:client": "node_modules/.bin/webpack -w",
