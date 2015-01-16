@@ -5,7 +5,12 @@ var React = require('react'),
 
 var Html = React.createClass({
   render: function () {
-    var title = this.props.context.getStore(ApplicationStore).getPageTitle();
+    var title = this.props.context.getStore(ApplicationStore).getPageTitle(),
+      scripts = this.props.assets.scripts
+        .map((src, key) => <script src={src} key={key}></script>),
+      styles = this.props.assets.styles
+        .map((href, key) => <link href={href} key={key} rel='stylesheet'></link>);
+
     return (
       <html>
         <head>
@@ -15,13 +20,13 @@ var Html = React.createClass({
           <meta name='description' content='An app for bikeshedding'/>
           <title>{title}</title>
           <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
-          <link href={this.props.assets.styles} rel='stylesheet'/>
+          {styles}
         </head>
         <body>
           <div id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
         </body>
         <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
-        <script src={this.props.assets.scripts}></script>
+        {scripts}
       </html>
     );
   }

@@ -1,8 +1,8 @@
 'use strict';
 
 // modules
-var fs = require('fs'),
-  koa = require('koa'),
+var koa = require('koa'),
+  path = require('path'),
   csrf = require('koa-csrf'),
   mount = require('koa-mount'),
   serve = require('koa-static'),
@@ -19,32 +19,23 @@ var config = require('./config'),
   api = require('./api'),
   client = require('./client/middleware');
 
-// assets
-var get = function (type) {
-  var asset = fs.readdirSync(`${config.server.assets}/assets/`)
-    .filter(file => file.indexOf(type) !== -1 && file.indexOf('.map') === -1)
-    .map(file => [file, fs.statSync(`${config.server.assets}/assets/${file}`)])
-    .map(pair => [`/assets/${pair[0]}`, pair[1]])
-    .sort((a, b) => b[1].ctime.getTime() - a[1].ctime.getTime())
-    .shift();
+// asset link loader
+var assets = function assets () {
+  var buckets = {'.js': 'scripts', '.css': 'styles'},
+    _assets = {scripts: [], styles: []}, stats;
 
-  return asset ? asset.shift() : asset;
-};
-
-var assets = function () {
-  return {
-    scripts: get('scripts'),
-    styles: get('styles')
-  };
-};
-
-var getAssets = function (env) {
-  if (env === 'production') {
-    var result = assets();
-    return () => result;
-  } else {
-    return assets;
+  try {
+    stats = require(path.join(config.server.assets, 'assets/stats.json'));
+  } catch (err) {
+    console.warn('UNABLE TO LOAD stats.json');
+    stats = {assets: [], publicPath: ''};
   }
+
+  stats.assets.forEach(function (asset) {
+    var extname = path.extname(asset.name), bucket = buckets[extname];
+    if (bucket) _assets[bucket].push(`${stats.publicPath}${asset.name}`);
+  });
+  return _assets;
 };
 
 // initialization
@@ -59,7 +50,7 @@ api = api({
   s3: s3
 });
 client = client({
-  getAssets: getAssets(config.server.env)
+  assets: assets
 });
 
 /**
@@ -97,19 +88,6 @@ server.use(function* setCsrfCookie (next) {
 debug('mounting modules');
 server.use(mount(api));
 server.use(mount(client));
-
-// if (server.env === 'production') {
-//   var scripts = fs.readdirSync(`${config.server.assets}/assets/`)
-//     .filter(file => file.indexOf('scripts.') !== -1)
-//     .map(file => [file, fs.statSync(`${config.server.assets}/assets/${file}`)])
-//     .map(pair => [`/assets/${pair[0]}`, pair[1]])
-//     .sort((a, b) => b[1].ctime.getTime() - a[1].ctime.getTime())
-//     .shift().shift();
-
-
-// } else {
-//   // else body
-// }
 
 /**
  * SERVER INITIALIZER

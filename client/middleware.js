@@ -14,7 +14,8 @@ var Html = React.createFactory(require('./components/Html.jsx')),
   app = require('./app');
 
 module.exports = function (opts={}) {
-  assert(opts.getAssets);
+  assert(opts.assets);
+  var assets = opts.assets();
 
   return function* client () {
     if (!isReactRoute({path: this.path, method: this.method}))
@@ -39,7 +40,7 @@ module.exports = function (opts={}) {
     log('rendering application component into html');
     var AppComponent = app.getAppComponent();
     var html = React.renderToStaticMarkup(Html({
-      assets: opts.getAssets(),
+      assets: assets,
       state: exposed,
       context: context.getComponentContext(),
       markup: React.renderToString(AppComponent({
