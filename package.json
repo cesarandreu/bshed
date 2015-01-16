@@ -21,7 +21,7 @@
     "build:client": "webpack -p -c --progress",
     "clean": "rm -rf public/*",
     "dev": "npm run dev:client & npm run dev:server && fg",
-    "dev:client": "node_modules/.bin/webpack -w",
+    "dev:client": "webpack-dev-server --content-base public --port 2992 --inline -h -c --progress",
     "dev:server": "nodemon -e js,jsx server.js",
     "test": "npm run test:base -- test/**/*spec.js",
     "test:api": "npm run test:base -- test/api/*.spec.js",
