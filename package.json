@@ -32,7 +32,8 @@
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:create": "node_modules/.bin/create_database",
     "db:drop": "node_modules/.bin/drop_database",
-    "db:refresh": "npm run db:drop && npm run db:create && npm run db:migrate"
+    "db:refresh": "npm run db:drop && npm run db:create && npm run db:migrate",
+    "imagemin": "node_modules/.bin/imagemin ./client/assets/images/* ./client/assets/images"
   },
   "dependencies": {
     "6to5": "^2.12.0",
@@ -89,6 +90,7 @@
     "cogent": "^1.0.1",
     "cookies": "^0.5.0",
     "csrf": "^2.0.3",
+    "imagemin": "^3.1.0",
     "istanbul": "^0.3.5",
     "keygrip": "^1.0.1",
     "mocha": "^2.0.1",
