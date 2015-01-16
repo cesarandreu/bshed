@@ -29,11 +29,13 @@
     "test:base": "NODE_ENV=test node_modules/.bin/6to5-node --experimental --extensions=[,.js,.jsx] --blacklist=generators --ignore=\".*node_modules.*((?!\\.jsx).{4}$)\" node_modules/.bin/_mocha",
     "test:coverage": "NODE_ENV=test node --harmony node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -u exports --require co-mocha test/server/**/*.spec.js",
     "fakes3": "fakes3 --root test/fakes3 -p 10001",
-    "db:migrate": "node_modules/.bin/sequelize db:migrate",
-    "db:create": "node_modules/.bin/create_database",
-    "db:drop": "node_modules/.bin/drop_database",
+    "db:migrate": "sequelize db:migrate",
+    "db:create": "create_database",
+    "db:drop": "drop_database",
     "db:refresh": "npm run db:drop && npm run db:create && npm run db:migrate",
     "imagemin": "imagemin ./client/assets/images/* ./client/assets/images",
+    "webpack": "webpack -c --progress",
+    "webpack:live": "npm run webpack -- -w"
   },
   "dependencies": {
     "6to5": "^2.12.0",
