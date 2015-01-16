@@ -1,6 +1,5 @@
 'use strict';
 
-require('6to5/runtime');
 var React = require('react'),
   debug = require('debug'),
   log = debug('bshed:client'),
@@ -9,7 +8,7 @@ var React = require('react'),
 // needed for onTouchTap
 require('react-tap-event-plugin')();
 
-// styles
+// assets
 require('./assets/styles/index.less');
 
 var dehydratedState = window.App; // sent from server
