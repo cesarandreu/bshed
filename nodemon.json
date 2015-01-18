@@ -1,6 +1,6 @@
 {
   "ignore": ["public/*", "node_modules/*"],
   "execMap": {
-    "js": "node_modules/.bin/6to5-node --experimental --extensions=[,.js,.jsx] --blacklist=generators --ignore=.*node_modules.*((?!\\.jsx).{4}$)"
+    "js": "node_modules/.bin/6to5-node --experimental --extensions=[,.js,.jsx] --blacklist=generators --ignore=(.*(prerender|node_modules).*((?!\\.jsx).{4}$))"
   }
 }

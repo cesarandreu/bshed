@@ -20,7 +20,7 @@ var config = require('./config'),
   client = require('./client/middleware');
 
 // asset link loader
-var assets = function assets () {
+function assets () {
   var buckets = {'.js': 'scripts', '.css': 'styles'},
     _assets = {scripts: [], styles: []}, stats;
 
@@ -36,7 +36,7 @@ var assets = function assets () {
     if (bucket) _assets[bucket].push(`${stats.publicPath}${asset.name}`);
   });
   return _assets;
-};
+}
 
 // initialization
 debug('initializing modules');
@@ -50,6 +50,7 @@ api = api({
   s3: s3
 });
 client = client({
+  rendererPath: path.join(config.server.assets, 'prerender/scripts.js'),
   assets: assets
 });
 
