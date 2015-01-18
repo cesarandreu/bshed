@@ -27,7 +27,7 @@ function assets () {
   try {
     stats = require(path.join(config.server.assets, 'assets/stats.json'));
   } catch (err) {
-    console.warn('UNABLE TO LOAD stats.json');
+    debug('UNABLE TO LOAD stats.json');
     stats = {assets: [], publicPath: ''};
   }
 
