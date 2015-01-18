@@ -11,11 +11,11 @@ module.exports = function buildWebpackConfig (options) {
 
   var ENV = options.ENV || process.env.NODE_ENV || 'development',
     PRODUCTION = options.PRODUCTION || ENV === 'production',
-    PRERENDER = !!options.prerender;
+    RENDERER = !!options.renderer;
 
   // shared values
   var publicPath = PRODUCTION ? '/assets/' : 'http://localhost:2992/assets/',
-    outputPath = path.join(__dirname, 'public', PRERENDER ? 'prerender' : 'assets');
+    outputPath = path.join(__dirname, 'public', RENDERER ? 'renderer' : 'assets');
 
   // base
   var config = {
@@ -55,7 +55,7 @@ module.exports = function buildWebpackConfig (options) {
           mkdirp.sync(outputPath);
           fs.writeFileSync(path.join(outputPath, 'stats.json'), JSON.stringify(jsonStats));
         }
-        if (!PRERENDER) this.plugin('done', statsPluginDone);
+        if (!RENDERER) this.plugin('done', statsPluginDone);
       },
       new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(ENV)}),
       new ExtractTextPlugin(PRODUCTION ? 'scripts.[hash].css' : 'scripts.dev.css')
@@ -64,7 +64,7 @@ module.exports = function buildWebpackConfig (options) {
 
   // entry
   config.entry = {
-    scripts: PRERENDER ? './client/renderer.js' : './client/index.js'
+    scripts: RENDERER ? './client/renderer.js' : './client/index.js'
   };
 
   // output
@@ -72,12 +72,12 @@ module.exports = function buildWebpackConfig (options) {
     path: outputPath,
     pathinfo: !PRODUCTION,
     publicPath: publicPath,
-    libraryTarget: PRERENDER ? 'commonjs2' : 'var',
-    filename: PRERENDER ? 'scripts.js' : PRODUCTION ? 'scripts.[hash].js' : 'scripts.dev.js'
+    libraryTarget: RENDERER ? 'commonjs2' : 'var',
+    filename: RENDERER ? 'renderer.js' : PRODUCTION ? 'scripts.[hash].js' : 'scripts.dev.js'
   };
 
   // loaders
-  var hotLoader = PRODUCTION || PRERENDER ? '' : 'react-hot-loader!';
+  var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot-loader!';
   config.module.loaders.push({
     test: /\.jsx$/,
     loader: hotLoader + '6to5-loader?runtime&experimental',
@@ -85,17 +85,17 @@ module.exports = function buildWebpackConfig (options) {
   });
 
   // target
-  config.target = PRERENDER ? 'node' : 'web';
+  config.target = RENDERER ? 'node' : 'web';
 
   // plugins
-  if (!PRERENDER) {
+  if (!RENDERER) {
     config.plugins.push(
       new webpack.PrefetchPlugin('react'),
       new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment'),
       new webpack.PrefetchPlugin('6to5/runtime')
     );
   }
-  if (PRODUCTION && !PRERENDER) {
+  if (PRODUCTION && !RENDERER) {
     config.plugins.push(
       new webpack.optimize.UglifyJsPlugin(),
       new webpack.optimize.DedupePlugin(),

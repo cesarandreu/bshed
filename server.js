@@ -50,7 +50,7 @@ api = api({
   s3: s3
 });
 client = client({
-  rendererPath: path.join(config.server.assets, 'prerender/scripts.js'),
+  rendererPath: path.join(config.server.assets, 'renderer/renderer.js'),
   assets: assets
 });
 
