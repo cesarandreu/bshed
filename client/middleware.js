@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert'),
-  request = require('supertest'),
+  request = require('./request.server.js'),
   log = require('debug')('bshed:client:middleware');
 
 module.exports = function (opts={}) {
@@ -12,13 +12,16 @@ module.exports = function (opts={}) {
     assets = opts.assets();
 
   return function* client () {
-    var {url, path, method} = this;
+    var {url, path, method, csrf} = this;
     try {
       log(`using renderer from ${rendererPath}`);
       var renderer = require(rendererPath);
       var {body, type} = yield renderer({
         url, path, method, assets,
-        request: request(this.app.callback())
+        request: request(this.app.server, {
+          cookie: this.get('cookie'), // send cookie header
+          'x-csrf-token': csrf // send csrf header
+        }),
       });
       this.body = body;
       this.type = type;

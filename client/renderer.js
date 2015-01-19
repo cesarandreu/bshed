@@ -18,9 +18,7 @@ module.exports = function renderer (opts={}) {
     if (!isReactRoute({path, method}))
       return reject({status: 400});
 
-    var context = app.createContext({
-      request: request
-    });
+    var context = app.createContext({request});
 
     log(`navigating to ${url}`);
     context.getActionContext().executeAction(navigateAction, {url, method}, afterNavigate);

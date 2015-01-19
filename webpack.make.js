@@ -20,6 +20,7 @@ module.exports = function buildWebpackConfig (options) {
   // base
   var config = {
     devtool: 'sourcemap',
+    externals: [],
     module: {
       loaders: [{
         test: /\.js$/,
@@ -75,6 +76,11 @@ module.exports = function buildWebpackConfig (options) {
     libraryTarget: RENDERER ? 'commonjs2' : 'var',
     filename: RENDERER ? 'renderer.js' : PRODUCTION ? 'scripts.[hash].js' : 'scripts.dev.js'
   };
+
+  // externals
+  if (RENDERER) {
+    config.externals.push('superagent');
+  }
 
   // loaders
   var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot-loader!';

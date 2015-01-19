@@ -9,7 +9,8 @@ var app = new Fluxible({
 });
 
 app.plug(routrPlugin({
-  routes: require('./configs/routes')
+  routes: require('./configs/routes'),
+  request: require('./request.client.js')
 }));
 
 app.registerStore(require('./stores/ApplicationStore.js'));
