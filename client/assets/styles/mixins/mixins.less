@@ -1,0 +1,66 @@
+// clearfix
+//
+// For modern browsers
+// 1. The space content is one way to avoid an Opera bug when the
+//    contenteditable attribute is included anywhere else in the document.
+//    Otherwise it causes space to appear at the top and bottom of elements
+//    that are clearfixed.
+// 2. The use of `table` rather than `block` is only necessary if using
+//    `:before` to contain the top-margins of child elements.
+//
+// Source: http://nicolasgallagher.com/micro-clearfix-hack/
+
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+// no-wrap
+.no-wrap {
+  white-space: nowrap;
+}
+
+
+// transitions
+@ease-out-function: cubic-bezier(0.23, 1, 0.32, 1);
+
+.ease-out(@duration: 450ms; @property: all; @delay: 0ms) {
+  transition: @property @duration @ease-out-function @delay;
+}
+
+.pulsate(@animation-name; @start-size: 0.75; @end-size: 1; @duration: 1.5s) {
+  @keyframes ~"@{animation-name}" {
+    0%, 100% {
+      transform: scale(@start-size);
+    }
+    50% {
+      transform: scale(@end-size);
+    }
+  }
+  animation: @animation-name @duration ease 0s infinite;
+}
+
+
+// whiteframe
+.whiteframe-z1 {
+  box-shadow: @whiteframe-shadow-z1;
+}
+.whiteframe-z2 {
+  box-shadow: @whiteframe-shadow-z2;
+}
+.whiteframe-z3 {
+  box-shadow: @whiteframe-shadow-z3;
+}
+.whiteframe-z4 {
+  box-shadow: @whiteframe-shadow-z4;
+}
+.whiteframe-z5 {
+  box-shadow: @whiteframe-shadow-z5;
+}
