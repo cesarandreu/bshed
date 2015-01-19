@@ -7,6 +7,7 @@ module.exports = {
     page: 'home',
     label: 'Home',
     action: function (context, payload, done) {
+      context.dispatch('UPDATE_LAYOUT', 'home');
       context.dispatch('UPDATE_PAGE_TITLE', {pageTitle: 'Home'});
       done();
     }

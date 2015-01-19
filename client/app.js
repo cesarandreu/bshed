@@ -15,5 +15,6 @@ app.plug(routrPlugin({
 }));
 
 app.registerStore(require('./stores/ApplicationStore.js'));
+app.registerStore(require('./stores/LayoutStore.js'));
 
 module.exports = app;
