@@ -20,7 +20,9 @@ var Layout = React.createClass({
   },
 
   render: function () {
-    return <div></div>;
+    var className = `layout ${this.state.currentLayout}`;
+
+    return <div className={className}>{this.props.children}</div>;
   }
 });
 

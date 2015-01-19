@@ -1,10 +1,19 @@
 'use strict';
 
 var React = require('react'),
-  Layout = require('./Layout.jsx'),
   ApplicationStore = require('../stores/ApplicationStore'),
   RouterMixin = require('flux-router-component').RouterMixin,
   StoreMixin = require('fluxible').StoreMixin;
+
+var Layout = require('./Layout.jsx'),
+  Header = require('./Header.jsx'),
+  Main = require('./Main.jsx'),
+  Footer = require('./Footer.jsx'),
+  Navigation = require('./Navigation.jsx');
+
+var Pages = {
+  home: require('./Home.jsx')
+};
 
 var Application = React.createClass({
   displayName: 'Application',
@@ -23,7 +32,17 @@ var Application = React.createClass({
   },
 
   render: function () {
-    return <div></div>;
+    var Page = Pages[this.state.currentPageName];
+    return (
+      <Layout context={this.props.context}>
+        <Navigation/>
+        <Header/>
+        <Main>
+          <Page context={this.props.context}/>
+        </Main>
+        <Footer/>
+      </Layout>
+    );
   },
 
   componentDidUpdate: function (prevPops, prevState) {
