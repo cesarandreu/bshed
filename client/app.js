@@ -8,9 +8,10 @@ var app = new Fluxible({
   appComponent: React.createFactory(require('./components/Application.jsx'))
 });
 
+// request: require('./request.client.js')
+
 app.plug(routrPlugin({
-  routes: require('./configs/routes'),
-  request: require('./request.client.js')
+  routes: require('./configs/routes')
 }));
 
 app.registerStore(require('./stores/ApplicationStore.js'));
