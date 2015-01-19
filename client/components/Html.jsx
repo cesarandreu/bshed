@@ -22,8 +22,7 @@ var Html = React.createClass({
           <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
           {styles}
         </head>
-        <body>
-          <div id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
+        <body id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}>
         </body>
         <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
         {scripts}
