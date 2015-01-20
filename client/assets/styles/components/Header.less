@@ -1,0 +1,27 @@
+header {
+  .flexbox;
+  .flex-direction(row);
+  background-color: @app-bar-color;
+  z-index: @z-index-app-bar;
+  height: @app-bar-height;
+  width: 100%;
+  position: fixed;
+
+  .menu {
+    color: #FFF;
+    padding: 0 2em;
+  }
+
+  .inner {
+    width: 100%;
+    .flexbox;
+    .flex-direction(row);
+    .align-items(center);
+    .justify-content(space-between);
+
+    div {
+      padding: 0 1.5em;
+    }
+
+  }
+}

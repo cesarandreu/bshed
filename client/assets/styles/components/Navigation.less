@@ -1,0 +1,17 @@
+nav {
+  .flexbox;
+  .flex-direction(column);
+  .whiteframe-z2;
+  position: absolute;
+  background-color: @canvas-color;
+  z-index: @z-index-sidenav;
+  min-width: @left-nav-width;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  &.closed {
+    display: none;
+  }
+
+}
