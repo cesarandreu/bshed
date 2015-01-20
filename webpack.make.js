@@ -97,8 +97,7 @@ module.exports = function buildWebpackConfig (options) {
   if (!RENDERER) {
     config.plugins.push(
       new webpack.PrefetchPlugin('react'),
-      new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment'),
-      new webpack.PrefetchPlugin('6to5/runtime')
+      new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment')
     );
   }
   if (PRODUCTION && !RENDERER) {
