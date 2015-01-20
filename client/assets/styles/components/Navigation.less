@@ -1,18 +1,30 @@
-nav {
-  .flexbox;
-  .flex-direction(column);
-  .whiteframe-z2;
-  .navigation-transition;
+.left-nav {
 
-  position: fixed;
-  background-color: @canvas-color;
-  z-index: @z-index-sidenav;
-  width: @left-nav-width;
-  top: @app-bar-height;
-  left: 0;
-  bottom: 0;
+  nav {
+    .flexbox;
+    .flex-direction(column);
+    .whiteframe-z2;
+    .navigation-transition;
 
-  &.closed {
-    transform: translateX(@left-nav-width * -1px);
+    position: fixed;
+    background-color: @canvas-color;
+    z-index: @z-index-sidenav;
+    width: @left-nav-width;
+    top: @app-bar-height;
+    left: 0;
+    bottom: 0;
+
+    &.closed {
+      transform: translateX(@left-nav-width * -1px);
+    }
   }
+
+  .menu-overlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: @z-index-sidenav - 1;
+    top: @app-bar-height;
+  }
+
 }
