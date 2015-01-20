@@ -33,14 +33,16 @@ var Application = React.createClass({
 
   render: function () {
     var Page = Pages[this.state.currentPageName];
+    var {context} = this.props;
+
     return (
-      <Layout context={this.props.context}>
-        <Navigation/>
-        <Header/>
-        <Main>
-          <Page context={this.props.context}/>
+      <Layout context={context}>
+        <Navigation context={context}/>
+        <Header context={context}/>
+        <Main context={context}>
+          <Page context={context}/>
         </Main>
-        <Footer/>
+        <Footer context={context}/>
       </Layout>
     );
   },
