@@ -1,6 +1,7 @@
 nav.app-bar {
   .flexbox;
   .flex-direction(row);
+  .app-bar-text;
   background-color: @app-bar-color;
   z-index: @z-index-app-bar;
   height: @app-bar-height;
@@ -8,8 +9,7 @@ nav.app-bar {
   position: fixed;
 
   .menu {
-    color: #FFF;
-    padding: 0 2em;
+    padding: 0 1em;
     opacity: 0.75;
 
     &:hover {
@@ -18,14 +18,12 @@ nav.app-bar {
   }
 
   .inner {
-    font-size: @app-bar-font-size;
-    width: 100%;
     .flexbox;
     .flex-direction(row);
     .align-items(center);
     .justify-content(space-between);
-
-    div {
+    width: 100%;
+    :last-child {
       padding: 0 1em;
     }
 

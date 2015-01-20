@@ -15,8 +15,8 @@ var AppBar = React.createClass({
       <nav className='app-bar'>
         <IconButton icon='md-menu' className='menu' onTouchTap={this.toggleMenu}/>
         <div className='inner'>
-          <div className='title'>{'TITLE'}</div>
-          <div className='user'>{'LOGIN OR REGISTER'}</div>
+          <div className='title'>Bikeshed it!</div>
+          <div className='user'>Login or sign up</div>
         </div>
       </nav>
     );
