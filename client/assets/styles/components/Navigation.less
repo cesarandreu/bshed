@@ -3,9 +3,9 @@
   nav {
     .flexbox;
     .flex-direction(column);
-    .whiteframe-z2;
     .navigation-transition;
 
+    box-shadow: @left-nav-shadow;
     position: fixed;
     background-color: @canvas-color;
     z-index: @z-index-sidenav;
@@ -15,10 +15,14 @@
     bottom: 0;
 
     &.closed {
+      box-shadow: none;
       transform: translateX(@left-nav-width * -1px);
     }
   }
 
+  // TODO: add color and animation to overlay
+  // transition: opacity 0.15s ease-in-out;
+  // background-color: rgba(0, 0, 0, 0.4);
   .menu-overlay {
     position: fixed;
     height: 100%;
