@@ -37,7 +37,7 @@ module.exports = function buildWebpackConfig (options) {
         loader: 'file-loader'
       }, {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('css-loader?sourceMap!less-loader?sourceMap')
+        loader: ExtractTextPlugin.extract('css-loader?sourceMap!autoprefixer-loader!less-loader?sourceMap')
       }]
     },
     // resolveLoader: {
