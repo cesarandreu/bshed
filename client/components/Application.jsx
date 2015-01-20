@@ -6,7 +6,7 @@ var React = require('react'),
   StoreMixin = require('fluxible').StoreMixin;
 
 var Layout = require('./Layout.jsx'),
-  Header = require('./Header.jsx'),
+  AppBar = require('./AppBar.jsx'),
   Main = require('./Main.jsx'),
   Footer = require('./Footer.jsx'),
   Navigation = require('./Navigation.jsx');
@@ -38,7 +38,7 @@ var Application = React.createClass({
     return (
       <Layout context={context}>
         <Navigation context={context}/>
-        <Header context={context}/>
+        <AppBar context={context}/>
         <Main context={context}>
           <Page context={context}/>
         </Main>
