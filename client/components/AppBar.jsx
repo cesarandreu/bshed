@@ -2,7 +2,8 @@
 
 var React = require('react'),
   IconButton = require('./IconButton.jsx'),
-  LayoutAction = require('../actions/Layout');
+  LayoutAction = require('../actions/Layout'),
+  AppBarUser = require('./AppBarUser.jsx');
 
 var AppBar = React.createClass({
 
@@ -16,7 +17,7 @@ var AppBar = React.createClass({
         <IconButton icon='md-menu' className='menu' onTouchTap={this.toggleMenu}/>
         <div className='inner'>
           <div className='title'>Bikeshed it!</div>
-          <div className='user'>Login or sign up</div>
+          <AppBarUser/>
         </div>
       </nav>
     );
