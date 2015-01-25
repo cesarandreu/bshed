@@ -14,3 +14,6 @@ coverage
 
 # Builds
 public
+
+# 6to5 caching
+.roadrunner.json
