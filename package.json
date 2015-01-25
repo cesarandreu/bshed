@@ -18,6 +18,7 @@
     "node": ">=0.11.14"
   },
   "scripts": {
+    "base": "6to5-node --ignore='public|node_modules' --cache --experimental",
     "build:client": "webpack -p -c --progress",
     "clean": "rm -rf public/*",
     "dev": "npm run dev:webpack & npm run dev:server && fg",
