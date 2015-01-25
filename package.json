@@ -2,7 +2,7 @@
   "name": "bshed",
   "description": "bikeshedding app",
   "license": "Apache-2.0",
-  "main": "",
+  "main": "server.js",
   "keywords": [],
   "version": "0.0.0",
   "repository": {
