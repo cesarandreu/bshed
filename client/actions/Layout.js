@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   toggleMenu: function (context) {
     context.dispatch('TOGGLE_MENU');

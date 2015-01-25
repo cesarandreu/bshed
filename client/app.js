@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react'),
   Fluxible = require('fluxible'),
   routrPlugin = require('fluxible-plugin-routr');

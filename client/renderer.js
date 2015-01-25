@@ -1,5 +1,3 @@
-'use strict';
-
 var some = require('lodash.some'),
   React = require('react'),
   serialize = require('serialize-javascript'),

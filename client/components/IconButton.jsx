@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react/addons'),
   EnhancedButton = require('./EnhancedButton.jsx'),
   Icon = require('./Icon.jsx'),

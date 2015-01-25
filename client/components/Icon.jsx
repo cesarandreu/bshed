@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react/addons'),
   cx = React.addons.classSet,
   _ = require('lodash');

@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react'),
   LayoutStore = require('../stores/LayoutStore'),
   StoreMixin = require('fluxible').StoreMixin;

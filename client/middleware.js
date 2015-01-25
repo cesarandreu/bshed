@@ -1,5 +1,3 @@
-'use strict';
-
 var assert = require('assert'),
   request = require('./request.server.js'),
   log = require('debug')('bshed:client:middleware');

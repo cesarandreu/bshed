@@ -1,5 +1,3 @@
-'use strict';
-
 var createStore = require('fluxible/utils/createStore');
 
 var LayoutStore = createStore({

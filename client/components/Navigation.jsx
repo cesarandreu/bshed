@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react/addons'),
   LayoutStore = require('../stores/LayoutStore'),
   LayoutAction = require('../actions/Layout'),

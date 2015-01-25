@@ -1,5 +1,3 @@
-'use strict';
-
 require('6to5/runtime');
 var React = require('react'),
   debug = require('debug'),
