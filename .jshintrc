@@ -18,7 +18,7 @@
   "expr": false,
   "undef": true,
   "unused": true,
-  "strict": true,
+  "strict": false,
   "mocha": true,
   "trailing": true,
   "smarttabs": true,
