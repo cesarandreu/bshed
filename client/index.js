@@ -1,8 +1,10 @@
 require('6to5/runtime');
 var React = require('react'),
+  Router = require('react-router'),
   debug = require('debug'),
   log = debug('bshed:client'),
-  app = require('./app');
+  app = require('./app'),
+  {HistoryLocation} = Router;
 
 // needed for onTouchTap
 require('react-tap-event-plugin')();
@@ -16,17 +18,20 @@ window.React = React; // For chrome dev tool support
 if (process.env.NODE_ENV !== 'production')
   debug.enable('*');
 
-log('rehydrating bshed:client');
-app.rehydrate(dehydratedState, function (err, context) {
+log('rehydrating');
+app.rehydrate(dehydratedState, rehydrateCallback);
+function rehydrateCallback (err, context) {
   if (err) throw err;
-
-  var mountNode = document.getElementById('bshed');
   window.context = context;
-  log('react rendering');
-  React.render(app.getAppComponent()({
-    context: context.getComponentContext()
-  }), mountNode, function () {
-    log('react rendered');
-  });
 
-});
+  log('router running');
+  Router.run(app.getAppComponent(), HistoryLocation, routerCallback);
+  function routerCallback (Handler, state) {
+    var mountNode = document.getElementById('bshed'),
+      props = {context: context.getComponentContext()},
+      handler = React.createElement(Handler, props);
+
+    log('react rendering');
+    React.render(handler, mountNode, () => log('react rendered'));
+  }
+}

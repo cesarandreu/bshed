@@ -1,16 +1,11 @@
-var React = require('react'),
-  Fluxible = require('fluxible'),
-  routrPlugin = require('fluxible-plugin-routr');
+var Fluxible = require('fluxible');
 
 var app = new Fluxible({
-  appComponent: React.createFactory(require('./components/Application.jsx'))
+  appComponent: require('./components/Routes.jsx')
 });
 
-// request: require('./request.client.js')
-
-app.plug(routrPlugin({
-  routes: require('./configs/routes')
-}));
+// var ReactRouterPlugin = require('./plugins/react-router.js');
+// app.plug(ReactRouterPlugin());
 
 app.registerStore(require('./stores/ApplicationStore.js'));
 app.registerStore(require('./stores/LayoutStore.js'));

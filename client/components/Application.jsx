@@ -1,21 +1,15 @@
 var React = require('react'),
-  ApplicationStore = require('../stores/ApplicationStore'),
-  RouterMixin = require('flux-router-component').RouterMixin,
+  {RouteHandler} = require('react-router'),
   StoreMixin = require('fluxible').StoreMixin;
 
+var ApplicationStore = require('../stores/ApplicationStore');
+
 var Layout = require('./Layout.jsx'),
-  Main = require('./Main.jsx'),
-  Footer = require('./Footer.jsx'),
   Navbar = require('./Navbar.jsx'),
   Navigation = require('./Navigation.jsx');
 
-var Pages = {
-  home: require('./Home.jsx')
-};
-
 var Application = React.createClass({
-  displayName: 'Application',
-  mixins: [RouterMixin, StoreMixin],
+  mixins: [StoreMixin],
   statics: {
     storeListeners: [ApplicationStore]
   },
@@ -30,24 +24,15 @@ var Application = React.createClass({
   },
 
   render: function () {
-    var Page = Pages[this.state.currentPageName];
     var {context} = this.props;
 
     return (
       <Layout context={context}>
         <Navigation context={context}/>
-        <Main context={context}>
-          <Page context={context}/>
-        </Main>
-        <Footer context={context}/>
         <Navbar context={context}/>
+        <RouteHandler/>
       </Layout>
     );
-  },
-
-  componentDidUpdate: function (prevPops, prevState) {
-    if (this.state.pageTitle !== prevState.pageTitle)
-      document.title = this.state.pageTitle;
   }
 });
 

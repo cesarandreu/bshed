@@ -1,5 +1,5 @@
 var assert = require('assert'),
-  request = require('./request.server.js'),
+  request = require('./utils/request.server.js'),
   log = require('debug')('bshed:client:middleware');
 
 module.exports = function (opts={}) {
@@ -8,14 +8,13 @@ module.exports = function (opts={}) {
 
   var {rendererPath} = opts,
     assets = opts.assets();
-
   return function* client () {
-    var {url, path, method, csrf} = this;
+    var {path, csrf} = this;
     try {
       log(`using renderer from ${rendererPath}`);
       var renderer = require(rendererPath);
       var {body, type} = yield renderer({
-        url, path, method, assets,
+        path, assets,
         request: request(this.app.server, {
           cookie: this.get('cookie'), // send cookie header
           'x-csrf-token': csrf // send csrf header
@@ -24,8 +23,7 @@ module.exports = function (opts={}) {
       this.body = body;
       this.type = type;
     } catch (err) {
-      if (err && err.status) this.throw(err.status);
-      else this.throw(500);
+      this.throw(500);
     }
   };
 

@@ -1,54 +1,42 @@
-var some = require('lodash.some'),
-  React = require('react'),
+var React = require('react'),
+  Router = require('react-router'),
   serialize = require('serialize-javascript'),
-  log = require('debug')('bshed:client:renderer'),
-  navigateAction = require('flux-router-component').navigateAction;
+  log = require('debug')('bshed:client:renderer');
 
 var Html = React.createFactory(require('./components/Html.jsx')),
-  routes = require('./configs/routes'),
+  navigate = require('./actions/navigate'),
   app = require('./app');
 
 module.exports = function renderer (opts={}) {
+  var {path, request, assets} = opts;
 
-  var {url, path, method, request, assets} = opts;
-
-  function _renderer (resolve, reject) {
-    if (!isReactRoute({path, method}))
-      return reject({status: 400});
-
+  return new Promise(render);
+  function render (resolve, reject) {
     var context = app.createContext({request});
+    log(`router running ${path}`);
 
-    log(`navigating to ${url}`);
-    context.getActionContext().executeAction(navigateAction, {url, method}, afterNavigate);
+    Router.run(app.getAppComponent(), path, afterRouterRun);
+    function afterRouterRun (Handler, state) {
+      log('router finished');
 
-    function afterNavigate (err) {
-      if (err) return reject(err);
+      context.executeAction(navigate, state, afterNavigate);
+      function afterNavigate () {
+        log('generating BSHED');
+        var BSHED = serialize(app.dehydrate(context));
 
-      log('generating BSHED');
-      var BSHED = serialize(app.dehydrate(context));
+        log('generating markup');
+        var props = {context: context.getComponentContext()},
+          markup = React.renderToString(React.createElement(Handler, props));
 
-      log('rendering application into html');
-      var AppComponent = app.getAppComponent();
-      var html = React.renderToStaticMarkup(Html({
-        assets: assets,
-        state: `window.BSHED=${BSHED}`,
-        context: context.getComponentContext(),
-        markup: React.renderToString(AppComponent({
-          context: context.getComponentContext()
-        }))
-      }));
+        log('generating html');
+        var html = React.renderToStaticMarkup(Html({
+            markup, assets, state: `window.BSHED=${BSHED}`,
+            context: context.getComponentContext()
+          }));
 
-      log('rendering finished');
-      resolve({body: html, type: 'html'});
+        log('renderer finished');
+        resolve({body: html, type: 'html'});
+      }
     }
   }
-
-  return new Promise(_renderer);
 };
-
-function isReactRoute (_route) {
-  return some(routes, function (route) {
-    return _route.path.match(new RegExp(route.path)) &&
-      route.method.toUpperCase() === _route.method;
-  });
-}
