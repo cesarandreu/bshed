@@ -77,7 +77,13 @@ module.exports = function buildWebpackConfig (options) {
 
   // externals
   if (RENDERER) {
-    config.externals.push('superagent');
+    Array.prototype.push.apply(config.externals, [
+      'react',
+      'fluxible',
+      'superagent',
+      'react-router',
+      'serialize-javascript'
+    ]);
   }
 
   // loaders
