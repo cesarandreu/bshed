@@ -1,9 +1,7 @@
-'use strict';
-
 var React = require('react'),
   EnhancedButton = require('./EnhancedButton.jsx');
 
-var AppBarUser = React.createClass({
+var NavbarUser = React.createClass({
 
   propTypes: {
     className: React.PropTypes.string,
@@ -25,8 +23,8 @@ var AppBarUser = React.createClass({
       component = <EnhancedButton {...props}>Login</EnhancedButton>;
     }
 
-    return <div className='app-bar-user'>{component}</div>;
+    return <div className='navbar-user'>{component}</div>;
   }
 });
 
-module.exports = AppBarUser;
+module.exports = NavbarUser;

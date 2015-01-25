@@ -1,11 +1,9 @@
-'use strict';
-
 var React = require('react'),
   IconButton = require('./IconButton.jsx'),
   LayoutAction = require('../actions/Layout'),
-  AppBarUser = require('./AppBarUser.jsx');
+  NavbarUser = require('./NavbarUser.jsx');
 
-var AppBar = React.createClass({
+var Navbar = React.createClass({
 
   toggleMenu: function () {
     this.props.context.executeAction(LayoutAction.toggleMenu);
@@ -13,15 +11,15 @@ var AppBar = React.createClass({
 
   render: function () {
     return (
-      <nav className='app-bar'>
+      <nav className='navbar'>
         <IconButton icon='md-menu' className='menu' onTouchTap={this.toggleMenu}/>
         <div className='inner'>
           <div className='title'>Bikeshed it!</div>
-          <AppBarUser/>
+          <NavbarUser/>
         </div>
       </nav>
     );
   }
 });
 
-module.exports = AppBar;
+module.exports = Navbar;
