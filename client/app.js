@@ -1,5 +1,4 @@
 var ReactRouterPlugin = require('./plugins/react-router.js'),
-  Routes = require('./components/Routes.jsx'),
   {HistoryLocation} = require('react-router'),
   Fluxible = require('fluxible');
 
@@ -8,8 +7,7 @@ var app = new Fluxible({
 });
 
 app.plug(ReactRouterPlugin({
-  location: HistoryLocation,
-  routes: Routes
+  location: HistoryLocation
 }));
 
 app.registerStore(require('./stores/ApplicationStore.js'));

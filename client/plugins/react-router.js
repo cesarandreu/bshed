@@ -1,16 +1,15 @@
 var Router = require('react-router');
 
 module.exports = function ReactRouterPlugin (options={}) {
-  var {routes, location} = options;
+  var {location} = options;
 
   return {
     name: 'ReactRouterPlugin',
     plugContext (contextOptions={}) {
-      if (contextOptions.routes) routes = contextOptions.routes;
-      if (contextOptions.location) location = contextOptions.location;
-      if (contextOptions.path) location = contextOptions.path;
-      var router = Router.create({routes, location});
-
+      var router = Router.create({
+        location: contextOptions.path || contextOptions.location || location,
+        routes: contextOptions.app.getAppComponent(),
+      });
       return {
         plugActionContext (actionContext) {
           actionContext.router = router;
@@ -20,10 +19,6 @@ module.exports = function ReactRouterPlugin (options={}) {
           componentContext.router = router;
         }
       };
-    },
-
-    getRoutes () {
-      return routes;
     }
   };
 };
