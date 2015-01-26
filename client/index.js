@@ -27,6 +27,21 @@ function rehydrateCallback (err, context) {
   if (process.env.NODE_ENV !== 'production')
     window.context = context;
 
+  /*
+    // IDEA
+    // potential implementation, it's nice and clean~
+    // reusable in both server and client too
+    // FluxibleContext#createElement would need to call Handler
+    // navigate needs to dispatch state
+    // navigate would always update _app to Handler
+    // navigate should dispatch CHANGE_ROUTE_START, CHANGE_ROUTE_SUCCESS, CHANGE_ROUTE_FAILURE
+    context.executeAction(navigate, {}, navigateCallback);
+    function navigateCallback () {
+      log('rendering route');
+      React.render(context.createElement(), mountNode, () => log('react rendered'));
+    }
+  */
+
   log('starting router');
   context.getComponentContext().router.run(runCallback);
   function runCallback (Handler, state) {
