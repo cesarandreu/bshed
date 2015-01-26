@@ -4,10 +4,6 @@ var React = require('react'),
 
 var ApplicationStore = require('../stores/ApplicationStore');
 
-var Layout = require('./Layout.jsx'),
-  Navbar = require('./Navbar.jsx'),
-  Navigation = require('./Navigation.jsx');
-
 var Application = React.createClass({
   mixins: [StoreMixin],
   statics: {
@@ -24,15 +20,7 @@ var Application = React.createClass({
   },
 
   render: function () {
-    var {context} = this.props;
-
-    return (
-      <Layout context={context}>
-        <Navigation context={context}/>
-        <Navbar context={context}/>
-        <RouteHandler/>
-      </Layout>
-    );
+    return <RouteHandler {...this.props}/>;
   }
 });
 

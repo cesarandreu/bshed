@@ -1,6 +1,10 @@
 var React = require('react'),
+  {RouteHandler} = require('react-router'),
   LayoutStore = require('../stores/LayoutStore'),
   StoreMixin = require('fluxible').StoreMixin;
+
+var Navbar = require('./Navbar.jsx'),
+  Navigation = require('./Navigation.jsx');
 
 var Layout = React.createClass({
   mixins: [StoreMixin],
@@ -18,8 +22,15 @@ var Layout = React.createClass({
   },
 
   render: function () {
-    var className = 'layout';
-    return <div className={className}>{this.props.children}</div>;
+    return (
+      <div className='layout'>
+        <Navigation {...this.props}/>
+        <Navbar {...this.props}/>
+        <div className='content'>
+          <RouteHandler {...this.props}/>
+        </div>
+      </div>
+    );
   }
 });
 
