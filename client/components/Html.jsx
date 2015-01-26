@@ -22,7 +22,7 @@ var Html = React.createClass({
         </head>
         <body id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}>
         </body>
-        <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
+        <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
         {scripts}
       </html>
     );

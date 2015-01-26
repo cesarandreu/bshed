@@ -1,10 +1,11 @@
 require('6to5/runtime');
-var React = require('react'),
-  Router = require('react-router'),
-  debug = require('debug'),
-  log = debug('bshed:client'),
-  app = require('./app'),
-  {HistoryLocation} = Router;
+var debug = require('debug'),
+  log = debug('bshed:client');
+
+var React = require('react');
+
+var app = require('./app'),
+  navigate = require('./actions/navigate');
 
 // needed for onTouchTap
 require('react-tap-event-plugin')();
@@ -12,6 +13,7 @@ require('react-tap-event-plugin')();
 // assets
 require('./assets/styles/index.less');
 
+var mountNode = document.getElementById('bshed'); // render node
 var dehydratedState = window.BSHED; // sent from server
 window.React = React; // For chrome dev tool support
 
@@ -22,16 +24,20 @@ log('rehydrating');
 app.rehydrate(dehydratedState, rehydrateCallback);
 function rehydrateCallback (err, context) {
   if (err) throw err;
-  window.context = context;
+  if (process.env.NODE_ENV !== 'production')
+    window.context = context;
 
-  log('router running');
-  Router.run(app.getAppComponent(), HistoryLocation, routerCallback);
-  function routerCallback (Handler, state) {
-    var mountNode = document.getElementById('bshed'),
-      props = {context: context.getComponentContext()},
-      handler = React.createElement(Handler, props);
+  log('starting router');
+  context.getComponentContext().router.run(runCallback);
+  function runCallback (Handler, state) {
+    context.executeAction(navigate, state, navigateCallback);
+    function navigateCallback () {
+      var handler = React.createElement(Handler, {
+        context: context.getComponentContext()
+      });
 
-    log('react rendering');
-    React.render(handler, mountNode, () => log('react rendered'));
+      log('rendering route');
+      React.render(handler, mountNode, () => log('react rendered'));
+    }
   }
 }

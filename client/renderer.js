@@ -1,5 +1,4 @@
 var React = require('react'),
-  Router = require('react-router'),
   serialize = require('serialize-javascript'),
   log = require('debug')('bshed:client:renderer');
 
@@ -12,27 +11,27 @@ module.exports = function renderer (opts={}) {
 
   return new Promise(render);
   function render (resolve, reject) {
-    var context = app.createContext({request});
-    log(`router running ${path}`);
+    var context = app.createContext({request, path});
 
-    Router.run(app.getAppComponent(), path, afterRouterRun);
-    function afterRouterRun (Handler, state) {
+    log(`router running to ${path}`);
+    context.getComponentContext().router.run(runCallback);
+    function runCallback (Handler, state) {
       log('router finished');
 
-      context.executeAction(navigate, state, afterNavigate);
-      function afterNavigate () {
+      context.executeAction(navigate, state, navigateCallback);
+      function navigateCallback (err) {
+        if (err) return reject(err);
+
         log('generating BSHED');
-        var BSHED = serialize(app.dehydrate(context));
+        var BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`;
 
         log('generating markup');
-        var props = {context: context.getComponentContext()},
-          markup = React.renderToString(React.createElement(Handler, props));
+        var markupProps = {context: context.getComponentContext()},
+          markup = React.renderToString(React.createElement(Handler, markupProps));
 
         log('generating html');
-        var html = React.renderToStaticMarkup(Html({
-            markup, assets, state: `window.BSHED=${BSHED}`,
-            context: context.getComponentContext()
-          }));
+        var htmlProps = {markup, assets, BSHED, context: context.getComponentContext()},
+          html = React.renderToStaticMarkup(Html(htmlProps));
 
         log('renderer finished');
         resolve({body: html, type: 'html'});
