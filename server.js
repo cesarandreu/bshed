@@ -1,7 +1,5 @@
 'use strict';
 
-require('6to5/runtime');
-
 // modules
 var koa = require('koa'),
   path = require('path'),
