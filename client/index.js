@@ -1,4 +1,3 @@
-require('6to5/runtime');
 var debug = require('debug'),
   log = debug('bshed:client');
 

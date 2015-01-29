@@ -22,7 +22,7 @@ module.exports = function buildWebpackConfig (options) {
     module: {
       loaders: [{
         test: /\.js$/,
-        loader: '6to5-loader?runtime&experimental',
+        loader: '6to5-loader?experimental&optional=selfContained',
         exclude: /.*node_modules.*/
       }, {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
@@ -90,7 +90,7 @@ module.exports = function buildWebpackConfig (options) {
   var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot-loader!';
   config.module.loaders.push({
     test: /\.jsx$/,
-    loader: hotLoader + '6to5-loader?runtime&experimental',
+    loader: hotLoader + '6to5-loader?experimental&optional=selfContained',
     exclude: /.*node_modules.*((?!\.jsx).{4}$)/
   });
 
