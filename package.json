@@ -18,7 +18,7 @@
     "node": ">=0.11.15"
   },
   "scripts": {
-    "base": "6to5-node --ignore='public|node_modules' --cache --experimental",
+    "base": "6to5-node --experimental --ignore='public|node_modules' --blacklist=regenerator",
     "build:client": "webpack -p -c --progress",
     "clean": "rm -rf public/*",
     "dev": "parallelshell 'npm run dev:server' 'npm run dev:renderer' 'npm run dev:client'",
