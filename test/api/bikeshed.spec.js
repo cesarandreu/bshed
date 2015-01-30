@@ -46,6 +46,7 @@ describe('Request:Bikeshed', function () {
                 id: { type: 'number', required: true, minimum: 1 },
                 name: { type: 'string', required: true, minLength: 1 },
                 body: { type: 'string', required: true, minLength: 1 },
+                size: { type: 'number', required: true, minimum: 0 },
                 updatedAt: { type: 'string', required: true },
                 createdAt: { type: 'string', required: true },
                 status: { type: 'string', required: true,
