@@ -1,6 +1,6 @@
 var React = require('react'),
-  IconButton = require('./IconButton.jsx'),
-  LayoutAction = require('../actions/Layout'),
+  IconButton = require('../general/IconButton.jsx'),
+  LayoutAction = require('../../actions/Layout'),
   NavbarUser = require('./NavbarUser.jsx');
 
 var Navbar = React.createClass({

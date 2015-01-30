@@ -1,6 +1,6 @@
 var React = require('react/addons'),
-  LayoutStore = require('../stores/LayoutStore'),
-  LayoutAction = require('../actions/Layout'),
+  LayoutStore = require('../../stores/LayoutStore'),
+  LayoutAction = require('../../actions/Layout'),
   StoreMixin = require('fluxible').StoreMixin,
   cx = React.addons.classSet;
 

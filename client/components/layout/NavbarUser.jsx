@@ -1,5 +1,5 @@
 var React = require('react'),
-  EnhancedButton = require('./EnhancedButton.jsx');
+  EnhancedButton = require('../general/EnhancedButton.jsx');
 
 var NavbarUser = React.createClass({
 

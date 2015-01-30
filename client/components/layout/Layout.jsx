@@ -1,6 +1,6 @@
 var React = require('react'),
   {RouteHandler} = require('react-router'),
-  LayoutStore = require('../stores/LayoutStore'),
+  LayoutStore = require('../../stores/LayoutStore'),
   StoreMixin = require('fluxible').StoreMixin;
 
 var Navbar = require('./Navbar.jsx'),
