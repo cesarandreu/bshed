@@ -2,10 +2,11 @@ var React = require('react/addons'),
   LayoutStore = require('../../stores/LayoutStore'),
   LayoutAction = require('../../actions/Layout'),
   StoreMixin = require('fluxible').StoreMixin,
+  {Link, State: StateMixin} = require('react-router'),
   cx = React.addons.classSet;
 
-var Navigation = React.createClass({
-  mixins: [StoreMixin],
+var Sidebar = React.createClass({
+  mixins: [StoreMixin, StateMixin],
   statics: {
     storeListeners: [LayoutStore]
   },
@@ -25,18 +26,30 @@ var Navigation = React.createClass({
 
   render: function () {
 
+    var links = [{
+      path: '/',
+      text: 'Home'
+    }, {
+      path: '/bikesheds',
+      text: 'Bikesheds'
+    }, {
+      path: '/about',
+      text: 'About'
+    }].map((link, idx) => <li key={idx}><Link to={link.path}>{link.text}</Link></li>);
+
     var className = cx({
       closed: !this.state.openMenu
     });
 
     var closeMenuOverlay;
-    if (this.state.openMenu) {
+    if (this.state.openMenu)
       closeMenuOverlay = <div onTouchTap={this._closeMenu} className='menu-overlay'></div>;
-    }
 
     return (
-      <div className='left-nav'>
-        <nav className={className}></nav>
+      <div className='sidebar'>
+        <nav className={className}>
+          <ul>{links}</ul>
+        </nav>
         {closeMenuOverlay}
       </div>
 
@@ -44,4 +57,4 @@ var Navigation = React.createClass({
   }
 });
 
-module.exports = Navigation;
+module.exports = Sidebar;

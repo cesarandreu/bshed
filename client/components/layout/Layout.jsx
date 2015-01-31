@@ -4,7 +4,7 @@ var React = require('react'),
   StoreMixin = require('fluxible').StoreMixin;
 
 var Navbar = require('./Navbar.jsx'),
-  Navigation = require('./Navigation.jsx');
+  Sidebar = require('./Sidebar.jsx');
 
 var Layout = React.createClass({
   mixins: [StoreMixin],
@@ -24,7 +24,7 @@ var Layout = React.createClass({
   render: function () {
     return (
       <div className='layout'>
-        <Navigation {...this.props}/>
+        <Sidebar {...this.props}/>
         <Navbar {...this.props}/>
         <div className='content'>
           <RouteHandler {...this.props}/>
