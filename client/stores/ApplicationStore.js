@@ -3,7 +3,7 @@ var createStore = require('fluxible/utils/createStore');
 var ApplicationStore = createStore({
   storeName: 'ApplicationStore',
   handlers: {
-    'CHANGE_ROUTE': 'handleNavigate'
+    'CHANGE_ROUTE_SUCCESS': 'handleNavigate'
   },
   initialize: function () {
     this.route = null;

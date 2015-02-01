@@ -3,7 +3,7 @@ var createStore = require('fluxible/utils/createStore');
 var LayoutStore = createStore({
   storeName: 'LayoutStore',
   handlers: {
-    'CHANGE_ROUTE': 'closeMenu',
+    'CHANGE_ROUTE_START': 'closeMenu',
     'UPDATE_LAYOUT': 'updateLayout',
     'TOGGLE_MENU': 'toggleMenu',
     'OPEN_MENU': 'openMenu',
