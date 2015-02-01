@@ -1,4 +1,5 @@
 {
+  "asi": true,
   "node": true,
   "browser": true,
   "esnext": true,
@@ -15,7 +16,7 @@
   "latedef": "nofunc",
   "quotmark": false,
   "regexp": true,
-  "expr": false,
+  "expr": true,
   "undef": true,
   "unused": true,
   "strict": false,
