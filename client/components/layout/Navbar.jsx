@@ -1,7 +1,8 @@
 var React = require('react'),
   IconButton = require('../general/IconButton.jsx'),
   LayoutAction = require('../../actions/Layout'),
-  NavbarUser = require('./NavbarUser.jsx');
+  NavbarUser = require('./NavbarUser.jsx'),
+  {Link} = require('react-router');
 
 var Navbar = React.createClass({
 
@@ -14,7 +15,7 @@ var Navbar = React.createClass({
       <nav className='navbar'>
         <IconButton icon='md-menu' className='navbar-menu' onTouchTap={this.toggleMenu}/>
         <div className='navbar-inner'>
-          <div className='title'>Bikeshed it!</div>
+          <Link className='navbar-title' to='home'>Bikeshed it!</Link>
           <NavbarUser/>
         </div>
       </nav>
