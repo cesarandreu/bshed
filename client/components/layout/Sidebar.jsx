@@ -39,15 +39,13 @@ var Sidebar = React.createClass({
       path: '/about',
       text: 'About'
     }].map((link, idx) =>
-      <li key={idx}>
-        <Link onClick={this._closeMenuLink} to={link.path}>{link.text}</Link>
-      </li>
+      <Link key={idx} onClick={this._closeMenuLink} to={link.path}>{link.text}</Link>
     );
 
     return (
       <div className={`sidebar-container ${this.state.openMenu ? 'open' : 'closed'}`}>
         <nav className='sidebar'>
-          <ul>{links}</ul>
+          <div className='sidebar-section'>{links}</div>
         </nav>
         <div className='sidebar-overlay' onTouchTap={this._closeMenu}></div>
       </div>
