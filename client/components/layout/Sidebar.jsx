@@ -40,7 +40,9 @@ var Sidebar = React.createClass({
       text: 'About'
     }]
     .map((link, idx) =>
-      <li key={idx}><Link onClick={this._closeMenuLink} to={link.path}>{link.text}</Link></li>
+      <li key={idx}>
+        <Link onClick={this._closeMenuLink} to={link.path}>{link.text}</Link>
+      </li>
     );
 
     return (
