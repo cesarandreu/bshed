@@ -1,9 +1,8 @@
 var React = require('react/addons'),
   LayoutStore = require('../../stores/LayoutStore'),
   LayoutAction = require('../../actions/Layout'),
-  StoreMixin = require('fluxible').StoreMixin,
-  {Link, State: StateMixin} = require('react-router'),
-  cx = React.addons.classSet;
+  {StoreMixin} = require('fluxible'),
+  {Link, State: StateMixin} = require('react-router');
 
 var Sidebar = React.createClass({
   mixins: [StoreMixin, StateMixin],
@@ -21,7 +20,11 @@ var Sidebar = React.createClass({
   },
 
   _closeMenu: function () {
-    this.props.context.executeAction(LayoutAction.closeMenu);
+    this.props.context.executeAction(LayoutAction.closeMenu)
+  },
+
+  _closeMenuLink: function (event) {
+    event.currentTarget.classList.contains('active') ? event.preventDefault() : this._closeMenu()
   },
 
   render: function () {
@@ -35,24 +38,18 @@ var Sidebar = React.createClass({
     }, {
       path: '/about',
       text: 'About'
-    }].map((link, idx) => <li key={idx}><Link to={link.path}>{link.text}</Link></li>);
-
-    var className = cx({
-      closed: !this.state.openMenu
-    });
-
-    var closeMenuOverlay;
-    if (this.state.openMenu)
-      closeMenuOverlay = <div onTouchTap={this._closeMenu} className='menu-overlay'></div>;
+    }]
+    .map((link, idx) =>
+      <li key={idx}><Link onClick={this._closeMenuLink} to={link.path}>{link.text}</Link></li>
+    );
 
     return (
-      <div className='sidebar'>
-        <nav className={className}>
+      <div className={`sidebar-container ${this.state.openMenu ? 'open' : 'closed'}`}>
+        <nav className='sidebar'>
           <ul>{links}</ul>
         </nav>
-        {closeMenuOverlay}
+        <div className='sidebar-overlay' onTouchTap={this._closeMenu}></div>
       </div>
-
     );
   }
 });
