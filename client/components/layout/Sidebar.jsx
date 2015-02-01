@@ -1,11 +1,11 @@
 var React = require('react/addons'),
   LayoutAction = require('../../actions/Layout'),
   LayoutStore = require('../../stores/LayoutStore'),
-  {Link, State: StateMixin} = require('react-router'),
+  {Link} = require('react-router'),
   {StoreMixin} = require('fluxible');
 
 var Sidebar = React.createClass({
-  mixins: [StoreMixin, StateMixin],
+  mixins: [StoreMixin],
   statics: {
     storeListeners: [LayoutStore]
   },
@@ -23,12 +23,12 @@ var Sidebar = React.createClass({
     this.props.context.executeAction(LayoutAction.closeMenu)
   },
 
-  _closeMenuLink: function (event) {
-    event.currentTarget.classList.contains('active') ? event.preventDefault() : this._closeMenu()
+  _checkState: function (event) {
+    if (event.currentTarget.classList.contains('active'))
+      event.preventDefault();
   },
 
   render: function () {
-
     var links = [{
       path: '/',
       text: 'Home'
@@ -39,7 +39,7 @@ var Sidebar = React.createClass({
       path: '/about',
       text: 'About'
     }].map((link, idx) =>
-      <Link key={idx} onClick={this._closeMenuLink} to={link.path}>{link.text}</Link>
+      <Link key={idx} onClick={this._checkState} to={link.path}>{link.text}</Link>
     );
 
     return (

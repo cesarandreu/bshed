@@ -3,13 +3,13 @@ var createStore = require('fluxible/utils/createStore');
 var ApplicationStore = createStore({
   storeName: 'ApplicationStore',
   handlers: {
-    'CHANGE_ROUTE_SUCCESS': 'handleNavigate'
+    'CHANGE_ROUTE': 'handleNavigate'
   },
   initialize: function () {
-    this.currentRoute = null;
+    this.route = null;
   },
   handleNavigate: function (route) {
-    this.currentRoute = route;
+    this.route = route;
     this.emitChange();
   },
   getPageTitle: function () {
@@ -17,14 +17,14 @@ var ApplicationStore = createStore({
   },
   getState: function () {
     return {
-      currentRoute: this.currentRoute
+      route: this.route
     };
   },
   dehydrate: function () {
     return this.getState();
   },
   rehydrate: function (state) {
-    this.currentRoute = state.currentRoute;
+    this.route = state.route;
   }
 });
 

@@ -1,8 +1,11 @@
 var React = require('react'),
   {RouteHandler} = require('react-router'),
-  StoreMixin = require('fluxible').StoreMixin;
+  {StoreMixin} = require('fluxible');
 
 var ApplicationStore = require('../../stores/ApplicationStore');
+
+var Navbar = require('./Navbar.jsx'),
+  Sidebar = require('./Sidebar.jsx');
 
 var Application = React.createClass({
   mixins: [StoreMixin],
@@ -20,7 +23,15 @@ var Application = React.createClass({
   },
 
   render: function () {
-    return <RouteHandler {...this.props}/>;
+    return (
+      <div className='layout'>
+        <Navbar {...this.props}/>
+        <Sidebar {...this.props}/>
+        <div className='content'>
+          <RouteHandler {...this.props}/>
+        </div>
+      </div>
+    );
   }
 });
 
