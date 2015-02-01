@@ -45,7 +45,9 @@ function rehydrateCallback (err, context) {
   context.getComponentContext().router.run(runCallback);
   function runCallback (Handler, state) {
     context.executeAction(navigate, state, navigateCallback);
-    function navigateCallback () {
+    function navigateCallback (err) {
+      if (err) console.error(err); // TODO: handle failure~
+
       var handler = React.createElement(Handler, {
         context: context.getComponentContext()
       });
