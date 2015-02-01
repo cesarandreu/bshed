@@ -1,8 +1,8 @@
 var React = require('react/addons'),
-  LayoutStore = require('../../stores/LayoutStore'),
   LayoutAction = require('../../actions/Layout'),
-  {StoreMixin} = require('fluxible'),
-  {Link, State: StateMixin} = require('react-router');
+  LayoutStore = require('../../stores/LayoutStore'),
+  {Link, State: StateMixin} = require('react-router'),
+  {StoreMixin} = require('fluxible');
 
 var Sidebar = React.createClass({
   mixins: [StoreMixin, StateMixin],
@@ -38,8 +38,7 @@ var Sidebar = React.createClass({
     }, {
       path: '/about',
       text: 'About'
-    }]
-    .map((link, idx) =>
+    }].map((link, idx) =>
       <li key={idx}>
         <Link onClick={this._closeMenuLink} to={link.path}>{link.text}</Link>
       </li>
