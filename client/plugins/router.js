@@ -1,10 +1,10 @@
 var Router = require('react-router');
 
-module.exports = function ReactRouterPlugin (options={}) {
+module.exports = function RouterPlugin (options={}) {
   var {location} = options;
 
   return {
-    name: 'ReactRouterPlugin',
+    name: 'RouterPlugin',
     plugContext (contextOptions={}) {
       var router = Router.create({
         location: contextOptions.path || contextOptions.location || location,
