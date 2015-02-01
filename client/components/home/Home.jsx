@@ -1,9 +1,7 @@
-var React = require('react');
-
-var {Link, State: StateMixin} = require('react-router');
+var React = require('react'),
+  {Link} = require('react-router');
 
 var Home = React.createClass({
-  mixins: [StateMixin],
   render: function () {
     return (
       <div className='home'>
