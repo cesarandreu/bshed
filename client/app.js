@@ -1,4 +1,5 @@
 var RouterPlugin = require('./plugins/router.js'),
+  RequestPlugin = require('./plugins/request'),
   Fluxible = require('fluxible');
 
 var app = new Fluxible({
@@ -7,6 +8,10 @@ var app = new Fluxible({
 
 app.plug(RouterPlugin({
   location: require('react-router').HistoryLocation
+}));
+
+app.plug(RequestPlugin({
+  request: require('superagent')
 }));
 
 app.registerStore(require('./stores/ApplicationStore.js'));
