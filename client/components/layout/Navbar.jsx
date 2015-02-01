@@ -12,8 +12,8 @@ var Navbar = React.createClass({
   render: function () {
     return (
       <nav className='navbar'>
-        <IconButton icon='md-menu' className='menu' onTouchTap={this.toggleMenu}/>
-        <div className='inner'>
+        <IconButton icon='md-menu' className='navbar-menu' onTouchTap={this.toggleMenu}/>
+        <div className='navbar-inner'>
           <div className='title'>Bikeshed it!</div>
           <NavbarUser/>
         </div>
