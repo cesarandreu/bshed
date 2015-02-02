@@ -33,9 +33,6 @@ module.exports = function buildWebpackConfig (options) {
       }, {
         test: /\.(ttf|eot)$/,
         loader: 'file-loader'
-      }, {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract('css-loader?sourceMap!autoprefixer-loader!less-loader?sourceMap')
       }]
     },
     // resolveLoader: {
@@ -56,8 +53,7 @@ module.exports = function buildWebpackConfig (options) {
         }
         if (!RENDERER) this.plugin('done', statsPluginDone);
       },
-      new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(ENV)}),
-      new ExtractTextPlugin(PRODUCTION ? 'scripts.[hash].css' : 'scripts.dev.css')
+      new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(ENV)})
     ]
   };
 
@@ -87,6 +83,12 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // loaders
+  var lessLoader = 'css-loader?sourceMap!autoprefixer-loader!less-loader?sourceMap';
+  config.module.loaders.push({
+    test: /\.less$/,
+    loader: PRODUCTION ? ExtractTextPlugin.extract(lessLoader) : 'style-loader!' + lessLoader
+  });
+
   var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot-loader!';
   config.module.loaders.push({
     test: /\.jsx$/,
@@ -98,6 +100,10 @@ module.exports = function buildWebpackConfig (options) {
   config.target = RENDERER ? 'node' : 'web';
 
   // plugins
+  if (PRODUCTION) {
+    // var cssName = PRODUCTION ? 'scripts.[hash].css' : 'scripts.dev.css'
+    config.plugins.push(new ExtractTextPlugin('scripts.[hash].css'));
+  }
   if (!RENDERER) {
     config.plugins.push(
       new webpack.PrefetchPlugin('react'),
