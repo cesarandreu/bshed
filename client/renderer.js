@@ -7,13 +7,13 @@ var Html = React.createFactory(require('./components/Html.jsx')),
   app = require('./app');
 
 module.exports = function renderer (opts={}) {
-  var {path, request, assets} = opts;
+  var {url, request, assets} = opts;
 
   return new Promise(render);
   function render (resolve, reject) {
-    var context = app.createContext({request, path});
+    var context = app.createContext({request, url});
 
-    log(`router running to ${path}`);
+    log(`router running to ${url}`);
     context.getComponentContext().router.run(runCallback);
     function runCallback (Handler, state) {
       log('router finished');
