@@ -3,21 +3,13 @@ var createStore = require('fluxible/utils/createStore');
 var LayoutStore = createStore({
   storeName: 'LayoutStore',
   handlers: {
-    'CHANGE_ROUTE_START': 'closeMenu',
-    'UPDATE_LAYOUT': 'updateLayout',
+    'CHANGE_ROUTE_SUCCESS': 'closeMenu',
     'TOGGLE_MENU': 'toggleMenu',
     'OPEN_MENU': 'openMenu',
     'CLOSE_MENU': 'closeMenu'
   },
   initialize: function () {
-    this.currentLayout = null;
     this.openMenu = false;
-  },
-  updateLayout: function (layout) {
-    if (this.currentLayout !== layout) {
-      this.currentLayout = layout;
-      this.emitChange();
-    }
   },
   toggleMenu: function () {
     this.openMenu = !this.openMenu;
@@ -35,12 +27,8 @@ var LayoutStore = createStore({
       this.emitChange();
     }
   },
-  getLayout: function () {
-    return this.currentLayout;
-  },
   getState: function () {
     return {
-      currentLayout: this.currentLayout,
       openMenu: this.openMenu
     };
   },
@@ -48,7 +36,6 @@ var LayoutStore = createStore({
     return this.getState();
   },
   rehydrate: function (state) {
-    this.currentLayout = state.currentLayout;
     this.openMenu = state.openMenu;
   }
 });
