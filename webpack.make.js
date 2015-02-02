@@ -21,10 +21,6 @@ module.exports = function buildWebpackConfig (options) {
     externals: [],
     module: {
       loaders: [{
-        test: /\.js$/,
-        loader: '6to5-loader?experimental&optional=selfContained',
-        exclude: /.*node_modules.*/
-      }, {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         loader: 'url-loader?limit=10000'
       }, {
@@ -83,17 +79,24 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // loaders
-  var lessLoader = 'css-loader?sourceMap!autoprefixer-loader!less-loader?sourceMap';
+  // var to5LoaderBlacklist = RENDERER ? '&blacklist=regenerator' : '';
   config.module.loaders.push({
-    test: /\.less$/,
-    loader: PRODUCTION ? ExtractTextPlugin.extract(lessLoader) : 'style-loader!' + lessLoader
+    test: /\.js$/,
+    loader: '6to5-loader?experimental&optional=selfContained', // + to5LoaderBlacklist,
+    exclude: /.*node_modules.*/
   });
 
   var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot-loader!';
   config.module.loaders.push({
     test: /\.jsx$/,
-    loader: hotLoader + '6to5-loader?experimental&optional=selfContained',
+    loader: hotLoader + '6to5-loader?experimental&optional=selfContained', // + to5LoaderBlacklist,
     exclude: /.*node_modules.*((?!\.jsx).{4}$)/
+  });
+
+  var lessLoader = 'css-loader?sourceMap!autoprefixer-loader!less-loader?sourceMap';
+  config.module.loaders.push({
+    test: /\.less$/,
+    loader: PRODUCTION ? ExtractTextPlugin.extract(lessLoader) : 'style-loader!' + lessLoader
   });
 
   // target
