@@ -4,6 +4,11 @@ var React = require('react'),
 
 var Html = React.createClass({
   mixins: [FluxibleMixin],
+  propTypes: {
+    assets: React.PropTypes.object.isRequired,
+    markup: React.PropTypes.string.isRequired,
+    BSHED: React.PropTypes.string.isRequired
+  },
   render: function () {
     var title = this.getStore(ApplicationStore).getPageTitle(),
       {scripts, styles} = this.props.assets;
