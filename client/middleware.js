@@ -23,6 +23,7 @@ module.exports = function (opts={}) {
       this.body = body;
       this.type = type;
     } catch (err) {
+      console.error(err);
       this.throw(500);
     }
   };
