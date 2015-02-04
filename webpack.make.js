@@ -106,6 +106,9 @@ module.exports = function buildWebpackConfig (options) {
   if (PRODUCTION) {
     // var cssName = PRODUCTION ? 'scripts.[hash].css' : 'scripts.dev.css'
     config.plugins.push(new ExtractTextPlugin('scripts.[hash].css'));
+
+    // Ensures requires for `react` and `react/addons` normalize to the same requirement
+    config.plugins.push(new webpack.NormalModuleReplacementPlugin(/^react(\/addons)?$/, require.resolve('react/addons')))
   }
   if (!RENDERER) {
     config.plugins.push(
