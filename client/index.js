@@ -48,12 +48,10 @@ function rehydrateCallback (err, context) {
     function navigateCallback (err) {
       if (err) console.error(err); // TODO: handle failure~
 
-      var handler = React.createElement(Handler, {
-        context: context.getComponentContext()
-      });
-
       log('rendering route');
-      React.render(handler, mountNode, () => log('react rendered'));
+      React.withContext(context.getComponentContext(), () => {
+        React.render(React.createElement(Handler), mountNode, () => log('react rendered'));
+      });
     }
   }
 }

@@ -25,16 +25,18 @@ module.exports = function renderer (opts={}) {
         log('generating BSHED');
         var BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`;
 
-        log('generating markup');
-        var markupProps = {context: context.getComponentContext()},
-          markup = React.renderToString(React.createElement(Handler, markupProps));
+        log('using component context')
+        React.withContext(context.getComponentContext(), () => {
 
-        log('generating html');
-        var htmlProps = {markup, assets, BSHED, context: context.getComponentContext()},
-          html = React.renderToStaticMarkup(Html(htmlProps));
+          log('generating markup');
+          var markup = React.renderToString(React.createElement(Handler));
 
-        log('renderer finished');
-        resolve({body: html, type: 'html'});
+          log('generating html');
+          var html = React.renderToStaticMarkup(Html({markup, assets, BSHED}));
+
+          log('renderer finished');
+          resolve({body: html, type: 'html'});
+        });
       }
     }
   }

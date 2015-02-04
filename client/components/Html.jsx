@@ -1,13 +1,12 @@
 var React = require('react'),
+  {Mixin: FluxibleMixin} = require('fluxible'),
   ApplicationStore = require('../stores/ApplicationStore');
 
 var Html = React.createClass({
+  mixins: [FluxibleMixin],
   render: function () {
-    var title = this.props.context.getStore(ApplicationStore).getPageTitle(),
-      scripts = this.props.assets.scripts
-        .map((src, key) => <script src={src} key={key}></script>),
-      styles = this.props.assets.styles
-        .map((href, key) => <link href={href} key={key} rel='stylesheet'></link>);
+    var title = this.getStore(ApplicationStore).getPageTitle(),
+      {scripts, styles} = this.props.assets;
 
     return (
       <html>
@@ -18,12 +17,12 @@ var Html = React.createClass({
           <meta name='description' content='An app for bikeshedding'/>
           <title>{title}</title>
           <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
-          {styles}
+          {styles.map((href, key) => <link href={href} key={key} rel='stylesheet'></link>)}
         </head>
         <body id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}>
         </body>
         <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
-        {scripts}
+        {scripts.map((src, key) => <script src={src} key={key}></script>)}
       </html>
     );
   }

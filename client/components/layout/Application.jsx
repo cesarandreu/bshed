@@ -1,6 +1,6 @@
 var React = require('react'),
   {RouteHandler} = require('react-router'),
-  {StoreMixin} = require('fluxible');
+  {Mixin: FluxibleMixin} = require('fluxible');
 
 var ApplicationStore = require('../../stores/ApplicationStore');
 
@@ -8,7 +8,7 @@ var Navbar = require('./Navbar.jsx'),
   Sidebar = require('./Sidebar.jsx');
 
 var Application = React.createClass({
-  mixins: [StoreMixin],
+  mixins: [FluxibleMixin],
   statics: {
     storeListeners: [ApplicationStore]
   },
@@ -25,10 +25,10 @@ var Application = React.createClass({
   render: function () {
     return (
       <div className='layout'>
-        <Navbar {...this.props}/>
-        <Sidebar {...this.props}/>
+        <Navbar/>
+        <Sidebar/>
         <div className='content'>
-          <RouteHandler {...this.props}/>
+          <RouteHandler/>
         </div>
       </div>
     );

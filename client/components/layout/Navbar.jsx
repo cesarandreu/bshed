@@ -2,12 +2,13 @@ var React = require('react'),
   IconButton = require('../general/IconButton.jsx'),
   LayoutAction = require('../../actions/Layout'),
   NavbarUser = require('./NavbarUser.jsx'),
+  {Mixin: FluxibleMixin} = require('fluxible'),
   {Link} = require('react-router');
 
 var Navbar = React.createClass({
-
+  mixins: [FluxibleMixin],
   toggleMenu: function () {
-    this.props.context.executeAction(LayoutAction.toggleMenu);
+    this.executeAction(LayoutAction.toggleMenu);
   },
 
   render: function () {

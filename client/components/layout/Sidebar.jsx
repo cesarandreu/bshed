@@ -2,10 +2,10 @@ var React = require('react/addons'),
   LayoutAction = require('../../actions/Layout'),
   LayoutStore = require('../../stores/LayoutStore'),
   {Link} = require('react-router'),
-  {StoreMixin} = require('fluxible');
+  {Mixin: FluxibleMixin} = require('fluxible');
 
 var Sidebar = React.createClass({
-  mixins: [StoreMixin],
+  mixins: [FluxibleMixin],
   statics: {
     storeListeners: [LayoutStore]
   },
@@ -20,7 +20,7 @@ var Sidebar = React.createClass({
   },
 
   _closeMenu: function () {
-    this.props.context.executeAction(LayoutAction.closeMenu)
+    this.executeAction(LayoutAction.closeMenu)
   },
 
   _checkState: function (event) {
