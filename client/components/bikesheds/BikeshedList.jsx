@@ -1,0 +1,17 @@
+var React = require('react'),
+  {Link} = require('react-router');
+
+var BikeshedList = React.createClass({
+  render: function () {
+    return (
+      <div>
+        <h1>BIKESHED LIST</h1>
+        <Link to='/bikesheds'>BIKESHEDS</Link>
+        <Link to='/bikesheds/1'>BIKESHED 1</Link>
+        <Link to='/bikesheds/2'>BIKESHED 2</Link>
+      </div>
+    );
+  }
+});
+
+module.exports = BikeshedList;
