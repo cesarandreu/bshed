@@ -4,6 +4,7 @@ var BikeshedListStore = createStore({
   storeName: 'BikeshedListStore',
   handlers: {
     // 'UPDATE_LAYOUT': 'updateLayout',
+    'FINISHED_NAVIGATION_REQUEST': 'finishedNavigationRequest'
   },
   initialize: function () {
     setProperties(this, {
@@ -17,8 +18,15 @@ var BikeshedListStore = createStore({
     });
   },
 
-  fetchData: function ({request, query}={}) {
+  fetch: function (request, {params, pathname, query}={}) {
     return request.get('/api/bikesheds').query(query);
+  },
+
+  finishedNavigationRequest: function ({storeName, res}={}) {
+    if (storeName === 'BikeshedListStore') {
+      setProperties(this, res.body)
+      this.emitChange();
+    }
   },
 
   getState: function () {

@@ -9,8 +9,8 @@ var BikeshedListContainer = React.createClass({
   mixins: [FluxibleMixin, StateMixin],
   statics: {
     storeListeners: [BikeshedListStore],
-    fetchData: function ({params, query}={}) {
-      return {storeName, params, query};
+    navigationData: function ({params, query, pathname}={}) {
+      return {storeName, params, query, pathname}
     }
   },
 
@@ -24,7 +24,7 @@ var BikeshedListContainer = React.createClass({
   },
 
   render: function () {
-    return <BikeshedList/>
+    return <BikeshedList {...this.state}/>
   }
 });
 

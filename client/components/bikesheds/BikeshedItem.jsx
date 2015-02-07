@@ -2,8 +2,8 @@ var React = require('react');
 
 var BikeshedItem = React.createClass({
   statics: {
-    fetchData: function () {
-      console.log('fetchData BikeshedItem');
+    navigationData: function () {
+      return {};
     }
   },
   propTypes: {

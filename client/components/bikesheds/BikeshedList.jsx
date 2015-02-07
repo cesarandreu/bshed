@@ -9,6 +9,9 @@ var BikeshedList = React.createClass({
         <Link to='/bikesheds'>BIKESHEDS</Link>
         <Link to='/bikesheds/1'>BIKESHED 1</Link>
         <Link to='/bikesheds/2'>BIKESHED 2</Link>
+        {this.props.list.map((bikeshed, idx) => {
+          return <div key={idx}>{JSON.stringify(bikeshed)}</div>
+        })}
       </div>
     );
   }
