@@ -15,6 +15,8 @@ app.plug(RequestPlugin({
 }));
 
 app.registerStore(require('./stores/ApplicationStore.js'));
+app.registerStore(require('./stores/BikeshedListStore.js'));
 app.registerStore(require('./stores/LayoutStore.js'));
+app.registerStore(require('./stores/RequestStore.js'));
 
 module.exports = app;
