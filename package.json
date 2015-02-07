@@ -53,7 +53,7 @@
     "extract-text-webpack-plugin": "^0.3.8",
     "file-loader": "^0.8.1",
     "fluxible": "^0.2.0",
-    "koa": "koajs/koa",
+    "koa": "^0.17.0",
     "koa-better-body": "^1.0.17",
     "koa-compose": "^2.3.0",
     "koa-compress": "^1.0.8",
