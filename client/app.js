@@ -11,7 +11,7 @@ app.plug(RouterPlugin({
 }));
 
 app.plug(RequestPlugin({
-  request: require('superagent')
+  request: require('./utils/request.client.js'),
 }));
 
 app.registerStore(require('./stores/ApplicationStore.js'));
