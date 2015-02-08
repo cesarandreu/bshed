@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 module.exports = function (sequelize, DataTypes) {
   var Bikeshed = sequelize.define('Bikeshed', {
     name: {
@@ -68,6 +70,14 @@ module.exports = function (sequelize, DataTypes) {
           previous = this.previous('status'), status = this.get('status');
         if (this.changed('status') && previous && status !== changes[previous]) {
           throw new Error(`unexpected status transition ${status}`);
+        }
+      },
+      statusDate: function () {
+        var status = this.get('status');
+        if (status === 'open' && !_.isDate(this.get('openedAt'))) {
+          throw new Error('must have openedAt date to open');
+        } else if (status === 'closed' && !_.isDate(this.get('closedAt'))) {
+          throw new Error('must have closedAt date to close');
         }
       }
     }
