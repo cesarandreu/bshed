@@ -1,25 +1,17 @@
 'use strict';
 
-var methods = require('methods'),
-  Test = require('supertest').Test;
+var supertest = require('supertest'),
+  methods = require('methods');
 
-module.exports = function request (server, headers) {
-
-  // from supertest
-  function requestWrapper (method, path) {
-    return new Test(server, method, path).set(headers);
-  }
-
-  // from superagent
-  methods.forEach(function (method) {
-    var name = 'delete' === method ? 'del' : method;
-    method = method.toUpperCase();
-    requestWrapper[name] = function (url, fn) {
-      var req = requestWrapper(method, url);
-      if (fn) req.end(fn);
-      return req;
-    };
+var promises = require('./request.promisify');
+module.exports = function serverRequest (server, headers) {
+  var request = supertest(server), out = {};
+  ['dev'].concat(methods).forEach((method) => {
+    if (request[method]) {
+      out[method] = (...args) => {
+        return request[method].apply(request, args).set(headers).use(promises);
+      }
+    }
   });
-
-  return requestWrapper;
+  return out;
 };
