@@ -16,7 +16,7 @@ module.exports = function (opts={}) {
       var {body, type} = yield renderer({
         url, assets,
         request: request(this.app.server, {
-          cookie: this.get('cookie'), // send cookie header
+          'cookie': this.get('cookie'), // send cookie header
           'x-csrf-token': csrf // send csrf header
         }),
       });
