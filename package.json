@@ -15,7 +15,7 @@
     "url": "https://github.com/cesarandreu"
   },
   "engines": {
-    "node": ">=0.11.15"
+    "node": ">=0.12.00"
   },
   "scripts": {
     "base": "6to5-node --experimental --ignore='public|node_modules'",
