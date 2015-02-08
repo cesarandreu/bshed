@@ -199,6 +199,8 @@ function* patch () {
     if (_.isString(body)) bikeshed.body = body;
   }
 
+  if (bikeshed.status === 'incomplete' && status === 'open') bikeshed.openedAt = new Date();
+  if (bikeshed.status === 'open' && status === 'closed') bikeshed.closedAt = new Date();
   if (_.isString(status)) bikeshed.status = status;
 
   var validation = yield bikeshed.validate();
