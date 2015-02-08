@@ -3,6 +3,7 @@
 // modules
 var koa = require('koa'),
   path = require('path'),
+  qs = require('koa-qs'),
   csrf = require('koa-csrf'),
   mount = require('koa-mount'),
   serve = require('koa-static'),
@@ -57,7 +58,7 @@ client = client({
 /**
  * SERVER
  */
-var server = koa();
+var server = qs(koa());
 server.name = config.server.name;
 server.env = config.server.env;
 server.keys = config.secret;

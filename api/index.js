@@ -4,6 +4,7 @@ var debug = require('debug')('bshed:api'),
   compose = require('koa-compose'),
   mount = require('koa-mount'),
   assert = require('assert'),
+  qs = require('koa-qs'),
   koa = require('koa');
 
 var controllers = require('./controllers'),
@@ -22,7 +23,7 @@ module.exports = function apiLoader (opts) {
   assert(opts.models);
   debug('loader:start');
 
-  var api = koa();
+  var api = qs(koa());
   api.name = opts.config.name;
   api.env = opts.config.env;
   api.keys = opts.config.secret;
