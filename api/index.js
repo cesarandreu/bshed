@@ -16,39 +16,30 @@ var controllers = require('./controllers'),
  * requires opts.config, opts.models
  * returns api application
  */
-module.exports = function apiLoader (opts) {
-  assert(opts);
-  assert(opts.s3);
-  assert(opts.config);
-  assert(opts.models);
+module.exports = function apiLoader ({s3, config, models}={}) {
+  assert(s3);
+  assert(config);
+  assert(models);
   debug('loader:start');
-
+  var {name, env, secret, endpoint} = config;
   var api = qs(koa());
-  api.name = opts.config.name;
-  api.env = opts.config.env;
-  api.keys = opts.config.secret;
-  api.config = opts.config;
-  api.models = opts.models;
-  api.s3 = opts.s3;
-  api.controllers = controllers;
-  api.helpers = helpers;
-
+  Object.assign(api, {
+    name, env, secret, config, models, s3, controllers, helpers
+  });
   var middleware = compose([
-    addToContext({models: api.models, s3: api.s3, helpers: api.helpers}),
+    addToContext({models, s3, helpers}),
     controllers(helpers)
   ]);
 
-  api.use(mount(api.config.endpoint, middleware));
+  api.use(mount(endpoint, middleware));
   debug('loader:end');
   return api;
 };
 
 // middleware~
-function addToContext (opts) {
+function addToContext (opts={}) {
   return function* addToContextMiddleware (next) {
-    this.models = opts.models;
-    this.s3 = opts.s3;
-    this.helpers = opts.helpers;
+    Object.assign(this, opts);
     yield next;
   };
 }
