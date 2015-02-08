@@ -28,6 +28,14 @@ module.exports = {
         type: DataTypes.INTEGER,
         defaultValue: 0
       },
+      openedAt: {
+        allowNull: true,
+        type: DataTypes.DATE
+      },
+      closedAt: {
+        allowNull: true,
+        type: DataTypes.DATE
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

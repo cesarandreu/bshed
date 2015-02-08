@@ -32,6 +32,15 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: 0
     },
 
+    openedAt: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    closedAt: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+
     // associations
     UserId: {
       type: DataTypes.INTEGER,

@@ -52,6 +52,8 @@ Bikeshed {
   status:string,
   size:integer,
 
+  openedAt:date,
+  closedAt:date,
   createdAt:date,
   updatedAt:date,
   deletedAt:date,
