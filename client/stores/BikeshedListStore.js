@@ -30,9 +30,7 @@ var BikeshedListStore = createStore({
   },
 
   getState: function () {
-    var state = {};
-    setProperties(state, this);
-    return state;
+    return setProperties({}, this);
   },
   dehydrate: function () {
     return this.getState();
@@ -50,6 +48,7 @@ function setProperties (self, props) {
   self.page = props.page;
   self.count = props.count;
   self.list = props.list;
+  return self;
 }
 
 
