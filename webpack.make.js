@@ -36,7 +36,7 @@ module.exports = function buildWebpackConfig (options) {
     // },
     resolve: {
       // root: path.join(__dirname, 'client'),
-      extensions: ['', '.js' , '.jsx'],
+      extensions: ['', '.js', '.jsx']
       // modulesDirectories: ['node_modules']
     },
     plugins: [
