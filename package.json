@@ -39,9 +39,9 @@
     "webpack:live": "npm run webpack -- -w"
   },
   "dependencies": {
-    "6to5": "^3.4.1",
+    "6to5": "^3.5.3",
     "6to5-loader": "^3.0.0",
-    "6to5-runtime": "^3.4.1",
+    "6to5-runtime": "^3.5.3",
     "autoprefixer-loader": "^1.0.0",
     "aws-sdk": "^2.1.8",
     "co": "^4.3.1",
