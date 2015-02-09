@@ -23,7 +23,7 @@ module.exports = function renderer (opts={}) {
         if (err) return reject(err);
 
         log('generating BSHED');
-        var BSHED = `;window.BSHED=${serialize(app.dehydrate(context))};`;
+        var BSHED = `window.BSHED=${serialize(app.dehydrate(context))};`;
 
         log('using component context')
         React.withContext(context.getComponentContext(), () => {
