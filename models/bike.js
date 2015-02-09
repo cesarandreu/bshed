@@ -49,7 +49,7 @@ module.exports = function (sequelize, DataTypes) {
     getterMethods: {
       bucket: () => 'bikesheds',
       key: function () {
-        return !this.imageName ? null : this.BikeshedId + '/' + this.imageName;
+        return !this.imageName ? null : `${this.BikeshedId}/${this.imageName}`
       }
     },
     classMethods: {
