@@ -43,41 +43,27 @@ module.exports = function BikeshedsController (helpers) {
 /**
  * GET /bikesheds
  * Public
- * Parameters: sortBy, direction, page, per
- *  per: default 12, [1..96]
- *  page: default 1, [1..]
- *  sortBy: default id, [id, name, createdAt, updatedAt]
- *  direction: default DESC, [DESC, ASC]
+ * Parameters: last, limit
+ *  limit: default 12, [1..96]
+ *  last: default Date.now(), unix timestamp in milliseconds
  */
 function* index () {
-  var Bikeshed = this.models.Bikeshed,
-    query = this.request.query,
-    page = _.parseInt(query.page),
-    per = _.parseInt(query.per),
-    sortBy = query.sortBy,
-    direction = (query.direction || '').toUpperCase();
+  var {Bikeshed} = this.models,
+    {last, limit} = this.query;
 
-  page = page >= 1 ? page : 1;
-  per = per >= 1 ? (per < 96 ? per : 96) : 12;
-  direction = _.contains(['ASC', 'DESC'], direction) ? direction : 'DESC';
-  sortBy = _.contains(['id', 'name', 'createdAt', 'updatedAt'], sortBy) ? sortBy : 'id';
-
-  var result = yield Bikeshed.findAndCountAll({
-    where: {status: {ne: 'incomplete'}},
-    order: [[sortBy, direction]],
-    offset: (page - 1) * per,
-    limit: per
+  var bikesheds = yield Bikeshed.findAll({
+    limit: limit >= 1 ? (limit < 96 ? limit : 96) : 12,
+    order: [['openedAt', 'DESC']],
+    where: {
+      status: {ne: 'incomplete'},
+      openedAt: {
+        lt: new Date(_.parseInt(last) || Date.now()),
+        ne: null
+      }
+    }
   });
 
-  this.body = {
-    list: result.rows,
-    count: result.count,
-    page: page,
-    pages: Math.ceil(result.count / per) || 1,
-    per: per,
-    sortBy: sortBy,
-    direction: direction
-  };
+  this.body = bikesheds;
 }
 
 /**
