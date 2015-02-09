@@ -1,14 +1,36 @@
-var requestAction = require('./requests');
-module.exports = function navigate (context, payload, done) {
-  if (!context.router) {
-    done(new Error('missing router'));
-  } else if (!context.request) {
-    done(new Error('missing request'));
-  } else {
-    context.dispatch('CHANGE_ROUTE_START', payload);
-    context.executeAction(requestAction, payload, function finishRequests (err) {
-      context.dispatch(err ? 'CHANGE_ROUTE_FAILURE' : 'CHANGE_ROUTE_SUCCESS', payload);
-      done(err);
-    });
+var co = require('co'),
+  _ = require('lodash'),
+  requests = require('../requests');
+
+module.exports = co.wrap(navigate);
+
+function* navigate (context, payload, done) {
+  try {
+    context.dispatch('NAVIGATE_START', payload);
+    yield co.wrap(navigateRequests)(context, payload);
+    context.dispatch('NAVIGATE_SUCCESS', payload)
+    done(null);
+  } catch (err) {
+    context.dispatch('NAVIGATE_ERROR', payload)
+    done(err);
   }
-};
+}
+
+function* navigateRequests (context, payload) {
+  var navigationRequests = payload.routes
+  .filter(route => route.handler && route.handler.navigationData)
+  .map(route => route.handler.navigationData(payload))
+  .map(nr => {
+    nr.req = requests[nr.storeName](context.request, nr);
+    context.dispatch('NEW_NAVIGATION_REQUEST', nr.req);
+    return nr;
+  })
+
+  var responses = (yield navigationRequests.map(nr => nr.req)).map(res => ({res: res}));
+
+  _.merge(navigationRequests, responses).forEach(nr => {
+    context.dispatch('FINISHED_NAVIGATION_REQUEST', nr);
+  });
+
+  return navigationRequests;
+}

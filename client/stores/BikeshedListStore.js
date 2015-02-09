@@ -22,11 +22,11 @@ var BikeshedListStore = createStore({
     return request.get('/api/bikesheds').query(query);
   },
 
-  finishedNavigationRequest: function ({storeName, res}={}) {
-    if (storeName === 'BikeshedListStore') {
-      setProperties(this, res.body)
-      this.emitChange();
-    }
+  finishedNavigationRequest: function (item={}) {
+    // if (storeName === 'BikeshedListStore') {
+    //   setProperties(this, res.body)
+    //   this.emitChange();
+    // }
   },
 
   getState: function () {
