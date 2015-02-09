@@ -26,8 +26,7 @@ function* navigateRequests (context, payload) {
     return nr;
   })
 
-  var responses = (yield navigationRequests.map(nr => nr.req)).map(res => ({res: res}));
-
+  var responses = (yield navigationRequests.map(nr => nr.req)).map(res => ({res}));
   _.merge(navigationRequests, responses).forEach(nr => {
     context.dispatch('FINISHED_NAVIGATION_REQUEST', nr);
   });
