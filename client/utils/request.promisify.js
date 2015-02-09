@@ -8,7 +8,7 @@ module.exports = function promises (request) {
 
 function _then (fulfilled, rejected) {
   this.promise = this.promise ? this.promise : new Promise((resolve, reject) => {
-    this.end((err, res) => err ? reject(err) : resolve(res));
+    this.end((res) => res.error ? reject(res) : resolve(res));
   }.bind(this))
   return this.promise.then(fulfilled, rejected);
 }
