@@ -35,7 +35,7 @@ module.exports = function renderer (opts={}) {
           var html = React.renderToStaticMarkup(Html({markup, assets, BSHED}));
 
           log('renderer finished');
-          resolve({body: html, type: 'html'});
+          resolve({body: html, type: 'html', status: 200});
         });
       }
     }
