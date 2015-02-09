@@ -13,15 +13,14 @@ module.exports = function (opts={}) {
     try {
       log(`using renderer from ${rendererPath}`);
       var renderer = require(rendererPath);
-      var {body, type} = yield renderer({
+      var {body, type, status} = yield renderer({
         url, assets,
         request: request(this.app.server, {
           'cookie': this.get('cookie'), // send cookie header
           'x-csrf-token': csrf // send csrf header
         }),
       });
-      this.body = body;
-      this.type = type;
+      Object.assign(this, {status, body, type})
     } catch (err) {
       console.error(err);
       this.throw(500);
