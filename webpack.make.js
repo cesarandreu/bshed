@@ -82,14 +82,14 @@ module.exports = function buildWebpackConfig (options) {
   // var to5LoaderBlacklist = RENDERER ? '&blacklist=regenerator' : '';
   config.module.loaders.push({
     test: /\.js$/,
-    loader: '6to5-loader?experimental&optional=selfContained', // + to5LoaderBlacklist,
+    loader: 'babel?experimental&optional=selfContained', // + to5LoaderBlacklist,
     exclude: /.*node_modules.*/
   });
 
   var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot-loader!';
   config.module.loaders.push({
     test: /\.jsx$/,
-    loader: hotLoader + '6to5-loader?experimental&optional=selfContained', // + to5LoaderBlacklist,
+    loader: hotLoader + 'babel?experimental&optional=selfContained', // + to5LoaderBlacklist,
     exclude: /.*node_modules.*((?!\.jsx).{4}$)/
   });
 
