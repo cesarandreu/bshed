@@ -79,17 +79,21 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // loaders
-  // var to5LoaderBlacklist = RENDERER ? '&blacklist=regenerator' : '';
+  var babelLoader = 'babel?experimental&optional=selfContained';
+
+  // Webpack fails at parsing generator functions :(
+  // babelLoader += RENDERER ? '&blacklist=regenerator' : '';
+
   config.module.loaders.push({
     test: /\.js$/,
-    loader: 'babel?experimental&optional=selfContained', // + to5LoaderBlacklist,
+    loader: babelLoader,
     exclude: /.*node_modules.*/
   });
 
   var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot!';
   config.module.loaders.push({
     test: /\.jsx$/,
-    loader: hotLoader + 'babel?experimental&optional=selfContained', // + to5LoaderBlacklist,
+    loader: hotLoader + babelLoader,
     exclude: /.*node_modules.*((?!\.jsx).{4}$)/
   });
 
