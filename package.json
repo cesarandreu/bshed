@@ -25,7 +25,7 @@
     "dev": "parallelshell 'npm run dev:server' 'npm run dev:renderer' 'npm run dev:client'",
     "dev:server": "nodemon --exec npm run base -- server.js",
     "dev:renderer": "webpack --config webpack.renderer.js --progress -c -w",
-    "dev:client": "webpack-dev-server --content-base public --port 2992 --inline -h -c --progress",
+    "dev:client": "webpack-dev-server --content-base public --inline -h -c --progress",
     "test": "npm run test:base -- test/**/*.spec.js",
     "test:api": "npm run test:base -- test/api/*.spec.js",
     "test:models": "npm run test:base -- test/models/*.spec.js",

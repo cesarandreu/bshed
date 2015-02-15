@@ -12,7 +12,7 @@ module.exports = function buildWebpackConfig (options) {
     RENDERER = !!options.renderer;
 
   // shared values
-  var publicPath = PRODUCTION ? '/assets/' : 'http://localhost:2992/assets/',
+  var publicPath = PRODUCTION ? '/assets/' : 'http://localhost:8080/assets/',
     outputPath = path.join(__dirname, 'public', RENDERER ? 'renderer' : 'assets');
 
   // base
