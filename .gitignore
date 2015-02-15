@@ -13,7 +13,8 @@ coverage
 .DS_Store
 
 # Builds
-public
+public/assets
+public/renderer
 
 # babel caching
 .roadrunner.json
