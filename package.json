@@ -3,6 +3,7 @@
   "description": "bikeshedding app",
   "license": "Apache-2.0",
   "main": "server.js",
+  "private": true,
   "keywords": [],
   "version": "0.0.0",
   "repository": {
