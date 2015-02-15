@@ -20,7 +20,7 @@
   "scripts": {
     "base": "babel-node --experimental --ignore='public|node_modules' --blacklist='regenerator'",
     "build:client": "webpack -p -c --progress",
-    "clean": "rm -rf public/*",
+    "clean": "rm -rf public/renderer public/assets",
     "dev": "parallelshell 'npm run dev:server' 'npm run dev:renderer' 'npm run dev:client'",
     "dev:server": "nodemon --exec npm run base -- server.js",
     "dev:renderer": "webpack --config webpack.renderer.js --progress -c -w",
