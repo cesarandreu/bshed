@@ -1,7 +1,6 @@
 'use strict';
 
 var chai = require('chai');
-chai.use(require('chai-json-schema'));
 
 global.expect = chai.expect;
 

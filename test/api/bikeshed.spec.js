@@ -12,7 +12,7 @@ var {Bikeshed, User, Bike, Vote} = models;
 var svgPath = path.join(helper.fixtures, 'invalid.svg'),
   jpgPath = path.join(helper.fixtures, 'puppy_01.jpg');
 
-var user, bikeshed, bikes, votes, attributes, res, url, headers, body, schema, bikesIndex;
+var user, bikeshed, bikes, votes, attributes, res, url, headers, body, bikesIndex;
 var UserId, BikeshedId;
 
 describe('Request:Bikeshed', function () {
@@ -28,36 +28,6 @@ describe('Request:Bikeshed', function () {
   describe('GET /api/bikesheds', function () {
     beforeEach(function* () {
       url = '/api/bikesheds';
-      schema = {
-        title: 'GET /api/bikesheds response',
-        type: 'object',
-        properties: {
-          sortBy: { type: 'string', required: true,
-            enum: ['id', 'name', 'createdAt', 'updatedAt']
-          },
-          direction: { type: 'string', required: true, enum: ['ASC', 'DESC'] },
-          per: { type: 'number', required: true, minimum: 1, maximum: 96 },
-          pages: { type: 'number', required: true, minimum: 1 },
-          page: { type: 'number', required: true, minimum: 1 },
-          count: { type: 'number', required: true },
-          list: { type: 'array', required: true,
-            items: { type: 'object',
-              properties: {
-                id: { type: 'number', required: true, minimum: 1 },
-                name: { type: 'string', required: true, minLength: 1 },
-                body: { type: 'string', required: true, minLength: 1 },
-                size: { type: 'number', required: true, minimum: 0 },
-                updatedAt: { type: 'string', required: true },
-                createdAt: { type: 'string', required: true },
-                status: { type: 'string', required: true,
-                  enum: ['open', 'closed']
-                }
-              }
-            }
-          }
-        }
-      };
-
       _.assign(attributes, body);
       yield Bikeshed.destroy({truncate: true});
       yield _.times(30, function (n) {
@@ -65,11 +35,6 @@ describe('Request:Bikeshed', function () {
         attributes.status = ['incomplete', 'open', 'closed'][n % 3];
         return Bikeshed.create(attributes, {validate: false});
       });
-    });
-
-    it('returns expected schema', function* () {
-      res = yield request.get(url);
-      expect(res.body).to.be.jsonSchema(schema);
     });
 
     it('sets defaults', function* () {
@@ -87,7 +52,6 @@ describe('Request:Bikeshed', function () {
 
     it('paginates', function* () {
       res = yield request.get(url).query({page: 2});
-      expect(res.body).to.be.jsonSchema(schema);
       expect(res.body.page).to.equal(2);
       expect(res.body.list).to.be.an('array').with.length(8);
     });
@@ -112,25 +76,10 @@ describe('Request:Bikeshed', function () {
   describe('POST /api/bikesheds', function () {
     beforeEach(function () {
       url = '/api/bikesheds';
-      schema = {
-        title: 'POST /api/bikesheds response',
-        type: 'object',
-        properties: {
-          id: { type: 'number', required: true, minimum: 1 },
-          name: { type: 'string', required: true, minLength: 1 },
-          body: { type: 'string', required: true, minLength: 1 },
-          updatedAt: { type: 'string', required: true },
-          createdAt: { type: 'string', required: true },
-          status: { type: 'string', required: true,
-            enum: ['incomplete', 'open', 'closed']
-          },
-        }
-      };
     });
 
     it('creates and returns a bikeshed', function* () {
       res = yield request.post(url).set(headers).send(body).expect(201);
-      expect(res.body).to.be.jsonSchema(schema);
     });
 
     it('returns 400 on empty body', function* () {
@@ -158,18 +107,6 @@ describe('Request:Bikeshed', function () {
 
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>');
-      schema = {
-        title: 'GET /api/bikesheds/:bikeshed response',
-        type: 'object',
-        properties: {
-          id: { type: 'number', required: true },
-          name: { type: 'string', required: true },
-          body: { type: 'string', required: true },
-          status: { type: 'string', required: true,
-            enum: ['incomplete', 'open', 'closed']
-          }
-        }
-      };
       attributes = _.assign(attributes, body);
       bikeshed = yield Bikeshed.create(attributes);
     });
@@ -177,7 +114,6 @@ describe('Request:Bikeshed', function () {
     it('returns a bikeshed', function* () {
       url = url({bikeshed: bikeshed.id});
       res = yield request.get(url).expect(200);
-      expect(res.body).to.be.jsonSchema(schema);
     });
 
     it('returns 404 when not found', function* () {
@@ -190,18 +126,6 @@ describe('Request:Bikeshed', function () {
   describe('POST /api/bikesheds/:bikeshed', function () {
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>');
-      schema = {
-        title: 'POST /api/bikesheds/:bikeshed response',
-        type: 'object',
-        properties: {
-          id: { type: 'number', required: true },
-          name: { type: 'string', required: true },
-          body: { type: 'string', required: true },
-          score: { type: 'number', required: true },
-          imageName: { type: ['string', 'null'], required: true },
-          imageType: { type: ['string', 'null'], required: true }
-        }
-      };
       attributes = _.assign(attributes, body);
       bikeshed = yield Bikeshed.create(attributes);
       body = {name: 'bike', body: 'description'};
@@ -210,14 +134,12 @@ describe('Request:Bikeshed', function () {
 
     it('allows you to add a bike without image', function* () {
       res = yield request.post(url).set(headers).send(body).expect(201);
-      expect(res.body).to.be.jsonSchema(schema);
     });
 
     it('allows you to add a bike with image', function* () {
       res = yield request.post(url).set(headers)
         .field('name', 'bike').field('body', 'description')
         .attach('image', jpgPath).expect(201);
-      expect(res.body).to.be.jsonSchema(schema);
     });
 
     it('returns 400 on empty body', function* () {
@@ -370,7 +292,6 @@ describe('Request:Bikeshed', function () {
   });
 
   // score
-  // TODO: add schema
   describe('GET /api/bikesheds/:bikeshed/bikes', function () {
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>/bikes');
@@ -414,7 +335,6 @@ describe('Request:Bikeshed', function () {
   });
 
   // rate
-  // TODO: add schema
   describe('POST /api/bikesheds/:bikeshed/bikes', function () {
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>/bikes');
@@ -487,7 +407,6 @@ describe('Request:Bikeshed', function () {
   });
 
   // change
-  // TODO: add schema
   describe('PUT /api//bikesheds/:bikeshed/bikes', function () {
     beforeEach(function* () {
       url = _.template('/api/bikesheds/<%=bikeshed%>/bikes');
