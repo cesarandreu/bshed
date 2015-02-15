@@ -22,13 +22,13 @@ module.exports = function buildWebpackConfig (options) {
     module: {
       loaders: [{
         test: /\.(png|jpg|jpeg|gif|svg)$/,
-        loader: 'url-loader?limit=10000'
+        loader: 'url?limit=10000'
       }, {
         test: /\.(woff)$/,
-        loader: 'url-loader?limit=100000'
+        loader: 'url?limit=100000'
       }, {
         test: /\.(ttf|eot)$/,
-        loader: 'file-loader'
+        loader: 'file'
       }]
     },
     // resolveLoader: {
@@ -86,17 +86,17 @@ module.exports = function buildWebpackConfig (options) {
     exclude: /.*node_modules.*/
   });
 
-  var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot-loader!';
+  var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot!';
   config.module.loaders.push({
     test: /\.jsx$/,
     loader: hotLoader + 'babel?experimental&optional=selfContained', // + to5LoaderBlacklist,
     exclude: /.*node_modules.*((?!\.jsx).{4}$)/
   });
 
-  var lessLoader = 'css-loader?sourceMap!autoprefixer-loader!less-loader?sourceMap';
+  var lessLoader = 'css?sourceMap!autoprefixer!less?sourceMap';
   config.module.loaders.push({
     test: /\.less$/,
-    loader: PRODUCTION ? ExtractTextPlugin.extract(lessLoader) : 'style-loader!' + lessLoader
+    loader: PRODUCTION ? ExtractTextPlugin.extract(lessLoader) : 'style!' + lessLoader
   });
 
   // target
