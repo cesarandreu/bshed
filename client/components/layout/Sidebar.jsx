@@ -2,7 +2,7 @@ var React = require('react/addons'),
   LayoutAction = require('../../actions/Layout'),
   LayoutStore = require('../../stores/LayoutStore'),
   {Link} = require('react-router'),
-  {Mixin: FluxibleMixin} = require('fluxible');
+  {FluxibleMixin} = require('fluxible');
 
 var Sidebar = React.createClass({
   mixins: [FluxibleMixin],

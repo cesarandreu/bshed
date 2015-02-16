@@ -2,7 +2,7 @@ var React = require('react'),
   IconButton = require('../general/IconButton.jsx'),
   LayoutAction = require('../../actions/Layout'),
   NavbarUser = require('./NavbarUser.jsx'),
-  {Mixin: FluxibleMixin} = require('fluxible'),
+  {FluxibleMixin} = require('fluxible'),
   {Link} = require('react-router');
 
 var Navbar = React.createClass({

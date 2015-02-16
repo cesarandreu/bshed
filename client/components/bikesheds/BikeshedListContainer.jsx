@@ -1,5 +1,5 @@
 var React = require('react'),
-  {Mixin: FluxibleMixin} = require('fluxible'),
+  {FluxibleMixin} = require('fluxible'),
   {State: StateMixin} = require('react-router'),
   BikeshedList = require('./BikeshedList.jsx'),
   BikeshedListStore = require('../../stores/BikeshedListStore'),

@@ -1,5 +1,5 @@
 var React = require('react'),
-  {Mixin: FluxibleMixin} = require('fluxible'),
+  {FluxibleMixin} = require('fluxible'),
   ApplicationStore = require('../stores/ApplicationStore');
 
 var Html = React.createClass({

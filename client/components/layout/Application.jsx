@@ -1,6 +1,6 @@
 var React = require('react'),
   {RouteHandler} = require('react-router'),
-  {Mixin: FluxibleMixin} = require('fluxible');
+  {FluxibleMixin} = require('fluxible');
 
 var ApplicationStore = require('../../stores/ApplicationStore');
 
