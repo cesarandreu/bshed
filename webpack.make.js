@@ -39,15 +39,7 @@ module.exports = function buildWebpackConfig (options) {
       // modulesDirectories: ['node_modules']
     },
     plugins: [
-      function statsPlugin () {
-        function statsPluginDone (stats) {
-          var jsonStats = stats.toJson();
-          jsonStats.publicPath = publicPath;
-          mkdirp.sync(outputPath);
-          fs.writeFileSync(path.join(outputPath, 'stats.json'), JSON.stringify(jsonStats));
-        }
-        if (!RENDERER) this.plugin('done', statsPluginDone);
-      },
+      StatsPlugin(publicPath, outputPath),
       new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(ENV)})
     ]
   };
@@ -132,3 +124,17 @@ module.exports = function buildWebpackConfig (options) {
 
   return config;
 };
+
+function StatsPlugin (publicPath, outputPath) {
+  return function () {
+    this.plugin('done', saveStats);
+  };
+
+  function saveStats (stats) {
+    var jsonStats = stats.toJson();
+    jsonStats.publicPath = publicPath;
+    mkdirp.sync(outputPath);
+    fs.writeFileSync(path.join(outputPath, 'stats.json'), JSON.stringify(jsonStats));
+  }
+}
+
