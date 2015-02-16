@@ -96,14 +96,16 @@ module.exports = function buildWebpackConfig (options) {
     config.plugins.push(new ExtractTextPlugin('scripts.[hash].css'));
   }
   if (!RENDERER) {
-    // Ensures requires for 'react' and 'react/addons' normalize to the same requirement
-    var reactRegex = /^react(\/addons)?$/, reactAddonsPath = require.resolve('react/addons');
-    config.plugins.push(new webpack.NormalModuleReplacementPlugin(reactRegex, reactAddonsPath));
-
     config.plugins.push(
       new webpack.PrefetchPlugin('react'),
       new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment')
     );
+  }
+  if (PRODUCTION || RENDERER) {
+    // Ensures requires for 'react' and 'react/addons' normalize to the same path
+    var reactAddonsPath = require.resolve('react/dist/react-with-addons'),
+      reactRegex = /^react(\/addons)?$/;
+    config.plugins.push(new webpack.NormalModuleReplacementPlugin(reactRegex, reactAddonsPath));
   }
   if (PRODUCTION && !RENDERER) {
     config.plugins.push(
