@@ -30,13 +30,8 @@ module.exports = function buildWebpackConfig (options) {
         loader: 'file'
       }]
     },
-    // resolveLoader: {
-    //   root: path.join(__dirname, 'node_modules')
-    // },
     resolve: {
-      // root: path.join(__dirname, 'client'),
       extensions: ['', '.js', '.jsx']
-      // modulesDirectories: ['node_modules']
     },
     plugins: [
       StatsPlugin(publicPath, outputPath),
