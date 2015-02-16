@@ -19,6 +19,7 @@ module.exports = function buildWebpackConfig (options) {
   var config = {
     externals: [],
     module: {
+      noParse: [/react-with-addons/],
       loaders: [{
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         loader: 'url?limit=10000'
