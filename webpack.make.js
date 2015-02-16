@@ -17,7 +17,6 @@ module.exports = function buildWebpackConfig (options) {
 
   // base
   var config = {
-    devtool: 'sourcemap',
     externals: [],
     module: {
       loaders: [{
@@ -52,6 +51,9 @@ module.exports = function buildWebpackConfig (options) {
       new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(ENV)})
     ]
   };
+
+  // Source maps
+  config.devtool = PRODUCTION ? 'source-map' : 'eval-source-map';
 
   // entry
   config.entry = {
