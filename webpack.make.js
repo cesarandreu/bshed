@@ -102,7 +102,7 @@ module.exports = function buildWebpackConfig (options) {
 
   // plugins
 
-  // Ensures requires for `react` and `react/addons` normalize to the same requirement
+  // Ensures requires for 'react' and 'react/addons' normalize to the same requirement
   var reactRegex = /^react(\/addons)?$/, reactAddonsPath = require.resolve('react/addons');
   config.plugins.push(new webpack.NormalModuleReplacementPlugin(reactRegex, reactAddonsPath));
 
