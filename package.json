@@ -49,7 +49,7 @@
     "co": "^4.3.1",
     "co-fs": "^1.2.0",
     "co-wait": "0.0.0",
-    "cookies-js": "^1.2.0",
+    "cookies-js": "^1.2.1",
     "css-loader": "^0.9.1",
     "debug": "^2.1.1",
     "extract-text-webpack-plugin": "^0.3.8",
