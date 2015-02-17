@@ -1,23 +1,22 @@
 var React = require('react'),
-  {Link} = require('react-router');
+  {FluxibleMixin} = require('fluxible'),
+  BikeshedBuilder = require('./BikeshedBuilder.jsx'),
+  BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore');
 
 var Home = React.createClass({
+  mixins: [FluxibleMixin],
+  statics: {
+    storeListeners: [BikeshedBuilderStore]
+  },
+  getInitialState: function () {
+    return this.getStore(BikeshedBuilderStore).getState();
+  },
+
+  onChange: function () {
+    this.setState(this.getStore(BikeshedBuilderStore).getState());
+  },
   render: function () {
-    return (
-      <div className='home'>
-        <header>
-          <div className='title'>BIKESHED IT!</div>
-          <div className='sub-title'>The premier bikeshedding platform.</div>
-          <Link to='/'>HOME</Link>
-          <Link to='/about'>ABOUT</Link>
-          <Link to='/bikesheds'>BIKESHEDS</Link>
-          <Link to='/bikesheds/1'>BIKESHED 1</Link>
-        </header>
-        <section> SECTION 1 </section>
-        <section> SECTION 2 </section>
-        <section> SECTION 3 </section>
-      </div>
-    );
+    return <BikeshedBuilder {...this.state}/>
   }
 });
 
