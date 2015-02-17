@@ -2,13 +2,17 @@ var createStore = require('fluxible/utils/createStore');
 
 var BikeshedBuilderStore = createStore({
   storeName: 'BikeshedBuilderStore',
-  // handlers: {
-  //   'UPDATE_LAYOUT': 'updateLayout',
-  // },
+  handlers: {
+    'ADD_FILES_TO_BIKESHED': 'addFiles',
+  },
   initialize: function () {
     Object.assign(this, {
       bikes: []
     });
+  },
+
+  addFiles: function (files) {
+    console.log('files!', files);
   },
 
   getBikes: function () {

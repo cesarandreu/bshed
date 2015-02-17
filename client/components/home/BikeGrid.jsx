@@ -1,8 +1,11 @@
 var React = require('react/addons'),
+  {FluxibleMixin} = require('fluxible'),
   cx = React.addons.classSet,
+  BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
   Icon = require('../general/Icon.jsx');
 
 var BikeGrid = React.createClass({
+  mixins: [FluxibleMixin],
   getInitialState: function () {
     return {
       dragging: false
@@ -48,7 +51,8 @@ var BikeGrid = React.createClass({
       multiple: true,
       accept: 'image/*',
       style: {display: 'none'},
-      ref: 'fileInput'
+      ref: 'fileInput',
+      onChange: this.changeFileInput
     }
 
     return (
@@ -83,7 +87,11 @@ var BikeGrid = React.createClass({
     this.setState({dragging: false});
     e.stopPropagation();
     e.preventDefault();
-    console.log('e.dataTransfer.files', e.dataTransfer.files);
+    this.executeAction(BikeshedBuilderAction.addFiles, e.dataTransfer.files);
+  },
+
+  changeFileInput: function (e) {
+    this.executeAction(BikeshedBuilderAction.addFiles, e.target.files);
   },
 
   clickFileInput: function (e) {
