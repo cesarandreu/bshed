@@ -1,4 +1,5 @@
-var createStore = require('fluxible/utils/createStore');
+var createStore = require('fluxible/utils/createStore'),
+  _ = require('lodash');
 
 var BikeshedBuilderStore = createStore({
   storeName: 'BikeshedBuilderStore',
@@ -7,12 +8,23 @@ var BikeshedBuilderStore = createStore({
   },
   initialize: function () {
     Object.assign(this, {
-      bikes: []
+      bikes: [],
+      bikesIndex: {}
     });
   },
 
   addFiles: function (files) {
-    console.log('files!', files);
+    files
+      .filter(f => !this.bikesIndex[f.name])
+      .forEach(f => {
+        this.bikes.push({
+          file: f,
+          name: f.name,
+          url: URL.createObjectURL(f)
+        });
+      });
+    this.bikesIndex = _.indexBy(this.bikes, 'name');
+    this.emitChange();
   },
 
   getBikes: function () {
