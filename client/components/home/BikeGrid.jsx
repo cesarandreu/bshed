@@ -17,7 +17,14 @@ var BikeGrid = React.createClass({
 
     var items;
     if (bikes.length) {
-      items = (bikes.map((b, key) => <div key={key}>{b}</div>));
+      items = (bikes.map((b, key) => {
+        return (
+          <div key={key}>
+            <img src={b.url}/>
+            <span>{b}</span>
+          </div>
+        )
+      }));
     } else {
 
       items = (
