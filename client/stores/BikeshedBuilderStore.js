@@ -13,6 +13,10 @@ var BikeshedBuilderStore = createStore({
     });
   },
 
+  reindex: function () {
+    this.bikesIndex = _.indexBy(this.bikes, 'name');
+  },
+
   addFiles: function (files) {
     files
       .filter(f => !this.bikesIndex[f.name])
@@ -23,7 +27,14 @@ var BikeshedBuilderStore = createStore({
           url: URL.createObjectURL(f)
         });
       });
-    this.bikesIndex = _.indexBy(this.bikes, 'name');
+    this.reindex();
+    this.emitChange();
+  },
+
+  removeBike: function (idx) {
+    URL.revokeObjectURL(this.bikes[idx].url);
+    this.bikes.splice(idx, 1);
+    this.reindex();
     this.emitChange();
   },
 
