@@ -2,6 +2,7 @@ var React = require('react/addons'),
   {FluxibleMixin} = require('fluxible'),
   cx = React.addons.classSet,
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
+  IconButton = require('../general/IconButton.jsx'),
   Icon = require('../general/Icon.jsx');
 
 var BikeGrid = React.createClass({
@@ -17,11 +18,18 @@ var BikeGrid = React.createClass({
 
     var items;
     if (bikes.length) {
-      items = (bikes.map((b, key) => {
+      items = (bikes.map((bike, key) => {
         return (
-          <div key={key}>
-            <img src={b.url}/>
-            <span>{b}</span>
+          <div className='bike-item' key={key}>
+            <div className='bike-item-image'>
+              <img src={bike.url}/>
+            </div>
+            <div className='bike-item-info'>
+              <div className='bike-item-name'>{bike.name}</div>
+              <IconButton className='bike-item-action' icon='md-info'/>
+
+            </div>
+
           </div>
         )
       }));

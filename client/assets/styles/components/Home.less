@@ -26,14 +26,6 @@
 
 // }
 
-.bikeshed-builder {
-
-  .bikeshed-options {
-
-  }
-
-}
-
 
 .bike-grid {
 
@@ -46,12 +38,63 @@
 .bike-grid-wrapper {
   height: calc(~'75% - ' @navbar-height);
   .flexbox;
-  .flex-direction(row);
+  .flex-flow(row, wrap);
 
   &.empty {
     .flex-direction(column);
     .align-items(center);
     .justify-content(center);
+  }
+}
+
+
+.bike-item {
+  height: 20vw;
+  width: 20vw;
+  position: relative;
+  border: 2px solid white;
+
+  .bike-item-image {
+    height: 100%;
+    width: 100%;
+    .flexbox;
+    .align-items(center);
+    .justify-content(center);
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .bike-item-info {
+    .flexbox;
+    .flex-flow(row, nowrap);
+    .align-items(center);
+    .align-content(space-between);
+    .justify-content(space-between);
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    color: white;
+    padding: 0 1em;
+
+    .bike-item-name {
+      .align-self(center);
+      color: white;
+      font-weight: 450;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+
+    .bike-item-action {
+      .align-self(end);
+    }
+
   }
 
 }
