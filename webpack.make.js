@@ -64,7 +64,7 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // loaders
-  var babelLoader = 'babel?experimental&optional=selfContained';
+  var babelLoader = 'babel?experimental&optional=runtime';
 
   // Webpack fails at parsing generator functions :(
   // babelLoader += RENDERER ? '&blacklist=regenerator' : '';
