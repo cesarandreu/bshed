@@ -4,9 +4,9 @@ var LayoutStore = createStore({
   storeName: 'LayoutStore',
   handlers: {
     'CHANGE_ROUTE_SUCCESS': 'closeMenu',
-    'TOGGLE_MENU': 'toggleMenu',
-    'OPEN_MENU': 'openMenu',
-    'CLOSE_MENU': 'closeMenu'
+    'TOGGLE_LAYOUT_MENU': 'toggleMenu',
+    'OPEN_LAYOUT_MENU': 'openMenu',
+    'CLOSE_LAYOUT_MENU': 'closeMenu'
   },
   initialize: function () {
     this.openMenu = false;
