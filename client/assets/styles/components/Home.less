@@ -39,6 +39,9 @@
   height: calc(~'75% - ' @navbar-height);
   .flexbox;
   .flex-flow(row, wrap);
+  .align-items(start);
+  .align-content(start);
+  .justify-content(start);
 
   &.empty {
     .flex-direction(column);
@@ -49,16 +52,17 @@
 
 
 .bike-item {
-  height: 20vw;
-  width: 20vw;
+  height: 250px;
+  width: 250px;
   position: relative;
-  border: 2px solid white;
+  border: 1px solid white;
 
   .bike-item-image {
     height: 100%;
     width: 100%;
     .flexbox;
-    .align-items(center);
+    // .align-items(center);
+    .align-items(start);
     .justify-content(center);
 
     img {
@@ -78,7 +82,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 20%;
+    height: 50px;
     color: white;
     padding: 0 1em;
 
