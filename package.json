@@ -15,9 +15,6 @@
     "email": "cesarandreu@gmail.com",
     "url": "https://github.com/cesarandreu"
   },
-  "engines": {
-    "node": ">=0.12.0"
-  },
   "scripts": {
     "base": "babel-node --experimental --ignore='public|node_modules' --blacklist='regenerator'",
     "build:client": "webpack -p -c --progress",
