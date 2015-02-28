@@ -30,15 +30,15 @@ function* renderer (options) {
 }
 
 function runRouter (context) {
-  return function runRouterThunk (callback) {
+  return new Promise(resolve => {
     context.getComponentContext().router.run((Handler, state) => {
-      callback(null, {Handler, state})
+      resolve({Handler, state})
     })
-  }
+  })
 }
 
 function render ({context, Handler, assets}={}) {
-  return function renderThunk (callback) {
+  return new Promise(resolve => {
     log('using component context')
     React.withContext(context.getComponentContext(), () => {
 
@@ -52,7 +52,7 @@ function render ({context, Handler, assets}={}) {
       var html = React.renderToStaticMarkup(Html({markup, assets, BSHED}))
 
       log('renderer finished')
-      callback(null, {body: html, type: 'html', status: 200})
+      resolve({body: html, type: 'html', status: 200})
     })
-  }
+  })
 }
