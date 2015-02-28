@@ -1,4 +1,4 @@
-var createStore = require('fluxible/utils/createStore');
+var createStore = require('fluxible/utils/createStore')
 
 var BikeshedListStore = createStore({
   storeName: 'BikeshedListStore',
@@ -15,44 +15,44 @@ var BikeshedListStore = createStore({
       pages: 1,
       count: 0,
       list: []
-    });
+    })
   },
 
   fetch: function (request, {params, pathname, query}={}) {
-    return request.get('/api/bikesheds').query(query);
+    return request.get('/api/bikesheds').query(query)
   },
 
   finishedNavigationRequest: function (item={}) {
     // if (storeName === 'BikeshedListStore') {
     //   setProperties(this, res.body)
-    //   this.emitChange();
+    //   this.emitChange()
     // }
   },
 
   getState: function () {
-    return setProperties({}, this);
+    return setProperties({}, this)
   },
   dehydrate: function () {
-    return this.getState();
+    return this.getState()
   },
   rehydrate: function (state) {
-    setProperties(this, state);
+    setProperties(this, state)
   }
-});
+})
 
 function setProperties (self, props) {
-  self.direction = props.direction;
-  self.sortBy = props.sortBy;
-  self.per = props.per;
-  self.pages = props.pages;
-  self.page = props.page;
-  self.count = props.count;
-  self.list = props.list;
-  return self;
+  self.direction = props.direction
+  self.sortBy = props.sortBy
+  self.per = props.per
+  self.pages = props.pages
+  self.page = props.page
+  self.count = props.count
+  self.list = props.list
+  return self
 }
 
 
-module.exports = BikeshedListStore;
+module.exports = BikeshedListStore
 
           // sortBy: { type: 'string', required: true,
           //   enum: ['id', 'name', 'createdAt', 'updatedAt']
