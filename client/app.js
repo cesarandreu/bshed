@@ -1,5 +1,6 @@
-var RouterPlugin = require('./plugins/router.js'),
+var RouterPlugin = require('./plugins/router'),
   RequestPlugin = require('./plugins/request'),
+  ActionPlugin = require('./plugins/action'),
   Fluxible = require('fluxible')
 
 var app = new Fluxible({
@@ -13,6 +14,8 @@ app.plug(RouterPlugin({
 app.plug(RequestPlugin({
   request: require('./utils/request.client.js')
 }))
+
+app.plug(ActionPlugin())
 
 app.registerStore(require('./stores/ApplicationStore.js'))
 app.registerStore(require('./stores/BikeshedListStore.js'))
