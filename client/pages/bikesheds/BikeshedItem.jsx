@@ -1,9 +1,9 @@
-var React = require('react');
+var React = require('react')
 
 var BikeshedItem = React.createClass({
   statics: {
     navigationData: function () {
-      return {};
+      return {}
     }
   },
   propTypes: {
@@ -11,11 +11,11 @@ var BikeshedItem = React.createClass({
       name: React.PropTypes.string.isRequired,
       body: React.PropTypes.string.isRequired,
       size: React.PropTypes.number.isRequired,
-      status: React.PropTypes.string.isRequired,
+      status: React.PropTypes.string.isRequired
     })
   },
   render: function () {
-    var {name, body, size, status} = this.props.bikeshed;
+    var {name, body, size, status} = this.props.bikeshed
     return (
       <div className='bikeshed-item'>
         <div className='bikeshed-item-status'>{status}</div>
@@ -23,8 +23,8 @@ var BikeshedItem = React.createClass({
         <div className='bikeshed-item-body'>{body}</div>
         <div className='bikeshed-item-size'>{size}</div>
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = BikeshedItem;
+module.exports = BikeshedItem

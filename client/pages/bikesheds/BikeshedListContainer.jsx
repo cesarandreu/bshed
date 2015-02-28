@@ -3,7 +3,7 @@ var React = require('react'),
   {State: StateMixin} = require('react-router'),
   BikeshedList = require('./BikeshedList.jsx'),
   BikeshedListStore = require('../../stores/BikeshedListStore'),
-  {storeName} = BikeshedListStore;
+  {storeName} = BikeshedListStore
 
 var BikeshedListContainer = React.createClass({
   mixins: [FluxibleMixin, StateMixin],
@@ -15,17 +15,17 @@ var BikeshedListContainer = React.createClass({
   },
 
   getInitialState: function () {
-    return this.getStore(BikeshedListStore).getState();
+    return this.getStore(BikeshedListStore).getState()
   },
 
   onChange: function () {
-    var state = this.getStore(BikeshedListStore).getState();
-    this.setState(state);
+    var state = this.getStore(BikeshedListStore).getState()
+    this.setState(state)
   },
 
   render: function () {
     return <BikeshedList {...this.state}/>
   }
-});
+})
 
-module.exports = BikeshedListContainer;
+module.exports = BikeshedListContainer

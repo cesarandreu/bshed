@@ -1,5 +1,5 @@
 var React = require('react'),
-  {Link} = require('react-router');
+  {Link} = require('react-router')
 
 var BikeshedList = React.createClass({
   render: function () {
@@ -13,8 +13,8 @@ var BikeshedList = React.createClass({
           return <div key={idx}>{JSON.stringify(bikeshed)}</div>
         })}
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = BikeshedList;
+module.exports = BikeshedList

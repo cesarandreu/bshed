@@ -3,7 +3,7 @@ var co = require('co'),
   serialize = require('serialize-javascript'),
   log = require('debug')('bshed:client:renderer')
 
-var Html = React.createFactory(require('../components/Html.jsx')),
+var Html = React.createFactory(require('./Html.jsx')),
   navigate = require('../actions/navigate'),
   app = require('../app')
 

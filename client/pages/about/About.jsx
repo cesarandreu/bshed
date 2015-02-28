@@ -1,6 +1,6 @@
-var React = require('react');
+var React = require('react')
 
-var {Link, State: StateMixin} = require('react-router');
+var {Link, State: StateMixin} = require('react-router')
 
 var About = React.createClass({
   mixins: [StateMixin],
@@ -13,8 +13,8 @@ var About = React.createClass({
           <Link to='/about'>ABOUT</Link>
         </header>
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = About;
+module.exports = About

@@ -2,8 +2,8 @@ var React = require('react/addons'),
   {FluxibleMixin} = require('fluxible'),
   cx = React.addons.classSet,
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
-  IconButton = require('../general/IconButton.jsx'),
-  Icon = require('../general/Icon.jsx');
+  IconButton = require('../../components/general/IconButton.jsx'),
+  Icon = require('../../components/general/Icon.jsx')
 
 var BikeGrid = React.createClass({
   mixins: [FluxibleMixin],
@@ -14,9 +14,9 @@ var BikeGrid = React.createClass({
   },
 
   render: function () {
-    var {bikes} = this.props;
+    var {bikes} = this.props
 
-    var items;
+    var items
     if (bikes.length) {
       items = (bikes.map((bike, key) => {
         return (
@@ -32,7 +32,7 @@ var BikeGrid = React.createClass({
 
           </div>
         )
-      }));
+      }))
     } else {
 
       items = (
@@ -42,7 +42,7 @@ var BikeGrid = React.createClass({
             Click here or drag & drop images to begin
           </div>
         </button>
-      );
+      )
     }
 
     var bikeGridProps = {
@@ -54,12 +54,12 @@ var BikeGrid = React.createClass({
       onDragEnter: this.onDragEnter,
       onDragOver: this.onDragOver,
       onDrop: this.onDrop
-    };
+    }
 
     var wrapperClasses = cx({
       'bike-grid-wrapper': true,
       'empty': !bikes.length
-    });
+    })
 
     var fileInputProps = {
       type: 'file',
@@ -77,43 +77,43 @@ var BikeGrid = React.createClass({
           {items}
         </div>
       </div>
-    );
+    )
   },
 
   onDragEnter: function (e) {
-    this.setState({dragging: true});
-    e.stopPropagation();
-    e.preventDefault();
+    this.setState({dragging: true})
+    e.stopPropagation()
+    e.preventDefault()
   },
 
   onDragOver: function (e) {
-    this.setState({dragging: true});
-    e.stopPropagation();
-    e.preventDefault();
+    this.setState({dragging: true})
+    e.stopPropagation()
+    e.preventDefault()
   },
 
   onDragLeave: function (e) {
-    this.setState({dragging: false});
-    e.stopPropagation();
-    e.preventDefault();
+    this.setState({dragging: false})
+    e.stopPropagation()
+    e.preventDefault()
   },
 
   onDrop: function (e) {
-    this.setState({dragging: false});
-    e.stopPropagation();
-    e.preventDefault();
-    this.executeAction(BikeshedBuilderAction.addFiles, e.dataTransfer.files);
+    this.setState({dragging: false})
+    e.stopPropagation()
+    e.preventDefault()
+    this.executeAction(BikeshedBuilderAction.addFiles, e.dataTransfer.files)
   },
 
   changeFileInput: function (e) {
-    this.executeAction(BikeshedBuilderAction.addFiles, e.target.files);
+    this.executeAction(BikeshedBuilderAction.addFiles, e.target.files)
   },
 
   clickFileInput: function (e) {
-    this.refs.fileInput.getDOMNode().click();
-    e.preventDefault();
+    this.refs.fileInput.getDOMNode().click()
+    e.preventDefault()
   }
 
-});
+})
 
-module.exports = BikeGrid;
+module.exports = BikeGrid

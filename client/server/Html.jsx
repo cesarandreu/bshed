@@ -1,6 +1,6 @@
 var React = require('react'),
   {FluxibleMixin} = require('fluxible'),
-  ApplicationStore = require('../stores/ApplicationStore');
+  ApplicationStore = require('../stores/ApplicationStore')
 
 var Html = React.createClass({
   mixins: [FluxibleMixin],
@@ -11,7 +11,7 @@ var Html = React.createClass({
   },
   render: function () {
     var title = this.getStore(ApplicationStore).getPageTitle(),
-      {scripts, styles} = this.props.assets;
+      {scripts, styles} = this.props.assets
 
     return (
       <html>
@@ -21,7 +21,9 @@ var Html = React.createClass({
           <meta name='viewport' content='width=device-width, user-scalable=no' />
           <meta name='description' content='An app for bikeshedding'/>
           <title>{title}</title>
-          <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
+          {/*
+            <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
+          */}
           {styles.map((href, key) => <link href={href} key={key} rel='stylesheet'></link>)}
         </head>
         <body id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}>
@@ -29,8 +31,8 @@ var Html = React.createClass({
         <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
         {scripts.map((src, key) => <script src={src} key={key}></script>)}
       </html>
-    );
+    )
   }
-});
+})
 
-module.exports = Html;
+module.exports = Html
