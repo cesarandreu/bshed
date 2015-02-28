@@ -1,4 +1,5 @@
-var React = require('react'),
+var co = require('co'),
+  React = require('react'),
   serialize = require('serialize-javascript'),
   log = require('debug')('bshed:client:renderer')
 
@@ -6,38 +7,52 @@ var Html = React.createFactory(require('../components/Html.jsx')),
   navigate = require('../actions/navigate'),
   app = require('../app')
 
-module.exports = function renderer (opts={}) {
-  var {url, request, assets} = opts
+module.exports = co.wrap(renderer)
 
-  return new Promise(render)
-  function render (resolve, reject) {
-    var context = app.createContext({request, url})
+function* renderer (options) {
+  var {url, request, assets} = options
 
-    log(`router running to ${url}`)
-    context.getComponentContext().router.run(runCallback)
-    function runCallback (Handler, state) {
-      log('router finished')
+  log(`creating context with url ${url}`)
+  var context = app.createContext({request, url})
 
-      context.executeAction(navigate, state, navigateCallback)
-      function navigateCallback (err) {
-        if (err) return reject(err)
+  log('running router')
+  var {Handler, state} = yield runRouter(context)
 
-        log('generating BSHED')
-        var BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
+  try {
+    log('executing navigate action')
+    yield context.executeAction(navigate, state)
+  } catch (err) {
+    console.error('Error executing navigate action', err)
+    throw err
+  }
 
-        log('using component context')
-        React.withContext(context.getComponentContext(), () => {
+  return yield render({context, app, Handler, assets})
+}
 
-          log('generating markup')
-          var markup = React.renderToString(React.createElement(Handler))
+function runRouter (context) {
+  return function runRouterThunk (callback) {
+    context.getComponentContext().router.run((Handler, state) => {
+      callback(null, {Handler, state})
+    })
+  }
+}
 
-          log('generating html')
-          var html = React.renderToStaticMarkup(Html({markup, assets, BSHED}))
+function render ({context, app, Handler, assets}={}) {
+  return function renderThunk (callback) {
+    log('using component context')
+    React.withContext(context.getComponentContext(), () => {
 
-          log('renderer finished')
-          resolve({body: html, type: 'html', status: 200})
-        })
-      }
-    }
+      log('generating BSHED')
+      var BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
+
+      log('generating markup')
+      var markup = React.renderToString(React.createElement(Handler))
+
+      log('generating html')
+      var html = React.renderToStaticMarkup(Html({markup, assets, BSHED}))
+
+      log('renderer finished')
+      callback(null, {body: html, type: 'html', status: 200})
+    })
   }
 }
