@@ -1,18 +1,18 @@
 var co = require('co'),
   _ = require('lodash'),
-  requests = require('../requests');
+  requests = require('../requests')
 
-module.exports = co.wrap(navigate);
+module.exports = co.wrap(navigate)
 
 function* navigate (context, payload, done) {
   try {
-    context.dispatch('NAVIGATE_START', payload);
-    yield co.wrap(navigateRequests)(context, payload);
+    context.dispatch('NAVIGATE_START', payload)
+    yield co.wrap(navigateRequests)(context, payload)
     context.dispatch('NAVIGATE_SUCCESS', payload)
-    done(null);
+    done(null)
   } catch (err) {
     context.dispatch('NAVIGATE_ERROR', payload)
-    done(err);
+    done(err)
   }
 }
 
@@ -21,15 +21,15 @@ function* navigateRequests (context, payload) {
   .filter(route => route.handler && route.handler.navigationData)
   .map(route => route.handler.navigationData(payload))
   .map(nr => {
-    nr.req = requests[nr.storeName](context.request, nr);
-    context.dispatch('NEW_NAVIGATION_REQUEST', nr.req);
-    return nr;
+    nr.req = requests[nr.storeName](context.request, nr)
+    context.dispatch('NEW_NAVIGATION_REQUEST', nr.req)
+    return nr
   })
 
-  var responses = (yield navigationRequests.map(nr => nr.req)).map(res => ({res}));
+  var responses = (yield navigationRequests.map(nr => nr.req)).map(res => ({res}))
   _.merge(navigationRequests, responses).forEach(nr => {
-    context.dispatch('FINISHED_NAVIGATION_REQUEST', nr);
-  });
+    context.dispatch('FINISHED_NAVIGATION_REQUEST', nr)
+  })
 
-  return navigationRequests;
+  return navigationRequests
 }
