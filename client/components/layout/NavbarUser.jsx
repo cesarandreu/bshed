@@ -1,5 +1,5 @@
 var React = require('react'),
-  EnhancedButton = require('../general/EnhancedButton.jsx');
+  EnhancedButton = require('../general/EnhancedButton.jsx')
 
 var NavbarUser = React.createClass({
 
@@ -9,22 +9,22 @@ var NavbarUser = React.createClass({
   },
 
   render: function () {
-    var {user} = this.props;
+    var {user} = this.props
 
-    var component, props;
+    var component, props
     if (user) {
-      component = <div></div>;
+      component = <div></div>
     } else {
       props = {
         className: 'login',
         link: true
-      };
+      }
 
-      component = <EnhancedButton {...props}>Login</EnhancedButton>;
+      component = <EnhancedButton {...props}>Login</EnhancedButton>
     }
 
-    return <div className='navbar-user'>{component}</div>;
+    return <div className='navbar-user'>{component}</div>
   }
-});
+})
 
-module.exports = NavbarUser;
+module.exports = NavbarUser

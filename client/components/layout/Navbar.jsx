@@ -3,12 +3,12 @@ var React = require('react'),
   LayoutAction = require('../../actions/Layout'),
   NavbarUser = require('./NavbarUser.jsx'),
   {FluxibleMixin} = require('fluxible'),
-  {Link} = require('react-router');
+  {Link} = require('react-router')
 
 var Navbar = React.createClass({
   mixins: [FluxibleMixin],
   toggleMenu: function () {
-    this.executeAction(LayoutAction.toggleMenu);
+    this.executeAction(LayoutAction.toggleMenu)
   },
 
   render: function () {
@@ -20,8 +20,8 @@ var Navbar = React.createClass({
           <NavbarUser/>
         </div>
       </nav>
-    );
+    )
   }
-});
+})
 
-module.exports = Navbar;
+module.exports = Navbar

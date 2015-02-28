@@ -2,7 +2,7 @@ var React = require('react/addons'),
   LayoutAction = require('../../actions/Layout'),
   LayoutStore = require('../../stores/LayoutStore'),
   {Link} = require('react-router'),
-  {FluxibleMixin} = require('fluxible');
+  {FluxibleMixin} = require('fluxible')
 
 var Sidebar = React.createClass({
   mixins: [FluxibleMixin],
@@ -11,12 +11,12 @@ var Sidebar = React.createClass({
   },
 
   getInitialState: function () {
-    return this.getStore(LayoutStore).getState();
+    return this.getStore(LayoutStore).getState()
   },
 
   onChange: function () {
-    var state = this.getStore(LayoutStore).getState();
-    this.setState(state);
+    var state = this.getStore(LayoutStore).getState()
+    this.setState(state)
   },
 
   _closeMenu: function () {
@@ -25,7 +25,7 @@ var Sidebar = React.createClass({
 
   _checkState: function (event) {
     if (event.currentTarget.classList.contains('active'))
-      event.preventDefault();
+      event.preventDefault()
   },
 
   render: function () {
@@ -40,7 +40,7 @@ var Sidebar = React.createClass({
       text: 'About'
     }].map((link, idx) =>
       <Link key={idx} onClick={this._checkState} to={link.path}>{link.text}</Link>
-    );
+    )
 
     return (
       <div className={`sidebar-container ${this.state.openMenu ? 'open' : 'closed'}`}>
@@ -49,8 +49,8 @@ var Sidebar = React.createClass({
         </nav>
         <div className='sidebar-overlay' onTouchTap={this._closeMenu}></div>
       </div>
-    );
+    )
   }
-});
+})
 
-module.exports = Sidebar;
+module.exports = Sidebar
