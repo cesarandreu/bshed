@@ -45,7 +45,7 @@ module.exports = function buildWebpackConfig (options) {
 
   // entry
   config.entry = {
-    scripts: RENDERER ? './client/renderer.js' : './client/index.js'
+    scripts: RENDERER ? './client/server/renderer.js' : './client/index.js'
   }
 
   // output
