@@ -32,7 +32,7 @@ function assets () {
 
   stats.assets.forEach(function (asset) {
     var bucket = buckets[path.extname(asset.name)]
-    if (bucket) _assets[bucket].push(path.join(stats.publicPath, asset.name))
+    if (bucket) _assets[bucket].push(`${stats.publicPath}${asset.name}`)
   })
   return _assets
 }
