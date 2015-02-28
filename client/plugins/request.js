@@ -3,14 +3,18 @@ module.exports = function RequestPlugin (options={}) {
 
   return {
     name: 'RequestPlugin',
-    plugContext (contextOptions) {
-      request = contextOptions.request || request
+    plugContext
+  }
 
-      return {
-        plugActionContext (actionContext) {
-          actionContext.request = request
-        }
-      }
+  function plugContext (contextOptions) {
+    request = contextOptions.request || request
+
+    return {
+      plugActionContext
+    }
+
+    function plugActionContext (actionContext) {
+      actionContext.request = request
     }
   }
 }
