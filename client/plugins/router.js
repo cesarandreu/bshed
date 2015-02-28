@@ -6,10 +6,10 @@ module.exports = function RouterPlugin ({location}={}) {
     plugContext
   }
 
-  function plugContext (contextOptions) {
+  function plugContext ({url, app}={}) {
     var router = Router.create({
-      location: contextOptions.url || contextOptions.location || location,
-      routes: contextOptions.app.getAppComponent()
+      location: url || location,
+      routes: app.getAppComponent()
     })
 
     return {
