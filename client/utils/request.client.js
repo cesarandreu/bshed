@@ -1,22 +1,19 @@
-'use strict';
-
-var superagent = require('superagent'),
+var promises = require('./request.promisify'),
+  superagent = require('superagent'),
   cookies = require('cookies-js'),
-  methods = require('methods');
+  methods = require('methods'),
+  clientRequest = {}
 
-var promises = require('./request.promisify');
-module.exports = (function clientRequest () {
-  var out = {};
-  ['del'].concat(methods).forEach((method) => {
-    if (superagent[method]) {
-      out[method] = (...args) => {
-        return superagent[method].apply(superagent, args).use(xsrfToken).use(promises);
-      }
+methods.concat('del').forEach((method) => {
+  if (superagent[method]) {
+    clientRequest[method] = (...args) => {
+      return superagent[method].apply(superagent, args).use(xsrfToken).use(promises)
     }
-  })
-  return out;
-})();
+  }
+})
+
+module.exports = clientRequest
 
 function xsrfToken (request) {
-  return request.set('x-xsrf-token', cookies.get('XSRF-TOKEN'));
+  return request.set('x-xsrf-token', cookies.get('XSRF-TOKEN'))
 }
