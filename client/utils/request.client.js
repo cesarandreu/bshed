@@ -4,12 +4,11 @@ var promises = require('./request.promisify'),
   methods = require('methods'),
   clientRequest = {}
 
-methods.concat('del').forEach((method) => {
-  if (superagent[method]) {
+methods.concat('del').forEach(method => {
+  if (superagent[method])
     clientRequest[method] = (...args) => {
       return superagent[method].apply(superagent, args).use(xsrfToken).use(promises)
     }
-  }
 })
 
 module.exports = clientRequest
