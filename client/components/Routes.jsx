@@ -1,5 +1,5 @@
 var React = require('react'),
-  {Route, DefaultRoute, NotFoundRoute} = require('react-router');
+  {Route, DefaultRoute, NotFoundRoute} = require('react-router')
 
 var routes = (
   <Route name='bshed' path='/' handler={require('./layout/Application.jsx')}>
@@ -8,6 +8,6 @@ var routes = (
     {require('./bikesheds/routes.jsx')}
     <NotFoundRoute handler={require('./layout/NotFound.jsx')}/>
   </Route>
-);
+)
 
-module.exports = routes;
+module.exports = routes
