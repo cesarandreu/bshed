@@ -41,13 +41,15 @@ function routerAction (context) {
 
     log('rendering application')
     yield render({context, Handler})
+
+    log('navigation and rendering finished')
   }
 }
 
 function render ({context, Handler}={}) {
   return new Promise(resolve => {
     React.withContext(context.getComponentContext(), () => {
-      React.render(React.createElement(Handler), mountNode, () => log('application rendered'))
+      React.render(React.createElement(Handler), mountNode, resolve)
     })
   })
 }
