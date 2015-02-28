@@ -1,26 +1,22 @@
-'use strict';
-
 var debug = require('debug')('bshed:config'),
-  fs = require('fs');
+  fs = require('fs')
 
 // Base config
 var config = {
   env: (process.env.NODE_ENV || 'development').toLowerCase()
-};
-debug('using %s env', config.env);
+}
+debug('using %s env', config.env)
 
 // Get configs and load them
-debug('loader:start');
+debug('loader:start')
 fs.readdirSync(__dirname)
-.filter(function (file) {
-  return file.indexOf('.') !== 0 && file !== 'index.js';
+.filter(file => file.indexOf('.') !== 0 && file !== 'index.js')
+.forEach(name => {
+  name = name.split('.js').shift()
+  config[name] = load(name)
 })
-.forEach(function (name) {
-  name = name.split('.js').shift();
-  config[name] = load(name);
-});
-debug('loader:end');
-module.exports = config;
+debug('loader:end')
+module.exports = config
 
 /**
  * Configuration loader
@@ -32,16 +28,16 @@ module.exports = config;
  *  - keep nameConfig as is
  */
 function load (name) {
-  debug('loading %s', name);
-  var configuration = require('./' + name);
+  debug('loading %s', name)
+  var configuration = require('./' + name)
   if (config.env in configuration) {
-    debug('using %s env from %s', config.env, name);
-    configuration = configuration[config.env];
+    debug('using %s env from %s', config.env, name)
+    configuration = configuration[config.env]
   } else if (typeof configuration === 'function') {
-    debug('using %s env to initialize %s', config.env, name);
-    configuration = configuration(config.env);
+    debug('using %s env to initialize %s', config.env, name)
+    configuration = configuration(config.env)
   } else {
-    debug('using %s directly', name);
+    debug('using %s directly', name)
   }
-  return configuration;
+  return configuration
 }

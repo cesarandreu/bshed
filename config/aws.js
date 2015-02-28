@@ -1,6 +1,4 @@
-'use strict';
-
-var AWS = require('aws-sdk');
+var AWS = require('aws-sdk')
 
 module.exports = {
   development: {
@@ -24,4 +22,4 @@ module.exports = {
     s3ForcePathStyle: true,
     endpoint: new AWS.Endpoint('http://localhost:10001')
   }
-};
+}
