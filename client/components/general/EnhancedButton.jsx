@@ -1,5 +1,5 @@
 var React = require('react/addons'),
-  cx = React.addons.classSet;
+  cx = React.addons.classSet
 
 var EnhancedButton = React.createClass({
   propTypes: {
@@ -15,33 +15,33 @@ var EnhancedButton = React.createClass({
       'enhanced-button': true,
       [className]: className,
       disabled, link
-    });
+    })
 
     var props = {
       disabled,
       className: classes,
       onTouchTap: this._onTouchTap
-    };
+    }
 
-    var enhancedButton;
+    var enhancedButton
     if (disabled && link) {
       enhancedButton = (
         <span {...other} className={classes} disabled={disabled}>
           {this.props.children}
         </span>
-      );
+      )
     } else if (link) {
-      enhancedButton = <a {...other} {...props}>{this.props.children}</a>;
+      enhancedButton = <a {...other} {...props}>{this.props.children}</a>
     } else {
-      enhancedButton = <button {...other} {...props}>{this.props.children}</button>;
+      enhancedButton = <button {...other} {...props}>{this.props.children}</button>
     }
 
-    return enhancedButton;
+    return enhancedButton
   },
 
   _onTouchTap: function (e) {
-    if (this.props.onTouchTap) this.props.onTouchTap(e);
+    if (this.props.onTouchTap) this.props.onTouchTap(e)
   }
-});
+})
 
-module.exports = EnhancedButton;
+module.exports = EnhancedButton
