@@ -10,7 +10,7 @@ module.exports = function ({rendererPath, assets}={}) {
       log(`using renderer from ${rendererPath}`)
       var renderer = require(rendererPath)
       var {body, type, status} = yield renderer({
-        assets, url: this.url,
+        assets: assets, url: this.url,
         request: request(this.app.server, {
           'cookie': this.get('cookie'), // send cookie header
           'x-csrf-token': this.csrf // send csrf header
