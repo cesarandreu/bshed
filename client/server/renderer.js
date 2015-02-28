@@ -26,7 +26,7 @@ function* renderer (options) {
     throw err
   }
 
-  return yield render({context, app, Handler, assets})
+  return yield render({context, Handler, assets})
 }
 
 function runRouter (context) {
@@ -37,7 +37,7 @@ function runRouter (context) {
   }
 }
 
-function render ({context, app, Handler, assets}={}) {
+function render ({context, Handler, assets}={}) {
   return function renderThunk (callback) {
     log('using component context')
     React.withContext(context.getComponentContext(), () => {
