@@ -1,10 +1,9 @@
 var React = require('react'),
+  {FluxibleMixin} = require('fluxible'),
   LabeledActionButton = require('../../components/buttons/LabeledActionButton.jsx')
 
 var AddBikeButton = React.createClass({
-  propTypes: {
-    inputChange: React.PropTypes.func.isRequired
-  },
+  mixins: [FluxibleMixin],
   render: function () {
     var buttonProps = {
       onTouchTap: this.clickInput,
@@ -13,7 +12,7 @@ var AddBikeButton = React.createClass({
       label: 'Add bike'
     }
     var inputProps = {
-      onChange: this.props.inputChange,
+      onChange: this.inputChange,
       ref: 'fileInput',
       type: 'file',
       multiple: true,
@@ -30,6 +29,10 @@ var AddBikeButton = React.createClass({
   clickInput: function (e) {
     this.refs.fileInput.getDOMNode().click()
     e.preventDefault()
+  },
+
+  inputChange: function (e) {
+    console.log('FILE RECEIVED', e)
   }
 })
 
