@@ -19,14 +19,18 @@ var Home = React.createClass({
   render: function () {
     return (
       <div className='bikeshed-builder'>
-        <div className='bikeshed-builder-main'>
+        <div className='bikeshed-builder-body'>
           {/*<BikeGrid bikes={this.state.bikes}/>*/}
-          <AddBikeButton/>
         </div>
-        <div className='bikeshed-builder-panel'></div>
+        <AddBikeButton inputChange={this._inputChange}/>
       </div>
     )
+  },
+
+  _inputChange (e) {
+    console.log('file received', e);
   }
+
 })
 
 module.exports = Home
