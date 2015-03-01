@@ -11,7 +11,7 @@ var AddBikeButton = React.createClass({
       className: 'add-bike-button',
       icon: 'md-add',
       label: 'Add bike',
-      position: 'top'
+      position: 'left'
     }
     var inputProps = {
       onChange: this.props.inputChange,
