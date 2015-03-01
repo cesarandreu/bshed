@@ -2,7 +2,9 @@ var React = require('react'),
   LabeledActionButton = require('../../components/buttons/LabeledActionButton.jsx')
 
 var AddBikeButton = React.createClass({
-
+  propTypes: {
+    inputChange: React.PropTypes.func.isRequired
+  },
   render: function () {
     var buttonProps = {
       onTouchTap: this.clickInput,
@@ -11,7 +13,7 @@ var AddBikeButton = React.createClass({
       label: 'Add bike'
     }
     var inputProps = {
-      onChange: this.props.fileReceived,
+      onChange: this.props.inputChange,
       ref: 'fileInput',
       type: 'file',
       multiple: true,

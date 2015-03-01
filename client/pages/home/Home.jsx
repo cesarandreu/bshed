@@ -21,14 +21,14 @@ var Home = React.createClass({
       <div className='bikeshed-builder'>
         <div className='bikeshed-builder-main'>
           {/*<BikeGrid bikes={this.state.bikes}/>*/}
-          <AddBikeButton fileReceived={this._fileReceived}/>
+          <AddBikeButton inputChange={this._inputChange}/>
         </div>
         <div className='bikeshed-builder-panel'></div>
       </div>
     )
   },
 
-  _fileReceived (e) {
+  _inputChange (e) {
     console.log('FILE RECEIVED', e)
   }
 
