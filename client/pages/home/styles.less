@@ -1,28 +1,29 @@
 
 .bikeshed-builder {
-
+  .flexbox;
+  .flex-direction(column);
+  height: calc(~'100% -' @navbar-height);
 }
 
 .bikeshed-builder-main {
-  .flexbox;
-  .flex-direction(column);
-  .align-items(center);
-  .justify-content(center);
-  height: calc(~'75% - ' @navbar-height);
+  // .flexbox;
+  // .flex-direction(column);
+  // .align-items(center);
+  // .justify-content(center);
+  // height: calc(100%);
+  // height: calc(75%);
+  // height: 75%;
+  height: 100%;
   width: 100%;
 }
-
-.bikeshed-builder-panel {
-  .flexbox;
-  .flex-direction(column);
-  .align-items(center);
-  .justify-content(center);
-  height: 25%;
-  width: 100%;
-}
-
 
 .add-bike-button {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding-right: @action-button-size / 2;
+  padding-bottom: @action-button-size / 2;
+
   input {
     display: none;
   }
