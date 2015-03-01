@@ -22,30 +22,8 @@
 }
 
 
-@build-bikeshed-full-size: 8em;
-
-.build-bikeshed-button {
-  .flexbox;
-  .flex-direction(row);
-  .align-items(center);
-  .justify-content(center);
-  .enhanced-button;
-
-  // padding: @build-bikeshed-full-size / 4;
-  padding: ~'calc(8em / 4)';
-  background: @red-A700;
-  border-radius: 50%;
-  border: none;
-
-  .build-bikeshed-icon {
-    height: 100%;
-    width: 100%;
-    color: @white;
-    font-size: @build-bikeshed-full-size;
-  }
-
+.add-bike-button {
   input {
     display: none;
   }
-
 }

@@ -1,7 +1,7 @@
 var React = require('react'),
   {FluxibleMixin} = require('fluxible'),
   // BikeGrid = require('./BikeGrid.jsx'),
-  BuildBikeshedButton = require('./BuildBikeshedButton.jsx'),
+  AddBikeButton = require('./AddBikeButton.jsx'),
   BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 
 var Home = React.createClass({
@@ -17,13 +17,11 @@ var Home = React.createClass({
     this.setState(this.getStore(BikeshedBuilderStore).getState())
   },
   render: function () {
-    var buildBikeshedPosition = this.state.bikes.length ? 'side' : 'center'
-
     return (
       <div className='bikeshed-builder'>
         <div className='bikeshed-builder-main'>
           {/*<BikeGrid bikes={this.state.bikes}/>*/}
-          <BuildBikeshedButton fileReceived={this._fileReceived} position={buildBikeshedPosition}/>
+          <AddBikeButton fileReceived={this._fileReceived}/>
         </div>
         <div className='bikeshed-builder-panel'></div>
       </div>
