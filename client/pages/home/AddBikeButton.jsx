@@ -8,8 +8,9 @@ var AddBikeButton = React.createClass({
     var buttonProps = {
       onTouchTap: this.clickInput,
       className: 'add-bike-button',
-      icon: 'md-cloud-upload',
-      label: 'Add bike'
+      icon: 'md-add',
+      label: 'Add bike',
+      position: 'top'
     }
     var inputProps = {
       onChange: this.inputChange,
