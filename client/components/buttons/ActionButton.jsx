@@ -1,6 +1,6 @@
 var React = require('react'),
   classnames = require('classnames'),
-  Icon = require('../general/Icon.jsx')
+  IconButton = require('./IconButton.jsx')
 
 var ActionButton = React.createClass({
   propTypes: {
@@ -10,11 +10,9 @@ var ActionButton = React.createClass({
   },
   render: function () {
     var {className, icon, mini, ...props} = this.props
-    className = classnames('base-button', 'action-button', {mini}, className)
+    className = classnames('action-button', {mini}, className)
     return (
-      <button className={className} {...props}>
-        <Icon className='action-button-icon' icon={icon}/>
-      </button>
+      <IconButton className={className} icon={icon} {...props}/>
     )
   }
 })
