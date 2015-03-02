@@ -19,13 +19,17 @@
 @border-color: @grey-300;
 
 //Component Colors
-@navbar-color: @primary-1-color;
-@navbar-text-color: @white;
 @canvas-color: @grey-200;
 @drop-down-menu-icon-color: @min-black;
-@sidebar-color: @white;
 @subheader-border-color: @border-color;
 @subheader-text-color: @primary-1-color;
+
+// body
+@body-text-color: @primary-text-color;
+
+// icons
+@icon-size: 24;
+@icon-color: @white;
 
 // // menu
 // @menu-background-color: @white;
@@ -77,8 +81,8 @@
 // action button
 @action-button-size: 56px;
 @action-button-mini-size: 40px;
-@action-button-icon-color: @white;
 @action-button-color: @accent-2-color;
+@action-button-icon-color: @icon-color;
 @action-button-hover-transition: box-shadow 150ms cubic-bezier(0,0,.2,1);
 @action-button-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
 @action-button-hover-shadow: 0 0 6px rgba(0,0,0,.16),0 6px 12px rgba(0,0,0,.32);
@@ -142,17 +146,18 @@
 // @slider-handle-color-zero: @grey-400;
 // @slider-selection-color: @primary-3-color;
 
-// home
-@home-header-color: @white;
-
-// icons
-@icon-size: 24;
-
-// layout
+// navbar
 @navbar-height: 56px;
 @navbar-font-size: 1.5em;
-@sidebar-width: 256px;
+@navbar-color: @primary-1-color;
+@navbar-text-color: @text-color;
+@navbar-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 
+// sidebar
+@sidebar-width: 256px;
+@sidebar-color: @white;
+@sidebar-text-color: @secondary-text-color;
+@sidebar-shadow: 0 0 4px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.28);
 
 // whiteframes
 // SOURCE: https://github.com/angular/material/blob/master/src/core/style/variables.scss#L20
@@ -166,9 +171,6 @@
 @whiteframe-zindex-z4: 4;
 @whiteframe-shadow-z5: 0px 27px 24px 0 rgba(0,0,0,0.2);
 @whiteframe-zindex-z5: 5;
-
-@navbar-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
-@sidebar-shadow: 0 0 4px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.28);
 
 // z-indexes
 // SOURCE: https://github.com/angular/material/blob/master/src/core/style/variables.scss#L35
