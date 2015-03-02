@@ -1,3 +1,14 @@
+/* Application */
+.layout {
+  overflow: auto;
+  width: 100%;
+}
+
+.content {
+  padding-top: @navbar-height;
+}
+
+/* SIDEBAR */
 @sidebar-transition-duration: 0.20s;
 
 // sidebar and sidebar-overlay positioning and size
@@ -36,7 +47,9 @@
     }
 
     .sidebar-overlay {
-      transition: opacity @sidebar-transition-duration ease-in-out, transform 0s ease-in-out @sidebar-transition-duration;
+      transition:
+        opacity @sidebar-transition-duration ease-in-out,
+        transform 0s ease-in-out @sidebar-transition-duration;
       transform: translateX(-100%);
       opacity: 0;
     }
@@ -46,8 +59,8 @@
 .sidebar {
   .flexbox;
   .flex-direction(column);
+  background-color: @sidebar-color;
   box-shadow: @sidebar-shadow;
-  background-color: @canvas-color;
   white-space: nowrap;
   line-height: 40px;
 }
@@ -56,22 +69,18 @@
   .flexbox;
   .flex-direction(column);
 
-  &:first-child {
-    margin-top: 1em;
-  }
+  margin: 1em 0;
+  padding: 0 0 8px 0;
 
+  border-bottom: 1px solid @border-color;
   &:last-child {
     border-bottom: none;
   }
 
-  border-bottom: 1px solid #e5e5e5;
-  padding: 0 0 8px 0;
-  margin: 0.5em 0;
-
   a {
-    padding: 4px 0 4px 1.5em;
-    color: @dark-black;
-
+    font-weight: bold;
+    padding: 4px 24px;
+    color: @sidebar-text-color;
     &.active {
       color: @accent-1-color;
     }
