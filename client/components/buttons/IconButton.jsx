@@ -1,5 +1,5 @@
 var React = require('react'),
-  Icon = require('./Icon.jsx'),
+  Icon = require('../general/Icon.jsx'),
   EnhancedButton = require('./EnhancedButton.jsx'),
   classnames = require('classnames')
 

@@ -9,6 +9,7 @@
   }
 }
 
+/* ActionButton */
 .action-button {
   background-color: @action-button-color;
   border-radius: 50%;
@@ -40,6 +41,7 @@
   }
 }
 
+/* LabeledActionButton */
 .labeled-action-button {
   .flexbox;
   .align-items(center);
@@ -101,3 +103,47 @@
     opacity: 1;
   }
 }
+
+/* IconButton */
+.icon-button {
+  .flexbox;
+  .flex-direction(column);
+  .align-items(center);
+  .justify-content(center);
+
+  position: relative;
+  padding: @icon-size / 2;
+
+  &.disabled {
+    color: lighten(@body-text-color, 75%);
+  }
+}
+
+/* EnhancedButton */
+.enhanced-button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.link {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &.disabled {
+      cursor: default;
+    }
+
+  }
+
+}
+

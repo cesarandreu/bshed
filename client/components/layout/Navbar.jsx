@@ -1,5 +1,4 @@
 var React = require('react'),
-  IconButton = require('../general/IconButton.jsx'),
   LayoutAction = require('../../actions/Layout'),
   NavbarUser = require('./NavbarUser.jsx'),
   {FluxibleMixin} = require('fluxible'),
@@ -14,7 +13,6 @@ var Navbar = React.createClass({
   render: function () {
     return (
       <nav className='navbar'>
-        <IconButton icon='md-menu' className='navbar-menu' onTouchTap={this.toggleMenu}/>
         <div className='navbar-inner'>
           <Link className='navbar-title' to='home'>Bikeshed it!</Link>
           <NavbarUser/>

@@ -2,8 +2,8 @@ var React = require('react/addons'),
   {FluxibleMixin} = require('fluxible'),
   cx = React.addons.classSet,
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
-  IconButton = require('../../components/general/IconButton.jsx'),
   Icon = require('../../components/general/Icon.jsx')
+  IconButton = require('../../components/buttons/IconButton.jsx')
 
 var BikeGrid = React.createClass({
   mixins: [FluxibleMixin],
