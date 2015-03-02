@@ -11,9 +11,7 @@ var ActionButton = React.createClass({
   render: function () {
     var {className, icon, mini, ...props} = this.props
     className = classnames('action-button', {mini}, className)
-    return (
-      <IconButton className={className} icon={icon} {...props}/>
-    )
+    return <IconButton className={className} icon={icon} {...props}/>
   }
 })
 
