@@ -104,21 +104,6 @@
   }
 }
 
-/* IconButton */
-.icon-button {
-  .flexbox;
-  .flex-direction(column);
-  .align-items(center);
-  .justify-content(center);
-
-  position: relative;
-  padding: @icon-size / 2;
-
-  &.disabled {
-    color: lighten(@body-text-color, 75%);
-  }
-}
-
 /* EnhancedButton */
 .enhanced-button {
   border: 0;
@@ -142,8 +127,22 @@
     &.disabled {
       cursor: default;
     }
-
   }
-
 }
 
+/* IconButton */
+.icon-button {
+  .flexbox;
+  .flex-direction(column);
+  .align-items(center);
+  .justify-content(center);
+
+  position: relative;
+  padding: @icon-size / 2;
+  height: @icon-size * 2;
+  width: @icon-size * 2;
+
+  &.disabled {
+    color: lighten(@body-text-color, 75%);
+  }
+}
