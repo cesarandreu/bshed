@@ -1,7 +1,7 @@
-var React = require('react/addons'),
-  EnhancedButton = require('./EnhancedButton.jsx'),
+var React = require('react'),
   Icon = require('./Icon.jsx'),
-  cx = React.addons.classSet
+  EnhancedButton = require('./EnhancedButton.jsx'),
+  classnames = require('classnames')
 
 var IconButton = React.createClass({
   propTypes: {
@@ -9,18 +9,10 @@ var IconButton = React.createClass({
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string.isRequired
   },
-
   render: function () {
-
     var {icon, className, ...other} = this.props
-
-    var classes = cx({
-      'icon-button': true,
-      [className]: className
-    })
-
     return (
-      <EnhancedButton {...other} className={classes}>
+      <EnhancedButton {...other} className={classnames('icon-button', className)}>
         <Icon icon={icon}/>
       </EnhancedButton>
     )
