@@ -24,7 +24,6 @@ var EnhancedButton = React.createClass({
     } else if (link) {
       enhancedButton = <a {...props}>{children}</a>
     } else {
-
       enhancedButton = <button {...props}>{children}</button>
     }
 
