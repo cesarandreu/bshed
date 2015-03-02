@@ -1,7 +1,8 @@
 var React = require('react'),
   {FluxibleMixin} = require('fluxible'),
-  // BikeGrid = require('./BikeGrid.jsx'),
+  BikeGrid = require('./BikeGrid.jsx'),
   AddBikeButton = require('./AddBikeButton.jsx'),
+  BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
   BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 
 var Home = React.createClass({
@@ -9,28 +10,33 @@ var Home = React.createClass({
   statics: {
     storeListeners: [BikeshedBuilderStore]
   },
-  getInitialState: function () {
+  getInitialState () {
     return this.getStore(BikeshedBuilderStore).getState()
   },
 
-  onChange: function () {
+  onChange () {
     this.setState(this.getStore(BikeshedBuilderStore).getState())
   },
-  render: function () {
+  render () {
     return (
       <div className='bikeshed-builder'>
-        <div className='bikeshed-builder-body'>
-          {/*<BikeGrid bikes={this.state.bikes}/>*/}
-        </div>
+        <BikeGrid bikes={this.state.bikes}/>
         <AddBikeButton inputChange={this._inputChange}/>
       </div>
     )
   },
 
-  _inputChange (e) {
-    console.log('file received', e);
-  }
+  _receivedFiles (files) {
+    this.executeAction(BikeshedBuilderAction.addFiles, files)
+  },
 
+  _inputChange (e) {
+    this._receivedFiles(e.target.files)
+  },
+
+  _fileDropped (e) {
+    this._receivedFiles(e.dataTransfer.files)
+  }
 })
 
 module.exports = Home
