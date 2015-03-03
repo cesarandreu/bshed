@@ -15,6 +15,15 @@
     "email": "cesarandreu@gmail.com",
     "url": "https://github.com/cesarandreu"
   },
+  "jest": {
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "moduleFileExtensions": ["js", "jsx"],
+    "testFileExtensions": ["js", "jsx"],
+    "testPathDirs": [
+      "<rootDir>/client"
+    ]
+  },
   "scripts": {
     "base": "babel-node --experimental --ignore='public|node_modules' --blacklist='regenerator'",
     "build:client": "webpack -p -c --progress",
@@ -27,6 +36,7 @@
     "test:api": "npm run test:base -- test/api/*.spec.js",
     "test:models": "npm run test:base -- test/models/*.spec.js",
     "test:base": "NODE_ENV=test npm run base -- node_modules/.bin/_mocha",
+    "test:client": "jest",
     "fakes3": "fakes3 --root test/fakes3 -p 10001",
     "db:migrate": "sequelize db:migrate",
     "db:create": "create_database",
