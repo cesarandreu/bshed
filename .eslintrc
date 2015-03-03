@@ -4,5 +4,11 @@
     "strict": false,
     "no-console": false,
     "no-multiple-empty-lines": false
+  },
+  "env": {
+    "mocha",
+    "jasmine": true,
+    "browser": true,
+    "node": true
   }
 }
