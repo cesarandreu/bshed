@@ -1,5 +1,6 @@
 var React = require('react'),
   {FluxibleMixin} = require('fluxible'),
+  Hero = require('./Hero.jsx'),
   BikeGrid = require('./BikeGrid.jsx'),
   AddBikeButton = require('./AddBikeButton.jsx'),
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
@@ -13,14 +14,17 @@ var Home = React.createClass({
   getInitialState () {
     return this.getStore(BikeshedBuilderStore).getState()
   },
-
   onChange () {
     this.setState(this.getStore(BikeshedBuilderStore).getState())
   },
   render () {
+
+    var {bikes} = this.state
+
     return (
       <div className='bikeshed-builder'>
-        <BikeGrid bikes={this.state.bikes}/>
+        {!bikes.length && <Hero/>}
+        <BikeGrid bikes={bikes}/>
         <AddBikeButton inputChange={this._inputChange}/>
       </div>
     )
