@@ -15,15 +15,6 @@
     "email": "cesarandreu@gmail.com",
     "url": "https://github.com/cesarandreu"
   },
-  "jest": {
-    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "moduleFileExtensions": ["js", "jsx"],
-    "testFileExtensions": ["js", "jsx"],
-    "testPathDirs": [
-      "<rootDir>/client"
-    ]
-  },
   "scripts": {
     "base": "babel-node --experimental --ignore='public|node_modules' --blacklist='regenerator'",
     "build:client": "webpack -p -c --progress",
@@ -108,7 +99,6 @@
     "webpack-dev-server": "^1.7.0"
   },
   "devDependencies": {
-    "babel-jest": "^4.0.0",
     "chai": "^2.0.0",
     "co-mocha": "^1.1.0",
     "co-pg": "^1.3.1",
@@ -117,7 +107,6 @@
     "cookies": "^0.5.0",
     "csrf": "^2.0.6",
     "imagemin": "^3.1.0",
-    "jest-cli": "^0.4.0",
     "keygrip": "^1.0.1",
     "mocha": "^2.0.1",
     "nodemon": "^1.3.6",
