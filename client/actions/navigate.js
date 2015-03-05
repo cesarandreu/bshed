@@ -7,7 +7,7 @@ module.exports = co.wrap(navigate)
 function* navigate (context, payload, done) {
   try {
     context.dispatch('NAVIGATE_START', payload)
-    yield co.wrap(navigateRequests)(context, payload)
+    yield co(navigateRequests(context, payload))
     context.dispatch('NAVIGATE_SUCCESS', payload)
     done(null)
   } catch (err) {
