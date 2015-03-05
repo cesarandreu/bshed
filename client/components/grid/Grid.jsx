@@ -1,4 +1,4 @@
-var React = require('react/addons'),
+var React = require('react'),
   classnames = require('classnames')
 
 var Grid = React.createClass({
