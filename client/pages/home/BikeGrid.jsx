@@ -6,11 +6,6 @@ var React = require('react'),
 
 var BikeGrid = React.createClass({
   mixins: [FluxibleMixin],
-  getInitialState: function () {
-    return {
-      dragging: false
-    }
-  },
 
   render: function () {
     var {bikes} = this.props
@@ -30,59 +25,11 @@ var BikeGrid = React.createClass({
       )
     })
 
-    var bikeGridProps = {
-      className: classnames('bike-grid', {'dragging': this.state.dragging}),
-      onDragEnd: this.onDragEnd,
-      onDragLeave: this.onDragLeave,
-      onDragEnter: this.onDragEnter,
-      onDrop: this.onDrop
-    }
-
-    var wrapperClasses = classnames('bike-grid-wrapper', {'empty': !bikes.length})
-
     return (
-      <div {...bikeGridProps}>
-        <div className={wrapperClasses}>
-          {items}
-        </div>
+      <div className={classnames('bike-grid', {'empty': !bikes.length})}>
+        {items}
       </div>
     )
-  },
-
-  onDragEnd: function (e) {
-    console.log('onDragEnd')
-    this.setState({dragging: false})
-    // e.stopPropagation()
-    e.preventDefault()
-  },
-
-  onDragEnter: function (e) {
-    console.log('onDragEnter')
-    this.setState({dragging: true})
-    // e.stopPropagation()
-    e.preventDefault()
-  },
-
-  onDragOver: function (e) {
-    console.log('onDragOver')
-    this.setState({dragging: true})
-    // e.stopPropagation()
-    e.preventDefault()
-  },
-
-  onDragLeave: function (e) {
-    console.log('onDragLeave')
-    this.setState({dragging: false})
-    // e.stopPropagation()
-    e.preventDefault()
-  },
-
-  onDrop: function (e) {
-    console.log('onDrop')
-    this.setState({dragging: false})
-    // e.stopPropagation()
-    e.preventDefault()
-    this.executeAction(BikeshedBuilderAction.addFiles, e.dataTransfer.files)
   }
 
 })
