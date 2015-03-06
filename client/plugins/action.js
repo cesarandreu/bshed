@@ -34,7 +34,7 @@ function plugContext (opts, context) {
 }
 
 function executeAction (action, payload={}, done) {
-  debug(`Executing action ${action.name} with payload`, payload)
+  debug(`Executing action ${action.displayName || action.name} with payload`, payload)
 
   var promise
   if (isGeneratorFunction(action)) {
