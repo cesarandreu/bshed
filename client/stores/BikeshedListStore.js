@@ -42,26 +42,3 @@ var BikeshedListStore = createStore({
 })
 
 module.exports = BikeshedListStore
-
-          // sortBy: { type: 'string', required: true,
-          //   enum: ['id', 'name', 'createdAt', 'updatedAt']
-          // },
-          // direction: { type: 'string', required: true, enum: ['ASC', 'DESC'] },
-          // per: { type: 'number', required: true, minimum: 1, maximum: 96 },
-          // pages: { type: 'number', required: true, minimum: 1 },
-          // page: { type: 'number', required: true, minimum: 1 },
-          // count: { type: 'number', required: true },
-          // list: { type: 'array', required: true,
-          //   items: { type: 'object',
-          //     properties: {
-          //       id: { type: 'number', required: true, minimum: 1 },
-          //       name: { type: 'string', required: true, minLength: 1 },
-          //       body: { type: 'string', required: true, minLength: 1 },
-          //       updatedAt: { type: 'string', required: true },
-          //       createdAt: { type: 'string', required: true },
-          //       status: { type: 'string', required: true,
-          //         enum: ['open', 'closed']
-          //       }
-          //     }
-          //   }
-          // }
