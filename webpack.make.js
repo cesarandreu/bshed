@@ -8,15 +8,15 @@ module.exports = function buildWebpackConfig (options) {
   options = options || {}
 
   var ENV = options.ENV || process.env.NODE_ENV || 'development',
-    PRODUCTION = options.PRODUCTION || ENV === 'production',
-    RENDERER = !!options.renderer
+    PRODUCTION = options.PRODUCTION || ENV === 'production'
 
   // shared values
   var publicPath = PRODUCTION ? '/assets/' : 'http://localhost:8080/assets/',
-    outputPath = path.join(__dirname, 'public', RENDERER ? 'renderer' : 'assets')
+    outputPath = path.join(__dirname, 'public', 'assets')
 
   // base
   var config = {
+    target: 'web',
     externals: [],
     module: {
       noParse: [/react-with-addons/],
@@ -36,7 +36,8 @@ module.exports = function buildWebpackConfig (options) {
     },
     plugins: [
       StatsPlugin(publicPath, outputPath),
-      new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(ENV)})
+      new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(ENV)}),
+      new webpack.PrefetchPlugin('react')
     ]
   }
 
@@ -45,7 +46,7 @@ module.exports = function buildWebpackConfig (options) {
 
   // entry
   config.entry = {
-    scripts: RENDERER ? './client/server/renderer.js' : './client/index.js'
+    scripts: './client/index.js'
   }
 
   // output
@@ -53,29 +54,18 @@ module.exports = function buildWebpackConfig (options) {
     path: outputPath,
     pathinfo: !PRODUCTION,
     publicPath: publicPath,
-    libraryTarget: RENDERER ? 'commonjs2' : 'var',
-    filename: RENDERER ? 'renderer.js' : PRODUCTION ? 'scripts.[hash].js' : 'scripts.dev.js'
-  }
-
-  // externals
-  if (RENDERER) {
-    // Every non-relative module is external
-    config.externals.push(/^[a-z\-0-9]+$/)
+    filename: PRODUCTION ? 'scripts.[hash].js' : 'scripts.dev.js'
   }
 
   // loaders
   var babelLoader = 'babel?experimental&optional=runtime'
-
-  // Webpack fails at parsing generator functions :(
-  // babelLoader += RENDERER ? '&blacklist=regenerator' : ''
-
   config.module.loaders.push({
     test: /\.js$/,
     loader: babelLoader,
     exclude: /.*node_modules.*/
   })
 
-  var hotLoader = PRODUCTION || RENDERER ? '' : 'react-hot!'
+  var hotLoader = PRODUCTION ? '' : 'react-hot!'
   config.module.loaders.push({
     test: /\.jsx$/,
     loader: hotLoader + babelLoader,
@@ -88,26 +78,17 @@ module.exports = function buildWebpackConfig (options) {
     loader: PRODUCTION ? ExtractTextPlugin.extract(lessLoader) : 'style!' + lessLoader
   })
 
-  // target
-  config.target = RENDERER ? 'node' : 'web'
-
   // plugins
   if (PRODUCTION) {
     // var cssName = PRODUCTION ? 'scripts.[hash].css' : 'scripts.dev.css'
     config.plugins.push(new ExtractTextPlugin('scripts.[hash].css'))
-  }
-  if (!RENDERER) {
-    config.plugins.push(
-      new webpack.PrefetchPlugin('react')
-    )
-  }
-  if (PRODUCTION || RENDERER) {
+
     // Ensures requires for 'react' and 'react/addons' normalize to the same path
     var reactAddonsPath = require.resolve('react/dist/react-with-addons'),
       reactRegex = /^react(\/addons)?$/
     config.plugins.push(new webpack.NormalModuleReplacementPlugin(reactRegex, reactAddonsPath))
-  }
-  if (PRODUCTION && !RENDERER) {
+
+    // Minifify, dedupe
     config.plugins.push(
       new webpack.optimize.UglifyJsPlugin(),
       new webpack.optimize.DedupePlugin(),
