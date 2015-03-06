@@ -1,6 +1,4 @@
-module.exports = function RequestPlugin (options={}) {
-  var {request} = options
-
+module.exports = function RequestPlugin ({request}={}) {
   return {
     name: 'RequestPlugin',
     plugContext
