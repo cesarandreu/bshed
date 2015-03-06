@@ -5,6 +5,7 @@ var React = require('react'),
 var Html = React.createClass({
   mixins: [FluxibleMixin],
   propTypes: {
+    context: React.PropTypes.object.isRequired,
     assets: React.PropTypes.object.isRequired,
     markup: React.PropTypes.string.isRequired,
     BSHED: React.PropTypes.string.isRequired
