@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build:client": "webpack -p -c --progress",
-    "clean": "rm -rf public/assets",
+    "clean": "rm -rf public/assets test/fakes3/*",
     "dev": "parallelshell 'npm run dev:server' 'npm run dev:client'",
     "dev:server": "nodemon --exec babel-node -- server.js",
     "dev:client": "webpack-dev-server --content-base public --inline -h -c --progress",
