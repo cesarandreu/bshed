@@ -9,7 +9,7 @@ module.exports = function RouterPlugin ({location}={}) {
   function plugContext ({url, app}={}) {
     var router = Router.create({
       location: url || location,
-      routes: app.getAppComponent()
+      routes: app.getComponent()
     })
 
     return {

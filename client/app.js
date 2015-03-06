@@ -4,7 +4,7 @@ var RouterPlugin = require('./plugins/router'),
   Fluxible = require('fluxible')
 
 var app = new Fluxible({
-  appComponent: require('./Routes.jsx')
+  component: require('./Routes.jsx')
 })
 
 app.plug(RouterPlugin({
