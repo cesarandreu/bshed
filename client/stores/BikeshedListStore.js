@@ -7,7 +7,7 @@ var BikeshedListStore = createStore({
     'FINISHED_NAVIGATION_REQUEST': 'finishedNavigationRequest'
   },
   initialize: function () {
-    setProperties(this, {
+    Object.assign(this, {
       direction: 'DESC',
       sortBy: 'id',
       per: 12,
@@ -30,27 +30,16 @@ var BikeshedListStore = createStore({
   },
 
   getState: function () {
-    return setProperties({}, this)
+    var {direction, sortBy, per, page, pages, count, list} = this
+    return {direction, sortBy, per, page, pages, count, list}
   },
   dehydrate: function () {
     return this.getState()
   },
   rehydrate: function (state) {
-    setProperties(this, state)
+    Object.assign(this, state)
   }
 })
-
-function setProperties (self, props) {
-  self.direction = props.direction
-  self.sortBy = props.sortBy
-  self.per = props.per
-  self.pages = props.pages
-  self.page = props.page
-  self.count = props.count
-  self.list = props.list
-  return self
-}
-
 
 module.exports = BikeshedListStore
 
