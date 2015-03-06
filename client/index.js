@@ -48,7 +48,5 @@ function routerAction (context) {
 
 function render ({context, Handler}={}) {
   var element = React.createElement(Handler, {context: context.getComponentContext()})
-  return new Promise(resolve => {
-    React.render(element, mountNode, resolve)
-  })
+  return new Promise(resolve => React.render(element, mountNode, resolve))
 }
