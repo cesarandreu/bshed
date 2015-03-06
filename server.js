@@ -44,9 +44,8 @@ server.api = api
 /**
  * MIDDLEWARE
  */
-if (server.env === 'development') {
+if (server.env === 'development')
   server.use(require('koa-logger')()) // request logging
-}
 server.use(responseTime()) // x-response-time
 server.use(compress()) // compression
 server.use(serve(config.server.assets, config.server.middleware.serve)) // assets
