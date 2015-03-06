@@ -26,7 +26,7 @@ function* renderer (options) {
     throw err
   }
 
-  return yield render({context, Handler, assets})
+  return render({context, Handler, assets})
 }
 
 function runRouter (context) {
@@ -38,21 +38,18 @@ function runRouter (context) {
 }
 
 function render ({context, Handler, assets}={}) {
-  return new Promise(resolve => {
-    log('using component context')
-    React.withContext(context.getComponentContext(), () => {
+  log('generating component context')
+  var componentContext = context.getComponentContext()
 
-      log('generating BSHED')
-      var BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
+  log('generating BSHED')
+  var BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
 
-      log('generating markup')
-      var markup = React.renderToString(React.createElement(Handler))
+  log('generating markup')
+  var markup = React.renderToString(React.createElement(Handler, {context: componentContext}))
 
-      log('generating html')
-      var html = React.renderToStaticMarkup(Html({markup, assets, BSHED}))
+  log('generating html')
+  var html = React.renderToStaticMarkup(Html({markup, assets, BSHED, context: componentContext}))
 
-      log('renderer finished')
-      resolve({body: html, type: 'html', status: 200})
-    })
-  })
+  log('render finished')
+  return {body: html, type: 'html', status: 200}
 }
