@@ -16,16 +16,15 @@
     "url": "https://github.com/cesarandreu"
   },
   "scripts": {
-    "base": "babel-node --experimental --ignore='public|node_modules' --blacklist='regenerator'",
     "build:client": "webpack -p -c --progress",
     "clean": "rm -rf public/assets",
     "dev": "parallelshell 'npm run dev:server' 'npm run dev:client'",
-    "dev:server": "nodemon --exec npm run base -- server.js",
+    "dev:server": "nodemon --exec babel-node -- server.js",
     "dev:client": "webpack-dev-server --content-base public --inline -h -c --progress",
     "test": "npm run test:base -- test/**/*.spec.js",
     "test:api": "npm run test:base -- test/api/*.spec.js",
     "test:models": "npm run test:base -- test/models/*.spec.js",
-    "test:base": "NODE_ENV=test npm run base -- node_modules/.bin/_mocha",
+    "test:base": "NODE_ENV=test babel-node node_modules/.bin/_mocha",
     "test:client": "jest",
     "fakes3": "fakes3 --root test/fakes3 -p 10001",
     "db:migrate": "sequelize db:migrate",
