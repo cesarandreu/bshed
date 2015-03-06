@@ -1,6 +1,5 @@
 // modules
 var koa = require('koa'),
-  path = require('path'),
   qs = require('koa-qs'),
   csrf = require('koa-csrf'),
   mount = require('koa-mount'),
@@ -18,26 +17,6 @@ var config = require('./config'),
   api = require('./api'),
   client = require('./client/server/middleware')
 
-// asset link loader
-function assets () {
-  var buckets = {'.js': 'scripts', '.css': 'styles'},
-    _assets = {scripts: [], styles: []}, stats
-
-  try {
-    stats = require(path.join(config.server.assets, 'assets/stats.json'))
-  } catch (err) {
-    console.warn('UNABLE TO LOAD stats.json', err)
-    stats = {assets: [], publicPath: ''}
-  }
-
-  stats.assets.forEach(function (asset) {
-    var bucket = buckets[path.extname(asset.name)]
-    if (bucket && (bucket !== 'scripts' || !asset.name.indexOf('scripts')))
-      _assets[bucket].push(`${stats.publicPath}${asset.name}`)
-  })
-  return _assets
-}
-
 // initialization
 debug('initializing modules')
 s3 = s3(config.aws)
@@ -49,10 +28,7 @@ api = api({
   models: models,
   s3: s3
 })
-client = client({
-  rendererPath: path.join(config.server.assets, 'renderer/renderer'),
-  assets: assets
-})
+client = client({assetPath: config.server.assets})
 
 /**
  * SERVER
