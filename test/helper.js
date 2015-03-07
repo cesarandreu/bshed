@@ -4,7 +4,7 @@ global.expect = require('chai').expect
 
 var path = require('path'),
   base = path.resolve(__dirname, '..'),
-  fixtures = path.join(base, '/test/fixtures'),
+  fixtures = path.join(base, 'test/fixtures'),
   config = require(path.join(base, 'config')),
   models = require(path.join(base, 'models')),
   server = require(path.join(base, 'server')),
