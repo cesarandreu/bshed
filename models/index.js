@@ -35,16 +35,13 @@ module.exports = function modelsLoader (opts) {
   })
 
   // Associate and initialize models
-  Object.keys(models)
-  .forEach(function (name) {
-    if ('associate' in models[name]) {
-      debug('associate %s', name)
-      models[name].associate(models)
-    }
-    if ('initialize' in models[name]) {
-      debug('initialize %s', name)
-      models[name].initialize(opts)
-    }
+  Object.keys(models).forEach(name => {
+    ['associate', 'initialize'].forEach(action => {
+      if (action in models[name]) {
+        debug(`${action} ${name}`)
+        models[name].associate(models)
+      }
+    })
   })
 
   models.sequelize = sequelize
