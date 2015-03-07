@@ -5,9 +5,8 @@ var _ = require('lodash'),
   Router = require('koa-router'),
   body = require('koa-better-body')
 
-module.exports = function BikeshedsController (helpers) {
-  var middleware = helpers.middleware,
-    auth = middleware.auth(),
+module.exports = function BikeshedsController ({middleware}={}) {
+  var auth = middleware.auth(),
     loadBikeshed = middleware.load('Bikeshed'),
     authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'})
 
