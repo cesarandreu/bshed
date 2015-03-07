@@ -1,9 +1,8 @@
 'use strict'
 
 var _ = require('lodash'),
-  uuid = require('node-uuid')
-
-var Router = require('koa-router'),
+  uuid = require('node-uuid'),
+  Router = require('koa-router'),
   body = require('koa-better-body')
 
 module.exports = function BikeshedsController (helpers) {
