@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-var _ = require('lodash');
+var _ = require('lodash')
 
 module.exports = function (sequelize, DataTypes) {
   var Bikeshed = sequelize.define('Bikeshed', {
@@ -52,9 +52,9 @@ module.exports = function (sequelize, DataTypes) {
     // paranoid: true,
     classMethods: {
       associate: function associate (models) {
-        models.Bikeshed.hasMany(models.Bike);
-        models.Bikeshed.hasMany(models.Vote);
-        models.Bikeshed.belongsTo(models.User);
+        models.Bikeshed.hasMany(models.Bike)
+        models.Bikeshed.hasMany(models.Vote)
+        models.Bikeshed.belongsTo(models.User)
       }
     },
     instanceMethods: {
@@ -62,27 +62,27 @@ module.exports = function (sequelize, DataTypes) {
     validate: {
       statusSize: function statusSize () {
         if (this.get('status') === 'open' && this.get('size') < 2) {
-          throw new Error('must have at least two bikes');
+          throw new Error('must have at least two bikes')
         }
       },
       statusTransition: function statusTransition () {
         var changes = {incomplete: 'open', open: 'closed'},
-          previous = this.previous('status'), status = this.get('status');
+          previous = this.previous('status'), status = this.get('status')
         if (this.changed('status') && previous && status !== changes[previous]) {
-          throw new Error(`unexpected status transition ${status}`);
+          throw new Error(`unexpected status transition ${status}`)
         }
       },
       statusDate: function () {
-        var status = this.get('status');
+        var status = this.get('status')
         if (status === 'open' && !_.isDate(this.get('openedAt'))) {
-          throw new Error('must have openedAt date to open');
+          throw new Error('must have openedAt date to open')
         } else if (status === 'closed' && !_.isDate(this.get('closedAt'))) {
-          throw new Error('must have closedAt date to close');
+          throw new Error('must have closedAt date to close')
         }
       }
     }
-  });
+  })
 
-  return Bikeshed;
-};
+  return Bikeshed
+}
 

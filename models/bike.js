@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, DataTypes) {
   var Bike = sequelize.define('Bike', {
@@ -54,11 +54,11 @@ module.exports = function (sequelize, DataTypes) {
     },
     classMethods: {
       associate: function associate (models) {
-        models.Bike.belongsTo(models.Bikeshed);
-        models.Bike.hasMany(models.Vote);
+        models.Bike.belongsTo(models.Bikeshed)
+        models.Bike.hasMany(models.Vote)
       }
     }
-  });
+  })
 
-  return Bike;
-};
+  return Bike
+}

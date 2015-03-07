@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = function (sequelize, DataTypes) {
   var User = sequelize.define('User', {
@@ -10,12 +10,12 @@ module.exports = function (sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: '',
+      defaultValue: ''
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: '',
+      defaultValue: ''
     },
     hashedPassword: {
       type: DataTypes.STRING,
@@ -25,13 +25,13 @@ module.exports = function (sequelize, DataTypes) {
     // paranoid: true,
     classMethods: {
       associate: function associate (models) {
-        models.User.hasMany(models.Bikeshed);
-        models.User.hasMany(models.Vote);
+        models.User.hasMany(models.Bikeshed)
+        models.User.hasMany(models.Vote)
       }
     },
     instanceMethods: {
     }
-  });
+  })
 
-  return User;
-};
+  return User
+}
