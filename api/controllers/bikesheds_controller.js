@@ -317,7 +317,7 @@ function* change () {
     this.throw(422)
   }
 
-  var saveVotes = function* saveVotes () {
+  var saveVotes = function* saveVotes (votes, sequelize) {
     var result, transaction = yield sequelize.transaction()
     try {
       result = yield votes.map(vote => vote.save({transaction}))
@@ -329,7 +329,7 @@ function* change () {
     return result
   }
 
-  this.body = yield retry(saveVotes)
+  this.body = yield retry(saveVotes(votes, sequelize))
   this.status = 200
 }
 
