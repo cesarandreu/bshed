@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-var helper = require('./helper');
+var helper = require('./helper')
 
 var models = helper.models,
-  Vote = models.Vote;
+  Vote = models.Vote
 
-var vote;
+var vote
 
 describe('Model:Vote', function () {
 
@@ -13,17 +13,17 @@ describe('Model:Vote', function () {
 
     vote = yield Vote.create({
       value: 5
-    });
-  });
+    })
+  })
 
   describe('Schema', function () {
 
     it('should have a valid schema', function () {
-      expect(vote).to.be.an('object');
-      expect(vote.id).to.be.a('number');
-      expect(vote.value).to.be.a('number').and.to.equal(5);
-    });
+      expect(vote).to.be.an('object')
+      expect(vote.id).to.be.a('number')
+      expect(vote.value).to.be.a('number').and.to.equal(5)
+    })
 
-  });
+  })
 
-});
+})

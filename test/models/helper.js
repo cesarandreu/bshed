@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-var helper = require('../helper');
+var helper = require('../helper')
 
-exports = module.exports = helper;
+exports = module.exports = helper

@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
 var helper = require('./helper'),
   models = helper.models,
-  Bike = models.Bike;
+  Bike = models.Bike
 
-var bike;
+var bike
 
 describe('Model:Bike', function () {
 
@@ -12,20 +12,20 @@ describe('Model:Bike', function () {
     bike = yield Bike.create({
       name: 'bike',
       body: 'description'
-    });
-  });
+    })
+  })
 
   describe('Schema', function () {
 
     it('should have a valid schema', function () {
-      expect(bike).to.be.an('object');
-      expect(bike.id).to.be.a('number');
-    });
+      expect(bike).to.be.an('object')
+      expect(bike.id).to.be.a('number')
+    })
 
-  });
+  })
 
 
   describe('methods', function () {
-  });
+  })
 
-});
+})
