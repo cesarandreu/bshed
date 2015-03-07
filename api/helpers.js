@@ -1,8 +1,9 @@
-'use strict';
+'use strict'
 
 var assert = require('assert'),
   wait = require('co-wait'),
-  _ = require('lodash');
+  _ = require('lodash'),
+  co = require('co')
 
 module.exports = {
   retry: retry,
@@ -11,24 +12,19 @@ module.exports = {
     load: load,
     auth: auth
   }
-};
+}
 
 /**
  * retry
  * ripped off from co-retry
  */
-function* retry (fn, opts={}) {
-  var {attempts, interval, delta} = opts;
-  attempts = attempts || 3;
-  interval = interval || 300;
-  delta = delta || 150;
-
+function* retry (fn, {attempts=3, interval=300, delta=150}={}) {
   while (true) {
     try {
-      return yield fn();
+      return yield co(fn)
     } catch (err) {
-      if (!(attempts--)) throw err;
-      yield wait(_.random(interval - delta, interval + delta));
+      if (!(attempts--)) throw err
+      yield wait(_.random(interval - delta, interval + delta))
     }
   }
 }
@@ -51,21 +47,21 @@ function* retry (fn, opts={}) {
  * example load('Bikeshed') - uses Bikeshed model, :bikeshed param, and sets ctx.state.bikeshed
  */
 function load (resource, opts={}) {
-  assert(resource);
+  assert(resource)
   opts = _.assign({
     key: 'id',
     name: resource.toLowerCase()
-  }, opts);
+  }, opts)
 
   if (opts.parent) {
     if (_.isString(opts.parent)) {
-      opts.parent = {resource: opts.parent};
+      opts.parent = {resource: opts.parent}
     }
     opts.parent = _.assign({
       name: opts.parent.resource.toLowerCase(),
       through: `${opts.parent.resource}Id`,
       key: 'id'
-    }, opts.parent);
+    }, opts.parent)
   }
 
   return function* loadMiddleware (next) {
@@ -73,18 +69,18 @@ function load (resource, opts={}) {
     try {
       var params = {
         where: {[opts.key]: this.params[opts.name]}
-      };
+      }
       if (opts.parent) {
-        params.where[opts.parent.through] = this.state[opts.parent.name][opts.parent.key];
+        params.where[opts.parent.through] = this.state[opts.parent.name][opts.parent.key]
       }
 
-      this.state[opts.name] = yield this.models[resource].find(params);
-      if (!this.state[opts.name]) throw new Error(resource + ' not found');
+      this.state[opts.name] = yield this.models[resource].find(params)
+      if (!this.state[opts.name]) throw new Error(resource + ' not found')
     } catch (err) {
-      this.throw(404, resource + ' not found');
+      this.throw(404, resource + ' not found')
     }
-    yield next;
-  };
+    yield next
+  }
 }
 
 /**
@@ -96,17 +92,16 @@ function load (resource, opts={}) {
 function auth (opts={}) {
   return function* authMiddleware (next) {
     try {
-      this.state.user = yield this.models.User.find(this.session.user.id);
+      this.state.user = yield this.models.User.find(this.session.user.id)
       if (!this.state.user) {
-        throw new Error('user not found');
+        throw new Error('user not found')
       }
     } catch (err) {
-      if (!opts.skippable) this.throw(401);
+      if (!opts.skippable) this.throw(401)
     }
-    yield next;
-  };
+    yield next
+  }
 }
 
 // do nothing
 function noop () {}
-
