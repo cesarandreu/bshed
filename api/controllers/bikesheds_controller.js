@@ -1,16 +1,16 @@
-'use strict';
+'use strict'
 
 var _ = require('lodash'),
-  uuid = require('node-uuid');
+  uuid = require('node-uuid')
 
 var Router = require('koa-router'),
-  body = require('koa-better-body');
+  body = require('koa-better-body')
 
 module.exports = function BikeshedsController (helpers) {
   var middleware = helpers.middleware,
     auth = middleware.auth(),
     loadBikeshed = middleware.load('Bikeshed'),
-    authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'});
+    authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'})
 
   var jsonBody = body(),
     multiBody = body({
@@ -18,7 +18,7 @@ module.exports = function BikeshedsController (helpers) {
       formidable: {
         multiples: false
       }
-    });
+    })
 
   var bikeshedRoutes = new Router()
 
@@ -34,11 +34,11 @@ module.exports = function BikeshedsController (helpers) {
     .patch('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, patch)
     .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
     .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change)
-    .get('/bikesheds/:bikeshed/bikes/votes', auth, loadBikeshed, votes);
-    // .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove);
+    .get('/bikesheds/:bikeshed/bikes/votes', auth, loadBikeshed, votes)
+    // .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove)
 
-  return bikeshedRoutes.middleware();
-};
+  return bikeshedRoutes.middleware()
+}
 
 /**
  * GET /bikesheds
@@ -49,7 +49,7 @@ module.exports = function BikeshedsController (helpers) {
  */
 function* index () {
   var {Bikeshed} = this.models,
-    {last, limit} = this.query;
+    {last, limit} = this.query
 
   var bikesheds = yield Bikeshed.findAll({
     limit: limit >= 1 ? (limit < 96 ? limit : 96) : 12,
@@ -61,9 +61,9 @@ function* index () {
         ne: null
       }
     }
-  });
+  })
 
-  this.body = bikesheds;
+  this.body = bikesheds
 }
 
 /**
@@ -72,19 +72,19 @@ function* index () {
  * Body: {name: string, body: string}
  */
 function* create () {
-  if (!this.request.body.fields) this.throw(400, 'empty body');
+  if (!this.request.body.fields) this.throw(400, 'empty body')
 
   var fields = _.assign({UserId: this.state.user.id},
-    _.pick(this.request.body.fields, ['name', 'body']));
+    _.pick(this.request.body.fields, ['name', 'body']))
 
   var bikeshed = this.models.Bikeshed.build(fields),
-    bikeshedValidation = yield bikeshed.validate();
+    bikeshedValidation = yield bikeshed.validate()
   if (bikeshedValidation) {
-    this.body = bikeshedValidation;
-    this.status = 422;
+    this.body = bikeshedValidation
+    this.status = 422
   } else {
-    this.body = yield bikeshed.save();
-    this.status = 201;
+    this.body = yield bikeshed.save()
+    this.status = 201
   }
 }
 
@@ -93,7 +93,7 @@ function* create () {
  * Public
  */
 function* show () {
-  this.body = this.state.bikeshed;
+  this.body = this.state.bikeshed
 }
 
 /**
@@ -102,34 +102,34 @@ function* show () {
  * Body: {name: string, body: string, image: file}
  */
 function* add () {
-  if (!this.request.body.fields) this.throw(400, 'empty body');
+  if (!this.request.body.fields) this.throw(400, 'empty body')
 
-  var bikeshed = this.state.bikeshed;
+  var bikeshed = this.state.bikeshed
   if (bikeshed.status !== 'incomplete') {
-    this.throw(403, 'can only add bikes to incomplete bikeshed');
+    this.throw(403, 'can only add bikes to incomplete bikeshed')
   } else if (bikeshed.size >= 5) {
-    this.throw(403, 'cannot insert over 5 bikes per bikeshed');
+    this.throw(403, 'cannot insert over 5 bikes per bikeshed')
   }
 
   var image = _.values(this.request.body.files)[0],
     fields = _.assign({
       BikeshedId: this.state.bikeshed.id, imageType: image && image.type
-    }, _.pick(this.request.body.fields, ['name', 'body']));
+    }, _.pick(this.request.body.fields, ['name', 'body']))
 
   var bike = this.models.Bike.build(fields),
-    bikeValidation = yield bike.validate();
+    bikeValidation = yield bike.validate()
   if (bikeValidation) {
-    this.body = bikeValidation;
+    this.body = bikeValidation
     if (_.where(bikeValidation.errors, {path: 'imageType'})) {
-      this.throw(415);
+      this.throw(415)
     } else {
-      this.throw(422);
+      this.throw(422)
     }
   }
 
-  var s3Options = {};
+  var s3Options = {}
   if (image) {
-    bike.imageName = uuid.v4();
+    bike.imageName = uuid.v4()
     s3Options.upload = {
       localFile: image.path,
       s3Params: {
@@ -138,32 +138,32 @@ function* add () {
         Bucket: bike.bucket,
         Key: bike.key
       }
-    };
+    }
     s3Options.destroy = {
       Delete: {Objects: [{Key: bike.key}]},
       Bucket: bike.bucket
-    };
-  }
-
-  var t = yield this.models.sequelize.transaction();
-  try {
-    bike = yield bike.save({transaction: t});
-    if (image) yield this.s3.attemptUpload(s3Options);
-    yield t.commit();
-  } catch (err) {
-    yield t.rollback();
-    if (err.message === 'cannot insert over 5 bikes per bikeshed') {
-      this.throw(403, err.message);
-    } else if (err.message === 'can only add bikes to incomplete bikeshed') {
-      this.throw(403, err.message);
-    } else if (err.message === 'could not serialize access due to concurrent update') {
-      this.throw(409, err.message);
-    } else {
-      this.throw(503);
     }
   }
-  this.body = bike;
-  this.status = 201;
+
+  var t = yield this.models.sequelize.transaction()
+  try {
+    bike = yield bike.save({transaction: t})
+    if (image) yield this.s3.attemptUpload(s3Options)
+    yield t.commit()
+  } catch (err) {
+    yield t.rollback()
+    if (err.message === 'cannot insert over 5 bikes per bikeshed') {
+      this.throw(403, err.message)
+    } else if (err.message === 'can only add bikes to incomplete bikeshed') {
+      this.throw(403, err.message)
+    } else if (err.message === 'could not serialize access due to concurrent update') {
+      this.throw(409, err.message)
+    } else {
+      this.throw(503)
+    }
+  }
+  this.body = bike
+  this.status = 201
 }
 
 /**
@@ -172,31 +172,31 @@ function* add () {
  * Body: {name: string, body: string, status: string}
  */
 function* patch () {
-  if (!this.request.body.fields) this.throw(400, 'empty body');
+  if (!this.request.body.fields) this.throw(400, 'empty body')
 
   var bikeshed = this.state.bikeshed,
-    {name, body, status} = _.pick(this.request.body.fields, ['name', 'body', 'status']);
+    {name, body, status} = _.pick(this.request.body.fields, ['name', 'body', 'status'])
 
   if ((name || body) && bikeshed.status !== 'incomplete')
-    this.throw(422, 'can only update name and body on incomplete bikeshed');
+    this.throw(422, 'can only update name and body on incomplete bikeshed')
 
   if (bikeshed.status === 'incomplete') {
-    if (_.isString(name)) bikeshed.name = name;
-    if (_.isString(body)) bikeshed.body = body;
+    if (_.isString(name)) bikeshed.name = name
+    if (_.isString(body)) bikeshed.body = body
   }
 
-  if (bikeshed.status === 'incomplete' && status === 'open') bikeshed.openedAt = new Date();
-  if (bikeshed.status === 'open' && status === 'closed') bikeshed.closedAt = new Date();
-  if (_.isString(status)) bikeshed.status = status;
+  if (bikeshed.status === 'incomplete' && status === 'open') bikeshed.openedAt = new Date()
+  if (bikeshed.status === 'open' && status === 'closed') bikeshed.closedAt = new Date()
+  if (_.isString(status)) bikeshed.status = status
 
-  var validation = yield bikeshed.validate();
+  var validation = yield bikeshed.validate()
   if (validation) {
-    this.body = validation;
-    this.throw(422);
+    this.body = validation
+    this.throw(422)
   }
 
-  this.body = yield bikeshed.save();
-  this.status = 200;
+  this.body = yield bikeshed.save()
+  this.status = 200
 }
 
 /**
@@ -204,8 +204,8 @@ function* patch () {
  * Protected
  */
 function* destroy () {
-  yield this.state.bikeshed.destroy();
-  this.status = 204;
+  yield this.state.bikeshed.destroy()
+  this.status = 204
 }
 
 /**
@@ -213,10 +213,10 @@ function* destroy () {
  * Public
  */
 function* score () {
-  var BikeshedId = this.state.bikeshed.id;
+  var BikeshedId = this.state.bikeshed.id
   this.body = yield this.models.Bike.findAll({
     order: [['score', 'ASC']], where: {BikeshedId}
-  });
+  })
 }
 
 /**
@@ -226,55 +226,55 @@ function* score () {
  * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
  */
 function* rate () {
-  if (!this.request.body.fields) this.throw(400, 'empty body');
+  if (!this.request.body.fields) this.throw(400, 'empty body')
 
   var {retry} = this.helpers,
     {Vote, Bike, sequelize} = this.models,
     {bikeshed, user} = this.state,
     BikeshedId = bikeshed.id,
-    UserId = user.id;
+    UserId = user.id
 
   if (bikeshed.status !== 'open') {
-    this.throw(403, 'bikeshed must be open');
+    this.throw(403, 'bikeshed must be open')
   } else if (yield Vote.count({where: {BikeshedId, UserId}})) {
-    this.throw(403, 'already voted');
+    this.throw(403, 'already voted')
   }
 
-  var bikes = yield Bike.findAll({where: {BikeshedId}});
+  var bikes = yield Bike.findAll({where: {BikeshedId}})
   var votes = _.pairs(this.request.body.fields)
   .map(function (pair) {
-    var BikeId = _.parseInt(pair[0]), {value} = _.pick(pair[1], ['value']);
-    return Vote.build({BikeshedId, UserId, BikeId, value});
-  });
+    var BikeId = _.parseInt(pair[0]), {value} = _.pick(pair[1], ['value'])
+    return Vote.build({BikeshedId, UserId, BikeId, value})
+  })
 
   if (bikes.length !== votes.length) {
-    this.throw(422, 'must vote for each bike');
+    this.throw(422, 'must vote for each bike')
   } else if (_.difference(_.pluck(votes, 'BikeId'), _.pluck(bikes, 'id')).length) {
-    this.throw(422, 'must vote on bikes');
+    this.throw(422, 'must vote on bikes')
   } else if (_.difference(_.range(votes.length), _.pluck(votes, 'value')).length) {
-    this.throw(422, 'must have unique value per bike');
+    this.throw(422, 'must have unique value per bike')
   }
 
-  var validations = (yield votes.map(vote => vote.validate())).filter(vote => vote);
+  var validations = (yield votes.map(vote => vote.validate())).filter(vote => vote)
   if (validations.length) {
-    this.body = validations;
-    this.throw(422);
+    this.body = validations
+    this.throw(422)
   }
 
   var saveVotes = function* saveVotes () {
-    var result, transaction = yield sequelize.transaction();
+    var result, transaction = yield sequelize.transaction()
     try {
-      result = yield votes.map(vote => vote.save({transaction}));
-      yield transaction.commit();
+      result = yield votes.map(vote => vote.save({transaction}))
+      yield transaction.commit()
     } catch (err) {
-      yield transaction.rollback();
-      throw err;
+      yield transaction.rollback()
+      throw err
     }
-    return result;
-  };
+    return result
+  }
 
-  this.body = yield retry(saveVotes);
-  this.status = 201;
+  this.body = yield retry(saveVotes)
+  this.status = 201
 }
 
 /**
@@ -285,52 +285,52 @@ function* rate () {
  */
 function* change () {
   if (!this.request.body.fields) {
-    this.throw(400, 'empty body');
+    this.throw(400, 'empty body')
   } else if (this.state.bikeshed.status !== 'open') {
-    this.throw(403, 'bikeshed must be open');
+    this.throw(403, 'bikeshed must be open')
   }
 
   var {retry} = this.helpers,
     {Vote, sequelize} = this.models,
     {bikeshed, user} = this.state,
     BikeshedId = bikeshed.id,
-    UserId = user.id;
+    UserId = user.id
 
   var fields = _.mapValues(this.request.body.fields, (field) => _.pick(field, 'value')),
-    votes = yield Vote.findAll({where: {BikeshedId, UserId}});
+    votes = yield Vote.findAll({where: {BikeshedId, UserId}})
 
   if (!votes.length) {
-    this.throw(403, 'must vote first');
+    this.throw(403, 'must vote first')
   } else if (votes.length !== _.keys(fields).length) {
-    this.throw(422, 'must vote on bikeshed bikes');
+    this.throw(422, 'must vote on bikeshed bikes')
   } else if (_.difference(votes.map(vote => vote.BikeId.toString()), _.keys(fields)).length) {
-    this.throw(422, 'must vote on each bike');
+    this.throw(422, 'must vote on each bike')
   } else if (_.difference(_.range(votes.length), _.pluck(fields, 'value')).length) {
-    this.throw(422, 'must use unique value per bike');
+    this.throw(422, 'must use unique value per bike')
   }
 
-  votes.forEach(vote => vote.value = fields[vote.BikeId].value);
+  votes.forEach(vote => vote.value = fields[vote.BikeId].value)
 
-  var validations = (yield votes.map(vote => vote.validate())).filter(vote => vote);
+  var validations = (yield votes.map(vote => vote.validate())).filter(vote => vote)
   if (validations.length) {
-    this.body = validations;
-    this.throw(422);
+    this.body = validations
+    this.throw(422)
   }
 
   var saveVotes = function* saveVotes () {
-    var result, transaction = yield sequelize.transaction();
+    var result, transaction = yield sequelize.transaction()
     try {
-      result = yield votes.map(vote => vote.save({transaction}));
-      yield transaction.commit();
+      result = yield votes.map(vote => vote.save({transaction}))
+      yield transaction.commit()
     } catch (err) {
-      yield transaction.rollback();
-      throw err;
+      yield transaction.rollback()
+      throw err
     }
-    return result;
-  };
+    return result
+  }
 
-  this.body = yield retry(saveVotes);
-  this.status = 200;
+  this.body = yield retry(saveVotes)
+  this.status = 200
 }
 
 /**
@@ -340,10 +340,10 @@ function* change () {
 function* votes () {
   var {Vote} = this.models,
     {bikeshed, user} = this.state,
-    BikeshedId = bikeshed.id, UserId = user.id;
+    BikeshedId = bikeshed.id, UserId = user.id
 
-  var list = yield Vote.findAll({where: {BikeshedId, UserId}});
-  this.body = Vote.asObject(list);
+  var list = yield Vote.findAll({where: {BikeshedId, UserId}})
+  this.body = Vote.asObject(list)
 }
 
 // TODO: add trigger for this to work
@@ -353,9 +353,9 @@ function* votes () {
 //  */
 // function* remove () {
 //   if (this.state.bikeshed.status !== 'incomplete') {
-//     this.throw(403, 'can only remove bikes from incomplete bikesheds');
+//     this.throw(403, 'can only remove bikes from incomplete bikesheds')
 //   }
 
-//   yield this.state.bike.destroy();
-//   this.status = 204;
+//   yield this.state.bike.destroy()
+//   this.status = 204
 // }
