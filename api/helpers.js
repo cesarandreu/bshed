@@ -6,12 +6,8 @@ var assert = require('assert'),
   co = require('co')
 
 module.exports = {
-  retry: retry,
-  noop: noop,
-  middleware: {
-    load: load,
-    auth: auth
-  }
+  retry, noop,
+  middleware: {load, auth}
 }
 
 /**
