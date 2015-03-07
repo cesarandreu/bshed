@@ -42,38 +42,28 @@ function* retry (fn, {attempts=3, interval=300, delta=150}={}) {
  *
  * example load('Bikeshed') - uses Bikeshed model, :bikeshed param, and sets ctx.state.bikeshed
  */
-function load (resource, opts={}) {
+function load (resource, {parent, key='id', name=resource.toLowerCase()}={}) {
   assert(resource)
-  opts = _.assign({
-    key: 'id',
-    name: resource.toLowerCase()
-  }, opts)
-
-  if (opts.parent) {
-    if (_.isString(opts.parent)) {
-      opts.parent = {resource: opts.parent}
-    }
-    opts.parent = _.assign({
-      name: opts.parent.resource.toLowerCase(),
-      through: `${opts.parent.resource}Id`,
+  if (parent) {
+    if (_.isString(parent)) parent = {resource: parent}
+    parent = _.assign({
+      name: parent.resource.toLowerCase(),
+      through: `${parent.resource}Id`,
       key: 'id'
-    }, opts.parent)
+    }, parent)
   }
 
   return function* loadMiddleware (next) {
     // inside of try-catch in case any key is incorrect
     try {
       var params = {
-        where: {[opts.key]: this.params[opts.name]}
+        where: {[key]: this.params[name]}
       }
-      if (opts.parent) {
-        params.where[opts.parent.through] = this.state[opts.parent.name][opts.parent.key]
-      }
-
-      this.state[opts.name] = yield this.models[resource].find(params)
-      if (!this.state[opts.name]) throw new Error(resource + ' not found')
+      if (parent) params.where[parent.through] = this.state[parent.name][parent.key]
+      this.state[name] = yield this.models[resource].find(params)
+      if (!this.state[name]) throw new Error(`${resource} not found`)
     } catch (err) {
-      this.throw(404, resource + ' not found')
+      this.throw(404, `${resource} not found`)
     }
     yield next
   }
