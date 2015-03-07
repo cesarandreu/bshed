@@ -71,12 +71,9 @@ server.use(mount(client))
  * Listen for connections
  * returns server instance
  */
-server.init = function init (port) {
-  port = port || config.server.port
+server.init = function init (port=config.server.port) {
   debug('initializing server using port %d', port)
-  server.server = server.listen(port, function () {
-    debug('listening on port %d', port)
-  })
+  server.server = server.listen(port, () => debug('listening on port %d', port))
   return server.server
 }
 
