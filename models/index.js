@@ -13,13 +13,12 @@ var assert = require('assert'),
  * requires opts.database
  * returns models object
  */
-module.exports = function modelsLoader (opts) {
-  assert(opts)
-  assert(opts.database)
+module.exports = function modelsLoader ({database}={}) {
+  assert(database)
   debug('loader:start')
 
   var models = {},
-    config = opts.database,
+    config = database,
     sequelize = new Sequelize(config.database, config.username, config.password, config)
 
   // Load models
@@ -29,7 +28,7 @@ module.exports = function modelsLoader (opts) {
     var modelPath = path.join(__dirname, file)
     var model = sequelize.import(modelPath)
     models[model.name] = model
-    debug('%s loaded from file %s', model.name, modelPath)
+    debug(`${model.name} loaded from file ${modelPath}`)
   })
 
   // Associate and initialize models
