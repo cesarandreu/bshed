@@ -1,11 +1,8 @@
 var React = require('react'),
-  {FluxibleMixin} = require('fluxible'),
   classnames = require('classnames'),
-  BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
   IconButton = require('../../components/buttons/IconButton.jsx')
 
 var BikeGrid = React.createClass({
-  mixins: [FluxibleMixin],
 
   render: function () {
     var {bikes} = this.props
