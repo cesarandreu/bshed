@@ -30,16 +30,8 @@ var Home = React.createClass({
     )
   },
 
-  _receivedFiles (files) {
-    this.executeAction(BikeshedBuilderAction.addFiles, files)
-  },
-
   _inputChange (e) {
-    this._receivedFiles(e.target.files)
-  },
-
-  _fileDropped (e) {
-    this._receivedFiles(e.dataTransfer.files)
+    this.executeAction(BikeshedBuilderAction.addFiles, e.target.files)
   }
 })
 
