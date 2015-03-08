@@ -53,6 +53,7 @@
     "extract-text-webpack-plugin": "^0.3.8",
     "file-loader": "^0.8.1",
     "fluxible": "^0.2.2",
+    "immutable": "^3.6.4",
     "is-generator-function": "^1.0.3",
     "koa": "^0.18.0",
     "koa-better-body": "^1.0.17",
