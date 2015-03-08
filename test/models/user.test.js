@@ -1,9 +1,6 @@
 'use strict'
 
-var helper = require('./helper')
-
-var User = helper.models.User
-
+var {models: {User}, expect} = require('./helper')
 var user
 
 describe('Model:User', function () {
