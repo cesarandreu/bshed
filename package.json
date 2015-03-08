@@ -26,7 +26,7 @@
     "test:api": "npm run test:base -- test/api/*.test.js",
     "test:models": "npm run test:base -- test/models/*.test.js",
     "test:base": "NODE_ENV=test babel-node node_modules/.bin/_mocha",
-    "test:client": "jest",
+    "test:client": "npm run test:base -- client/**/test/*.test.js",
     "fakes3": "fakes3 --root test/fakes3 -p 10001",
     "db:migrate": "sequelize db:migrate",
     "db:create": "create_database",
