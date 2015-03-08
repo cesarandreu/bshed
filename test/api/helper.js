@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
 var supertest = require('supertest-as-promised'),
-  helper = require('../helper');
+  helper = require('../helper')
 
-exports = module.exports = helper;
-exports.request = supertest(helper.server.callback());
+exports = module.exports = helper
+exports.request = supertest(helper.server.callback())
