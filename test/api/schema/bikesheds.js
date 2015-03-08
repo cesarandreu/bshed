@@ -58,7 +58,7 @@ module.exports = {
         enum: ['incomplete', 'open', 'closed']
       }
     }
-  }
+  },
 
   // POST /api/bikesheds/:bikeshed
   add: {
@@ -73,4 +73,4 @@ module.exports = {
       imageType: { type: ['string', 'null'], required: true }
     }
   }
-};
+}
