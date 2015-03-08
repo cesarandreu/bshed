@@ -1,14 +1,13 @@
 'use strict'
 
-global.expect = require('chai').expect
-
 var path = require('path'),
   base = path.resolve(__dirname, '..'),
   fixtures = path.join(base, 'test/fixtures'),
   config = require(path.join(base, 'config')),
   models = require(path.join(base, 'models')),
   server = require(path.join(base, 'server')),
-  buildHeaders = require('./buildHeaders')
+  buildHeaders = require('./buildHeaders'),
+  {expect} = require('chai')
 
 // initialize stuff
 buildHeaders = buildHeaders({
@@ -21,6 +20,7 @@ models = models({
 
 module.exports = {
   base,
+  expect,
   config,
   models,
   server,
