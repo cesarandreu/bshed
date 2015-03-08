@@ -1,7 +1,8 @@
 'use strict'
 
-var {models: {Bikeshed}, expect} = require('./helper')
-var bikeshed
+var {models: {Bikeshed}} = require('./helper'),
+  {expect} = require('chai'),
+  bikeshed
 
 describe('Model:Bikeshed', function () {
 

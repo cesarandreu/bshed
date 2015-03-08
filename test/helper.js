@@ -6,8 +6,7 @@ var path = require('path'),
   config = require(path.join(base, 'config')),
   models = require(path.join(base, 'models')),
   server = require(path.join(base, 'server')),
-  buildHeaders = require('./buildHeaders'),
-  {expect} = require('chai')
+  buildHeaders = require('./buildHeaders')
 
 // initialize stuff
 buildHeaders = buildHeaders({
@@ -20,7 +19,6 @@ models = models({
 
 module.exports = {
   base,
-  expect,
   config,
   models,
   server,
