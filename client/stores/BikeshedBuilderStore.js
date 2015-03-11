@@ -55,8 +55,10 @@ var BikeshedBuilderStore = createStore({
   },
 
   getState: function () {
-    var {bikes, index} = this
-    return {bikes, index}
+    return {
+      bikes: this.bikes,
+      index: this.index
+    }
   },
   dehydrate: function () {
     return this.getState()
