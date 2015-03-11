@@ -4,15 +4,14 @@ var co = require('co'),
 
 module.exports = co.wrap(navigate)
 
-function* navigate (context, payload, done) {
+function* navigate (context, payload) {
   try {
     context.dispatch('NAVIGATE_START', payload)
     yield co(navigateRequests(context, payload))
     context.dispatch('NAVIGATE_SUCCESS', payload)
-    done(null)
   } catch (err) {
     context.dispatch('NAVIGATE_ERROR', payload)
-    done(err)
+    throw err
   }
 }
 
