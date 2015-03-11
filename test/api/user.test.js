@@ -20,7 +20,7 @@ describe('Request:User', function () {
     it('returns 200 and current user', function* () {
       res = yield request.get(url).set(headers).expect(200)
       expect(res.body).to.be.an('object')
-      ;['id', 'name', 'email'].forEach(function (value) {
+      ; ['id', 'name', 'email'].forEach(function (value) {
         expect(res.body[value]).to.equal(user[value])
       })
     })
