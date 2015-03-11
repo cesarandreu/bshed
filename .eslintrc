@@ -3,7 +3,6 @@
   "rules": {
     "strict": false,
     "no-console": false,
-    "space-before-blocks": false,
     "no-multiple-empty-lines": false
   },
   "env": {
