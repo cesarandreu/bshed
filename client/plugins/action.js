@@ -1,5 +1,6 @@
 var co = require('co'),
   debug = require('debug'),
+  isPromise = require('is-promise'),
   isGeneratorFunction = require('is-generator-function')
 
 module.exports = function ActionPlugin () {
@@ -40,7 +41,12 @@ function executeAction (action, payload={}, done) {
     promise = co(action(this.getActionContext(), payload))
   } else {
     promise = new Promise((resolve, reject) => {
-      action(this.getActionContext(), payload, (err, res) => err ? reject(err) : resolve(res))
+      var result = action(this.getActionContext(), payload, (e, r) => e ? reject(e) : resolve(r))
+      if (isPromise(result)) {
+        result.then(resolve, reject)
+      } else if (action.length < 3) {
+        resolve(result)
+      }
     })
   }
 
