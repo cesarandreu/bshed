@@ -27,8 +27,7 @@ function plugContext (opts, context) {
 
   function componentContextAction (action, payload) {
     context.executeAction(action, payload).catch(err => {
-      debug('Action returned error', err)
-      throw err
+      context.executeAction(context._app._componentActionHandler, {err}, () => {})
     })
   }
 }
