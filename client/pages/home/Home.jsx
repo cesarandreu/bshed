@@ -1,6 +1,6 @@
 var React = require('react'),
   {FluxibleMixin} = require('fluxible'),
-  Hero = require('./Hero.jsx'),
+  BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx'),
   BikeGrid = require('./BikeGrid.jsx'),
   AddBikeButton = require('./AddBikeButton.jsx'),
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
@@ -23,7 +23,7 @@ var Home = React.createClass({
 
     return (
       <div className='bikeshed-builder'>
-        {!bikes.length && <Hero/>}
+        {!bikes.length && <BikeshedBuilderHero/>}
         <BikeGrid bikes={bikes}/>
         <AddBikeButton inputChange={this._inputChange}/>
       </div>
