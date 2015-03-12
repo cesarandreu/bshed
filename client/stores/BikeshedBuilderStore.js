@@ -1,4 +1,4 @@
-var createStore = require('fluxible/utils/createStore'),
+var {createStore} = require('fluxible/addons'),
   _ = require('lodash')
 
 class Bike {
