@@ -15,15 +15,15 @@ require('./assets/styles/index.less')
 var mountNode = document.getElementById('bshed') // render node
 
 if (process.env.NODE_ENV !== 'production') {
-  window.React = React // For chrome dev tool support
+  global.React = React // For chrome dev tool support
   debug.enable('*')
 }
 
 log('rehydrating application')
-app.rehydrate(window.BSHED, (err, context) => {
+app.rehydrate(global.BSHED, (err, context) => {
   if (err) throw err
   if (process.env.NODE_ENV !== 'production')
-    window.context = context // For debugging
+    global.context = context // For debugging
 
   log('starting router')
   context.getComponentContext().router.run(co.wrap(routerAction(context)))
