@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build:client": "webpack -p -c --progress",
-    "clean": "rm -rf public/assets test/fakes3/*",
+    "clean": "rm -rf public/{assets,renderer} test/fakes3/*",
     "db:create": "create_database",
     "db:drop": "drop_database",
     "db:migrate": "sequelize db:migrate",
