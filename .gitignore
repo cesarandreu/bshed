@@ -15,6 +15,3 @@ coverage
 # Builds
 public/assets
 public/renderer
-
-# babel caching
-.roadrunner.json
