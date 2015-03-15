@@ -116,10 +116,10 @@ module.exports = function buildWebpackConfig (options) {
 
     // Minifify, dedupe, extract css
     config.plugins.push(
-      new ExtractTextPlugin('[name].css?[contenthash]'),
-      new webpack.optimize.UglifyJsPlugin(),
+      new ExtractTextPlugin('[name].[hash].css'),
+      new webpack.NoErrorsPlugin(),
       new webpack.optimize.DedupePlugin(),
-      new webpack.NoErrorsPlugin()
+      new webpack.optimize.UglifyJsPlugin()
     )
   }
 
