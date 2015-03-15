@@ -38,7 +38,7 @@ function assetList (assetPath) {
 
   stats.assets.forEach(function (asset) {
     var bucket = buckets[path.extname(asset.name)]
-    if (bucket && (bucket !== 'scripts' || !asset.name.indexOf('scripts')))
+    if (bucket && (bucket !== 'scripts' || !asset.name.indexOf('bshed')))
       assets[bucket].push(`${stats.publicPath}${asset.name}`)
   })
 

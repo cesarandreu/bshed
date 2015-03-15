@@ -15,7 +15,7 @@ var config = require('./config'),
   models = require('./models'),
   s3 = require('./lib/s3'),
   api = require('./api'),
-  client = require('./client/server/middleware')
+  client = require('./client/renderer/middleware')
 
 // initialization
 debug('initializing modules')
