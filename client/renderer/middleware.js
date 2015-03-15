@@ -25,22 +25,27 @@ module.exports = function ({assetPath}={}) {
 
 // asset link loader
 function assetList (assetPath) {
-  var buckets = {'.js': 'scripts', '.css': 'styles'},
-    assets = {scripts: [], styles: []}, stats
+  var assets = {scripts: [], styles: []}, stats
 
   try {
     log(`Getting asset list from ${assetPath}`)
     stats = require(path.join(assetPath, 'assets/stats.json'))
   } catch (err) {
     console.warn(`UNABLE TO LOAD ${path.join(assetPath, 'assets/stats.json')}`, err)
-    stats = {assets: [], publicPath: ''}
+    stats = {assetsByChunkName: {bshed: []}, publicPath: ''}
   }
 
-  stats.assets.forEach(function (asset) {
-    var bucket = buckets[path.extname(asset.name)]
-    if (bucket && (bucket !== 'scripts' || !asset.name.indexOf('bshed')))
-      assets[bucket].push(`${stats.publicPath}${asset.name}`)
+  stats.assetsByChunkName.bshed.forEach(asset => {
+    switch (path.extname(asset)) {
+      case '.js':
+        assets.scripts.push(`${stats.publicPath}${asset}`)
+        break
+      case '.css':
+        assets.styles.push(`${stats.publicPath}${asset}`)
+        break
+    }
   })
 
+  log(`Asset list: ${JSON.stringify(assets)}`)
   return assets
 }
