@@ -28,6 +28,7 @@
     "dev:client": "webpack-dev-server --inline -h -c --progress",
     "fakes3": "fakes3 --root test/fakes3 -p 10001",
     "imagemin": "imagemin client/assets/images/**/*",
+    "server": "babel-node server.js",
     "test": "npm run test:base -- {client/**/,}test/**/*.test.*",
     "test:api": "npm run test:base -- test/api/*.test.js",
     "test:base": "NODE_ENV=test babel-node node_modules/.bin/_mocha",
