@@ -79,7 +79,6 @@ module.exports = function buildWebpackConfig (options) {
     publicPath: publicPath,
     filename: filename,
     chunkFilename: '[id].[hash].js',
-    sourceMapFilename: 'debugging/[file].[hash].map',
     libraryTarget: SERVER ? 'commonjs2' : void 0
   }
 
