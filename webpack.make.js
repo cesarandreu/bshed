@@ -23,7 +23,6 @@ module.exports = function buildWebpackConfig (options) {
   var config = {
     externals: [],
     module: {
-      // noParse: [/react-with-addons/],
       loaders: [{
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         loader: BUILD ? 'url?limit=10000' : 'url'
@@ -83,7 +82,8 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // loaders
-  var babelLoader = 'babel?experimental&optional=runtime'
+  var babelLoader = 'babel?experimental'
+  babelLoader += SERVER ? '' : '&optional=runtime'
 
   // Webpack fails at parsing generator functions :(
   // babelLoader += SERVER ? '&blacklist=regenerator' : ''
@@ -109,11 +109,6 @@ module.exports = function buildWebpackConfig (options) {
 
   // plugins
   if (BUILD && !SERVER) {
-    // Ensures requires for 'react' and 'react/addons' normalize to the same path
-    var reactRegex = /^react(\/addons)?$/
-    var reactAddonsPath = require.resolve('react/dist/react-with-addons')
-    config.plugins.push(new webpack.NormalModuleReplacementPlugin(reactRegex, reactAddonsPath))
-
     // Minifify, dedupe, extract css
     config.plugins.push(
       new ExtractTextPlugin('[name].[hash].css'),
@@ -124,7 +119,6 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   if (!SERVER) {
-    config.plugins.push(new webpack.PrefetchPlugin('react'))
     config.plugins.push(StatsPlugin())
   }
 
