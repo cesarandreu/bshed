@@ -31,14 +31,22 @@ app.rehydrate(global.BSHED, (err, context) => {
   context.getComponentContext().router.run(co.wrap(routerAction(context)))
 })
 
+var firstRender = true
 function routerAction (context) {
   return function* (Handler, state) {
-    try {
-      log('executing navigate action')
-      yield context.executeAction(navigate, state)
-    } catch (err) {
-      console.error('Error executing navigate action', err)
-      throw err
+    // Don't call the action on the first render on top of the server rehydration
+    // Otherwise there is a race condition where the action gets executed before
+    // render has been called, which can cause the checksum to fail.
+    if (!firstRender) {
+      try {
+        log('executing navigate action')
+        yield context.executeAction(navigate, state)
+      } catch (err) {
+        console.error('Error executing navigate action', err)
+        throw err
+      }
+    } else {
+      firstRender = false
     }
 
     log('rendering application')
