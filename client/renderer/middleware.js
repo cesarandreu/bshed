@@ -3,6 +3,7 @@ var path = require('path'),
   log = require('debug')('bshed:client:middleware')
 
 module.exports = function ({assetPath}={}) {
+  log(`Loading renderer from ${path.join(assetPath, 'renderer')}`)
   var renderer = require(path.join(assetPath, 'renderer')),
     assets = assetList(assetPath)
 
