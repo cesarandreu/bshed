@@ -33,9 +33,7 @@
     "test:base": "NODE_ENV=test babel-node node_modules/.bin/_mocha",
     "test:client": "npm run test:base -- client/**/test/*.test.*",
     "test:coverage": "NODE_ENV=test babel-node node_modules/.bin/isparta cover --report text --report html node_modules/.bin/_mocha -- --reporter dot {client/**/,}test/**/*.test.*",
-    "test:models": "npm run test:base -- test/models/*.test.js",
-    "webpack": "webpack -c --progress",
-    "webpack:live": "npm run webpack -- -w"
+    "test:models": "npm run test:base -- test/models/*.test.js"
   },
   "dependencies": {
     "autoprefixer-loader": "^1.0.0",
