@@ -16,7 +16,7 @@
     "url": "https://github.com/cesarandreu"
   },
   "scripts": {
-    "build:client": "webpack -p -c --progress",
+    "build:client": "webpack --config webpack.build.js --progress -p -c",
     "clean": "rm -rf public/{assets,renderer} test/fakes3/*",
     "db:create": "create_database",
     "db:drop": "drop_database",
