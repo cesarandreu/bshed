@@ -42,7 +42,7 @@
     "aws-sdk": "^2.1.17",
     "babel": "^4.7.12",
     "babel-core": "^4.7.12",
-    "babel-loader": "^4.0.0",
+    "babel-loader": "^4.2.0",
     "babel-runtime": "^4.7.12",
     "classnames": "^1.1.4",
     "co": "^4.3.1",
@@ -99,7 +99,7 @@
     "webpack-dev-server": "^1.7.0"
   },
   "devDependencies": {
-    "chai": "^2.0.0",
+    "chai": "^2.1.2",
     "co-mocha": "^1.1.0",
     "cookies": "^0.5.0",
     "csrf": "^2.0.6",
