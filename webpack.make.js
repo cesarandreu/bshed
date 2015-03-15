@@ -39,7 +39,7 @@ module.exports = function buildWebpackConfig (options) {
       extensions: ['', '.js', '.jsx', '.less']
     },
     plugins: [
-      // TODO: move this to be client-only?
+      // TODO: only use when non-server?
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(ENV)
       })
@@ -109,19 +109,12 @@ module.exports = function buildWebpackConfig (options) {
   })
 
   // plugins
-  if (BUILD) {
+  if (BUILD && !SERVER) {
     // Ensures requires for 'react' and 'react/addons' normalize to the same path
     var reactRegex = /^react(\/addons)?$/
     var reactAddonsPath = require.resolve('react/dist/react-with-addons')
     config.plugins.push(new webpack.NormalModuleReplacementPlugin(reactRegex, reactAddonsPath))
-  }
 
-  if (!SERVER) {
-    config.plugins.push(new webpack.PrefetchPlugin('react'))
-    config.plugins.push(StatsPlugin())
-  }
-
-  if (BUILD && !SERVER) {
     // Minifify, dedupe, extract css
     config.plugins.push(
       new ExtractTextPlugin('[name].css?[contenthash]'),
@@ -129,6 +122,11 @@ module.exports = function buildWebpackConfig (options) {
       new webpack.optimize.DedupePlugin(),
       new webpack.NoErrorsPlugin()
     )
+  }
+
+  if (!SERVER) {
+    config.plugins.push(new webpack.PrefetchPlugin('react'))
+    config.plugins.push(StatsPlugin())
   }
 
   return config
