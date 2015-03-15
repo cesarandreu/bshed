@@ -8,13 +8,12 @@ module.exports = function buildWebpackConfig (options) {
   options = options || {}
 
   var ENV = options.ENV || process.env.NODE_ENV || 'development',
-    DEVELOPMENT = options.DEVELOPMENT || ENV === 'development',
-    PRODUCTION = options.PRODUCTION || ENV === 'production',
-    SERVER = options.SERVER, DEBUG = options.DEBUG
+    SERVER = options.SERVER || process.env.SERVER,
+    BUILD = options.BUILD || process.env.BUILD
 
   // shared values
-  var publicPath = PRODUCTION ? '/assets/' : 'http://localhost:8080/assets/',
-    outputPath = path.join(__dirname, 'public', SERVER ? 'renderer' : 'assets')
+  var publicPath = BUILD ? '/assets/' : 'http://localhost:8080/assets/'
+  var outputPath = path.resolve('public', SERVER ? 'renderer' : 'assets')
 
   var excludeFromStats = [
     /node_modules[\\\/]react(-router)?[\\\/]/
@@ -22,28 +21,31 @@ module.exports = function buildWebpackConfig (options) {
 
   // base
   var config = {
-    debug: DEBUG,
     externals: [],
     module: {
-      noParse: [/react-with-addons/],
+      // noParse: [/react-with-addons/],
       loaders: [{
         test: /\.(png|jpg|jpeg|gif|svg)$/,
-        loader: 'url?limit=10000'
+        loader: BUILD ? 'url?limit=10000' : 'url'
       }, {
         test: /\.(woff)$/,
-        loader: 'url?limit=100000'
+        loader: BUILD ? 'url?limit=100000' : 'url'
       }, {
         test: /\.(ttf|eot)$/,
         loader: 'file'
       }]
     },
     resolve: {
-      extensions: ['', '.js', '.jsx']
+      extensions: ['', '.js', '.jsx', '.less']
     },
     plugins: [
-      new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(ENV)})
+      // TODO: move this to be client-only?
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(ENV)
+      })
     ],
     devServer: {
+      contentBase: './public',
       stats: {
         exclude: excludeFromStats,
         cached: false
@@ -55,11 +57,11 @@ module.exports = function buildWebpackConfig (options) {
   config.target = SERVER ? 'node' : 'web'
 
   // Source maps
-  config.devtool = PRODUCTION ? 'source-map' : 'eval-source-map'
+  config.devtool = BUILD ? 'source-map' : 'eval'
 
   // entry
   config.entry = {
-    scripts: SERVER ? './client/server' : './client'
+    bshed: SERVER ? './client/renderer' : './client'
   }
 
   // externals
@@ -69,21 +71,15 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // output
-  var filename = SERVER ? 'index.js' : '[name].js',
-    chunkFilename = DEVELOPMENT && SERVER ? '[id].js' : '[name].js'
-
-  if (PRODUCTION && !SERVER) {
-    filename += '?[chunkhash]'
-    chunkFilename += '?[chunkhash]'
-  }
+  var filename = SERVER ? 'index.js' : '[name].[hash].js'
 
   config.output = {
     path: outputPath,
-    pathinfo: DEBUG,
+    pathinfo: !BUILD,
     publicPath: publicPath,
     filename: filename,
-    chunkFilename: chunkFilename,
-    sourceMapFilename: 'debugging/[file].map',
+    chunkFilename: '[id].[hash].js',
+    sourceMapFilename: 'debugging/[file].[hash].map',
     libraryTarget: SERVER ? 'commonjs2' : void 0
   }
 
@@ -98,7 +94,7 @@ module.exports = function buildWebpackConfig (options) {
     exclude: /.*node_modules.*/
   })
 
-  var hotLoader = PRODUCTION || SERVER ? '' : 'react-hot!'
+  var hotLoader = BUILD || SERVER ? '' : 'react-hot!'
   config.module.loaders.push({
     test: /\.jsx$/,
     loader: hotLoader + babelLoader,
@@ -106,25 +102,26 @@ module.exports = function buildWebpackConfig (options) {
   })
 
   var lessLoader = 'css?sourceMap!autoprefixer!less?sourceMap'
+  lessLoader = BUILD ? ExtractTextPlugin.extract(lessLoader) : 'style!' + lessLoader
   config.module.loaders.push({
     test: /\.less$/,
-    loader: PRODUCTION ? ExtractTextPlugin.extract(lessLoader) : 'style!' + lessLoader
+    loader: SERVER ? 'null' : lessLoader
   })
 
   // plugins
+  if (BUILD) {
+    // Ensures requires for 'react' and 'react/addons' normalize to the same path
+    var reactRegex = /^react(\/addons)?$/
+    var reactAddonsPath = require.resolve('react/dist/react-with-addons')
+    config.plugins.push(new webpack.NormalModuleReplacementPlugin(reactRegex, reactAddonsPath))
+  }
+
   if (!SERVER) {
     config.plugins.push(new webpack.PrefetchPlugin('react'))
     config.plugins.push(StatsPlugin())
   }
 
-  if (PRODUCTION || SERVER) {
-    // Ensures requires for 'react' and 'react/addons' normalize to the same path
-    var reactAddonsPath = require.resolve('react/dist/react-with-addons'),
-      reactRegex = /^react(\/addons)?$/
-    config.plugins.push(new webpack.NormalModuleReplacementPlugin(reactRegex, reactAddonsPath))
-  }
-
-  if (PRODUCTION && !SERVER) {
+  if (BUILD && !SERVER) {
     // Minifify, dedupe, extract css
     config.plugins.push(
       new ExtractTextPlugin('[name].css?[contenthash]'),
