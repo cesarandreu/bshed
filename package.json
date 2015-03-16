@@ -18,6 +18,7 @@
   "scripts": {
     "build:client": "webpack --config webpack.build.js --progress -c",
     "clean": "rm -rf public/{assets,renderer} test/fakes3/*",
+    "cluster": "babel-node scripts/cluster",
     "db:create": "create_database",
     "db:drop": "drop_database",
     "db:migrate": "sequelize db:migrate",
