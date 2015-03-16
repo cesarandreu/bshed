@@ -1,6 +1,6 @@
 var co = require('co'),
-  debug = require('debug'),
   React = require('react'),
+  debug = require('debug'),
   log = debug('bshed:client')
 
 var navigate = require('./actions/navigate'),
