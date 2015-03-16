@@ -1,3 +1,7 @@
+require('babel/register')({
+  ignore: /node_modules|public/
+})
+
 // modules
 var koa = require('koa'),
   qs = require('koa-qs'),
