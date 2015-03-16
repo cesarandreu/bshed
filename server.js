@@ -80,6 +80,6 @@ server.init = function init (port=config.server.port) {
 // export the server so it can be started externally
 module.exports = server
 
-// initialize server if there's no parent
-if (!module.parent)
+// initialize server if called directly
+if (require.main === module)
   server.init()
