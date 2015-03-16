@@ -36,6 +36,9 @@ function assetList (assetPath) {
     stats = {assetsByChunkName: {bshed: ''}, publicPath: ''}
   }
 
+  if (typeof stats.assetsByChunkName.bshed === 'string')
+    stats.assetsByChunkName.bshed = [stats.assetsByChunkName.bshed]
+
   stats.assetsByChunkName.bshed.forEach(asset => {
     switch (path.extname(asset)) {
       case '.js':
