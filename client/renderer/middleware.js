@@ -32,8 +32,8 @@ function assetList (assetPath) {
     log(`Getting asset list from ${assetPath}`)
     stats = require(path.join(assetPath, 'assets/stats.json'))
   } catch (err) {
-    console.warn(`UNABLE TO LOAD ${path.join(assetPath, 'assets/stats.json')}`, err)
-    stats = {assetsByChunkName: {bshed: []}, publicPath: ''}
+    console.warn(`UNABLE TO LOAD ${path.join(assetPath, 'assets/stats.json')}`)
+    stats = {assetsByChunkName: {bshed: ''}, publicPath: ''}
   }
 
   stats.assetsByChunkName.bshed.forEach(asset => {
