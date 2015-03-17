@@ -32,7 +32,9 @@ api = api({
   models: models,
   s3: s3
 })
-client = client({assetPath: config.server.assets})
+client = client({
+  assetPath: config.server.assets
+})
 
 /**
  * SERVER
