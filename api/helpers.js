@@ -41,7 +41,7 @@ function* retry (fn, {attempts=3, interval=300, delta=150}={}) {
  * example load('Bikeshed') - uses Bikeshed model, :bikeshed param, and sets ctx.state.bikeshed
  */
 function load (resource, {parent, key='id', name=resource.toLowerCase()}={}) {
-  assert(resource)
+  assert(resource, 'load middleware requires a resource')
   if (parent) {
     if (_.isString(parent)) parent = {resource: parent}
     parent = _.assign({

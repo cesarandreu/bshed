@@ -1,10 +1,14 @@
 var _ = require('lodash'),
+  assert = require('assert'),
   uuid = require('node-uuid'),
   Router = require('koa-router'),
   body = require('koa-better-body')
 
-module.exports = function BikeshedsController ({middleware}={}) {
-  var auth = middleware.auth(),
+module.exports = function BikeshedsController ({helpers}={}) {
+  assert(helpers, 'BikeshedsController requires helpers')
+
+  var {middleware} = helpers,
+    auth = middleware.auth(),
     loadBikeshed = middleware.load('Bikeshed'),
     authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'})
 

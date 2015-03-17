@@ -15,7 +15,7 @@ var controllers = require('./controllers'),
  * returns api application
  */
 module.exports = function apiLoader ({s3, config, models}={}) {
-  assert(s3 && config && models)
+  assert(s3 && config && models, 'api requires s3, config, and models')
   debug('loader:start')
   var {name, env, secret, endpoint} = config
   var api = qs(koa())

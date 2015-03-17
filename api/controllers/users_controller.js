@@ -2,7 +2,7 @@ var Router = require('koa-router'),
   assert = require('assert');
 
 module.exports = function UsersController (helpers) {
-  assert(helpers);
+  assert(helpers, 'UsersController requries helpers')
 
   var auth = helpers.middleware.auth();
 
