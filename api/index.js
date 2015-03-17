@@ -11,7 +11,7 @@ var controllersLoader = require('./controllers'),
 /**
  * API loader
  *
- * requires opts.config, opts.models
+ * requires opts.config, opts.models, opts.s3
  * returns api application
  */
 module.exports = function apiLoader ({s3, config, models}={}) {
