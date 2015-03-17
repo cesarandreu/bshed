@@ -25,7 +25,7 @@ var config = require('./config'),
 debug('initializing modules')
 s3 = s3(config.aws)
 models = models({
-  database: config.database
+  config: config.database
 })
 api = api({
   config: config.api,

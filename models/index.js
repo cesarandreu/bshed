@@ -8,15 +8,14 @@ var assert = require('assert'),
 /**
  * Model loader
  *
- * requires opts.database
+ * requires opts.config
  * returns models object
  */
-module.exports = function modelsLoader ({database}={}) {
-  assert(database)
+module.exports = function modelsLoader ({config}={}) {
+  assert(config)
   debug('loader:start')
 
   var models = {},
-    config = database,
     sequelize = new Sequelize(config.database, config.username, config.password, config)
 
   // Load models

@@ -4,5 +4,5 @@ var config = require('../../config'),
   models = require('../')
 
 module.exports = {
-  models: models({database: config.database})
+  models: models({config: config.database})
 }

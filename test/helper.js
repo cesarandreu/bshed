@@ -14,7 +14,7 @@ buildHeaders = buildHeaders({
   secret: config.secret
 })
 models = models({
-  database: config.database
+  config: config.database
 })
 
 module.exports = {
