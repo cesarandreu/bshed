@@ -1,5 +1,6 @@
 var co = require('co'),
   debug = require('debug'),
+  log = debug('ActionPlugin'),
   isPromise = require('is-promise'),
   isGeneratorFunction = require('is-generator-function')
 
@@ -34,7 +35,7 @@ function plugContext (opts, context) {
 }
 
 function executeAction (action, payload={}, done) {
-  debug(`Executing action ${action.displayName || action.name} with payload`, payload)
+  log(`Executing action ${action.displayName || action.name} with payload ${payload}`)
 
   var promise
   if (isGeneratorFunction(action)) {
