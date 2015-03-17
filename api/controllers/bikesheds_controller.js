@@ -4,7 +4,8 @@ var _ = require('lodash'),
   Router = require('koa-router'),
   body = require('koa-better-body')
 
-module.exports = function BikeshedsController ({helpers}={}) {
+module.exports = BikeshedsController
+function BikeshedsController ({helpers}={}) {
   assert(helpers, 'BikeshedsController requires helpers')
 
   var {middleware} = helpers,
@@ -47,6 +48,7 @@ module.exports = function BikeshedsController ({helpers}={}) {
  *  limit: default 12, [1..96]
  *  last: default Date.now(), unix timestamp in milliseconds
  */
+exports.index = index
 function* index () {
   var {Bikeshed} = this.models,
     {last, limit} = this.query
@@ -71,6 +73,7 @@ function* index () {
  * Protected
  * Body: {name: string, body: string}
  */
+exports.create = create
 function* create () {
   if (!this.request.body.fields) this.throw(400, 'empty body')
 
@@ -92,6 +95,7 @@ function* create () {
  * GET /bikesheds/:bikeshed
  * Public
  */
+exports.show = show
 function* show () {
   this.body = this.state.bikeshed
 }
@@ -101,6 +105,7 @@ function* show () {
  * Protected
  * Body: {name: string, body: string, image: file}
  */
+exports.add = add
 function* add () {
   if (!this.request.body.fields) this.throw(400, 'empty body')
 
@@ -171,6 +176,7 @@ function* add () {
  * Protected
  * Body: {name: string, body: string, status: string}
  */
+exports.patch = patch
 function* patch () {
   if (!this.request.body.fields) this.throw(400, 'empty body')
 
@@ -203,6 +209,7 @@ function* patch () {
  * DELETE /bikeshed/:bikeshed
  * Protected
  */
+exports.destroy = destroy
 function* destroy () {
   yield this.state.bikeshed.destroy()
   this.status = 204
@@ -212,6 +219,7 @@ function* destroy () {
  * GET /bikesheds/:bikeshed/bikes
  * Public
  */
+exports.score = score
 function* score () {
   var BikeshedId = this.state.bikeshed.id
   this.body = yield this.models.Bike.findAll({
@@ -225,6 +233,7 @@ function* score () {
  * Body: {[BikeId]: {value: number}}
  * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
  */
+exports.rate = rate
 function* rate () {
   if (!this.request.body.fields) this.throw(400, 'empty body')
 
@@ -283,6 +292,7 @@ function* rate () {
  * Body: {[BikeId]: {value: number}}
  * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
  */
+exports.change = change
 function* change () {
   if (!this.request.body.fields) {
     this.throw(400, 'empty body')
@@ -337,6 +347,7 @@ function* change () {
  * GET /bikesheds/:bikeshed/bikes/votes
  * Protected
  */
+exports.votes = votes
 function* votes () {
   var {Vote} = this.models,
     {bikeshed, user} = this.state,
