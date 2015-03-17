@@ -1,11 +1,11 @@
-var debug = require('debug')('bshed:api'),
+var log = require('debug')('bshed:api'),
   compose = require('koa-compose'),
   mount = require('koa-mount'),
   assert = require('assert'),
   qs = require('koa-qs'),
   koa = require('koa')
 
-var controllers = require('./controllers'),
+var loadControllers = require('./controllers'),
   helpers = require('./helpers')
 
 /**
@@ -16,8 +16,10 @@ var controllers = require('./controllers'),
  */
 module.exports = function apiLoader ({s3, config, models}={}) {
   assert(s3 && config && models, 'api requires s3, config, and models')
-  debug('loader:start')
+  log('loader start')
   var {name, env, secret, endpoint} = config
+  var {addToContext} = helpers.middleware
+  var controllers = loadControllers()
   var api = qs(koa())
   Object.assign(api, {
     name, env, secret, config, models, s3, controllers, helpers
@@ -28,14 +30,6 @@ module.exports = function apiLoader ({s3, config, models}={}) {
   ])
 
   api.use(mount(endpoint, middleware))
-  debug('loader:end')
+  log('loader end')
   return api
-}
-
-// middleware~
-function addToContext (opts={}) {
-  return function* addToContextMiddleware (next) {
-    Object.assign(this, opts)
-    yield next
-  }
 }

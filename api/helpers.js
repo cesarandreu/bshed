@@ -5,7 +5,9 @@ var assert = require('assert'),
 
 module.exports = {
   retry, noop,
-  middleware: {load, auth}
+  middleware: {
+    load, auth, addToContext
+  }
 }
 
 /**
@@ -20,6 +22,23 @@ function* retry (fn, {attempts=3, interval=300, delta=150}={}) {
       if (!(attempts--)) throw err
       yield wait(_.random(interval - delta, interval + delta))
     }
+  }
+}
+
+/**
+ * noop
+ * do nothing
+ */
+function noop () {}
+
+/**
+ * addToContext
+ * Adds all enumerable keys in opts to context
+ */
+function addToContext (opts={}) {
+  return function* addToContextMiddleware (next) {
+    Object.assign(this, opts)
+    yield next
   }
 }
 
@@ -84,6 +103,3 @@ function auth ({skippable=false}={}) {
     yield next
   }
 }
-
-// do nothing
-function noop () {}
