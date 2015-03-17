@@ -23,7 +23,7 @@ module.exports = function modelsLoader ({database}={}) {
 
   // Load models
   fs.readdirSync(__dirname)
-  .filter(file => file.indexOf('.') !== 0 && file !== 'index.js')
+  .filter(file => file.indexOf('.') !== 0 && file !== 'index.js' && file !== 'test')
   .forEach(file => {
     var modelPath = path.join(__dirname, file)
     var model = sequelize.import(modelPath)
