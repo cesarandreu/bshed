@@ -24,7 +24,7 @@ module.exports = function apiLoader ({s3, config, models}={}) {
   })
   var middleware = compose([
     addToContext({models, s3, helpers}),
-    controllers(helpers)
+    controllers({helpers})
   ])
 
   api.use(mount(endpoint, middleware))

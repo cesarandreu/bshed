@@ -2,33 +2,33 @@ var fs = require('fs'),
   path = require('path'),
   assert = require('assert'),
   compose = require('koa-compose'),
-  debug = require('debug')('bshed:api:controllers');
+  log = require('debug')('bshed:api:controllers')
 
-function controllers (helpers) {
-  assert(helpers);
+function controllers ({helpers}) {
+  assert(helpers, 'controllers require helpers')
 
-  debug('middleware:start');
+  log('middleware start')
   var middleware = Object.keys(controllers)
   .map(function (name) {
-    debug('initializing %s', name);
-    return controllers[name](helpers);
-  });
-  debug('middleware:end');
-  return compose(middleware);
+    log(`initializing ${name}`, name)
+    return controllers[name]({helpers})
+  })
+  log('middleware end')
+  return compose(middleware)
 }
 
 // Load controllers
-debug('load:start');
+log('load start')
 fs.readdirSync(__dirname)
 .filter(function (file) {
-  return file.indexOf('.') !== 0 && file !== 'index.js';
+  return file.indexOf('.') !== 0 && file !== 'index.js'
 })
 .forEach(function (file) {
-  var name = file.split('_controller').shift();
-  var controllerPath = path.join(__dirname, file);
-  controllers[name] = require(controllerPath);
-  debug('%s loaded from %s', name, controllerPath);
-});
-debug('load:end');
+  var name = file.split('_controller').shift()
+  var controllerPath = path.join(__dirname, file)
+  controllers[name] = require(controllerPath)
+  log(`${name} loaded from ${controllerPath}`)
+})
+log('load end')
 
-module.exports = controllers;
+module.exports = controllers
