@@ -36,7 +36,7 @@ module.exports = function modelsLoader ({database}={}) {
     ['associate', 'initialize'].forEach(action => {
       if (action in models[name]) {
         debug(`${action} ${name}`)
-        models[name].associate(models)
+        models[name][action](models)
       }
     })
   })
