@@ -1,5 +1,3 @@
-'use strict'
-
 var assert = require('assert'),
   wait = require('co-wait'),
   _ = require('lodash'),

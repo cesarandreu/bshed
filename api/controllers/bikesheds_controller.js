@@ -1,5 +1,3 @@
-'use strict'
-
 var _ = require('lodash'),
   uuid = require('node-uuid'),
   Router = require('koa-router'),

@@ -1,5 +1,3 @@
-'use strict'
-
 var debug = require('debug')('bshed:api'),
   compose = require('koa-compose'),
   mount = require('koa-mount'),

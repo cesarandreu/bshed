@@ -1,5 +1,3 @@
-'use strict';
-
 var Router = require('koa-router'),
   assert = require('assert');
 
