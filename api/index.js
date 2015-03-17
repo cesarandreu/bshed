@@ -5,7 +5,7 @@ var log = require('debug')('bshed:api'),
   qs = require('koa-qs'),
   koa = require('koa')
 
-var loadControllers = require('./controllers'),
+var controllersLoader = require('./controllers'),
   helpers = require('./helpers')
 
 /**
@@ -19,7 +19,7 @@ module.exports = function apiLoader ({s3, config, models}={}) {
   log('loader start')
   var {name, env, secret, endpoint} = config
   var {addToContext} = helpers.middleware
-  var controllers = loadControllers()
+  var controllers = controllersLoader()
   var api = qs(koa())
   Object.assign(api, {
     name, env, secret, config, models, s3, controllers, helpers

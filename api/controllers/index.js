@@ -4,7 +4,7 @@ var fs = require('fs'),
   compose = require('koa-compose'),
   log = require('debug')('bshed:api:controllers')
 
-module.exports = function loadControllers () {
+module.exports = function controllersLoader () {
   log('load start')
   fs.readdirSync(__dirname)
   .filter(file => file.indexOf('.') !== 0 && file !== 'index.js' && file !== 'test')
