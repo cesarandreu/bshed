@@ -9,8 +9,8 @@ function controllers ({helpers}) {
 
   log('middleware start')
   var middleware = Object.keys(controllers)
-  .map(function (name) {
-    log(`initializing ${name}`, name)
+  .map(name => {
+    log(`initializing ${name}`)
     return controllers[name]({helpers})
   })
   log('middleware end')
@@ -20,9 +20,7 @@ function controllers ({helpers}) {
 // Load controllers
 log('load start')
 fs.readdirSync(__dirname)
-.filter(function (file) {
-  return file.indexOf('.') !== 0 && file !== 'index.js'
-})
+.filter(file => file.indexOf('.') !== 0 && file !== 'index.js' && file !== 'test')
 .forEach(function (file) {
   var name = file.split('_controller').shift()
   var controllerPath = path.join(__dirname, file)
