@@ -1,5 +1,3 @@
-'use strict'
-
 var Sequelize = require('sequelize'),
   path = require('path'),
   fs = require('fs')

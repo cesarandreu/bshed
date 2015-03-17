@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = function (sequelize, DataTypes) {
   var Bike = sequelize.define('Bike', {
     name: {
