@@ -1,3 +1,19 @@
 language: node_js
+
 node_js:
-  - iojs-v1.5.0
+  - iojs
+  # - iojs-v1.5.1
+
+env:
+  global:
+    - NODE_ENV=test
+
+addons:
+  postgresql: 9.3
+
+before_install:
+  - gem install fakes3
+
+before_script:
+  - npm run fakes3 &
+  - npm run db:refresh
