@@ -7,7 +7,7 @@ module.exports = {
     dialect: 'postgres'
   },
   test: {
-    username: null,
+    username: process.env.DB_USERNAME || null,
     password: null,
     database: 'bshed_test',
     host: '127.0.0.1',
