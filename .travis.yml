@@ -15,4 +15,5 @@ before_install:
 
 before_script:
   - npm run fakes3 &
-  - npm run db:refresh
+  - npm run db:create
+  - npm run db:migrate
