@@ -16,5 +16,5 @@ before_install:
 
 before_script:
   - npm run fakes3 &
-  - npm run db:create
+  - psql -c 'create database bshed_test;' -U postgres
   - npm run db:migrate
