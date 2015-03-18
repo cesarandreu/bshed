@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "npm run build:client",
-    "build:client": "webpack --config webpack.build.js --progress -c",
+    "build:client": "webpack --config webpack.build.js -c",
     "clean": "rm -rf public/{assets,renderer} test/fakes3/*",
     "cluster": "babel-node scripts/cluster",
     "db:create": "create_database",
