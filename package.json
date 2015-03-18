@@ -16,6 +16,7 @@
     "url": "https://github.com/cesarandreu"
   },
   "scripts": {
+    "build": "npm run build:client",
     "build:client": "webpack --config webpack.build.js --progress -c",
     "clean": "rm -rf public/{assets,renderer} test/fakes3/*",
     "cluster": "babel-node scripts/cluster",
