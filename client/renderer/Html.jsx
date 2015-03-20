@@ -19,7 +19,8 @@ var Html = React.createClass({
         <head>
           <meta charSet='utf-8' />
           <meta httpEquiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
-          <meta name='viewport' content='width=device-width, user-scalable=no' />
+          <meta name='viewport'
+            content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
           <meta name='description' content='An app for bikeshedding'/>
           <title>{title}</title>
           <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
