@@ -10,9 +10,9 @@ var navigate = require('./actions/navigate'),
 require('react-tap-event-plugin')()
 
 // assets
-require('./assets/styles/base.less')
-require('./assets/styles/pages.less')
-require('./assets/styles/components.less')
+require('./styles/base.less')
+require('./components/styles.less')
+require('./app/styles.less')
 
 var mountNode = document.getElementById('bshed') // render node
 
