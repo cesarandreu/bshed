@@ -1,11 +1,10 @@
 var path = require('path'),
+  renderer = require('./index'),
   request = require('../utils/request.server.js'),
   log = require('debug')('bshed:client:middleware')
 
 module.exports = function ({assetPath}={}) {
-  log(`Loading renderer from ${path.join(assetPath, 'renderer')}`)
-  var renderer = require(path.join(assetPath, 'renderer')),
-    assets = assetList(assetPath)
+  var assets = assetList(assetPath)
 
   return function* client () {
     try {

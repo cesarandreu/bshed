@@ -8,12 +8,11 @@ module.exports = function buildWebpackConfig (options) {
   options = options || {}
 
   var ENV = options.ENV || process.env.NODE_ENV || 'development',
-    SERVER = options.SERVER || process.env.SERVER,
     BUILD = options.BUILD || process.env.BUILD
 
   // shared values
   var publicPath = BUILD ? '/assets/' : 'http://localhost:8080/assets/'
-  var outputPath = path.resolve('public', SERVER ? 'renderer' : 'assets')
+  var outputPath = __dirname + '/public/assets'
 
   var excludeFromStats = [
     /node_modules[\\\/]react(-router)?[\\\/]/
@@ -21,6 +20,22 @@ module.exports = function buildWebpackConfig (options) {
 
   // base
   var config = {
+    entry: {
+      bshed: './client'
+    },
+
+    output: {
+      path: outputPath,
+      pathinfo: !BUILD,
+      publicPath: publicPath,
+      filename: '[name].[hash].js',
+      chunkFilename: '[id].[hash].js'
+    },
+
+    target: 'web',
+
+    devtool: BUILD ? 'source-map' : 'eval',
+
     externals: [],
     module: {
       loaders: [{
@@ -38,7 +53,7 @@ module.exports = function buildWebpackConfig (options) {
       extensions: ['', '.js', '.jsx', '.less']
     },
     plugins: [
-      // TODO: only use when non-server?
+      StatsPlugin(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(ENV)
       })
@@ -52,48 +67,15 @@ module.exports = function buildWebpackConfig (options) {
     }
   }
 
-  // target
-  config.target = SERVER ? 'node' : 'web'
-
-  // Source maps
-  config.devtool = BUILD ? 'source-map' : 'eval'
-
-  // entry
-  config.entry = {
-    bshed: SERVER ? './client/renderer' : './client'
-  }
-
-  // externals
-  if (SERVER) {
-    // Every non-relative module is external
-    config.externals.push(/^[a-z\-0-9]+$/)
-  }
-
-  // output
-  var filename = SERVER ? 'index.js' : '[name].[hash].js'
-
-  config.output = {
-    path: outputPath,
-    pathinfo: !BUILD,
-    publicPath: publicPath,
-    filename: filename,
-    chunkFilename: '[id].[hash].js',
-    libraryTarget: SERVER ? 'commonjs2' : void 0
-  }
-
   // loaders
-  var babelLoader = 'babel?experimental'
-  babelLoader += SERVER ? '' : '&optional=runtime'
-
-  // Webpack fails at parsing generator functions :(
-  // babelLoader += SERVER ? '&blacklist=regenerator' : ''
+  var babelLoader = 'babel?experimental&optional=runtime'
   config.module.loaders.push({
     test: /\.js$/,
     loader: babelLoader,
     exclude: /.*node_modules.*/
   })
 
-  var hotLoader = BUILD || SERVER ? '' : 'react-hot!'
+  var hotLoader = BUILD ? '' : 'react-hot!'
   config.module.loaders.push({
     test: /\.jsx$/,
     loader: hotLoader + babelLoader,
@@ -101,14 +83,12 @@ module.exports = function buildWebpackConfig (options) {
   })
 
   var lessLoader = 'css?sourceMap!autoprefixer!less?sourceMap'
-  lessLoader = BUILD ? ExtractTextPlugin.extract(lessLoader) : 'style!' + lessLoader
   config.module.loaders.push({
     test: /\.less$/,
-    loader: SERVER ? 'null' : lessLoader
+    loader: BUILD ? ExtractTextPlugin.extract(lessLoader) : 'style!' + lessLoader
   })
 
-  // plugins
-  if (BUILD && !SERVER) {
+  if (BUILD) {
     // Minifify, dedupe, extract css
     config.plugins.push(
       new ExtractTextPlugin('[name].[hash].css'),
@@ -116,10 +96,6 @@ module.exports = function buildWebpackConfig (options) {
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin()
     )
-  }
-
-  if (!SERVER) {
-    config.plugins.push(StatsPlugin())
   }
 
   return config
