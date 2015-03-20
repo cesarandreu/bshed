@@ -57,7 +57,9 @@ module.exports = function buildWebpackConfig (options) {
     devServer: {
       contentBase: './public',
       stats: {
-        cached: false
+        modules: false,
+        cached: false,
+        chunk: false
       }
     }
   }
