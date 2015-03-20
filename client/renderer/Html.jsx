@@ -23,8 +23,8 @@ var Html = React.createClass({
             content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
           <meta name='description' content='An app for bikeshedding'/>
           <title>{title}</title>
-          <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
           {styles.map((href, key) => <link href={href} key={key} rel='stylesheet'></link>)}
+          <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
         </head>
         <body id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}>
         </body>
