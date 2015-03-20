@@ -14,10 +14,6 @@ module.exports = function buildWebpackConfig (options) {
   var publicPath = BUILD ? '/assets/' : 'http://localhost:8080/assets/'
   var outputPath = __dirname + '/public/assets'
 
-  var excludeFromStats = [
-    /node_modules[\\\/]react(-router)?[\\\/]/
-  ]
-
   // base
   var config = {
     entry: {
@@ -61,7 +57,6 @@ module.exports = function buildWebpackConfig (options) {
     devServer: {
       contentBase: './public',
       stats: {
-        exclude: excludeFromStats,
         cached: false
       }
     }
@@ -107,8 +102,8 @@ module.exports = function buildWebpackConfig (options) {
 
     function saveStats (stats) {
       var jsonStats = stats.toJson({
-        exclude: excludeFromStats,
-        chunkModules: true
+        chunks: false,
+        modules: false
       })
       jsonStats.publicPath = publicPath
       mkdirp.sync(outputPath)
