@@ -36,3 +36,14 @@ var Home = React.createClass({
 })
 
 module.exports = Home
+
+/*
+
+bottom text area is 48px
+text padding 16px
+grid padding 4px or 1px
+
+card height is 148px
+card width is 180px
+
+*/

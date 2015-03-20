@@ -71,15 +71,24 @@
 }
 
 .bike-item {
+  // .flexbox;
+  // .flex-direction(column);
+  // .justify-content(space-between);
+  // .justify-content(center);
+  // .align-items(center);
+
+  .whiteframe-z1;
   margin: 10px;
-  width: 208px;
-  border: 1px solid @border-color;
+  width: 192px;
+  height: 192px + 48px;
   background-color: @white;
-  position: relative;
 
   .bike-item-image {
-    height: 206px;
     width: 100%;
+    height: 192px;
+    // max-height: 100%;
+    // max-width: 100%;
+    // width: 100%;
     .flexbox;
     .align-items(center);
     .justify-content(center);
@@ -88,9 +97,14 @@
       max-height: 100%;
       max-width: 100%;
     }
+
   }
 
   .bike-item-metadata {
+    // .flex-grow(0);
+    // .flex-shrink(0);
+    // .align-self(end);
+
     .flexbox;
     .flex-flow(row, nowrap);
     .align-items(center);
@@ -103,7 +117,7 @@
 
     .bike-item-name {
       color: @primary-text-color;
-      font-weight: 450;
+      font-weight: 500;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

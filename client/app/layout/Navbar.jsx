@@ -1,5 +1,5 @@
 var React = require('react'),
-  IconButton = require('../buttons/IconButton.jsx'),
+  IconButton = require('../../components/buttons/IconButton.jsx'),
   LayoutAction = require('../../actions/Layout'),
   NavbarUser = require('./NavbarUser.jsx'),
   {FluxibleMixin} = require('fluxible'),
