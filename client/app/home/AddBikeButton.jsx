@@ -7,7 +7,7 @@ var AddBikeButton = React.createClass({
   },
   render: function () {
     var buttonProps = {
-      onTouchTap: this.clickInput,
+      onClick: this.clickInput,
       className: 'add-bike-button',
       icon: 'md-add',
       label: 'Add bike',

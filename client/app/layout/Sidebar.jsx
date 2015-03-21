@@ -1,11 +1,11 @@
 var React = require('react/addons'),
-  LayoutAction = require('../../actions/Layout'),
+  FluxibleRouterMixin = require('../../utils/FluxibleRouterMixin'),
   LayoutStore = require('../../stores/LayoutStore'),
-  {Link} = require('react-router'),
-  {FluxibleMixin} = require('fluxible')
+  LayoutAction = require('../../actions/Layout'),
+  {Link} = require('react-router')
 
 var Sidebar = React.createClass({
-  mixins: [FluxibleMixin],
+  mixins: [FluxibleRouterMixin],
   statics: {
     storeListeners: [LayoutStore]
   },
@@ -47,7 +47,7 @@ var Sidebar = React.createClass({
         <nav className='sidebar'>
           <div className='sidebar-section'>{links}</div>
         </nav>
-        <div className='sidebar-overlay' onTouchTap={this._closeMenu}></div>
+        <div className='sidebar-overlay' onClick={this._closeMenu}></div>
       </div>
     )
   }

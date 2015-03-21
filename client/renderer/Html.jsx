@@ -1,9 +1,10 @@
 var React = require('react'),
-  {FluxibleMixin} = require('fluxible'),
   ApplicationStore = require('../stores/ApplicationStore')
 
 var Html = React.createClass({
-  mixins: [FluxibleMixin],
+  contextTypes: {
+    getStore: React.PropTypes.func.isRequired
+  },
   propTypes: {
     context: React.PropTypes.object.isRequired,
     assets: React.PropTypes.object.isRequired,
@@ -11,7 +12,7 @@ var Html = React.createClass({
     BSHED: React.PropTypes.string.isRequired
   },
   render: function () {
-    var title = this.getStore(ApplicationStore).getPageTitle(),
+    var title = this.context.getStore(ApplicationStore).getPageTitle(),
       {scripts, styles} = this.props.assets
 
     return (
@@ -26,10 +27,11 @@ var Html = React.createClass({
           {styles.map((href, key) => <link href={href} key={key} rel='stylesheet'></link>)}
           <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
         </head>
-        <body id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}>
+        <body>
+          <div id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
+          <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
+          {scripts.map((src, key) => <script src={src} key={key}></script>)}
         </body>
-        <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
-        {scripts.map((src, key) => <script src={src} key={key}></script>)}
       </html>
     )
   }

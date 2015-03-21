@@ -2,7 +2,6 @@ var React = require('react'),
   EnhancedButton = require('../../components/buttons/EnhancedButton.jsx')
 
 var NavbarUser = React.createClass({
-
   propTypes: {
     className: React.PropTypes.string,
     user: React.PropTypes.object

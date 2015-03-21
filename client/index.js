@@ -1,13 +1,15 @@
 var co = require('co'),
   React = require('react'),
   debug = require('debug'),
-  log = debug('bshed:client')
+  log = debug('bshed:client'),
+  {FluxibleComponent} = require('fluxible')
 
 var navigate = require('./actions/navigate'),
   app = require('./app')
 
 // needed for onTouchTap
-require('react-tap-event-plugin')()
+// breaks with react v0.13
+// require('react-tap-event-plugin')()
 
 // assets
 require('./styles/base.less')
@@ -28,7 +30,7 @@ app.rehydrate(global.BSHED, (err, context) => {
     global.context = context // For debugging
 
   log('starting router')
-  context.getComponentContext().router.run(co.wrap(routerAction(context)))
+  context.getActionContext().router.run(co.wrap(routerAction(context)))
 })
 
 var firstRender = true
@@ -57,6 +59,10 @@ function routerAction (context) {
 }
 
 function render ({context, Handler}={}) {
-  var element = React.createElement(Handler, {context: context.getComponentContext()})
+  var element = (
+    <FluxibleComponent context={context.getComponentContext()}>
+      <Handler/>
+    </FluxibleComponent>
+  )
   return new Promise(resolve => React.render(element, mountNode, resolve))
 }
