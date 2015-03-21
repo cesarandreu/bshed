@@ -27,10 +27,11 @@ var Html = React.createClass({
           {styles.map((href, key) => <link href={href} key={key} rel='stylesheet'></link>)}
           <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet'/>
         </head>
-        <body id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}>
+        <body>
+          <div id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
+          <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
+          {scripts.map((src, key) => <script src={src} key={key}></script>)}
         </body>
-        <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
-        {scripts.map((src, key) => <script src={src} key={key}></script>)}
       </html>
     )
   }
