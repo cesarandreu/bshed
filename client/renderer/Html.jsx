@@ -1,9 +1,10 @@
 var React = require('react'),
-  {FluxibleMixin} = require('fluxible'),
   ApplicationStore = require('../stores/ApplicationStore')
 
 var Html = React.createClass({
-  mixins: [FluxibleMixin],
+  contextTypes: {
+    getStore: React.PropTypes.func.isRequired
+  },
   propTypes: {
     context: React.PropTypes.object.isRequired,
     assets: React.PropTypes.object.isRequired,
@@ -11,7 +12,7 @@ var Html = React.createClass({
     BSHED: React.PropTypes.string.isRequired
   },
   render: function () {
-    var title = this.getStore(ApplicationStore).getPageTitle(),
+    var title = this.context.getStore(ApplicationStore).getPageTitle(),
       {scripts, styles} = this.props.assets
 
     return (
