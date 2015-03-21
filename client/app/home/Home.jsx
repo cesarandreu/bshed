@@ -1,5 +1,5 @@
 var React = require('react'),
-  {FluxibleMixin} = require('fluxible'),
+  FluxibleRouterMixin = require('../../utils/FluxibleRouterMixin'),
   BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx'),
   BikeGrid = require('./BikeGrid.jsx'),
   AddBikeButton = require('./AddBikeButton.jsx'),
@@ -7,7 +7,7 @@ var React = require('react'),
   BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 
 var Home = React.createClass({
-  mixins: [FluxibleMixin],
+  mixins: [FluxibleRouterMixin],
   statics: {
     storeListeners: [BikeshedBuilderStore]
   },
@@ -18,7 +18,6 @@ var Home = React.createClass({
     this.setState(this.getStore(BikeshedBuilderStore).getState())
   },
   render () {
-
     var {bikes} = this.state
 
     return (

@@ -1,6 +1,6 @@
 var React = require('react'),
   {RouteHandler} = require('react-router'),
-  {FluxibleMixin} = require('fluxible')
+  FluxibleRouterMixin = require('../../utils/FluxibleRouterMixin')
 
 var ApplicationStore = require('../../stores/ApplicationStore')
 
@@ -8,7 +8,7 @@ var Navbar = require('./Navbar.jsx'),
   Sidebar = require('./Sidebar.jsx')
 
 var Application = React.createClass({
-  mixins: [FluxibleMixin],
+  mixins: [FluxibleRouterMixin],
   statics: {
     storeListeners: [ApplicationStore]
   },
@@ -18,8 +18,7 @@ var Application = React.createClass({
   },
 
   onChange: function () {
-    var state = this.getStore(ApplicationStore).getState()
-    this.setState(state)
+    this.setState(this.getStore(ApplicationStore).getState())
   },
 
   render: function () {
