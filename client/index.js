@@ -7,7 +7,8 @@ var navigate = require('./actions/navigate'),
   app = require('./app')
 
 // needed for onTouchTap
-require('react-tap-event-plugin')()
+// breaks with react v0.13
+// require('react-tap-event-plugin')()
 
 // assets
 require('./styles/base.less')
