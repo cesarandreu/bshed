@@ -161,7 +161,7 @@ Allowing image uploads and downloads requires taking some precautions to prevent
 * Applying size limits per file (i.e. combination of all files should not pass 5MB)
 * Applying total file limits (i.e. you cannot upload more than 5 images)
 * Limit MIME type to popular formats (i.e. only allow image/png and image/jpeg, maybe image/gif)
-* Check [file-type](https://github.com/sindresorhus/file-type)
+* Check [file-type](https://github.com/sindresorhus/file-type), or even better, [image-type](https://github.com/sindresorhus/image-type)!
 
 **Downloads:**
 
