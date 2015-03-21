@@ -1,10 +1,11 @@
 var co = require('co'),
   React = require('react'),
+  {FluxibleComponent} = require('fluxible'),
   serialize = require('serialize-javascript'),
   log = require('debug')('bshed:client:renderer')
 
-var Html = React.createFactory(require('./Html.jsx')),
-  navigate = require('../actions/navigate'),
+var navigate = require('../actions/navigate'),
+  Html = require('./Html.jsx'),
   app = require('../app')
 
 module.exports = co.wrap(renderer)
@@ -45,10 +46,18 @@ function render ({context, Handler, assets}={}) {
   var BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
 
   log('generating markup')
-  var markup = React.renderToString(React.createElement(Handler, {context: componentContext}))
+  var markup = React.renderToString(
+    <FluxibleComponent context={componentContext}>
+      <Handler/>
+    </FluxibleComponent>
+  )
 
   log('generating html')
-  var html = React.renderToStaticMarkup(Html({markup, assets, BSHED, context: componentContext}))
+  var html = React.renderToStaticMarkup(
+    <FluxibleComponent context={componentContext}>
+      <Html markup={markup} assets={assets} BSHED={BSHED} context={componentContext}/>
+    </FluxibleComponent>
+  )
 
   log('render finished')
   return {body: html, type: 'html', status: 200}
