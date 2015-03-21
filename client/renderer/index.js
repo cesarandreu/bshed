@@ -31,7 +31,7 @@ function* renderer (options) {
 
 function runRouter (context) {
   return new Promise(resolve => {
-    context.getComponentContext().router.run((Handler, state) => {
+    context.getActionContext().router.run((Handler, state) => {
       resolve({Handler, state})
     })
   })
