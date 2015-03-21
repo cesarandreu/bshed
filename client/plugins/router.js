@@ -13,17 +13,11 @@ module.exports = function RouterPlugin ({location}={}) {
     })
 
     return {
-      plugActionContext,
-      plugComponentContext
+      plugActionContext
     }
 
     function plugActionContext (actionContext) {
       actionContext.router = router
-    }
-
-    function plugComponentContext (componentContext) {
-      componentContext.transitionTo = router.transitionTo.bind(router)
-      componentContext.router = router
     }
   }
 }
