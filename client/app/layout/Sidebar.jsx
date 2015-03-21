@@ -47,7 +47,7 @@ var Sidebar = React.createClass({
         <nav className='sidebar'>
           <div className='sidebar-section'>{links}</div>
         </nav>
-        <div className='sidebar-overlay' onTouchTap={this._closeMenu}></div>
+        <div className='sidebar-overlay' onClick={this._closeMenu}></div>
       </div>
     )
   }

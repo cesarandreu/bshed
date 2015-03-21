@@ -6,7 +6,7 @@ var EnhancedButton = React.createClass({
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
     link: React.PropTypes.bool,
-    onTouchTap: React.PropTypes.func
+    onClick: React.PropTypes.func
   },
 
   render: function () {
@@ -15,7 +15,7 @@ var EnhancedButton = React.createClass({
 
     var props = {
       ...other, disabled, className,
-      onTouchTap: this._onTouchTap
+      onClick: this._onClick
     }
 
     var enhancedButton
@@ -30,8 +30,8 @@ var EnhancedButton = React.createClass({
     return enhancedButton
   },
 
-  _onTouchTap: function (e) {
-    if (this.props.onTouchTap) this.props.onTouchTap(e)
+  _onClick: function (e) {
+    if (this.props.onClick) this.props.onClick(e)
   }
 })
 
