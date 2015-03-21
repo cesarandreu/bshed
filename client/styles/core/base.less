@@ -14,20 +14,22 @@
 
 html {
   height: 100%;
-  width: 100%;
-  -webkit-font-smoothing: antialiased;
-  background-color: @canvas-color;
-  color: @body-text-color;
-  font-family: @font-family;
 }
 
 body {
-  .flexbox;
-  .flex-direction(row);
+  height: 100%;
+  color: @body-text-color;
+  background-color: @canvas-color;
+  font-family: @font-family;
   font-size: 82.5%;
   min-width: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
+}
+
+#bshed {
+  .flexbox;
+  .flex-direction(row);
 }
 
 hr {
