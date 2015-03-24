@@ -60,5 +60,5 @@ function render ({context, Handler, assets}={}) {
   )
 
   log('render finished')
-  return {body: html, type: 'html', status: 200}
+  return {body: `<!DOCTYPE html>${html}`, type: 'html', status: 200}
 }
