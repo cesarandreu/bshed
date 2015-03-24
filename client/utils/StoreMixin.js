@@ -15,7 +15,7 @@ var StoreMixin = {
 
     // Register static listeners
     this.getListeners().forEach(listener => {
-       self._attachStoreListener(listener)
+       this._attachStoreListener(listener)
     })
   },
 
