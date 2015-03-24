@@ -1,14 +1,13 @@
 var React = require('react'),
   {RouteHandler} = require('react-router'),
-  FluxibleRouterMixin = require('../../utils/FluxibleRouterMixin')
-
-var ApplicationStore = require('../../stores/ApplicationStore')
+  StoreMixin = require('../../utils/StoreMixin'),
+  ApplicationStore = require('../../stores/ApplicationStore')
 
 var Navbar = require('./Navbar.jsx'),
   Sidebar = require('./Sidebar.jsx')
 
 var Application = React.createClass({
-  mixins: [FluxibleRouterMixin],
+  mixins: [StoreMixin],
   statics: {
     storeListeners: [ApplicationStore]
   },
