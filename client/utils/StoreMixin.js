@@ -69,8 +69,8 @@ var StoreMixin = {
    */
   getListener: function (store, handler) {
     return {
-      store: this.getStore(store),
-      handler: this.getHandler(handler)
+      handler: this.getHandler(handler),
+      store: this.getStore(store)
     }
   },
 
