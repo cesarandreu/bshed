@@ -16,7 +16,7 @@ var Html = React.createClass({
       {scripts, styles} = this.props.assets
 
     return (
-      <html>
+      <html lang="en">
         <head>
           <meta charSet='utf-8' />
           <meta httpEquiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
