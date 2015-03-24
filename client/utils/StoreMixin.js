@@ -50,7 +50,7 @@ var StoreMixin = {
    * @returns {Function}
    * @method getHandler
    */
-  getHandler: function (handler) {
+  getHandler: function getHandler (handler) {
     if (typeof handler === 'string')
       handler = this[handler]
 
@@ -67,7 +67,7 @@ var StoreMixin = {
    * @returns {Object}
    * @method getListener
    */
-  getListener: function (store, handler) {
+  getListener: function getListener (store, handler) {
     return {
       handler: this.getHandler(handler),
       store: this.getStore(store)
@@ -79,7 +79,7 @@ var StoreMixin = {
    * @returns {Object}
    * @method getListeners
    */
-  getListeners: function () {
+  getListeners: function getListeners () {
     var storeListeners = this.constructor.storeListeners // Static property on component
 
     if (!storeListeners)
