@@ -1,18 +1,16 @@
 var React = require('react'),
+  StoreMixin = require('../utils/StoreMixin'),
   ApplicationStore = require('../stores/ApplicationStore')
 
 var Html = React.createClass({
-  contextTypes: {
-    getStore: React.PropTypes.func.isRequired
-  },
+  mixins: [StoreMixin],
   propTypes: {
-    context: React.PropTypes.object.isRequired,
     assets: React.PropTypes.object.isRequired,
     markup: React.PropTypes.string.isRequired,
     BSHED: React.PropTypes.string.isRequired
   },
   render: function () {
-    var title = this.context.getStore(ApplicationStore).getPageTitle(),
+    var title = this.getStore(ApplicationStore).getPageTitle(),
       {scripts, styles} = this.props.assets
 
     return (
