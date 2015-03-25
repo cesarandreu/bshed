@@ -1,6 +1,5 @@
 var path = require('path'),
   renderer = require('./index'),
-  request = require('../utils/request.server.js'),
   log = require('debug')('bshed:client:middleware')
 
 module.exports = function ({assetPath}={}) {
@@ -9,11 +8,8 @@ module.exports = function ({assetPath}={}) {
   return function* client () {
     try {
       var {body, type, status} = yield renderer({
-        assets: assets, url: this.url,
-        request: request(this.app.server, {
-          'cookie': this.get('cookie'), // send cookie header
-          'x-csrf-token': this.csrf // send csrf header
-        })
+        assets: assets, url: this.url, host: this.host,
+        csrf: this.csrf, cookie: this.get('cookie')
       })
       Object.assign(this, {status, body, type})
     } catch (err) {

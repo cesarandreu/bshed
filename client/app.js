@@ -12,7 +12,7 @@ app.plug(RouterPlugin({
 }))
 
 app.plug(RequestPlugin({
-  request: require('./utils/request.client.js')
+  fetch: require('isomorphic-fetch')
 }))
 
 app.plug(ActionPlugin())
