@@ -8,7 +8,7 @@ module.exports = function ({assetPath}={}) {
   return function* client () {
     try {
       var {body, type, status} = yield renderer({
-        assets: assets, url: this.url, host: this.host,
+        assets: assets, url: this.url, host: this.host, protocol: this.protocol,
         csrf: this.csrf, cookie: this.get('cookie')
       })
       Object.assign(this, {status, body, type})

@@ -20,12 +20,13 @@ function* navigateRequests (context, payload) {
   .filter(route => route.handler && route.handler.navigationData)
   .map(route => route.handler.navigationData(payload))
   .map(nr => {
-    nr.req = requests[nr.storeName](context.request, nr)
+    nr.req = requests[nr.storeName](context.fetch, nr)
     context.dispatch('NEW_NAVIGATION_REQUEST', nr.req)
     return nr
   })
 
-  var responses = (yield navigationRequests.map(nr => nr.req)).map(res => ({res}))
+  var responses = yield navigationRequests.map(nr => nr.req)
+  responses = responses.map(res => ({res}))
   _.merge(navigationRequests, responses).forEach(nr => {
     context.dispatch('FINISHED_NAVIGATION_REQUEST', nr)
   })

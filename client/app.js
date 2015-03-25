@@ -1,6 +1,7 @@
 var RouterPlugin = require('./plugins/router'),
   RequestPlugin = require('./plugins/request'),
   ActionPlugin = require('./plugins/action'),
+  fetch = require('isomorphic-fetch'),
   Fluxible = require('fluxible')
 
 var app = new Fluxible({
@@ -12,7 +13,7 @@ app.plug(RouterPlugin({
 }))
 
 app.plug(RequestPlugin({
-  fetch: require('isomorphic-fetch')
+  fetch: typeof fetch === 'function' ? fetch : global.fetch
 }))
 
 app.plug(ActionPlugin())

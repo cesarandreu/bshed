@@ -1,5 +1,11 @@
+var {format} = require('url')
+
 module.exports = {
-  BikeshedListStore (request, {query}={}) {
-    return request.get('/api/bikesheds').query(query)
+  BikeshedListStore (fetch, {query}={}) {
+    var url = format({
+      pathname: '/api/bikesheds',
+      query: query
+    })
+    return fetch(url)
   }
 }

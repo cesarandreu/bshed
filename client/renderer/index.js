@@ -11,10 +11,10 @@ var navigate = require('../actions/navigate'),
 module.exports = co.wrap(renderer)
 
 function* renderer (options) {
-  var {url, host, cookie, csrf, assets} = options
+  var {url, host, protocol, cookie, csrf, assets} = options
 
   log(`creating context with url ${url}`)
-  var context = app.createContext({host, cookie, csrf, url})
+  var context = app.createContext({host, protocol, cookie, csrf, url})
 
   log('running router')
   var {Handler, state} = yield runRouter(context)
