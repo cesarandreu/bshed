@@ -56,6 +56,7 @@
     "immutable": "^3.6.4",
     "is-generator-function": "^1.0.3",
     "is-promise": "^2.0.0",
+    "isomorphic-fetch": "^2.0.0",
     "koa": "^0.18.0",
     "koa-better-body": "^1.0.17",
     "koa-compose": "^2.3.0",
