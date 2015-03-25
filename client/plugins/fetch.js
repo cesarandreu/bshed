@@ -1,8 +1,8 @@
 var cookies = require('cookies-js')
 
-module.exports = function RequestPlugin ({fetch}={}) {
+module.exports = function FetchPlugin ({fetch}={}) {
   return {
-    name: 'RequestPlugin',
+    name: 'FetchPlugin',
     plugContext
   }
 

@@ -1,6 +1,6 @@
 var RouterPlugin = require('./plugins/router'),
-  RequestPlugin = require('./plugins/request'),
   ActionPlugin = require('./plugins/action'),
+  FetchPlugin = require('./plugins/fetch'),
   fetch = require('isomorphic-fetch'),
   Fluxible = require('fluxible')
 
@@ -12,7 +12,7 @@ app.plug(RouterPlugin({
   location: require('react-router').HistoryLocation
 }))
 
-app.plug(RequestPlugin({
+app.plug(FetchPlugin({
   fetch: typeof fetch === 'function' ? fetch : global.fetch
 }))
 
