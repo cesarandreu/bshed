@@ -33,7 +33,8 @@ var BikeshedBuilderStore = createStore({
     this.emitChange()
   },
 
-  removeBike: function (idx) {
+  removeBike: function (name) {
+    var idx = _.findIndex(this.bikes, {name})
     var bike = this.bikes.splice(idx, 1)
     URL.revokeObjectURL(bike.url)
     this.reindex()
