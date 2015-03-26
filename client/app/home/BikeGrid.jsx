@@ -1,24 +1,13 @@
 var React = require('react'),
   classnames = require('classnames'),
-  IconButton = require('../../components/buttons/IconButton.jsx')
+  BikeGridItem = require('./BikeGridItem.jsx')
 
 var BikeGrid = React.createClass({
 
   render: function () {
     var {bikes} = this.props
     var items = bikes.map((bike, key) => {
-      return (
-        <div className='bike-item' key={key}>
-          {/*<IconButton className='bike-item-action' icon='md-info'/>*/}
-          <div className='bike-item-image'>
-            <img src={bike.url}/>
-          </div>
-          <div className='bike-item-metadata'>
-            <div className='bike-item-name'>{bike.name}</div>
-          </div>
-
-        </div>
-      )
+      return <BikeGridItem key={key} bike={bike} onBikeClick={this.props.onBikeClick}/>
     })
 
     return (

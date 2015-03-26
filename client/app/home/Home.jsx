@@ -24,7 +24,7 @@ var Home = React.createClass({
     return (
       <div className='bikeshed-builder'>
         {!bikes.length && <BikeshedBuilderHero/>}
-        <BikeGrid bikes={bikes}/>
+        <BikeGrid bikes={bikes} onBikeClick={this._onBikeClick}/>
         <AddBikeButton inputChange={this._inputChange}/>
       </div>
     )
@@ -32,7 +32,12 @@ var Home = React.createClass({
 
   _inputChange (e) {
     this.executeAction(BikeshedBuilderAction.addFiles, e.target.files)
+  },
+
+  _onBikeClick (bikeName) {
+    this.executeAction(BikeshedBuilderAction.removeBike, bikeName)
   }
+
 })
 
 module.exports = Home
