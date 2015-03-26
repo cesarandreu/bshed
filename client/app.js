@@ -1,6 +1,6 @@
-var RouterPlugin = require('./plugins/router'),
-  ActionPlugin = require('./plugins/action'),
-  FetchPlugin = require('./plugins/fetch'),
+var RouterPlugin = require('./utils/plugins/router'),
+  ActionPlugin = require('./utils/plugins/action'),
+  FetchPlugin = require('./utils/plugins/fetch'),
   fetch = require('isomorphic-fetch'),
   Fluxible = require('fluxible')
 
