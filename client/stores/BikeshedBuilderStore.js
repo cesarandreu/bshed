@@ -1,18 +1,6 @@
 var {createStore} = require('fluxible/addons'),
   _ = require('lodash')
 
-class Bike {
-  constructor (file) {
-    this.file = file
-    this.name = file.name
-    this.url = URL.createObjectURL(file)
-  }
-
-  destroy () {
-    this.url = URL.revokeObjectURL(this.url)
-  }
-}
-
 var BikeshedBuilderStore = createStore({
   storeName: 'BikeshedBuilderStore',
   handlers: {
@@ -27,16 +15,18 @@ var BikeshedBuilderStore = createStore({
     })
   },
 
-  Bike: Bike,
-
   reindex: function () {
     this.index = _.indexBy(this.bikes, 'name')
   },
 
-  addBikes: function (files) {
-    var bikes = files
-      .filter(file => !this.index[file.name])
-      .map(file => new Bike(file))
+  addBikes: function (bikes) {
+    bikes = bikes
+    .filter(bike => {
+      var isNew = !this.index[bike.name]
+      if (!isNew)
+        URL.revokeObjectURL(bike.url)
+      return isNew
+    })
 
     this.bikes = this.bikes.concat(bikes)
     this.reindex()
@@ -45,7 +35,7 @@ var BikeshedBuilderStore = createStore({
 
   removeBike: function (idx) {
     var bike = this.bikes.splice(idx, 1)
-    bike.destroy()
+    URL.revokeObjectURL(bike.url)
     this.reindex()
     this.emitChange()
   },
