@@ -1,5 +1,5 @@
 var path = require('path'),
-  renderer = require('./index'),
+  renderer = require('./renderer'),
   log = require('debug')('bshed:client:middleware')
 
 module.exports = function ({assetPath}={}) {
