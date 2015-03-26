@@ -1,8 +1,6 @@
-var co = require('co'),
-  debug = require('debug'),
+var debug = require('debug'),
   log = debug('ActionPlugin'),
-  isPromise = require('is-promise'),
-  isGeneratorFunction = require('is-generator-function')
+  isPromise = require('is-promise')
 
 module.exports = function ActionPlugin () {
   return {
@@ -35,21 +33,16 @@ function plugContext (opts, context) {
 }
 
 function executeAction (action, payload={}, done) {
-  log(`Executing action ${action.displayName || action.name} with payload ${payload}`)
+  log(`Executing action ${action.displayName || action.name} with payload`, payload)
 
-  var promise
-  if (isGeneratorFunction(action)) {
-    promise = co(action(this.getActionContext(), payload))
-  } else {
-    promise = new Promise((resolve, reject) => {
-      var result = action(this.getActionContext(), payload, (e, r) => e ? reject(e) : resolve(r))
-      if (isPromise(result)) {
-        result.then(resolve, reject)
-      } else if (action.length < 3) {
-        resolve(result)
-      }
-    })
-  }
+  var promise = new Promise((resolve, reject) => {
+    var result = action(this.getActionContext(), payload, (e, r) => e ? reject(e) : resolve(r))
+    if (isPromise(result)) {
+      result.then(resolve, reject)
+    } else if (action.length < 3) {
+      resolve(result)
+    }
+  })
 
   if (done)
     promise.then(result => done(null, result)).catch(err => done(err))
