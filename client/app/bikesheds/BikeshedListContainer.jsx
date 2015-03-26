@@ -1,14 +1,14 @@
 var React = require('react'),
-  FluxibleRouterMixin = require('../../utils/FluxibleRouterMixin'),
-  BikeshedListStore = require('../../stores/BikeshedListStore'),
   BikeshedList = require('./BikeshedList.jsx'),
-  {storeName} = BikeshedListStore
+  StoreMixin = require('../../utils/mixins/StoreMixin'),
+  BikeshedListStore = require('../../stores/BikeshedListStore')
 
 var BikeshedListContainer = React.createClass({
-  mixins: [FluxibleRouterMixin],
+  mixins: [StoreMixin],
   statics: {
     storeListeners: [BikeshedListStore],
     navigationData: function ({params, query, pathname}={}) {
+      var {storeName} = BikeshedListStore
       return {storeName, params, query, pathname}
     }
   },

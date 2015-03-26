@@ -1,11 +1,12 @@
 var React = require('react/addons'),
-  FluxibleRouterMixin = require('../../utils/FluxibleRouterMixin'),
+  ActionMixin = require('../../utils/mixins/ActionMixin'),
+  StoreMixin = require('../../utils/mixins/StoreMixin'),
   LayoutStore = require('../../stores/LayoutStore'),
   LayoutAction = require('../../actions/Layout'),
   {Link} = require('react-router')
 
 var Sidebar = React.createClass({
-  mixins: [FluxibleRouterMixin],
+  mixins: [ActionMixin, StoreMixin],
   statics: {
     storeListeners: [LayoutStore]
   },

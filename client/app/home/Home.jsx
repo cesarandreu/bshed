@@ -1,13 +1,14 @@
 var React = require('react'),
-  FluxibleRouterMixin = require('../../utils/FluxibleRouterMixin'),
-  BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx'),
   BikeGrid = require('./BikeGrid.jsx'),
   AddBikeButton = require('./AddBikeButton.jsx'),
+  StoreMixin = require('../../utils/mixins/StoreMixin'),
+  ActionMixin = require('../../utils/mixins/ActionMixin'),
+  BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx'),
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
   BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 
 var Home = React.createClass({
-  mixins: [FluxibleRouterMixin],
+  mixins: [ActionMixin, StoreMixin],
   statics: {
     storeListeners: [BikeshedBuilderStore]
   },

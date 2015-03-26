@@ -1,6 +1,6 @@
 var React = require('react'),
   IconButton = require('../../components/buttons/IconButton.jsx'),
-  ActionMixin = require('../../utils/ActionMixin'),
+  ActionMixin = require('../../utils/mixins/ActionMixin'),
   LayoutAction = require('../../actions/Layout'),
   NavbarUser = require('./NavbarUser.jsx'),
   {Link} = require('react-router')

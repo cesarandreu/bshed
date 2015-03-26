@@ -1,6 +1,6 @@
 var React = require('react'),
   {RouteHandler} = require('react-router'),
-  StoreMixin = require('../../utils/StoreMixin'),
+  StoreMixin = require('../../utils/mixins/StoreMixin'),
   ApplicationStore = require('../../stores/ApplicationStore')
 
 var Navbar = require('./Navbar.jsx'),
