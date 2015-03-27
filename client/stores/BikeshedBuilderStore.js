@@ -1,5 +1,5 @@
 var {createStore} = require('fluxible/addons'),
-  _ = require('lodash')
+  Immutable = require('immutable')
 
 var BikeshedBuilderStore = createStore({
   storeName: 'BikeshedBuilderStore',
@@ -9,36 +9,30 @@ var BikeshedBuilderStore = createStore({
   },
 
   initialize: function () {
-    Object.assign(this, {
-      index: {},
-      bikes: []
-    })
+    this.bikes = Immutable.OrderedMap()
   },
 
-  reindex: function () {
-    this.index = _.indexBy(this.bikes, 'name')
-  },
-
-  addBikes: function (bikes) {
-    bikes = bikes
-    .filter(bike => {
-      var isNew = !this.index[bike.name]
-      if (!isNew)
-        URL.revokeObjectURL(bike.url)
-      return isNew
+  addBikes: function (newBikeList) {
+    var bikes = this.bikes
+    newBikeList.forEach(bike => {
+      if (!bikes.has(bike.name)) {
+        bike.url = URL.createObjectURL(bike.file)
+        bikes = bikes.set(bike.name, bike)
+      }
     })
-
-    this.bikes = this.bikes.concat(bikes)
-    this.reindex()
-    this.emitChange()
+    if (bikes !== this.bikes) {
+      this.bikes = bikes
+      this.emitChange()
+    }
   },
 
   removeBike: function (name) {
-    var idx = _.findIndex(this.bikes, {name})
-    var bike = this.bikes.splice(idx, 1)
-    URL.revokeObjectURL(bike.url)
-    this.reindex()
-    this.emitChange()
+    var bikes = this.bikes
+    if (bikes.has(name)) {
+      URL.revokeObjectURL(bikes.get(name).url)
+      this.bikes = bikes.delete(name)
+      this.emitChange()
+    }
   },
 
   getBikes: function () {
@@ -47,15 +41,18 @@ var BikeshedBuilderStore = createStore({
 
   getState: function () {
     return {
-      bikes: this.bikes,
-      index: this.index
+      bikes: this.bikes.toArray()
     }
   },
+
   dehydrate: function () {
-    return this.getState()
+    return {
+      bikes: this.bikes.toObject()
+    }
   },
-  rehydrate: function (state) {
-    Object.assign(this, state)
+
+  rehydrate: function (state={}) {
+    this.bikes = Immutable.OrderedMap(state.bikes)
   }
 })
 
