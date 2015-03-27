@@ -6,9 +6,9 @@ var BikeGrid = React.createClass({
 
   render: function () {
     var {bikes} = this.props
-    var items = bikes.map((bike, key) => {
-      return <BikeGridItem key={key} bike={bike} onBikeClick={this.props.onBikeClick}/>
-    })
+    var items = bikes.map((bike, key) =>
+      <BikeGridItem key={key} bike={bike} onBikeClick={this.props.onBikeClick}/>
+    )
 
     return (
       <div className={classnames('bike-grid-container grid-container', {'empty': !bikes.length})}>
