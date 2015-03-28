@@ -1,9 +1,13 @@
 {
   "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
   "rules": {
     "strict": false,
     "no-console": false,
-    "no-multiple-empty-lines": false
+    "no-multiple-empty-lines": false,
+    "react/jsx-uses-vars": 1
   },
   "env": {
     "mocha": true,
