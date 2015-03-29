@@ -1,5 +1,4 @@
-var co = require('co'),
-  React = require('react'),
+var React = require('react'),
   {FluxibleComponent} = require('fluxible'),
   serialize = require('serialize-javascript'),
   log = require('debug')('bshed:client:renderer')
@@ -8,7 +7,7 @@ var navigate = require('../actions/navigate'),
   Html = require('./Html.jsx'),
   app = require('../app')
 
-module.exports = co.wrap(renderer)
+module.exports = renderer
 
 function* renderer (options) {
   var {url, host, protocol, cookie, csrf, assets} = options
