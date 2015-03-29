@@ -17,7 +17,7 @@ var BikeshedBuilderStore = createStore({
     newBikeList.forEach(bike => {
       if (!bikes.has(bike.name)) {
         bike.url = URL.createObjectURL(bike.file)
-        bikes = bikes.set(bike.name, bike)
+        bikes = bikes.set(bike.name, Immutable.Map(bike))
       }
     })
     if (bikes !== this.bikes) {
@@ -29,26 +29,24 @@ var BikeshedBuilderStore = createStore({
   removeBike: function (name) {
     var bikes = this.bikes
     if (bikes.has(name)) {
-      URL.revokeObjectURL(bikes.get(name).url)
+      URL.revokeObjectURL(bikes.get(name).get('url'))
       this.bikes = bikes.delete(name)
       this.emitChange()
     }
   },
 
   getBikes: function () {
-    return this.bikes
+    return this.bikes.toArray().map(bike => bike.toObject())
   },
 
   getState: function () {
     return {
-      bikes: this.bikes.toArray()
+      bikes: this.getBikes()
     }
   },
 
   dehydrate: function () {
-    return {
-      bikes: this.bikes.toObject()
-    }
+    return this.getState()
   },
 
   rehydrate: function (state={}) {
