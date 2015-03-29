@@ -1,6 +1,7 @@
-var React = require('react'),
+var React = require('react/addons'),
   BikeGrid = require('./BikeGrid.jsx'),
   AddBikeButton = require('./AddBikeButton.jsx'),
+  PureRenderMixin = React.addons.PureRenderMixin,
   StoreMixin = require('../../utils/mixins/StoreMixin'),
   ActionMixin = require('../../utils/mixins/ActionMixin'),
   BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx'),
@@ -8,7 +9,7 @@ var React = require('react'),
   BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 
 var Home = React.createClass({
-  mixins: [ActionMixin, StoreMixin],
+  mixins: [ActionMixin, PureRenderMixin, StoreMixin],
   statics: {
     storeListeners: [BikeshedBuilderStore]
   },

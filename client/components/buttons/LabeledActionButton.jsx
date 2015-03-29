@@ -1,9 +1,11 @@
-var React = require('react'),
+var React = require('react/addons'),
   classnames = require('classnames'),
-  ActionButton = require('./ActionButton.jsx')
+  ActionButton = require('./ActionButton.jsx'),
+  PureRenderMixin = React.addons.PureRenderMixin
 
 // TODO: allow setting label position, currently sets position to the left
 var LabeledActionButton = React.createClass({
+  mixins: [PureRenderMixin],
   propTypes: {
     position: React.PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
     label: React.PropTypes.string.isRequired,

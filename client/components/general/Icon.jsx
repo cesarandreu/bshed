@@ -1,14 +1,15 @@
-var React = require('react'),
+var React = require('react/addons'),
   classnames = require('classnames'),
-  _ = require('lodash')
+  PureRenderMixin = React.addons.PureRenderMixin
 
 var Icon = React.createClass({
+  mixins: [PureRenderMixin],
   propTypes: {
     icon: React.PropTypes.string.isRequired
   },
   render: function () {
     var {className, icon, ...other} = this.props
-    var classes = classnames('icon', icon, className, {md: _.contains(icon, 'md')})
+    var classes = classnames('icon', icon, className, {md: !icon.indexOf('md')})
     return <span {...other} className={classes}></span>
   }
 })

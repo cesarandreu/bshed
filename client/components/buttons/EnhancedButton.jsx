@@ -1,7 +1,10 @@
-var React = require('react'),
-  classnames = require('classnames')
+var React = require('react/addons'),
+  classnames = require('classnames'),
+  PureRenderMixin = React.addons.PureRenderMixin
 
 var EnhancedButton = React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     className: React.PropTypes.string,
     disabled: React.PropTypes.bool,
