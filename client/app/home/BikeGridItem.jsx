@@ -1,5 +1,5 @@
-var React = require('react')
-  // IconButton = require('../../components/buttons/IconButton.jsx')
+var React = require('react'),
+  IconButton = require('../../components/buttons/IconButton.jsx')
 
 var BikeGridItem = React.createClass({
 
@@ -7,12 +7,12 @@ var BikeGridItem = React.createClass({
     var {bike} = this.props
     return (
       <div className='bike-item' onClick={this._onClick}>
-        {/*<IconButton className='bike-item-action' icon='md-info'/>*/}
-        <div className='bike-item-image'>
-          <img src={bike.url}/>
-        </div>
         <div className='bike-item-metadata'>
-          <div className='bike-item-name'>{bike.name}</div>
+          <div className='bike-item-name' title={bike.name}>{bike.name}</div>
+          <IconButton className='bike-item-delete' icon='md-clear'/>
+        </div>
+        <div className='bike-item-image'>
+          <img src={bike.url} alt={bike.file.name}/>
         </div>
       </div>
     )
