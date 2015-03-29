@@ -17,7 +17,7 @@ var Home = React.createClass({
     return this.getStore(BikeshedBuilderStore).getState()
   },
   onChange () {
-    this.setState(this.getStore(BikeshedBuilderStore).getState())
+    this.setState(this.getInitialState())
   },
   render () {
     var {bikes} = this.state
