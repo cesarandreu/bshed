@@ -34,8 +34,9 @@ function assetList (assetPath) {
   if (typeof stats.assetsByChunkName.bshed === 'string')
     stats.assetsByChunkName.bshed = [stats.assetsByChunkName.bshed]
 
-  stats.assetsByChunkName.bshed.forEach(asset => {
-    if (asset.indexOf('bshed') !== 0) return
+  stats.assetsByChunkName.bshed
+  .filter(asset => !asset.indexOf('bshed'))
+  .forEach(asset => {
     switch (path.extname(asset)) {
       case '.js':
         assets.scripts.push(`${stats.publicPath}${asset}`)
