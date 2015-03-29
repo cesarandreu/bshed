@@ -92,14 +92,13 @@
 
   .bike-item-metadata {
     .flexbox;
-    .flex-flow(row, nowrap);
+    .flex-direction(row);
     .align-items(center);
-    .align-content(space-between);
     .justify-content(space-between);
     width: 100%;
     height: 48px;
-    padding: 0 16px;
-    border-top: 1px solid @border-color;
+    padding-left: 16px;
+    border-bottom: 1px solid @border-color;
 
     .bike-item-name {
       color: @primary-text-color;
@@ -108,6 +107,18 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
+    .bike-item-clear {
+      min-height: 48px;
+      min-width: 48px;
+      color: @grid-action-color;
+
+      opacity: 0.6;
+      &:hover {
+        opacity: 1;
+      }
+    }
+
   }
 
 }
