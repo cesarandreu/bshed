@@ -3,6 +3,9 @@
 
 //Typography
 @font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@base-font-size: 82.5%;
+@display-1-font-size: 1.5em;
+
 
 // App Colors
 @primary-1-color: @red-600;
@@ -97,6 +100,9 @@
 @labeled-action-button-label-transition: opacity 150ms cubic-bezier(.4,0,1,1);
 @labeled-action-button-label-leave-transition: opacity 150ms cubic-bezier(0,0,.2,1);
 
+// grid
+@grid-action-color: @grey-900;
+
 // // input
 // @input-width: 320px;
 // @input-font-size: 16px;
@@ -150,7 +156,7 @@
 
 // navbar
 @navbar-height: 56px;
-@navbar-font-size: 1.5em;
+@navbar-font-size: @display-1-font-size;
 @navbar-color: @primary-1-color;
 @navbar-text-color: @text-color;
 @navbar-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
