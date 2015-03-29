@@ -9,7 +9,7 @@ var BikeGridItem = React.createClass({
       <div className='bike-item' onClick={this._onClick}>
         <div className='bike-item-metadata'>
           <div className='bike-item-name' title={bike.name}>{bike.name}</div>
-          <IconButton className='bike-item-delete' icon='md-clear'/>
+          <IconButton className='bike-item-clear' icon='md-clear'/>
         </div>
         <div className='bike-item-image'>
           <img src={bike.url} alt={bike.file.name}/>
