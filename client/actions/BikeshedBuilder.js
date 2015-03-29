@@ -14,8 +14,7 @@ module.exports = {
       return imageSize(file).then(size => ({name, file, size}))
     })
 
-    if (fileList.length)
-      context.dispatch('ADD_BIKES_TO_BIKESHED_BUILDER', fileList)
+    context.dispatch('ADD_BIKES_TO_BIKESHED_BUILDER', fileList)
   }),
 
   removeBike: function removeBike (context, payload) {
