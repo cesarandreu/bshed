@@ -1,4 +1,5 @@
 var co = require('co')
+var BikeshedBuilderStore = require('../stores/BikeshedBuilderStore')
 
 module.exports = {
   addFiles: co.wrap(function* addFiles (context, payload) {
@@ -19,7 +20,19 @@ module.exports = {
 
   removeBike: function removeBike (context, payload) {
     context.dispatch('REMOVE_BIKE_FROM_BIKESHED_BUILDER', payload)
+  },
+
+  openPreview: function openPreview (context, bikeName) {
+    if (context.getStore(BikeshedBuilderStore).hasBike(bikeName))
+      context.dispatch('OPEN_BIKE_PREVIEW', bikeName)
+    else
+      context.dispatch('ADD_TOAST_MESSAGE', `Bike ${bikeName} does not exist`)
+  },
+
+  closePreview: function closePreview (context) {
+    context.dispatch('CLOSE_BIKE_PREVIEW')
   }
+
 }
 
 function imageSize (file) {

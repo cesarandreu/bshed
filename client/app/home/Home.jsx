@@ -1,5 +1,6 @@
 var React = require('react/addons'),
   BikeGrid = require('./BikeGrid.jsx'),
+  BikePreview = require('./BikePreview.jsx'),
   AddBikeButton = require('./AddBikeButton.jsx'),
   PureRenderMixin = React.addons.PureRenderMixin,
   StoreMixin = require('../../utils/mixins/StoreMixin'),
@@ -13,20 +14,23 @@ var Home = React.createClass({
   statics: {
     storeListeners: [BikeshedBuilderStore]
   },
+
   getInitialState () {
     return this.getStore(BikeshedBuilderStore).getState()
   },
+
   onChange () {
     this.setState(this.getInitialState())
   },
-  render () {
-    var {bikes} = this.state
 
+  render () {
+    var {bikes, preview} = this.state
     return (
       <div className='bikeshed-builder'>
         {!bikes.length && <BikeshedBuilderHero/>}
-        <BikeGrid bikes={bikes} onBikeClick={this._onBikeClick}/>
+        <BikeGrid bikes={bikes} onBikeClick={this._onBikeClick} onBikeClear={this._onBikeClear}/>
         <AddBikeButton inputChange={this._inputChange}/>
+        {preview.isOpen && <BikePreview preview={preview} closePreview={this._closePreview}/>}
       </div>
     )
   },
@@ -35,7 +39,15 @@ var Home = React.createClass({
     this.executeAction(BikeshedBuilderAction.addFiles, e.target.files)
   },
 
+  _closePreview () {
+    this.executeAction(BikeshedBuilderAction.closePreview)
+  },
+
   _onBikeClick (bikeName) {
+    this.executeAction(BikeshedBuilderAction.openPreview, bikeName)
+  },
+
+  _onBikeClear (bikeName) {
     this.executeAction(BikeshedBuilderAction.removeBike, bikeName)
   }
 

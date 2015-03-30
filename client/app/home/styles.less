@@ -121,3 +121,56 @@
   }
 
 }
+
+.bike-preview {
+  z-index: @z-index-fullscreen-overlay;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+
+  .bike-preview-overlay {
+    z-index: @z-index-fullscreen-overlay - 1;
+    background-color: @black;
+    position: fixed;
+    opacity: 0.9;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .bike-preview-content {
+    position: relative;
+    z-index: inherit;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+
+    .flexbox;
+    .align-items(center);
+    .flex-direction(column);
+    .justify-content(center);
+
+    .bike-preview-close {
+      top: 0;
+      right: 0;
+      position: fixed;
+      color: @white;
+      opacity: 0.6;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .bike-preview-image {
+      max-width: 80%;
+      max-height: 80%;
+    }
+
+  }
+
+}
+
+
