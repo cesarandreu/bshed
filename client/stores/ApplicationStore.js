@@ -1,4 +1,5 @@
-var {createStore} = require('fluxible/addons')
+var {createStore} = require('fluxible/addons'),
+  Immutable = require('immutable')
 
 var ApplicationStore = createStore({
   storeName: 'ApplicationStore',
@@ -6,25 +7,28 @@ var ApplicationStore = createStore({
     'CHANGE_ROUTE_SUCCESS': 'handleNavigate'
   },
   initialize: function () {
-    this.route = null
+    this.state = Immutable.Map()
   },
   handleNavigate: function (route) {
-    this.route = route
-    this.emitChange()
+    if (this.state.get('route') !== route) {
+      this.state = this.state.set('route', route)
+      this.emitChange()
+    }
   },
   getPageTitle: function () {
     return 'Bikeshed it!'
   },
+  getRoute: function () {
+    return this.state.get('route')
+  },
   getState: function () {
-    return {
-      route: this.route
-    }
+    return this.state.toJS()
   },
   dehydrate: function () {
     return this.getState()
   },
   rehydrate: function (state) {
-    this.route = state.route
+    this.state = Immutable.Map(state)
   }
 })
 
