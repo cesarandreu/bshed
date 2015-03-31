@@ -35,13 +35,7 @@ module.exports = function buildWebpackConfig (options) {
     externals: [],
     module: {
       loaders: [{
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
-        loader: BUILD ? 'url?limit=10000' : 'url'
-      }, {
-        test: /\.(woff)$/,
-        loader: BUILD ? 'url?limit=100000' : 'url'
-      }, {
-        test: /\.(ttf|eot)$/,
+        test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
         loader: 'file'
       }]
     },
