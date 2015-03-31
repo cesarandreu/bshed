@@ -20,7 +20,7 @@ var mountNode = document.getElementById('bshed') // render node
 
 if (process.env.NODE_ENV !== 'production') {
   global.React = React // For chrome dev tool support
-  debug.enable('*')
+  debug.enable('bshed:*')
 }
 
 log('rehydrating application')
