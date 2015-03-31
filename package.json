@@ -83,6 +83,7 @@
     "qs": "^2.3.3",
     "react": "^0.13.1",
     "react-hot-loader": "^1.2.3",
+    "react-hotkey": "^0.3.0",
     "react-router": "^0.13.1",
     "s3": "^4.4.0",
     "sequelize": "^2.0.5",

@@ -2,6 +2,7 @@ var co = require('co'),
   React = require('react'),
   debug = require('debug'),
   log = debug('bshed:client'),
+  hotkey = require('react-hotkey'),
   {FluxibleComponent} = require('fluxible')
 
 var navigate = require('./actions/navigate'),
@@ -28,6 +29,9 @@ app.rehydrate(global.BSHED, (err, context) => {
   if (err) throw err
   if (process.env.NODE_ENV !== 'production')
     global.context = context // For debugging
+
+  log('activating hotkeys')
+  hotkey.activate()
 
   log('starting router')
   context.getActionContext().router.run(co.wrap(routerAction(context)))
