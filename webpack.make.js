@@ -1,5 +1,4 @@
 var fs = require('fs'),
-  path = require('path'),
   mkdirp = require('mkdirp'),
   webpack = require('webpack'),
   ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -102,7 +101,7 @@ module.exports = function buildWebpackConfig (options) {
       })
       jsonStats.publicPath = publicPath
       mkdirp.sync(outputPath)
-      fs.writeFileSync(path.join(outputPath, 'stats.json'), JSON.stringify(jsonStats))
+      fs.writeFileSync(outputPath + '/stats.json', JSON.stringify(jsonStats))
     }
   }
 }
