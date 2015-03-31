@@ -70,18 +70,24 @@
 }
 
 .bike-item {
-  .whiteframe-z1;
   margin: 10px;
   width: 192px;
   height: 192px + 48px;
   background-color: @white;
 
+  transition: box-shadow .15s cubic-bezier(.4, 0, .2, 1);
+  .whiteframe-z1;
+  &:hover {
+    .whiteframe-z2;
+  }
+
   .bike-item-image {
-    width: 100%;
-    height: 192px;
     .flexbox;
-    .align-items(center);
     .justify-content(center);
+    .align-items(center);
+    cursor: pointer;
+    height: 192px;
+    width: 100%;
 
     img {
       max-height: 100%;
