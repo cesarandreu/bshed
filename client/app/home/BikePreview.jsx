@@ -1,9 +1,10 @@
 var React = require('react/addons'),
+  hotkey = require('react-hotkey'),
   PureRenderMixin = React.addons.PureRenderMixin,
   IconButton = require('../../components/buttons/IconButton.jsx')
 
 var BikePreview = React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin, hotkey.Mixin('_handleHotkey')],
   propTypes: {
     closePreview: React.PropTypes.func.isRequired,
     preview: React.PropTypes.shape({
@@ -28,6 +29,11 @@ var BikePreview = React.createClass({
 
   _closeOnClick: function (e) {
     if (e.target.className.indexOf('bike-preview-content') > -1)
+      this.props.closePreview()
+  },
+
+  _handleHotkey: function (e) {
+    if (e.key === 'Escape')
       this.props.closePreview()
   }
 
