@@ -1,5 +1,5 @@
 {
-  "ext": "js jsx",
+  "ext": "js jsx json",
   "ignore": [
     ".git",
     "node_modules/*"
