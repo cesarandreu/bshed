@@ -72,10 +72,9 @@ module.exports = function buildWebpackConfig (options) {
     exclude: /.*node_modules.*/
   })
 
-  var hotLoader = BUILD ? '' : 'react-hot!'
   config.module.loaders.push({
     test: /\.jsx$/,
-    loader: hotLoader + babelLoader,
+    loader: (BUILD ? '' : 'react-hot!') + babelLoader,
     exclude: /.*node_modules.*((?!\.jsx).{4}$)/
   })
 
