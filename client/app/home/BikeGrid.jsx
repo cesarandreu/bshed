@@ -11,8 +11,9 @@ var BikeGrid = React.createClass({
   render: function () {
     var {bikes} = this.props
     var className = classnames(
-      'bike-grid-container grid-container',
-      {'empty': !bikes.length}
+      {'empty': !bikes.length},
+      'bike-grid-container',
+      'grid-container'
     )
 
     return (
