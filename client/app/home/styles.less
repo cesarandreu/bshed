@@ -18,6 +18,7 @@
   }
 }
 
+// AddBikeButton
 .add-bike-button {
   padding-bottom: @action-button-size / 2;
   padding-right: @action-button-size / 2;
@@ -30,30 +31,32 @@
   }
 }
 
+// BikeshedBuilderHero
 .bikeshed-builder-hero {
   .flexbox;
   .flex-direction(column);
   .align-items(center);
   .justify-content(center);
+  min-height: ~'calc(70vh - 56px)';
   height: 100%;
-}
 
-.bikeshed-builder-hero-logo {
-  .icon {
-    font-size: 10em;
-    color: @grey-400;
+  .bikeshed-builder-hero-logo {
+    .icon {
+      font-size: 10em;
+      color: @grey-400;
+    }
   }
-}
 
-.bikeshed-builder-hero-heading {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 18px;
-  color: @dark-black;
-}
+  .bikeshed-builder-hero-heading {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: @dark-black;
+  }
 
-.bikeshed-builder-hero-create {
-  font-size: 14px;
+  .bikeshed-builder-hero-create {
+    font-size: 14px;
+  }
 }
 
 .bike-grid-container {
@@ -62,13 +65,14 @@
       display: none;
     }
   }
-
 }
 
+// BikeGrid
 .bike-grid {
 
 }
 
+// BikeGridItem
 .bike-item {
   margin: 10px;
   width: 192px;
@@ -123,11 +127,12 @@
         opacity: 1;
       }
     }
-
   }
+}
 
 }
 
+// BikePreview
 .bike-preview {
   z-index: @z-index-fullscreen-overlay;
   position: fixed;
@@ -174,9 +179,7 @@
       max-width: 80%;
       max-height: 80%;
     }
-
   }
-
 }
 
 
