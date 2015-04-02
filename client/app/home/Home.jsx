@@ -6,6 +6,7 @@ var React = require('react/addons'),
   StoreMixin = require('../../utils/mixins/StoreMixin'),
   ActionMixin = require('../../utils/mixins/ActionMixin'),
   BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx'),
+  BikeshedBuilderPanel = require('./BikeshedBuilderPanel.jsx'),
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
   BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 
@@ -29,6 +30,9 @@ var Home = React.createClass({
       <div className='bikeshed-builder'>
         {!bikes.length && <BikeshedBuilderHero/>}
         <BikeGrid bikes={bikes} onBikeClick={this._onBikeClick} onBikeClear={this._onBikeClear}/>
+        <BikeshedBuilderPanel>
+          <div>SHIP IT~</div>
+        </BikeshedBuilderPanel>
         <AddBikeButton inputChange={this._inputChange}/>
         {preview.isOpen && <BikePreview preview={preview} closePreview={this._closePreview}/>}
       </div>
