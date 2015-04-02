@@ -31,9 +31,9 @@ var Home = React.createClass({
         {!bikes.length && <BikeshedBuilderHero/>}
         <BikeGrid bikes={bikes} onBikeClick={this._onBikeClick} onBikeClear={this._onBikeClear}/>
         <BikeshedBuilderPanel>
+          <AddBikeButton inputChange={this._inputChange}/>
           <div>SHIP IT~</div>
         </BikeshedBuilderPanel>
-        <AddBikeButton inputChange={this._inputChange}/>
         {preview.isOpen && <BikePreview preview={preview} closePreview={this._closePreview}/>}
       </div>
     )
