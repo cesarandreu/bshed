@@ -58,7 +58,7 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // loaders
-  var babelLoader = 'babel?experimental&optional=runtime'
+  var babelLoader = 'babel?optional=runtime&breakConfig=true&stage=1'
   config.module.loaders.push({
     test: /\.js$/,
     loader: babelLoader,
