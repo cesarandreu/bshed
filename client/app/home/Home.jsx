@@ -34,7 +34,7 @@ var Home = React.createClass({
           <AddBikeButton inputChange={this._inputChange}/>
           <div>SHIP IT~</div>
         </BikeshedBuilderPanel>
-        {preview.isOpen && <BikePreview preview={preview} closePreview={this._closePreview}/>}
+        <BikePreview preview={preview} closePreview={this._closePreview}/>
       </div>
     )
   },

@@ -8,11 +8,16 @@ var BikePreview = React.createClass({
   propTypes: {
     closePreview: React.PropTypes.func.isRequired,
     preview: React.PropTypes.shape({
-      bike: React.PropTypes.object.isRequired
+      isOpen: React.PropTypes.bool.isRequired,
+      bike: React.PropTypes.object
     }).isRequired
   },
   render: function () {
-    var {bike} = this.props.preview
+    var {bike, isOpen} = this.props.preview
+
+    if (!isOpen)
+      return <div></div>
+
     return (
       <div className='bike-preview'>
         <div className='bike-preview-content' onClick={this._closeOnClick}>
