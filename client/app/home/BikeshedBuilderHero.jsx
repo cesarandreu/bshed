@@ -2,7 +2,14 @@ var React = require('react'),
   Icon = require('../../components/general/Icon.jsx')
 
 var BikeshedBuilderHero = React.createClass({
+  propTypes: {
+    hasBikes: React.PropTypes.bool.isRequired
+  },
+
   render () {
+    if (!this.props.hasBikes)
+      return <div></div>
+
     return (
       <div className='bikeshed-builder-hero'>
         <div className='bikeshed-builder-hero-logo'>
