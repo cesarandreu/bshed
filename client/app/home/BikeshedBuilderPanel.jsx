@@ -1,9 +1,6 @@
 var React = require('react')
 
 var BikeshedBuilderPanel = React.createClass({
-  propTypes: {
-    children: React.PropTypes.element.isRequired
-  },
   render: function () {
     return (
       <div className='bikeshed-builder-panel-container'>
