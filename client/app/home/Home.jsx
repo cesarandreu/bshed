@@ -28,7 +28,7 @@ var Home = React.createClass({
     var {bikes, preview} = this.state
     return (
       <div className='bikeshed-builder'>
-        {!bikes.length && <BikeshedBuilderHero/>}
+        <BikeshedBuilderHero hasBikes={!!bikes.length}/>
         <BikeGrid bikes={bikes} onBikeClick={this._onBikeClick} onBikeClear={this._onBikeClear}/>
         <BikeshedBuilderPanel>
           <AddBikeButton inputChange={this._inputChange}/>
