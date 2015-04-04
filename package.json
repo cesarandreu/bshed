@@ -101,7 +101,7 @@
     "cookies": "^0.5.0",
     "csrf": "^2.0.6",
     "imagemin": "^3.1.0",
-    "isparta": "^2.2.0",
+    "isparta": "^3.0.0",
     "jsdom": "^4.0.2",
     "keygrip": "^1.0.1",
     "mocha": "^2.0.1",
