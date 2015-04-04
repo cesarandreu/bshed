@@ -7,7 +7,7 @@ var BikeshedBuilderHero = React.createClass({
   },
 
   render () {
-    if (!this.props.hasBikes)
+    if (this.props.hasBikes)
       return <div></div>
 
     return (
