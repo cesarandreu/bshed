@@ -3,7 +3,7 @@ var co = require('co'),
   debug = require('debug'),
   log = debug('bshed:client'),
   hotkey = require('react-hotkey'),
-  {FluxibleComponent} = require('fluxible')
+  {FluxibleComponent} = require('fluxible/addons')
 
 var navigate = require('./actions/navigate'),
   app = require('./app')

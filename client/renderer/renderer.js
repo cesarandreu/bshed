@@ -1,7 +1,7 @@
 var React = require('react'),
-  {FluxibleComponent} = require('fluxible'),
   serialize = require('serialize-javascript'),
-  log = require('debug')('bshed:client:renderer')
+  log = require('debug')('bshed:client:renderer'),
+  {FluxibleComponent} = require('fluxible/addons')
 
 var navigate = require('../actions/navigate'),
   Html = require('./Html.jsx'),
