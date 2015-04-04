@@ -1,5 +1,4 @@
 var RouterPlugin = require('./utils/plugins/router'),
-  ActionPlugin = require('./utils/plugins/action'),
   FetchPlugin = require('./utils/plugins/fetch'),
   fetch = require('isomorphic-fetch'),
   Fluxible = require('fluxible')
@@ -15,8 +14,6 @@ app.plug(RouterPlugin({
 app.plug(FetchPlugin({
   fetch: typeof fetch === 'function' ? fetch : global.fetch
 }))
-
-app.plug(ActionPlugin())
 
 app.registerStore(require('./stores/ApplicationStore.js'))
 app.registerStore(require('./stores/BikeshedListStore.js'))
