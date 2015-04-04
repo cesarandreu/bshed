@@ -150,7 +150,7 @@
 // BikePreview
 .bike-preview {
   z-index: @z-index-fullscreen-overlay;
-  position: fixed;
+  position: absolute;
   height: 100%;
   width: 100%;
   left: 0;
@@ -159,7 +159,7 @@
   .bike-preview-overlay {
     z-index: @z-index-fullscreen-overlay - 1;
     background-color: @black;
-    position: fixed;
+    position: absolute;
     opacity: 0.9;
     height: 100%;
     width: 100%;
@@ -182,7 +182,7 @@
     .bike-preview-close {
       top: 0;
       right: 0;
-      position: fixed;
+      position: absolute;
       color: @white;
       opacity: 0.6;
       &:hover {
