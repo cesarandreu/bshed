@@ -7,12 +7,30 @@ var BikeshedBuilderStore = createStore({
     'ADD_BIKES_TO_BIKESHED_BUILDER': 'addBikes',
     'REMOVE_BIKE_FROM_BIKESHED_BUILDER': 'removeBike',
     'CLOSE_BIKE_PREVIEW': 'closeBikePreview',
-    'OPEN_BIKE_PREVIEW': 'openBikePreview'
+    'OPEN_BIKE_PREVIEW': 'openBikePreview',
+    'BIKESHED_BUILDER_FORM_CHANGE': 'handleFormChange'
   },
 
   initialize: function () {
     this.preview = Immutable.fromJS({bike: null})
     this.bikes = Immutable.OrderedMap()
+    this.form = this.defaultForm()
+  },
+
+  defaultForm: function () {
+    return Immutable.fromJS({
+      name: {
+        errorText: '',
+        value: ''
+      }
+    })
+  },
+
+  handleFormChange: function ({name, value}={}) {
+    if (this.form.keys(name)) {
+      this.form = this.form.updateIn([name, 'value'], () => value)
+      this.emitChange()
+    }
   },
 
   openBikePreview: function (name) {
@@ -52,6 +70,10 @@ var BikeshedBuilderStore = createStore({
     return this.bikes.has(name)
   },
 
+  getForm: function () {
+    return this.form.toJS()
+  },
+
   getBikes: function () {
     return this.bikes.toArray().map(bike => bike.toObject())
   },
@@ -62,6 +84,7 @@ var BikeshedBuilderStore = createStore({
 
   getState: function () {
     return {
+      form: this.getForm(),
       bikes: this.getBikes(),
       preview: this.getPreview()
     }
