@@ -3,7 +3,7 @@ var cn = require('classnames'),
   {PureRenderMixin} = React.addons.PureRenderMixin
 
 
-var TextInput = React.createClass({
+var TextField = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
@@ -20,9 +20,10 @@ var TextInput = React.createClass({
 
   render: function () {
     var {name, errorText, label, value, onChange} = this.props
-    var wrapperClassNames = cn('text-input-wrapper', {
+    var wrapperClassNames = cn('text-field', {
       'has-focus': this.state.focused,
-      'has-error': !!errorText
+      'has-error': !!errorText,
+      'has-value': !!value
     })
     var inputProps = {
       name, value, onChange,
@@ -31,13 +32,13 @@ var TextInput = React.createClass({
     }
     return (
       <div className={wrapperClassNames}>
-        <label className='text-input-floating-label'>
+        <label className='text-field-floating-label'>
           {label || name}
         </label>
-        <input className='text-input' type='text' {...inputProps}/>
-        <hr className='text-input-underline'/>
-        <hr className='text-input-focus-underline'/>
-        {errorText ? <div className='text-input-error-text'>{errorText}</div> : null}
+        <input className='text-field-input' type='text' {...inputProps}/>
+        <hr className='text-field-underline'/>
+        <hr className='text-field-focus-underline'/>
+        {errorText ? <div className='text-field-error'>{errorText}</div> : null}
       </div>
     )
   },
@@ -53,4 +54,4 @@ var TextInput = React.createClass({
 })
 
 
-module.exports = TextInput
+module.exports = TextField
