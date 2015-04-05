@@ -2,7 +2,6 @@ var cn = require('classnames'),
   React = require('react/addons'),
   {PureRenderMixin} = React.addons.PureRenderMixin
 
-
 var TextField = React.createClass({
   mixins: [PureRenderMixin],
 
@@ -52,6 +51,5 @@ var TextField = React.createClass({
   }
 
 })
-
 
 module.exports = TextField
