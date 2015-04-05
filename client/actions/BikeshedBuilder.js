@@ -31,6 +31,10 @@ module.exports = {
 
   closePreview: function closePreview (context) {
     context.dispatch('CLOSE_BIKE_PREVIEW')
+  },
+
+  formChange: function (context, payload) {
+    context.dispatch('BIKESHED_BUILDER_FORM_CHANGE', payload)
   }
 
 }
