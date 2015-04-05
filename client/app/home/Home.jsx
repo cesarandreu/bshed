@@ -5,6 +5,7 @@ var React = require('react/addons'),
   PureRenderMixin = React.addons.PureRenderMixin,
   StoreMixin = require('../../utils/mixins/StoreMixin'),
   ActionMixin = require('../../utils/mixins/ActionMixin'),
+  BikeshedBuilderForm = require('./BikeshedBuilderForm.jsx'),
   BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx'),
   BikeshedBuilderPanel = require('./BikeshedBuilderPanel.jsx'),
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
@@ -25,7 +26,7 @@ var Home = React.createClass({
   },
 
   render () {
-    var {bikes, preview} = this.state
+    var {bikes, preview, form} = this.state
     return (
       <div className='bikeshed-builder'>
         <BikeshedBuilderHero hasBikes={!!bikes.length}/>
@@ -33,10 +34,15 @@ var Home = React.createClass({
         <BikeshedBuilderPanel>
           <AddBikeButton inputChange={this._inputChange}/>
           <div>SHIP IT</div>
+          <BikeshedBuilderForm form={form} onFormChange={this._onFormChange}/>
         </BikeshedBuilderPanel>
         <BikePreview preview={preview} closePreview={this._closePreview}/>
       </div>
     )
+  },
+
+  _onFormChange (formField) {
+    this.executeAction(BikeshedBuilderAction.formChange, formField)
   },
 
   _inputChange (e) {
