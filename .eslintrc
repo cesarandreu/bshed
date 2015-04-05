@@ -4,9 +4,10 @@
     "react"
   ],
   "rules": {
-    "strict": false,
-    "no-console": false,
-    "no-multiple-empty-lines": false,
+    "strict": 0,
+    "no-console": 0,
+    "no-multiple-empty-lines": 0,
+    "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1
   },
   "env": {
