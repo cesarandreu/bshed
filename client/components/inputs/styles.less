@@ -1,0 +1,79 @@
+.text-field {
+  .inline-flexbox;
+  .flex-direction(column);
+  position: relative;
+  width: 256px;
+  height: @text-field-full-height;
+
+  &.has-value, &.has-focus {
+    .text-field-floating-label {
+      transform: translate3d(0, -8px, 0);
+      font-size: @text-field-hint-font-size;
+    }
+  }
+
+  &.has-focus {
+    &.has-error .text-field-floating-label {
+      color: @error-color;
+    }
+    .text-field-floating-label {
+      color: @text-field-focus-color;
+    }
+    .text-field-focus-underline {
+      transform: scaleX(1);
+    }
+  }
+
+  &.has-error .text-field-focus-underline {
+    transform: scaleX(1);
+    border-color: @error-color;
+  }
+
+  .text-field-floating-label {
+    transform: translate3d(0, 16px, 0);
+    transform-origin: left top;
+    position: absolute;
+    line-height: @text-field-height;
+    font-size: @text-field-input-font-size;
+    color: @text-field-hint-color;
+    transition: @text-field-transition;
+  }
+
+  .text-field-input {
+    font-size: @text-field-input-font-size;
+    position: relative;
+    width: 100%;
+    height: @text-field-height;
+    margin: 16px 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    color: @text-field-input-color;
+  }
+
+  .text-field-underline,
+  .text-field-focus-underline {
+    border-bottom: 1px solid @border-color;
+    position: absolute;
+    width: 100%;
+    bottom: 24px;
+    margin: 0;
+  }
+
+  .text-field-focus-underline {
+    border-color: @text-field-focus-color;
+    border-bottom-width: 2px;
+    transform: scaleX(0);
+    transition: @text-field-transition;
+  }
+
+  .text-field-error {
+    position: absolute;
+    bottom: 4px;
+    font-size: @text-field-hint-font-size;
+    line-height: 16px;
+    color: @error-color;
+    transition: @text-field-transition;
+  }
+}
