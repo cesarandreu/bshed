@@ -11,17 +11,17 @@ var BikeshedBuilderStore = createStore({
   },
 
   initialize: function () {
-    this.preview = Immutable.Map({isOpen: false, bike: null})
+    this.preview = Immutable.fromJS({bike: null})
     this.bikes = Immutable.OrderedMap()
   },
 
   openBikePreview: function (name) {
-    this.preview = Immutable.Map({isOpen: true, bike: this.bikes.get(name)})
+    this.preview = Immutable.fromJS({bike: this.bikes.get(name)})
     this.emitChange()
   },
 
   closeBikePreview: function () {
-    this.preview = Immutable.Map({isOpen: false, bike: null})
+    this.preview = Immutable.fromJS({bike: null})
     this.emitChange()
   },
 
