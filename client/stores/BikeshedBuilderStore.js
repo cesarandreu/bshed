@@ -20,8 +20,7 @@ var BikeshedBuilderStore = createStore({
   defaultForm: function () {
     return Immutable.fromJS({
       name: {
-        errorText: '',
-        value: ''
+        name: 'name', errorText: '', value: ''
       }
     })
   },
@@ -96,7 +95,8 @@ var BikeshedBuilderStore = createStore({
 
   rehydrate: function (state) {
     this.bikes = Immutable.OrderedMap(state.bikes)
-    this.preview = Immutable.Map(state.preview)
+    this.preview = Immutable.fromJS(state.preview)
+    this.form = Immutable.fromJS(state.form)
   }
 })
 
