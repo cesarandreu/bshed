@@ -15,8 +15,14 @@ var BikeshedBuilderForm = React.createClass({
     var {name} = form.toJS()
 
     return (
-      <div className='bikeshed-builder-form'>
+      <div className='bikeshed-builder-form-container'>
+        <h1 className='bikeshed-builder-form-header'>
+          Build your bikeshed
+        </h1>
+        <div className='bikeshed-builder-form'>
           <TextField {...name} onChange={this._onChange}/>
+        </div>
+
       </div>
     )
   },
