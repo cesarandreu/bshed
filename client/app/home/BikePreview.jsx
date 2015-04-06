@@ -10,8 +10,7 @@ var BikePreview = React.createClass({
     preview: React.PropTypes.object.isRequired
   },
   render: function () {
-    var {bike} = this.props.preview
-
+    var bike = this.props.preview.get('bike')
     if (!bike)
       return null
 
@@ -22,7 +21,7 @@ var BikePreview = React.createClass({
             onClick={this.props.closePreview}
             className='bike-preview-close'
             icon='md-clear'/>
-          <img className='bike-preview-image' src={bike.url} alt={bike.file.name}/>
+          <img className='bike-preview-image' src={bike.get('url')} alt={bike.get('name')}/>
         </div>
         <div className='bike-preview-overlay'></div>
       </div>

@@ -12,7 +12,7 @@ var BikeshedBuilderStore = createStore({
   },
 
   initialize: function () {
-    this.preview = Immutable.fromJS({bike: null})
+    this.preview = Immutable.Map({bike: null})
     this.bikes = Immutable.OrderedMap()
     this.form = this.defaultForm()
   },
@@ -33,12 +33,12 @@ var BikeshedBuilderStore = createStore({
   },
 
   openBikePreview: function (name) {
-    this.preview = Immutable.fromJS({bike: this.bikes.get(name)})
+    this.preview = Immutable.Map({bike: this.bikes.get(name)})
     this.emitChange()
   },
 
   closeBikePreview: function () {
-    this.preview = Immutable.fromJS({bike: null})
+    this.preview = Immutable.Map({bike: null})
     this.emitChange()
   },
 
@@ -78,7 +78,7 @@ var BikeshedBuilderStore = createStore({
   },
 
   getPreview: function () {
-    return this.preview.toJS()
+    return this.preview
   },
 
   getState: function () {
@@ -94,7 +94,7 @@ var BikeshedBuilderStore = createStore({
   },
 
   rehydrate: function (state) {
-    this.bikes = Immutable.OrderedMap(state.bikes)
+    this.bikes = Immutable.fromJS(state.bikes).toOrderedMap()
     this.preview = Immutable.fromJS(state.preview)
     this.form = Immutable.fromJS(state.form)
   }
