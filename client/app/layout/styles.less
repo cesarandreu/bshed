@@ -24,37 +24,30 @@
     width: @sidebar-width;
     top: @navbar-height;
     bottom: 0;
-    left: 0;
+    left: @sidebar-width * -1.5;
     z-index: @z-index-sidebar;
     transition: transform @sidebar-transition-duration ease-in-out;
   }
 
   .sidebar-overlay {
-    position: fixed;
-    height: 100%;
+    opacity: 0;
+    left: -100%;
     width: 100%;
-    z-index: @z-index-sidebar - 1;
+    height: 100%;
+    position: fixed;
     background-color: @black;
+    z-index: @z-index-sidebar - 1;
+    transition: opacity @sidebar-transition-duration ease-in-out;
   }
 
-  &.open {
-    .sidebar-overlay {
-      transition: opacity @sidebar-transition-duration ease-in-out;
-      opacity: 0.4;
-    }
-  }
-
-  &.closed {
+  &.is-open {
     .sidebar {
-      transform: translateX(@sidebar-width * -1.5)
+      transform: translateX(@sidebar-width * 1.5);
     }
 
     .sidebar-overlay {
-      transition:
-        opacity @sidebar-transition-duration ease-in-out,
-        transform 0s ease-in-out @sidebar-transition-duration;
-      transform: translateX(-100%);
-      opacity: 0;
+      opacity: 0.4;
+      transform: translateX(100%);
     }
   }
 }
