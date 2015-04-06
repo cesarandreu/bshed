@@ -7,7 +7,7 @@ var React = require('react'),
 var Navbar = React.createClass({
   mixins: [ActionMixin],
   toggleMenu: function () {
-    this.executeAction(LayoutAction.toggleMenu)
+    this.executeAction(LayoutAction.sidebar.toggle)
   },
 
   render: function () {
