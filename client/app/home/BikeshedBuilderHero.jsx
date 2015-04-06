@@ -1,15 +1,11 @@
-var React = require('react'),
+var React = require('react/addons'),
+  PureRenderMixin = React.addons.PureRenderMixin,
   Icon = require('../../components/general/Icon.jsx')
 
 var BikeshedBuilderHero = React.createClass({
-  propTypes: {
-    hasBikes: React.PropTypes.bool.isRequired
-  },
+  mixins: [PureRenderMixin],
 
   render () {
-    if (this.props.hasBikes)
-      return null
-
     return (
       <div className='bikeshed-builder-hero'>
         <div className='bikeshed-builder-hero-logo'>
