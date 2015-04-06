@@ -10,10 +10,8 @@ var ApplicationStore = createStore({
     this.state = Immutable.Map()
   },
   handleNavigate: function (route) {
-    if (this.state.get('route') !== route) {
-      this.state = this.state.set('route', route)
-      this.emitChange()
-    }
+    this.state = this.state.set('route', route)
+    this.emitChange()
   },
   getPageTitle: function () {
     return 'Bikeshed it!'
