@@ -13,6 +13,8 @@ var Sidebar = React.createClass({
 
   render: function () {
     var {sidebar, closeSidebar} = this.props
+    sidebar = sidebar.toJS()
+
     var links = [{
       path: '/',
       text: 'Home'
