@@ -29,16 +29,24 @@ var Application = React.createClass({
       sidebar: this.state.sidebar,
       closeSidebar: this._closeSidebar
     }
+    var navbarProps = {
+      navbar: this.state.navbar,
+      toggleSidebar: this._toggleSidebar
+    }
 
     return (
       <div className='layout'>
-        <Navbar/>
+        <Navbar {...navbarProps}/>
         <Sidebar {...sidebarProps}/>
         <div className='content'>
           <RouteHandler/>
         </div>
       </div>
     )
+  },
+
+  _toggleSidebar () {
+    this.executeAction(LayoutAction.sidebar.toggle)
   },
 
   _closeSidebar () {
