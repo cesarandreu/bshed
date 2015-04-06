@@ -1,13 +1,19 @@
-var React = require('react'),
+var React = require('react/addons'),
+  PureRenderMixin = React.addons.PureRenderMixin,
   IconButton = require('../../components/buttons/IconButton.jsx')
 
 var BikeGridItem = React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     onBikeClear: React.PropTypes.func.isRequired,
-    onBikeClick: React.PropTypes.func.isRequired
+    onBikeClick: React.PropTypes.func.isRequired,
+    bike: React.PropTypes.object.isRequired
   },
+
   render: function () {
-    var {bike} = this.props
+    var bike = this.props.bike.toObject()
+
     return (
       <div className='bike-item'>
         <div className='bike-item-metadata'>
@@ -22,11 +28,11 @@ var BikeGridItem = React.createClass({
   },
 
   _onBikeClear: function () {
-    this.props.onBikeClear(this.props.bike.name)
+    this.props.onBikeClear(this.props.bike.get('name'))
   },
 
   _onBikeClick: function () {
-    this.props.onBikeClick(this.props.bike.name)
+    this.props.onBikeClick(this.props.bike.get('name'))
   }
 
 })
