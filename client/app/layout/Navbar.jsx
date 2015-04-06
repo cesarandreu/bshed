@@ -1,21 +1,27 @@
-var React = require('react'),
+var React = require('react/addons'),
   IconButton = require('../../components/buttons/IconButton.jsx'),
-  ActionMixin = require('../../utils/mixins/ActionMixin'),
-  LayoutAction = require('../../actions/Layout'),
+  PureRenderMixin = React.addons.PureRenderMixin,
   {Link} = require('react-router')
 
 var Navbar = React.createClass({
-  mixins: [ActionMixin],
-  toggleMenu: function () {
-    this.executeAction(LayoutAction.sidebar.toggle)
+  mixins: [PureRenderMixin],
+
+  propTypes: {
+    navbar: React.PropTypes.object.isRequired,
+    toggleSidebar: React.PropTypes.func.isRequired
   },
 
   render: function () {
+    var {toggleSidebar, navbar} = this.props
+    navbar = navbar.toJS()
+
     return (
       <nav className='navbar'>
-        <IconButton className='navbar-menu-button' icon='md-menu' onClick={this.toggleMenu}/>
+        <IconButton className='navbar-menu-button' icon='md-menu' onClick={toggleSidebar}/>
         <div className='navbar-inner'>
-          <Link className='navbar-title' to='home'>Bikeshed it!</Link>
+          <Link className='navbar-title' to={navbar.title.to}>
+            {navbar.title.text}
+          </Link>
         </div>
       </nav>
     )
