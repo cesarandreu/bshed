@@ -1,42 +1,54 @@
-var {createStore} = require('fluxible/addons')
+var {createStore} = require('fluxible/addons'),
+  Immutable = require('immutable')
 
 var LayoutStore = createStore({
   storeName: 'LayoutStore',
   handlers: {
-    'NAVIGATE_SUCCESS': 'closeMenu',
-    'TOGGLE_LAYOUT_MENU': 'toggleMenu',
-    'OPEN_LAYOUT_MENU': 'openMenu',
-    'CLOSE_LAYOUT_MENU': 'closeMenu'
+    'NAVIGATE_SUCCESS': 'closeSidebar',
+    'TOGGLE_SIDEBAR': 'toggleSidebar',
+    'CLOSE_SIDEBAR': 'closeSidebar',
+    'OPEN_SIDEBAR': 'openSidebar'
   },
   initialize: function () {
-    this.openMenu = false
+    this.sidebar = Immutable.fromJS({
+      open: false
+    })
   },
-  toggleMenu: function () {
-    this.openMenu = !this.openMenu
-    this.emitChange()
-  },
-  openMenu: function () {
-    if (this.openMenu !== true) {
-      this.openMenu = true
+
+  setSidebar: function (name, value) {
+    var sidebar = this.sidebar.set(name, value)
+    if (this.sidebar !== sidebar) {
+      this.sidebar = sidebar
       this.emitChange()
     }
   },
-  closeMenu: function () {
-    if (this.openMenu !== false) {
-      this.openMenu = false
-      this.emitChange()
-    }
+
+  toggleSidebar: function () {
+    this.setSidebar('open', !this.sidebar.get('open'))
   },
+  openSidebar: function () {
+    this.setSidebar('open', true)
+  },
+  closeSidebar: function () {
+    this.setSidebar('open', false)
+  },
+
+  getSidebar: function () {
+    return this.sidebar.toJS()
+  },
+
   getState: function () {
     return {
-      openMenu: this.openMenu
+      sidebar: this.getSidebar()
     }
   },
+
   dehydrate: function () {
     return this.getState()
   },
+
   rehydrate: function (state) {
-    this.openMenu = state.openMenu
+    this.sidebar = Immutable.fromJS(state.sidebar)
   }
 })
 
