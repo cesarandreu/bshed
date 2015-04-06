@@ -12,6 +12,7 @@ var Sidebar = React.createClass({
   },
 
   render: function () {
+    var {sidebar, closeSidebar} = this.props
     var links = [{
       path: '/',
       text: 'Home'
@@ -23,11 +24,8 @@ var Sidebar = React.createClass({
       text: 'About'
     }]
 
-    var {sidebar, closeSidebar} = this.props
-
-    // cn('sidebar-container', {'is-open': this.state.openMenu})
     return (
-      <div className={cn('sidebar-container', sidebar.open ? 'open' : 'closed')}>
+      <div className={cn('sidebar-container', {'is-open': sidebar.open})}>
         <nav className='sidebar'>
           <div className='sidebar-section'>
             {links.map((link, idx) =>
