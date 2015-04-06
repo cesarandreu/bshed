@@ -12,10 +12,11 @@ var BikeshedBuilderForm = React.createClass({
 
   render: function () {
     var {form} = this.props
+    var {name} = form.toJS()
 
     return (
       <div className='bikeshed-builder-form'>
-        <TextField name='name' {...form.name} onChange={this._onChange}/>
+          <TextField {...name} onChange={this._onChange}/>
       </div>
     )
   },

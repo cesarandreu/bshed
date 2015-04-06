@@ -70,7 +70,7 @@ var BikeshedBuilderStore = createStore({
   },
 
   getForm: function () {
-    return this.form.toJS()
+    return this.form
   },
 
   getBikes: function () {
