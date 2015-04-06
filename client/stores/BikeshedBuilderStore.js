@@ -74,7 +74,7 @@ var BikeshedBuilderStore = createStore({
   },
 
   getBikes: function () {
-    return this.bikes.toArray().map(bike => bike.toObject())
+    return this.bikes
   },
 
   getPreview: function () {
