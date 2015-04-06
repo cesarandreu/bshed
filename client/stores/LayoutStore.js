@@ -3,7 +3,7 @@ var {createStore} = require('fluxible/addons')
 var LayoutStore = createStore({
   storeName: 'LayoutStore',
   handlers: {
-    'CHANGE_ROUTE_SUCCESS': 'closeMenu',
+    'NAVIGATE_SUCCESS': 'closeMenu',
     'TOGGLE_LAYOUT_MENU': 'toggleMenu',
     'OPEN_LAYOUT_MENU': 'openMenu',
     'CLOSE_LAYOUT_MENU': 'closeMenu'
