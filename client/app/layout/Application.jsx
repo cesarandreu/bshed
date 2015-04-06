@@ -1,35 +1,48 @@
-var React = require('react'),
+var React = require('react/addons'),
   {RouteHandler} = require('react-router'),
+  LayoutAction = require('../../actions/Layout'),
+  PureRenderMixin = React.addons.PureRenderMixin,
+  LayoutStore = require('../../stores/LayoutStore'),
   StoreMixin = require('../../utils/mixins/StoreMixin'),
-  ApplicationStore = require('../../stores/ApplicationStore')
+  ActionMixin = require('../../utils/mixins/ActionMixin')
 
 var Navbar = require('./Navbar.jsx'),
   Sidebar = require('./Sidebar.jsx')
 
 var Application = React.createClass({
-  mixins: [StoreMixin],
+  mixins: [ActionMixin, PureRenderMixin, StoreMixin],
+
   statics: {
-    storeListeners: [ApplicationStore]
+    storeListeners: [LayoutStore]
   },
 
-  getInitialState: function () {
-    return this.getStore(ApplicationStore).getState()
+  getInitialState () {
+    return this.getStore(LayoutStore).getState()
   },
 
-  onChange: function () {
-    this.setState(this.getStore(ApplicationStore).getState())
+  onChange () {
+    this.setState(this.getInitialState())
   },
 
-  render: function () {
+  render () {
+    var sidebarProps = {
+      sidebar: this.state.sidebar,
+      closeSidebar: this._closeSidebar
+    }
+
     return (
       <div className='layout'>
         <Navbar/>
-        <Sidebar/>
+        <Sidebar {...sidebarProps}/>
         <div className='content'>
           <RouteHandler/>
         </div>
       </div>
     )
+  },
+
+  _closeSidebar () {
+    this.executeAction(LayoutAction.sidebar.close)
   }
 })
 
