@@ -30,7 +30,7 @@ var BikePreview = React.createClass({
   },
 
   _closeOnClick: function (e) {
-    if (e.target.className.indexOf('bike-preview-content') > -1)
+    if (e.target.classList.contains('bike-preview-content'))
       this.props.closePreview()
   },
 
