@@ -10,6 +10,12 @@ var LayoutStore = createStore({
     'OPEN_SIDEBAR': 'openSidebar'
   },
   initialize: function () {
+    this.navbar = Immutable.fromJS({
+      title: {
+        to: 'home', text: 'Bikeshed it!'
+      }
+    })
+
     this.sidebar = Immutable.fromJS({
       open: false
     })
@@ -33,13 +39,18 @@ var LayoutStore = createStore({
     this.setSidebar('open', false)
   },
 
+  getNavbar: function () {
+    return this.navbar
+  },
+
   getSidebar: function () {
-    return this.sidebar.toJS()
+    return this.sidebar
   },
 
   getState: function () {
     return {
-      sidebar: this.getSidebar()
+      sidebar: this.sidebar,
+      navbar: this.navbar
     }
   },
 
@@ -49,6 +60,7 @@ var LayoutStore = createStore({
 
   rehydrate: function (state) {
     this.sidebar = Immutable.fromJS(state.sidebar)
+    this.navbar = Immutable.fromJS(state.navbar)
   }
 })
 
