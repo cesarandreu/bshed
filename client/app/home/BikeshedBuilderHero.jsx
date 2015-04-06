@@ -8,7 +8,7 @@ var BikeshedBuilderHero = React.createClass({
 
   render () {
     if (this.props.hasBikes)
-      return <div></div>
+      return null
 
     return (
       <div className='bikeshed-builder-hero'>
