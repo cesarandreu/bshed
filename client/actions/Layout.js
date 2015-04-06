@@ -1,11 +1,13 @@
 module.exports = {
-  toggleMenu: function (context) {
-    context.dispatch('TOGGLE_LAYOUT_MENU')
-  },
-  openMenu: function (context) {
-    context.dispatch('OPEN_LAYOUT_MENU')
-  },
-  closeMenu: function (context) {
-    context.dispatch('CLOSE_LAYOUT_MENU')
+  sidebar: {
+    toggle: function (context) {
+      context.dispatch('TOGGLE_SIDEBAR')
+    },
+    open: function (context) {
+      context.dispatch('OPEN_SIDEBAR')
+    },
+    close: function (context) {
+      context.dispatch('CLOSE_SIDEBAR')
+    }
   }
 }
