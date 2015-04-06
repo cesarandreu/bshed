@@ -4,7 +4,7 @@ var {createStore} = require('fluxible/addons'),
 var ApplicationStore = createStore({
   storeName: 'ApplicationStore',
   handlers: {
-    'CHANGE_ROUTE_SUCCESS': 'handleNavigate'
+    'NAVIGATE_SUCCESS': 'handleNavigate'
   },
   initialize: function () {
     this.state = Immutable.Map()
