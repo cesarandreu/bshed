@@ -1,31 +1,33 @@
-var React = require('react'),
-  classnames = require('classnames'),
-  BikeGridItem = require('./BikeGridItem.jsx')
+var React = require('react/addons'),
+  BikeGridItem = require('./BikeGridItem.jsx'),
+  PureRenderMixin = React.addons.PureRenderMixin,
+  BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx')
 
 var BikeGrid = React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     onBikeClear: React.PropTypes.func.isRequired,
     onBikeClick: React.PropTypes.func.isRequired,
-    bikes: React.PropTypes.array.isRequired
+    bikes: React.PropTypes.object.isRequired
   },
+
   render: function () {
-    var {bikes} = this.props
-    var className = classnames(
-      {'empty': !bikes.length},
-      'bike-grid-container',
-      'grid-container'
-    )
+    var {bikes, onBikeClick, onBikeClear} = this.props
+
+    if (!bikes.count())
+      return <BikeshedBuilderHero/>
 
     return (
-      <div className={className}>
+      <div className='bike-grid-container grid-container'>
         <div className='bike-grid-subheader grid-subheader'>
           Bikes
         </div>
         <div className='bike-grid grid'>
-          {bikes.map((bike, key) =>
+          {bikes.toArray().map((bike, key) =>
             <BikeGridItem
-              onBikeClear={this.props.onBikeClear}
-              onBikeClick={this.props.onBikeClick}
+              onBikeClear={onBikeClear}
+              onBikeClick={onBikeClick}
               bike={bike}
               key={key}/>
           )}
