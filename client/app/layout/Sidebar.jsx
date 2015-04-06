@@ -1,32 +1,14 @@
 var React = require('react/addons'),
-  ActionMixin = require('../../utils/mixins/ActionMixin'),
-  StoreMixin = require('../../utils/mixins/StoreMixin'),
-  LayoutStore = require('../../stores/LayoutStore'),
-  LayoutAction = require('../../actions/Layout'),
-  {Link} = require('react-router')
+  PureRenderMixin = React.addons.PureRenderMixin,
+  {Link} = require('react-router'),
+  cn = require('classnames')
 
 var Sidebar = React.createClass({
-  mixins: [ActionMixin, StoreMixin],
-  statics: {
-    storeListeners: [LayoutStore]
-  },
+  mixins: [PureRenderMixin],
 
-  getInitialState: function () {
-    return this.getStore(LayoutStore).getState()
-  },
-
-  onChange: function () {
-    var state = this.getStore(LayoutStore).getState()
-    this.setState(state)
-  },
-
-  _closeMenu: function () {
-    this.executeAction(LayoutAction.closeMenu)
-  },
-
-  _checkState: function (event) {
-    if (event.currentTarget.classList.contains('active'))
-      event.preventDefault()
+  propTypes: {
+    sidebar: React.PropTypes.object.isRequired,
+    closeSidebar: React.PropTypes.func.isRequired
   },
 
   render: function () {
@@ -39,18 +21,28 @@ var Sidebar = React.createClass({
     }, {
       path: '/about',
       text: 'About'
-    }].map((link, idx) =>
-      <Link key={idx} onClick={this._checkState} to={link.path}>{link.text}</Link>
-    )
+    }]
 
+    var {sidebar, closeSidebar} = this.props
+
+    // cn('sidebar-container', {'is-open': this.state.openMenu})
     return (
-      <div className={`sidebar-container ${this.state.openMenu ? 'open' : 'closed'}`}>
+      <div className={cn('sidebar-container', sidebar.open ? 'open' : 'closed')}>
         <nav className='sidebar'>
-          <div className='sidebar-section'>{links}</div>
+          <div className='sidebar-section'>
+            {links.map((link, idx) =>
+              <Link key={idx} onClick={this._checkState} to={link.path}>{link.text}</Link>
+            )}
+          </div>
         </nav>
-        <div className='sidebar-overlay' onClick={this._closeMenu}></div>
+        <div className='sidebar-overlay' onClick={closeSidebar}></div>
       </div>
     )
+  },
+
+  _checkState: function (e) {
+    if (e.currentTarget.classList.contains('active'))
+      e.preventDefault()
   }
 })
 
