@@ -15,8 +15,8 @@ var BikePreview = React.createClass({
       return null
 
     return (
-      <div className='bike-preview'>
-        <div className='bike-preview-content' onClick={this._closeOnClick}>
+      <div className='bike-preview-container'>
+        <div className='bike-preview' onClick={this._closeOnClick}>
           <IconButton
             onClick={this.props.closePreview}
             className='bike-preview-close'
@@ -29,7 +29,7 @@ var BikePreview = React.createClass({
   },
 
   _closeOnClick: function (e) {
-    if (e.target.classList.contains('bike-preview-content'))
+    if (e.target.classList.contains('bike-preview'))
       this.props.closePreview()
   },
 

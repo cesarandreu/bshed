@@ -151,14 +151,7 @@
 }
 
 // BikePreview
-.bike-preview {
-  z-index: @z-index-fullscreen-overlay;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0;
-
+.bike-preview-container {
   .bike-preview-overlay {
     z-index: @z-index-fullscreen-overlay - 1;
     background-color: @black;
@@ -170,12 +163,14 @@
     top: 0;
   }
 
-  .bike-preview-content {
-    position: relative;
-    z-index: inherit;
+  .bike-preview {
+    z-index: @z-index-fullscreen-overlay;
+    position: absolute;
     height: 100%;
     width: 100%;
     opacity: 1;
+    left: 0;
+    top: 0;
 
     .flexbox;
     .align-items(center);
