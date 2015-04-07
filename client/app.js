@@ -4,11 +4,7 @@ var RouterPlugin = require('./utils/plugins/router'),
   Fluxible = require('fluxible')
 
 var app = new Fluxible({
-  component: require('./app/Routes.jsx'),
-  componentActionHandler: function componentActionHandler (context, payload) {
-    if (payload.err)
-      setTimeout(() => { throw payload.err }, 0)
-  }
+  component: require('./app/Routes.jsx')
 })
 
 app.plug(RouterPlugin({
