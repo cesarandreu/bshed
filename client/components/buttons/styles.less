@@ -137,3 +137,31 @@
     opacity: 1;
   }
 }
+
+/* FlatButton */
+.flat-button {
+  margin: 0 4px;
+  padding: 6px 0;
+  font-size: 1rem;
+  min-width: 64px;
+  height: @flat-button-height;
+  color: @flat-button-text-color;
+
+  &:hover .flat-button-label, &:focus .flat-button-label {
+    background-color: @flat-button-hover-color;
+  }
+
+  &:active .flat-button-label {
+    background-color: @flat-button-active-color;
+  }
+
+  .flat-button-label {
+    font-weight: @flat-button-font-weight;
+    background-color: @flat-button-color;
+    text-transform: uppercase;
+    display: inline-block;
+    border-radius: 2px;
+    line-height: 36px;
+    padding: 0px 8px;
+  }
+}
