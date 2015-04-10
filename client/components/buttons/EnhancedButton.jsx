@@ -34,7 +34,8 @@ var EnhancedButton = React.createClass({
   },
 
   _onClick: function (e) {
-    if (this.props.onClick) this.props.onClick(e)
+    if (!this.props.disabled && this.props.onClick)
+      this.props.onClick(e)
   }
 })
 
