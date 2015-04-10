@@ -2,10 +2,16 @@
   border: 0;
   margin: 0;
   padding: 0;
+  cursor: pointer;
   background: none;
+  text-align: center;
 
   &:focus {
     outline: none;
+  }
+  &[disabled] {
+    cursor: default;
+    opacity: 0.3;
   }
 }
 
@@ -22,15 +28,10 @@
 
   &.link {
     display: inline-block;
-    cursor: pointer;
     text-decoration: none;
 
     &:hover {
       text-decoration: none;
-    }
-
-    &.disabled {
-      cursor: default;
     }
   }
 }
@@ -47,8 +48,6 @@
   height: @icon-size * 2;
   width: @icon-size * 2;
 
-  &.disabled {
-    color: lighten(@body-text-color, 75%);
   }
 }
 
