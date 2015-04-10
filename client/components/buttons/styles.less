@@ -48,6 +48,8 @@
   height: @icon-size * 2;
   width: @icon-size * 2;
 
+  .icon {
+    color: @white;
   }
 }
 
@@ -153,19 +155,18 @@
   font-size: 1rem;
   min-width: 64px;
   height: @flat-button-height;
-  color: @flat-button-text-color;
 
-  &:hover .flat-button-label, &:focus .flat-button-label {
-    background-color: @flat-button-hover-color;
-  }
-
-  &:active .flat-button-label {
-    background-color: @flat-button-active-color;
+  &:not([disabled]) {
+    &:hover .flat-button-label, &:focus .flat-button-label {
+      background-color: @flat-button-hover-color;
+    }
+    &:active .flat-button-label {
+      background-color: @flat-button-active-color;
+    }
   }
 
   .flat-button-label {
     font-weight: @flat-button-font-weight;
-    background-color: @flat-button-color;
     text-transform: uppercase;
     display: inline-block;
     border-radius: 2px;
