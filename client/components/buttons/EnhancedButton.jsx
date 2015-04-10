@@ -13,8 +13,10 @@ var EnhancedButton = React.createClass({
   },
 
   render: function () {
-    var {children, className, link, disabled, ...other} = this.props
-    className = classnames('base-button', 'enhanced-button', className, {disabled, link})
+    var {children, className, link, disabled, primary, secondary, ...other} = this.props
+    className = classnames('base-button', 'enhanced-button', className, {
+      disabled, link, primary, secondary
+    })
 
     var props = {
       ...other, disabled, className,
@@ -22,10 +24,10 @@ var EnhancedButton = React.createClass({
     }
 
     var enhancedButton
-    if (disabled && link) {
-      enhancedButton = <span {...other} className={className} disabled={disabled}>{children}</span>
-    } else if (link) {
-      enhancedButton = <a {...props}>{children}</a>
+    if (link) {
+      enhancedButton = disabled
+        ? <div {...props}>{children}</div>
+        : <a {...props}>{children}</a>
     } else {
       enhancedButton = <button {...props}>{children}</button>
     }
