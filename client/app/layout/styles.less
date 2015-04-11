@@ -137,12 +137,13 @@
 
   &::before {
     position: absolute;
+    top: @icon-size * 0.25;
+    left: @icon-size * 0.25;
     height: @icon-size * 1.5;
     width: @icon-size * 1.5;
-    transform: translate(@icon-size * -0.25, @icon-size * -0.25);
     background-color: @black;
     border-radius: 50%;
-    content: '';
+    content: ' ';
     opacity: 0;
   }
 
