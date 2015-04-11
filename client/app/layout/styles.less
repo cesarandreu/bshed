@@ -37,17 +37,19 @@
     position: fixed;
     background-color: @black;
     z-index: @z-index-sidebar - 1;
-    transition: opacity @sidebar-transition-duration ease-in-out;
+    transition: opacity @sidebar-transition-duration ease-in-out,
+                transform 0s linear @sidebar-transition-duration;
   }
 
   &.is-open {
     .sidebar {
-      transform: translateX(@sidebar-width * 1.5);
+      transform: translate3d(@sidebar-width * 1.5, 0, 0);
     }
 
     .sidebar-overlay {
       opacity: 0.4;
-      transform: translateX(100%);
+      transform: translate3d(100%, 0, 0);
+      transition: opacity @sidebar-transition-duration ease-in-out;
     }
   }
 }
