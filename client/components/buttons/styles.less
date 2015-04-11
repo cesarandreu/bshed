@@ -17,6 +17,8 @@
 
 /* EnhancedButton */
 .enhanced-button {
+  height: @button-height;
+  font-size: @button-font-size;
   background-color: transparent;
   color: @button-text-color;
   &.primary {
@@ -152,9 +154,7 @@
 .flat-button {
   margin: 0 4px;
   padding: 6px 0;
-  font-size: 1rem;
   min-width: 64px;
-  height: @flat-button-height;
 
   &:not([disabled]) {
     &:hover .flat-button-label,
