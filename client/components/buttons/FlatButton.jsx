@@ -10,7 +10,7 @@ var FlatButton = React.createClass({
     var {label, children, className, ...other} = this.props
 
     return (
-      <EnhancedButton {...other} className={cn(className, 'flat-button')}>
+      <EnhancedButton {...other} className={cn(className, 'flat-button', 'rectangle-button')}>
         {label ? <span className='button-label'>{label}</span> : children}
       </EnhancedButton>
     )
