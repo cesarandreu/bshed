@@ -36,6 +36,15 @@
       text-decoration: none;
     }
   }
+
+  .button-label {
+    font-weight: @button-font-weight;
+    text-transform: uppercase;
+    display: inline-block;
+    border-radius: 2px;
+    line-height: 36px;
+    padding: 0px 8px;
+  }
 }
 
 /* IconButton */
@@ -154,21 +163,13 @@
   min-width: 64px;
 
   &:not([disabled]) {
-    &:hover .flat-button-label,
-    &:focus .flat-button-label {
+    &:hover .button-label,
+    &:focus .button-label {
       background-color: @flat-button-hover-color;
     }
-    &:active .flat-button-label {
+    &:active .button-label {
       background-color: @flat-button-active-color;
     }
   }
 
-  .flat-button-label {
-    font-weight: @flat-button-font-weight;
-    text-transform: uppercase;
-    display: inline-block;
-    border-radius: 2px;
-    line-height: 36px;
-    padding: 0px 8px;
-  }
 }
