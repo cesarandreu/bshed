@@ -6,6 +6,11 @@ var cn = require('classnames'),
 var FlatButton = React.createClass({
   mixins: [PureRenderMixin],
 
+  propTypes: {
+    className: React.PropTypes.string,
+    label: React.PropTypes.string
+  },
+
   render: function () {
     var {label, children, className, ...other} = this.props
 
