@@ -162,13 +162,16 @@
   padding: 6px 0;
   min-width: 64px;
 
+  .button-label {
+    background-color: @flat-button-background-color;
+  }
   &:not([disabled]) {
     &:hover .button-label,
     &:focus .button-label {
-      background-color: @flat-button-hover-color;
+      background-color: @flat-button-hover-background-color;
     }
     &:active .button-label {
-      background-color: @flat-button-active-color;
+      background-color: @flat-button-active-background-color;
     }
   }
 
