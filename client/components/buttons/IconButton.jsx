@@ -12,6 +12,7 @@ var IconButton = React.createClass({
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string.isRequired
   },
+
   render: function () {
     var {icon, className, ...other} = this.props
     return (
