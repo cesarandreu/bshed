@@ -11,7 +11,6 @@
   }
   &[disabled] {
     cursor: default;
-    opacity: 0.3;
   }
 }
 
@@ -21,12 +20,6 @@
   font-size: @button-font-size;
   background-color: transparent;
   color: @button-text-color;
-  &.primary {
-    color: @button-primary-text-color;
-  }
-  &.secondary {
-    color: @button-secondary-text-color;
-  }
 
   &.link {
     display: inline-block;
@@ -158,13 +151,30 @@
 
 // Used with FlatButton and RaisedButton
 .rectangle-button {
-  margin: 0 4px;
+  min-width: @rectangle-button-min-width;
   padding: 6px 0;
-  min-width: 64px;
+  margin: 0 4px;
+  &[disabled] {
+    color: @rectangle-button-color-disabled;
+  }
 }
 
 /* FlatButton */
 .flat-button {
+  &[disabled] {
+    &.primary,
+    &.secondary {
+      opacity: 0.3;
+    }
+  }
+
+  &.primary {
+    color: @flat-button-primary-text-color;
+  }
+  &.secondary {
+    color: @flat-button-secondary-text-color;
+  }
+
   .button-label {
     background-color: @flat-button-background-color;
   }
