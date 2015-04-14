@@ -4,7 +4,14 @@ var cn = require('classnames'),
   PureRenderMixin = React.addons.PureRenderMixin
 
 var Dialog = React.createClass({
-  mixins: [PureRenderMixin, hotkey.Mixin('_handleHotkey')],
+  mixins: [
+    PureRenderMixin,
+    hotkey.Mixin('_handleHotkey')
+  ],
+
+  propTypes: {
+    onClose: React.PropTypes.func.isRequired
+  },
 
   render: function () {
     var {children, className, ...other} = this.props
