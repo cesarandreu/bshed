@@ -21,7 +21,7 @@ var Dialog = React.createClass({
   },
 
   _onClick: function (e) {
-    if (e.target.classList.contains('dialog-wrapper'))
+    if (e.target.classList.contains('dialog-container'))
       this.props.onClose()
   },
 
