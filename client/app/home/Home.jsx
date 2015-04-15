@@ -1,12 +1,10 @@
 var React = require('react/addons'),
   BikeGrid = require('./BikeGrid.jsx'),
-  BikePreview = require('./BikePreview.jsx'),
-  AddBikeButton = require('./AddBikeButton.jsx'),
   PureRenderMixin = React.addons.PureRenderMixin,
   StoreMixin = require('../../utils/mixins/StoreMixin'),
   ActionMixin = require('../../utils/mixins/ActionMixin'),
-  BikeshedBuilderForm = require('./BikeshedBuilderForm.jsx'),
-  BikeshedBuilderPanel = require('./BikeshedBuilderPanel.jsx'),
+  BikeshedBuilderButton = require('./BikeshedBuilderButton.jsx'),
+  BikeshedBuilderDialog = require('./BikeshedBuilderDialog.jsx'),
   BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
   BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 
@@ -25,25 +23,39 @@ var Home = React.createClass({
   },
 
   render () {
-    var {bikes, preview, form} = this.state
+    var {bikes, form, dialog} = this.state
+    var dialogProps = {
+      onFormChange: this._onFormChange,
+      closeDialog: this._closeDialog,
+      addFiles: this._addFiles,
+      dialog,
+      form
+    }
+
     return (
       <div className='bikeshed-builder'>
         <BikeGrid bikes={bikes} onBikeClick={this._onBikeClick} onBikeClear={this._onBikeClear}/>
-        <BikeshedBuilderPanel>
-          <AddBikeButton inputChange={this._inputChange}/>
-          <BikeshedBuilderForm form={form} onFormChange={this._onFormChange}/>
-        </BikeshedBuilderPanel>
-        <BikePreview preview={preview} closePreview={this._closePreview}/>
+
+        <BikeshedBuilderButton onClick={this._openDialog}/>
+        <BikeshedBuilderDialog {...dialogProps}/>
       </div>
     )
   },
 
-  _onFormChange (formField) {
-    this.executeAction(BikeshedBuilderAction.formChange, formField)
+  _addFiles (files) {
+    this.executeAction(BikeshedBuilderAction.addFiles, files)
   },
 
-  _inputChange (e) {
-    this.executeAction(BikeshedBuilderAction.addFiles, e.target.files)
+  _closeDialog () {
+    this.executeAction(BikeshedBuilderAction.closeDialog)
+  },
+
+  _openDialog () {
+    this.executeAction(BikeshedBuilderAction.openDialog)
+  },
+
+  _onFormChange (formField) {
+    this.executeAction(BikeshedBuilderAction.formChange, formField)
   },
 
   _closePreview () {
