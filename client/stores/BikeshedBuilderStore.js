@@ -4,6 +4,7 @@ var {createStore} = require('fluxible/addons'),
 var BikeshedBuilderStore = createStore({
   storeName: 'BikeshedBuilderStore',
   handlers: {
+    'OPEN_BIKESHED_BUILDER_DIALOG': 'openDialog',
     'ADD_BIKES_TO_BIKESHED_BUILDER': 'addBikes',
     'REMOVE_BIKE_FROM_BIKESHED_BUILDER': 'removeBike',
     'CLOSE_BIKE_PREVIEW': 'closeBikePreview',
@@ -12,6 +13,7 @@ var BikeshedBuilderStore = createStore({
   },
 
   initialize: function () {
+    this.dialog = Immutable.Map({isOpen: false})
     this.preview = Immutable.Map({bike: null})
     this.bikes = Immutable.OrderedMap()
     this.form = this.defaultForm()
@@ -28,6 +30,14 @@ var BikeshedBuilderStore = createStore({
   handleFormChange: function ({name, value}={}) {
     if (this.form.keys(name)) {
       this.form = this.form.updateIn([name, 'value'], () => value)
+      this.emitChange()
+    }
+  },
+
+  openDialog: function (isOpen) {
+    var dialog = this.dialog.set('isOpen', !!isOpen)
+    if (dialog !== this.dialog) {
+      this.dialog = dialog
       this.emitChange()
     }
   },
@@ -77,6 +87,10 @@ var BikeshedBuilderStore = createStore({
     return this.bikes
   },
 
+  getDialog: function () {
+    return this.dialog
+  },
+
   getPreview: function () {
     return this.preview
   },
@@ -85,6 +99,7 @@ var BikeshedBuilderStore = createStore({
     return {
       form: this.getForm(),
       bikes: this.getBikes(),
+      dialog: this.getDialog(),
       preview: this.getPreview()
     }
   },
@@ -93,10 +108,11 @@ var BikeshedBuilderStore = createStore({
     return this.getState()
   },
 
-  rehydrate: function (state) {
-    this.bikes = Immutable.fromJS(state.bikes).toOrderedMap()
-    this.preview = Immutable.fromJS(state.preview)
-    this.form = Immutable.fromJS(state.form)
+  rehydrate: function ({bikes, preview, dialog, form}={}) {
+    this.bikes = Immutable.fromJS(bikes).toOrderedMap()
+    this.preview = Immutable.fromJS(preview)
+    this.dialog = Immutable.fromJS(dialog)
+    this.form = Immutable.fromJS(form)
   }
 })
 

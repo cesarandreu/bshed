@@ -34,6 +34,14 @@ module.exports = {
     context.dispatch('CLOSE_BIKE_PREVIEW')
   },
 
+  openDialog: function (context) {
+    context.dispatch('OPEN_BIKESHED_BUILDER_DIALOG', true)
+  },
+
+  closeDialog: function (context) {
+    context.dispatch('OPEN_BIKESHED_BUILDER_DIALOG', false)
+  },
+
   formChange: function (context, payload) {
     context.dispatch('BIKESHED_BUILDER_FORM_CHANGE', payload)
   }
