@@ -44,6 +44,7 @@
     "babel-core": "^5.0.2",
     "babel-loader": "^5.0.0",
     "babel-runtime": "^5.0.2",
+    "browser-image-size": "^1.0.2",
     "classnames": "^1.1.4",
     "co": "^4.3.1",
     "co-wait": "0.0.0",
