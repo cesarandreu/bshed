@@ -1,4 +1,5 @@
 var co = require('co')
+var browserImageSize = require('browser-image-size')
 var BikeshedBuilderStore = require('../stores/BikeshedBuilderStore')
 
 module.exports = {
@@ -12,7 +13,7 @@ module.exports = {
     })
     .map(file => {
       var name = file.name
-      return imageSize(file).then(size => ({name, file, size}))
+      return browserImageSize(file).then(size => ({name, file, size}))
     })
 
     context.dispatch('ADD_BIKES_TO_BIKESHED_BUILDER', fileList)
@@ -37,20 +38,4 @@ module.exports = {
     context.dispatch('BIKESHED_BUILDER_FORM_CHANGE', payload)
   }
 
-}
-
-function imageSize (file) {
-  return new Promise((resolve, reject) => {
-    var img = document.createElement('img')
-    var url = URL.createObjectURL(file)
-    img.onload = function onload () {
-      URL.revokeObjectURL(url)
-      resolve({width: img.width, height: img.height})
-    }
-    img.onerror = function onerror (err) {
-      URL.revokeObjectURL(url)
-      reject(err)
-    }
-    img.src = url
-  })
 }
