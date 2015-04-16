@@ -1,7 +1,7 @@
 var React = require('react'),
   BikeshedList = require('./BikeshedList.jsx'),
-  StoreMixin = require('../../utils/mixins/StoreMixin'),
-  BikeshedListStore = require('../../stores/BikeshedListStore')
+  StoreMixin = require('../../../utils/mixins/StoreMixin'),
+  BikeshedListStore = require('../stores/BikeshedListStore')
 
 var BikeshedListContainer = React.createClass({
   mixins: [StoreMixin],

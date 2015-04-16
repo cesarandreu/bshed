@@ -5,7 +5,7 @@ var co = require('co'),
   hotkey = require('react-hotkey'),
   {FluxibleComponent} = require('fluxible/addons')
 
-var navigate = require('./actions/navigate'),
+var NavigateAction = require('./app/Application/actions/NavigateAction'),
   app = require('./app')
 
 // needed for onTouchTap
@@ -48,7 +48,7 @@ function routerAction (context) {
     if (!firstRender) {
       try {
         log('executing navigate action')
-        yield context.executeAction(navigate, state)
+        yield context.executeAction(NavigateAction, state)
       } catch (err) {
         console.error('Error executing navigate action', err)
         throw err

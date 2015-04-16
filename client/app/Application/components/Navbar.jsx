@@ -1,5 +1,5 @@
 var React = require('react/addons'),
-  IconButton = require('../../components/buttons/IconButton.jsx'),
+  IconButton = require('../../../components/buttons/IconButton.jsx'),
   PureRenderMixin = React.addons.PureRenderMixin,
   {Link} = require('react-router')
 

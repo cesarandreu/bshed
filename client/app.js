@@ -15,10 +15,15 @@ app.plug(FetchPlugin({
   fetch: typeof fetch === 'function' ? fetch : global.fetch
 }))
 
-app.registerStore(require('./stores/ApplicationStore.js'))
-app.registerStore(require('./stores/BikeshedListStore.js'))
-app.registerStore(require('./stores/BikeshedBuilderStore.js'))
-app.registerStore(require('./stores/LayoutStore.js'))
-app.registerStore(require('./stores/RequestStore.js'))
+// Application
+app.registerStore(require('./app/Application/stores/ApplicationStore'))
+app.registerStore(require('./app/Application/stores/LayoutStore'))
+app.registerStore(require('./app/Application/stores/RequestStore'))
+
+// Bikesheds
+app.registerStore(require('./app/Bikesheds/stores/BikeshedListStore'))
+
+// Home
+app.registerStore(require('./app/Home/stores/BikeshedBuilderStore'))
 
 module.exports = app

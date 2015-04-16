@@ -3,7 +3,7 @@ var React = require('react'),
   log = require('debug')('bshed:client:renderer'),
   {FluxibleComponent} = require('fluxible/addons')
 
-var navigate = require('../actions/navigate'),
+var NavigateAction = require('../app/Application/actions/NavigateAction'),
   Html = require('./Html.jsx'),
   app = require('../app')
 
@@ -20,7 +20,7 @@ function* renderer (options) {
 
   try {
     log('executing navigate action')
-    yield context.executeAction(navigate, state)
+    yield context.executeAction(NavigateAction, state)
   } catch (err) {
     console.error('Error executing navigate action', err)
     throw err

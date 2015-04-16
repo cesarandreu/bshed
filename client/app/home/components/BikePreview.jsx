@@ -1,7 +1,7 @@
 var React = require('react/addons'),
   hotkey = require('react-hotkey'),
   PureRenderMixin = React.addons.PureRenderMixin,
-  IconButton = require('../../components/buttons/IconButton.jsx')
+  IconButton = require('../../../components/buttons/IconButton.jsx')
 
 var BikePreview = React.createClass({
   mixins: [PureRenderMixin, hotkey.Mixin('_handleHotkey')],

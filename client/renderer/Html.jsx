@@ -1,6 +1,6 @@
 var React = require('react'),
   StoreMixin = require('../utils/mixins/StoreMixin'),
-  ApplicationStore = require('../stores/ApplicationStore')
+  ApplicationStore = require('../app/Application/stores/ApplicationStore')
 
 var Html = React.createClass({
   mixins: [StoreMixin],

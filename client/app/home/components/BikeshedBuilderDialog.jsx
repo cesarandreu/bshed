@@ -1,10 +1,10 @@
 var React = require('react/addons'),
   PureRenderMixin = React.addons.PureRenderMixin,
-  Dialog = require('../../components/dialog/Dialog.jsx'),
-  TextField = require('../../components/inputs/TextField.jsx'),
-  DialogPart = require('../../components/dialog/DialogPart.jsx'),
-  FlatButton = require('../../components/buttons/FlatButton.jsx'),
-  RaisedButton = require('../../components/buttons/RaisedButton.jsx')
+  Dialog = require('../../../components/dialog/Dialog.jsx'),
+  TextField = require('../../../components/inputs/TextField.jsx'),
+  DialogPart = require('../../../components/dialog/DialogPart.jsx'),
+  FlatButton = require('../../../components/buttons/FlatButton.jsx'),
+  RaisedButton = require('../../../components/buttons/RaisedButton.jsx')
 
 var BikeshedBuilderDialog = React.createClass({
   mixins: [PureRenderMixin],

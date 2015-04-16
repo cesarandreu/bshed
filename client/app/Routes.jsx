@@ -2,11 +2,11 @@ var React = require('react'),
   {Route, DefaultRoute, NotFoundRoute} = require('react-router')
 
 var Routes = (
-  <Route name='bshed' path='/' handler={require('./layout/Application.jsx')}>
-    <DefaultRoute name='home' handler={require('./home/Home.jsx')}/>
-    <Route name='about' handler={require('./about/About.jsx')}></Route>
-    {require('./bikesheds/routes.jsx')}
-    <NotFoundRoute handler={require('./layout/NotFound.jsx')}/>
+  <Route name='bshed' path='/' handler={require('./Application/components/Application.jsx')}>
+    <DefaultRoute name='home' handler={require('./Home/components/Home.jsx')}/>
+    <Route name='about' handler={require('./Application/components/About.jsx')}></Route>
+    {require('./Bikesheds/routes.jsx')}
+    <NotFoundRoute handler={require('./Application/components/NotFound.jsx')}/>
   </Route>
 )
 

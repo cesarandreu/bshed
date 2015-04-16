@@ -1,8 +1,8 @@
 var React = require('react'),
   {Route, DefaultRoute} = require('react-router'),
-  BikeshedBase = require('./BikeshedBase.jsx'),
-  BikeshedListContainer = require('./BikeshedListContainer.jsx'),
-  Bikeshed = require('./Bikeshed.jsx')
+  BikeshedBase = require('./components/BikeshedBase.jsx'),
+  BikeshedListContainer = require('./components/BikeshedListContainer.jsx'),
+  Bikeshed = require('./components/Bikeshed.jsx')
 
 module.exports = (
   <Route name='bikesheds' handler={BikeshedBase}>

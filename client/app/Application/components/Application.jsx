@@ -1,10 +1,10 @@
 var React = require('react/addons'),
   {RouteHandler} = require('react-router'),
-  LayoutAction = require('../../actions/Layout'),
+  LayoutActions = require('../actions/LayoutActions'),
   PureRenderMixin = React.addons.PureRenderMixin,
-  LayoutStore = require('../../stores/LayoutStore'),
-  StoreMixin = require('../../utils/mixins/StoreMixin'),
-  ActionMixin = require('../../utils/mixins/ActionMixin')
+  LayoutStore = require('../stores/LayoutStore'),
+  StoreMixin = require('../../../utils/mixins/StoreMixin'),
+  ActionMixin = require('../../../utils/mixins/ActionMixin')
 
 var Navbar = require('./Navbar.jsx'),
   Sidebar = require('./Sidebar.jsx')
@@ -46,11 +46,11 @@ var Application = React.createClass({
   },
 
   _toggleSidebar () {
-    this.executeAction(LayoutAction.sidebar.toggle)
+    this.executeAction(LayoutActions.sidebar.toggle)
   },
 
   _closeSidebar () {
-    this.executeAction(LayoutAction.sidebar.close)
+    this.executeAction(LayoutActions.sidebar.close)
   }
 })
 

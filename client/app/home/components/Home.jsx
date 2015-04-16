@@ -1,12 +1,12 @@
 var React = require('react/addons'),
   BikeGrid = require('./BikeGrid.jsx'),
   PureRenderMixin = React.addons.PureRenderMixin,
-  StoreMixin = require('../../utils/mixins/StoreMixin'),
-  ActionMixin = require('../../utils/mixins/ActionMixin'),
+  StoreMixin = require('../../../utils/mixins/StoreMixin'),
+  ActionMixin = require('../../../utils/mixins/ActionMixin'),
   BikeshedBuilderButton = require('./BikeshedBuilderButton.jsx'),
   BikeshedBuilderDialog = require('./BikeshedBuilderDialog.jsx'),
-  BikeshedBuilderAction = require('../../actions/BikeshedBuilder'),
-  BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
+  BikeshedBuilderStore = require('../stores/BikeshedBuilderStore'),
+  BikeshedBuilderActions = require('../actions/BikeshedBuilderActions')
 
 var Home = React.createClass({
   mixins: [ActionMixin, PureRenderMixin, StoreMixin],
@@ -43,31 +43,31 @@ var Home = React.createClass({
   },
 
   _addFiles (files) {
-    this.executeAction(BikeshedBuilderAction.addFiles, files)
+    this.executeAction(BikeshedBuilderActions.addFiles, files)
   },
 
   _closeDialog () {
-    this.executeAction(BikeshedBuilderAction.closeDialog)
+    this.executeAction(BikeshedBuilderActions.closeDialog)
   },
 
   _openDialog () {
-    this.executeAction(BikeshedBuilderAction.openDialog)
+    this.executeAction(BikeshedBuilderActions.openDialog)
   },
 
   _onFormChange (formField) {
-    this.executeAction(BikeshedBuilderAction.formChange, formField)
+    this.executeAction(BikeshedBuilderActions.formChange, formField)
   },
 
   _closePreview () {
-    this.executeAction(BikeshedBuilderAction.closePreview)
+    this.executeAction(BikeshedBuilderActions.closePreview)
   },
 
   _onBikeClick (bikeName) {
-    this.executeAction(BikeshedBuilderAction.openPreview, bikeName)
+    this.executeAction(BikeshedBuilderActions.openPreview, bikeName)
   },
 
   _onBikeClear (bikeName) {
-    this.executeAction(BikeshedBuilderAction.removeBike, bikeName)
+    this.executeAction(BikeshedBuilderActions.removeBike, bikeName)
   }
 
 })

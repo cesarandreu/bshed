@@ -1,9 +1,9 @@
 var co = require('co')
-var browserImageSize = require('browser-image-size')
 var BikeshedBuilderStore = require('../stores/BikeshedBuilderStore')
 
 module.exports = {
   addFiles: co.wrap(function* addFiles (context, payload) {
+    var browserImageSize = require('browser-image-size')
     var fileList = yield Array.from(payload)
     .filter(file => {
       var isValid = ['image/png', 'image/jpeg'].indexOf(file.type) > -1
