@@ -1,4 +1,4 @@
-var {testdom, cleanup} = require('../../../test/helper'),
+var {testdom, cleanup} = require('../../../utils/test-helper'),
   ActionButton = require('../ActionButton.jsx'),
   React = require('react/addons'),
   {assert} = require('chai'),

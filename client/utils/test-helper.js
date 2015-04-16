@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = {testdom, cleanup}
 
 function testdom (markup='') {

@@ -1,4 +1,4 @@
-var {testdom, cleanup} = require('../../../test/helper'),
+var {testdom, cleanup} = require('../../../utils/test-helper'),
   EnhancedButton = require('../EnhancedButton.jsx'),
   React = require('react/addons'),
   {expect} = require('chai'),
