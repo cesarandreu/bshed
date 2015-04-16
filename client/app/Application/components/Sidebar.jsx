@@ -13,8 +13,6 @@ var Sidebar = React.createClass({
 
   render: function () {
     var {sidebar, closeSidebar} = this.props
-    sidebar = sidebar.toJS()
-
     var links = [{
       path: '/',
       text: 'Home'
@@ -27,7 +25,7 @@ var Sidebar = React.createClass({
     }]
 
     return (
-      <div className={cn('sidebar-container', {'is-open': sidebar.open})}>
+      <div className={cn('sidebar-container', {'is-open': sidebar.get('open')})}>
         <nav className='sidebar'>
           <div className='sidebar-section'>
             {links.map((link, idx) =>
