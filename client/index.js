@@ -13,9 +13,11 @@ var navigate = require('./actions/navigate'),
 // require('react-tap-event-plugin')()
 
 // assets
+require('./styles/imports.less')
 require('./styles/base.less')
 require('./components/styles.less')
-require('./app/styles.less')
+require('./app/Application/styles.less')
+require('./app/Home/styles.less')
 
 var mountNode = document.getElementById('bshed') // render node
 
