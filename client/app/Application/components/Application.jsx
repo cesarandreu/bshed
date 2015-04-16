@@ -1,36 +1,24 @@
 var React = require('react/addons'),
   {RouteHandler} = require('react-router'),
-  LayoutActions = require('../actions/LayoutActions'),
   PureRenderMixin = React.addons.PureRenderMixin,
   LayoutStore = require('../stores/LayoutStore'),
-  StoreMixin = require('../../../utils/mixins/StoreMixin'),
+  {connectToStores} = require('fluxible/addons'),
+  LayoutActions = require('../actions/LayoutActions'),
   ActionMixin = require('../../../utils/mixins/ActionMixin')
 
 var Navbar = require('./Navbar.jsx'),
   Sidebar = require('./Sidebar.jsx')
 
 var Application = React.createClass({
-  mixins: [ActionMixin, PureRenderMixin, StoreMixin],
-
-  statics: {
-    storeListeners: [LayoutStore]
-  },
-
-  getInitialState () {
-    return this.getStore(LayoutStore).getState()
-  },
-
-  onChange () {
-    this.setState(this.getInitialState())
-  },
+  mixins: [ActionMixin, PureRenderMixin],
 
   render () {
     var sidebarProps = {
-      sidebar: this.state.sidebar,
+      sidebar: this.props.sidebar,
       closeSidebar: this._closeSidebar
     }
     var navbarProps = {
-      navbar: this.state.navbar,
+      navbar: this.props.navbar,
       toggleSidebar: this._toggleSidebar
     }
 
@@ -52,6 +40,10 @@ var Application = React.createClass({
   _closeSidebar () {
     this.executeAction(LayoutActions.sidebar.close)
   }
+})
+
+Application = connectToStores(Application, [LayoutStore], stores => {
+  return stores.LayoutStore.getState()
 })
 
 module.exports = Application
