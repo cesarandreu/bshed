@@ -1,10 +1,11 @@
 var React = require('react/addons'),
   PureRenderMixin = React.addons.PureRenderMixin,
   {Link} = require('react-router'),
+  hotkey = require('react-hotkey'),
   cn = require('classnames')
 
 var Sidebar = React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin, hotkey.Mixin('_handleHotkey')],
 
   propTypes: {
     sidebar: React.PropTypes.object.isRequired,
@@ -41,6 +42,11 @@ var Sidebar = React.createClass({
   _checkState: function (e) {
     if (e.currentTarget.classList.contains('active'))
       e.preventDefault()
+  },
+
+  _handleHotkey: function (e) {
+    if (e.key === 'Escape')
+      this.props.closeSidebar()
   }
 })
 
