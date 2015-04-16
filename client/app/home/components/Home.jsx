@@ -1,7 +1,7 @@
 var React = require('react/addons'),
   BikeGrid = require('./BikeGrid.jsx'),
   PureRenderMixin = React.addons.PureRenderMixin,
-  StoreMixin = require('../../../utils/mixins/StoreMixin'),
+  {connectToStores} = require('fluxible/addons'),
   ActionMixin = require('../../../utils/mixins/ActionMixin'),
   BikeshedBuilderButton = require('./BikeshedBuilderButton.jsx'),
   BikeshedBuilderDialog = require('./BikeshedBuilderDialog.jsx'),
@@ -9,21 +9,10 @@ var React = require('react/addons'),
   BikeshedBuilderActions = require('../actions/BikeshedBuilderActions')
 
 var Home = React.createClass({
-  mixins: [ActionMixin, PureRenderMixin, StoreMixin],
-  statics: {
-    storeListeners: [BikeshedBuilderStore]
-  },
-
-  getInitialState () {
-    return this.getStore(BikeshedBuilderStore).getState()
-  },
-
-  onChange () {
-    this.setState(this.getInitialState())
-  },
+  mixins: [ActionMixin, PureRenderMixin],
 
   render () {
-    var {bikes, form, dialog} = this.state
+    var {bikes, form, dialog} = this.props
     var dialogProps = {
       onFormChange: this._onFormChange,
       closeDialog: this._closeDialog,
@@ -69,7 +58,10 @@ var Home = React.createClass({
   _onBikeClear (bikeName) {
     this.executeAction(BikeshedBuilderActions.removeBike, bikeName)
   }
+})
 
+Home = connectToStores(Home, [BikeshedBuilderStore], stores => {
+  return stores.BikeshedBuilderStore.getState()
 })
 
 module.exports = Home
