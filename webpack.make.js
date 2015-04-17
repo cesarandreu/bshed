@@ -1,7 +1,7 @@
-var fs = require('fs'),
-  mkdirp = require('mkdirp'),
-  webpack = require('webpack'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin')
+var fs = require('fs')
+var mkdirp = require('mkdirp')
+var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = function buildWebpackConfig (options) {
   options = options || {}
