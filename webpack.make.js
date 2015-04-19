@@ -23,8 +23,8 @@ module.exports = function buildWebpackConfig (options) {
       path: outputPath,
       pathinfo: !BUILD,
       publicPath: publicPath,
-      filename: '[name].[hash].js',
-      chunkFilename: '[id].[hash].js'
+      filename: BUILD ? '[name].[hash].js' : '[name].bundle.js',
+      chunkFilename: BUILD ? '[id].[hash].js' : '[id].bundle.js'
     },
 
     target: 'web',
