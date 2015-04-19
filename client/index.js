@@ -5,7 +5,7 @@ var co = require('co'),
   hotkey = require('react-hotkey'),
   {FluxibleComponent} = require('fluxible/addons')
 
-var NavigateAction = require('./app/Application/actions/NavigateAction'),
+var NavigateAction = require('./app/application/actions/NavigateAction'),
   app = require('./app')
 
 // needed for onTouchTap
@@ -16,8 +16,8 @@ var NavigateAction = require('./app/Application/actions/NavigateAction'),
 require('./styles/imports.less')
 require('./styles/base.less')
 require('./components/styles.less')
-require('./app/Application/styles.less')
-require('./app/Home/styles.less')
+require('./app/application/styles.less')
+require('./app/home/styles.less')
 
 var mountNode = document.getElementById('bshed') // render node
 
