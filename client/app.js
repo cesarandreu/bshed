@@ -1,7 +1,7 @@
-var RouterPlugin = require('./utils/plugins/router'),
-  FetchPlugin = require('./utils/plugins/fetch'),
-  fetch = require('isomorphic-fetch'),
-  Fluxible = require('fluxible')
+var RouterPlugin = require('./utils/plugins/RouterPlugin')
+var FetchPlugin = require('./utils/plugins/FetchPlugin')
+var fetch = require('isomorphic-fetch')
+var Fluxible = require('fluxible')
 
 var app = new Fluxible({
   component: require('./app/routes.jsx')
