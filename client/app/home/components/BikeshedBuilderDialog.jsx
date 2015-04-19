@@ -1,5 +1,7 @@
 var React = require('react/addons'),
+  BikeItem = require('./BikeItem.jsx'),
   PureRenderMixin = React.addons.PureRenderMixin,
+  Grid = require('../../../components/grid/Grid.jsx'),
   Dialog = require('../../../components/dialog/Dialog.jsx'),
   TextField = require('../../../components/inputs/TextField.jsx'),
   DialogPart = require('../../../components/dialog/DialogPart.jsx'),
@@ -11,14 +13,16 @@ var BikeshedBuilderDialog = React.createClass({
 
   propTypes: {
     form: React.PropTypes.object.isRequired,
+    bikes: React.PropTypes.object.isRequired,
     dialog: React.PropTypes.object.isRequired,
     addFiles: React.PropTypes.func.isRequired,
+    onBikeClear: React.PropTypes.func.isRequired,
     closeDialog: React.PropTypes.func.isRequired,
     onFormChange: React.PropTypes.func.isRequired
   },
 
   render () {
-    var {form, dialog, closeDialog} = this.props
+    var {form, bikes, dialog, closeDialog, onBikeClear} = this.props
     var fileInputProps = {
       type: 'file',
       multiple: true,
@@ -37,6 +41,14 @@ var BikeshedBuilderDialog = React.createClass({
           Build your bikeshed
         </DialogPart>
         <DialogPart type='body'>
+          <Grid>
+            {bikes.map((bike, key) =>
+              <BikeItem
+                onBikeClear={onBikeClear}
+                bike={bike}
+                key={key}/>
+            )}
+          </Grid>
           <RaisedButton label='add bikes' secondary={true} onClick={this._clickFileInput}/>
           <TextField {...form.get('name').toJS()} onChange={this._inputChange}/>
         </DialogPart>
