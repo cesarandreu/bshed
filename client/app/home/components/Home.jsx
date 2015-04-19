@@ -15,9 +15,11 @@ var Home = React.createClass({
     var {bikes, form, dialog} = this.props
     var dialogProps = {
       onFormChange: this._onFormChange,
+      onBikeClear: this._onBikeClear,
       closeDialog: this._closeDialog,
       addFiles: this._addFiles,
       dialog,
+      bikes,
       form
     }
 
