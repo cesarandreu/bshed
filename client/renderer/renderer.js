@@ -3,7 +3,7 @@ var React = require('react'),
   log = require('debug')('bshed:client:renderer'),
   {FluxibleComponent} = require('fluxible/addons')
 
-var NavigateAction = require('../app/Application/actions/NavigateAction'),
+var NavigateAction = require('../app/application/actions/NavigateAction'),
   Html = require('./Html.jsx'),
   app = require('../app')
 
