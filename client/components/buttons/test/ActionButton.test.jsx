@@ -1,5 +1,5 @@
 var {testdom, cleanup} = require('../../../utils/test-helper'),
-  ActionButton = require('../ActionButton.jsx'),
+  ActionButton = require('../ActionButton'),
   React = require('react/addons'),
   {assert} = require('chai'),
   {TestUtils} = React.addons,

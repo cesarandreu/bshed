@@ -1,5 +1,5 @@
 var {testdom, cleanup} = require('../../../utils/test-helper'),
-  EnhancedButton = require('../EnhancedButton.jsx'),
+  EnhancedButton = require('../EnhancedButton'),
   React = require('react/addons'),
   {expect} = require('chai'),
   {TestUtils} = React.addons,

@@ -4,7 +4,7 @@ var React = require('react'),
   {FluxibleComponent} = require('fluxible/addons')
 
 var NavigateAction = require('../app/application/actions/NavigateAction'),
-  Html = require('./Html.jsx'),
+  Html = require('./Html'),
   app = require('../app')
 
 module.exports = renderer

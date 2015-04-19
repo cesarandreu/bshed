@@ -1,6 +1,6 @@
 var React = require('react/addons'),
   classnames = require('classnames'),
-  ActionButton = require('./ActionButton.jsx'),
+  ActionButton = require('./ActionButton'),
   PureRenderMixin = React.addons.PureRenderMixin
 
 // TODO: allow setting label position, currently sets position to the left

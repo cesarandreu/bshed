@@ -1,6 +1,6 @@
 var React = require('react/addons'),
   classnames = require('classnames'),
-  IconButton = require('./IconButton.jsx'),
+  IconButton = require('./IconButton'),
   PureRenderMixin = React.addons.PureRenderMixin
 
 var ActionButton = React.createClass({

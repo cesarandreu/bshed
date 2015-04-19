@@ -1,7 +1,7 @@
 var React = require('react/addons'),
   classnames = require('classnames'),
-  Icon = require('../general/Icon.jsx'),
-  EnhancedButton = require('./EnhancedButton.jsx'),
+  Icon = require('../general/Icon'),
+  EnhancedButton = require('./EnhancedButton'),
   PureRenderMixin = React.addons.PureRenderMixin
 
 var IconButton = React.createClass({
