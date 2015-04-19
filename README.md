@@ -183,3 +183,6 @@ Initially I didn't want users, but having users makes it really easy to apply co
 4. open Bikeshed
 
 
+## Notes
+
+* Avoid folders with uppercase characters because it breaks webpack's file watcher
