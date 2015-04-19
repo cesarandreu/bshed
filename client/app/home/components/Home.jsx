@@ -1,5 +1,4 @@
 var React = require('react/addons'),
-  BikeGrid = require('./BikeGrid.jsx'),
   PureRenderMixin = React.addons.PureRenderMixin,
   {connectToStores} = require('fluxible/addons'),
   ActionMixin = require('../../../utils/mixins/ActionMixin'),
@@ -22,11 +21,8 @@ var Home = React.createClass({
       bikes,
       form
     }
-
     return (
       <div className='bikeshed-builder'>
-        <BikeGrid bikes={bikes} onBikeClick={this._onBikeClick} onBikeClear={this._onBikeClear}/>
-
         <BikeshedBuilderButton onClick={this._openDialog}/>
         <BikeshedBuilderDialog {...dialogProps}/>
       </div>
