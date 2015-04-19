@@ -1,57 +1,22 @@
-var React = require('react'),
-  classnames = require('classnames')
+var cn = require('classnames'),
+  React = require('react/addons'),
+  PureRenderMixin = React.addons.PureRenderMixin
 
 var Grid = React.createClass({
-  getInitialState: function () {
-    return {
-      dragging: false
-    }
+  mixin: [PureRenderMixin],
+
+  propTypes: {
+    className: React.PropTypes.string
   },
 
   render: function () {
+    var {children, className, ...props} = this.props
     return (
-      <div className={classnames('grid', {dragging: this.state.dragging}, this.props.className)}>
-        {this.props.children}
+      <div className={cn('grid', className)} {...props}>
+        {children}
       </div>
     )
-  },
-
-  onDragEnter: function (e) {
-    console.log('e', e)
-    this.setState({dragging: true})
-    // e.stopPropagation()
-    e.preventDefault()
-  },
-
-  onDragOver: function (e) {
-
-    this.setState({dragging: true})
-    // e.stopPropagation()
-    e.preventDefault()
-  },
-
-  onDragEnd: function (e) {
-    console.log('onDragEnd')
-    this.setState({dragging: false})
-    // e.stopPropagation()
-    e.preventDefault()
-  },
-
-  onDragLeave: function (e) {
-    this.setState({dragging: false})
-    // e.stopPropagation()
-    e.preventDefault()
-  },
-
-  onDrop: function (e) {
-    this.setState({dragging: false})
-    // e.stopPropagation()
-    e.preventDefault()
-    // this.executeAction(BikeshedBuilderAction.addFiles, e.dataTransfer.files)
   }
-
-
-
 })
 
 module.exports = Grid
