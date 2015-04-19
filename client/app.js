@@ -4,7 +4,7 @@ var fetch = require('isomorphic-fetch')
 var Fluxible = require('fluxible')
 
 var app = new Fluxible({
-  component: require('./app/routes.jsx')
+  component: require('./app/routes')
 })
 
 app.plug(RouterPlugin({

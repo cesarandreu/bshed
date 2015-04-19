@@ -6,8 +6,8 @@ var React = require('react/addons'),
   LayoutActions = require('../actions/LayoutActions'),
   ActionMixin = require('../../../utils/mixins/ActionMixin')
 
-var Navbar = require('./Navbar.jsx'),
-  Sidebar = require('./Sidebar.jsx')
+var Navbar = require('./Navbar'),
+  Sidebar = require('./Sidebar')
 
 var Application = React.createClass({
   mixins: [ActionMixin, PureRenderMixin],

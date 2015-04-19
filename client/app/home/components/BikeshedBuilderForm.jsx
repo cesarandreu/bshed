@@ -1,6 +1,6 @@
 var React = require('react/addons'),
   {PureRenderMixin} = React.addons.PureRenderMixin,
-  TextField = require('../../../components/inputs/TextField.jsx')
+  TextField = require('../../../components/inputs/TextField')
 
 var BikeshedBuilderForm = React.createClass({
   mixins: [PureRenderMixin],

@@ -2,8 +2,8 @@ var React = require('react/addons'),
   PureRenderMixin = React.addons.PureRenderMixin,
   {connectToStores} = require('fluxible/addons'),
   ActionMixin = require('../../../utils/mixins/ActionMixin'),
-  BikeshedBuilderButton = require('./BikeshedBuilderButton.jsx'),
-  BikeshedBuilderDialog = require('./BikeshedBuilderDialog.jsx'),
+  BikeshedBuilderButton = require('./BikeshedBuilderButton'),
+  BikeshedBuilderDialog = require('./BikeshedBuilderDialog'),
   BikeshedBuilderStore = require('../stores/BikeshedBuilderStore'),
   BikeshedBuilderActions = require('../actions/BikeshedBuilderActions')
 

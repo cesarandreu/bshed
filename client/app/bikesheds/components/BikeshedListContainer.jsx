@@ -1,5 +1,5 @@
 var React = require('react'),
-  BikeshedList = require('./BikeshedList.jsx'),
+  BikeshedList = require('./BikeshedList'),
   StoreMixin = require('../../../utils/mixins/StoreMixin'),
   BikeshedListStore = require('../stores/BikeshedListStore')
 

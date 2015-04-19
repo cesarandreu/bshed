@@ -1,6 +1,6 @@
 var React = require('react/addons'),
   PureRenderMixin = React.addons.PureRenderMixin,
-  Icon = require('../../../components/general/Icon.jsx')
+  Icon = require('../../../components/general/Icon')
 
 var BikeshedBuilderHero = React.createClass({
   mixins: [PureRenderMixin],

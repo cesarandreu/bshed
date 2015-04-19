@@ -1,6 +1,6 @@
 var React = require('react/addons'),
   PureRenderMixin = React.addons.PureRenderMixin,
-  IconButton = require('../../../components/buttons/IconButton.jsx')
+  IconButton = require('../../../components/buttons/IconButton')
 
 var BikeItem = React.createClass({
   mixins: [PureRenderMixin],

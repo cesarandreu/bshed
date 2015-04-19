@@ -1,7 +1,7 @@
 var React = require('react/addons'),
-  BikeGridItem = require('./BikeGridItem.jsx'),
+  BikeGridItem = require('./BikeGridItem'),
   PureRenderMixin = React.addons.PureRenderMixin,
-  BikeshedBuilderHero = require('./BikeshedBuilderHero.jsx')
+  BikeshedBuilderHero = require('./BikeshedBuilderHero')
 
 var BikeGrid = React.createClass({
   mixins: [PureRenderMixin],
