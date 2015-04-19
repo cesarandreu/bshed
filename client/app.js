@@ -16,14 +16,14 @@ app.plug(FetchPlugin({
 }))
 
 // Application
-app.registerStore(require('./app/application/stores/ApplicationStore'))
-app.registerStore(require('./app/application/stores/LayoutStore'))
-app.registerStore(require('./app/application/stores/RequestStore'))
+app.registerStore(require('./app/Application/stores/ApplicationStore'))
+app.registerStore(require('./app/Application/stores/LayoutStore'))
+app.registerStore(require('./app/Application/stores/RequestStore'))
 
 // Bikesheds
-app.registerStore(require('./app/bikesheds/stores/BikeshedListStore'))
+app.registerStore(require('./app/Bikesheds/stores/BikeshedListStore'))
 
 // Home
-app.registerStore(require('./app/home/stores/BikeshedBuilderStore'))
+app.registerStore(require('./app/Home/stores/BikeshedBuilderStore'))
 
 module.exports = app
