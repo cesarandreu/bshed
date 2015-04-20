@@ -47,7 +47,7 @@ var BikeshedBuilderDialog = React.createClass({
                 onBikeClear={onBikeClear}
                 bike={bike}
                 key={key}/>
-            )}
+            ).toArray()}
           </Grid>
           <RaisedButton label='add bikes' secondary={true} onClick={this._clickFileInput}/>
           <TextField {...form.get('name').toJS()} onChange={this._inputChange}/>
