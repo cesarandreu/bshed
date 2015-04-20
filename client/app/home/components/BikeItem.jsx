@@ -14,7 +14,6 @@ var BikeItem = React.createClass({
 
   render: function () {
     var {bike} = this.props
-
     var {width, height} = bike.get('size')
     var imageClass = cn('bike-item-image', {
       small: width < BIKE_ITEM_SIZE || height < BIKE_ITEM_SIZE,
