@@ -15,7 +15,7 @@ var BikeGridItem = React.createClass({
     var bike = this.props.bike.toObject()
 
     return (
-      <div className='bike-item'>
+      <div className='bike-grid-item'>
         <div className='bike-item-metadata'>
           <div className='bike-item-name' title={bike.name}>{bike.name}</div>
           <IconButton className='bike-item-clear' icon='md-clear' onClick={this._onBikeClear}/>
