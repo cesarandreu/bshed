@@ -1,5 +1,5 @@
-var React = require('react'),
-  LabeledActionButton = require('../../../components/buttons/LabeledActionButton')
+var React = require('react')
+var LabeledActionButton = require('../../../components/buttons/LabeledActionButton')
 
 var AddBikeButton = React.createClass({
   propTypes: {
