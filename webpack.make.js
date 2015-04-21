@@ -65,13 +65,15 @@ module.exports = function buildWebpackConfig (options) {
   config.module.loaders.push({
     test: /\.js$/,
     loader: babelLoader,
-    exclude: /.*node_modules.*/
+    exclude: /node_modules/
+    // exclude: /.*node_modules.*/
   })
 
   config.module.loaders.push({
     test: /\.jsx$/,
     loader: (BUILD ? '' : 'react-hot!') + babelLoader,
-    exclude: /.*node_modules.*((?!\.jsx).{4}$)/
+    exclude: /node_modules/
+    // exclude: /.*node_modules.*((?!\.jsx).{4}$)/
   })
 
   var lessLoader = 'css?sourceMap!autoprefixer!less?sourceMap'
