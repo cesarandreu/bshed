@@ -45,14 +45,6 @@ var Home = React.createClass({
     this.executeAction(BikeshedBuilderActions.formChange, formField)
   },
 
-  _closePreview () {
-    this.executeAction(BikeshedBuilderActions.closePreview)
-  },
-
-  _onBikeClick (bikeName) {
-    this.executeAction(BikeshedBuilderActions.openPreview, bikeName)
-  },
-
   _onBikeClear (bikeName) {
     this.executeAction(BikeshedBuilderActions.removeBike, bikeName)
   }
