@@ -34,8 +34,10 @@ var BikePreview = React.createClass({
   },
 
   _handleHotkey: function (e) {
-    if (e.key === 'Escape')
+    if (e.key === 'Escape') {
       this.props.closePreview()
+      e.stopPropagation()
+    }
   }
 
 })
