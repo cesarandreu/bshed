@@ -20,11 +20,10 @@ var TextField = React.createClass({
 
   render: function () {
     var {name, errorText, label, value, onChange, className} = this.props
-    var wrapperClassNames = cn('text-field', {
+    var wrapperClassNames = cn('text-field', className, {
       'has-focus': this.state.focused,
       'has-error': !!errorText,
-      'has-value': !!value,
-      className
+      'has-value': !!value
     })
     var inputProps = {
       name, value, onChange,
