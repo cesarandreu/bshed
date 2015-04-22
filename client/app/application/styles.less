@@ -1,6 +1,6 @@
 @import "../../styles/styles.less";
 
-/* Application */
+// Application
 .layout {
   line-height: 1.5;
   overflow: auto;
@@ -13,11 +13,10 @@
   height: 100%;
 }
 
-/* Sidebar */
-@sidebar-transition-duration: 0.20s;
-
-// sidebar and sidebar-overlay positioning and size
+// Sidebar
 .sidebar-container {
+  @sidebar-transition-duration: 0.20s;
+
   .sidebar {
     position: fixed;
     overflow-x: hidden;
@@ -96,7 +95,7 @@
   }
 }
 
-/* Navbar */
+// Navbar
 .navbar {
   .flexbox;
   .flex-direction(row);
