@@ -198,6 +198,31 @@
   }
 }
 
+// BikeItemPlaceholder
+.bike-item-placeholder {
+  border: dashed 2px @border-color;
+
+  .flexbox;
+  .flex-direction(column);
+  .align-items(center);
+  .justify-content(center);
+
+  .bike-item-placeholder-icon {
+    margin: auto;
+
+    .icon {
+      color: @border-color;
+      font-size: @display-3-font-size;
+    }
+  }
+
+  .bike-item-placeholder-text {
+    color: @secondary-text-color;
+    font-size: @button-font-size;
+    padding: 0 16px 8px;
+  }
+}
+
 // BikeshedBuilderPanel
 .bikeshed-builder-panel-container {
   // Container is needed to add padding at the bottom
