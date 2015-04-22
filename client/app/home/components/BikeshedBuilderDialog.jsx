@@ -31,6 +31,12 @@ var BikeshedBuilderDialog = React.createClass({
       onChange: this._addFiles,
       accept: 'image/jpeg,image/png'
     }
+    var addBikesButton = {
+      secondary: true,
+      label: 'add bikes',
+      onClick: this._clickFileInput,
+      className: 'bikeshed-builder-dialog-add-bikes-button'
+    }
     var titleInputProps = {
       className: 'bikeshed-builder-dialog-title-input',
       onChange: this._inputChange,
@@ -45,7 +51,7 @@ var BikeshedBuilderDialog = React.createClass({
         <DialogPart type='header'>
           Build your bikeshed
         </DialogPart>
-        <DialogPart type='body'>
+        <DialogPart type='body' className='bikeshed-builder-dialog-body'>
           <TextField {...titleInputProps}/>
           <Grid>
             {bikes.map((bike, key) =>
@@ -55,9 +61,9 @@ var BikeshedBuilderDialog = React.createClass({
                 key={key}/>
             ).toArray()}
           </Grid>
-          <RaisedButton label='add bikes' secondary={true} onClick={this._clickFileInput}/>
         </DialogPart>
         <DialogPart type='footer'>
+          <RaisedButton {...addBikesButton}/>
           <FlatButton label='discard' secondary={true}/>
           <FlatButton label='save' secondary={true} disabled={true}/>
         </DialogPart>
