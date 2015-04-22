@@ -3,6 +3,7 @@ var React = require('react/addons'),
   PureRenderMixin = React.addons.PureRenderMixin,
   Grid = require('../../../components/grid/Grid'),
   Dialog = require('../../../components/dialog/Dialog'),
+  BikeItemPlaceholder = require('./BikeItemPlaceholder'),
   TextField = require('../../../components/inputs/TextField'),
   DialogPart = require('../../../components/dialog/DialogPart'),
   FlatButton = require('../../../components/buttons/FlatButton'),
@@ -60,6 +61,7 @@ var BikeshedBuilderDialog = React.createClass({
                 bike={bike}
                 key={key}/>
             ).toArray()}
+            <BikeItemPlaceholder bikes={bikes}/>
           </Grid>
         </DialogPart>
         <DialogPart type='footer'>
