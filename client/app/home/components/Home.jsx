@@ -1,9 +1,8 @@
 var React = require('react/addons'),
   PureRenderMixin = React.addons.PureRenderMixin,
   {connectToStores} = require('fluxible/addons'),
+  BikeshedBuilder = require('./BikeshedBuilder'),
   ActionMixin = require('../../../utils/mixins/ActionMixin'),
-  BikeshedBuilderButton = require('./BikeshedBuilderButton'),
-  BikeshedBuilderDialog = require('./BikeshedBuilderDialog'),
   BikeshedBuilderStore = require('../stores/BikeshedBuilderStore'),
   BikeshedBuilderActions = require('../actions/BikeshedBuilderActions')
 
@@ -11,34 +10,23 @@ var Home = React.createClass({
   mixins: [ActionMixin, PureRenderMixin],
 
   render () {
-    var {bikes, form, dialog} = this.props
-    var dialogProps = {
+    var {bikes, form} = this.props
+    var builderProps = {
       onFormChange: this._onFormChange,
       onBikeClear: this._onBikeClear,
-      closeDialog: this._closeDialog,
       addFiles: this._addFiles,
-      dialog,
       bikes,
       form
     }
     return (
-        <BikeshedBuilderButton onClick={this._openDialog}/>
-        <BikeshedBuilderDialog {...dialogProps}/>
       <div className='home'>
+        <BikeshedBuilder {...builderProps}/>
       </div>
     )
   },
 
   _addFiles (files) {
     this.executeAction(BikeshedBuilderActions.addFiles, files)
-  },
-
-  _closeDialog () {
-    this.executeAction(BikeshedBuilderActions.closeDialog)
-  },
-
-  _openDialog () {
-    this.executeAction(BikeshedBuilderActions.openDialog)
   },
 
   _onFormChange (formField) {
