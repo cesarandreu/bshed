@@ -7,11 +7,13 @@ var BikeItem = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    bikes: React.PropTypes.object.isRequired
+    bikes: React.PropTypes.object.isRequired,
+    onClick: React.PropTypes.func.isRequired
   },
 
   render: function () {
-      var bikeCount = this.props.bikes.count()
+      var {bikes, onClick} = this.props
+      var bikeCount = bikes.count()
       var placeholderText = null
       if (bikeCount < 2) {
         placeholderText = (
@@ -22,7 +24,7 @@ var BikeItem = React.createClass({
       }
 
       return (
-        <EnhancedButton className='bike-item bike-item-placeholder'>
+        <EnhancedButton className='bike-item bike-item-placeholder' onClick={onClick}>
           <div className='bike-item-placeholder-icon'>
             <Icon icon='md-add'/>
           </div>
