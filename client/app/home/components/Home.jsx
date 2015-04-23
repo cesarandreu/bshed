@@ -22,9 +22,9 @@ var Home = React.createClass({
       form
     }
     return (
-      <div className='bikeshed-builder'>
         <BikeshedBuilderButton onClick={this._openDialog}/>
         <BikeshedBuilderDialog {...dialogProps}/>
+      <div className='home'>
       </div>
     )
   },
