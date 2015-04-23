@@ -201,12 +201,23 @@
 
 // BikeItemPlaceholder
 .bike-item-placeholder {
-  border: dashed 2px @border-color;
-
   .flexbox;
   .flex-direction(column);
   .align-items(center);
   .justify-content(center);
+
+  border: dashed 2px @border-color;
+  &:hover, &:focus {
+    border-color: @grey-400;
+
+    .bike-item-placeholder-icon .icon {
+      color: @grey-400;
+    }
+
+    .bike-item-placeholder-text {
+      color: @grey-600;
+    }
+  }
 
   .bike-item-placeholder-icon {
     margin: auto;
