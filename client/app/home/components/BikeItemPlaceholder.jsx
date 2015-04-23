@@ -16,7 +16,7 @@ var BikeItem = React.createClass({
       if (bikeCount < 2) {
         placeholderText = (
           <div className='bike-item-placeholder-text'>
-            {`Please add at least ${bikeCount ? '1 more image' : '2 more images'}`}
+            {`Please add at least ${bikeCount ? '1 more image' : '2 images'}`}
           </div>
         )
       }
