@@ -45,10 +45,7 @@ module.exports = function buildWebpackConfig (options) {
       StatsPlugin(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(ENV)
-      }),
-
-      // https://github.com/jakearchibald/es6-promise/issues/100
-      new webpack.IgnorePlugin(/vertx/)
+      })
     ],
     devServer: {
       contentBase: './public',
