@@ -35,6 +35,8 @@ var BikeshedBuilder = React.createClass({
       className: 'bikeshed-builder-save-button'
     }
     var titleInputProps = {
+      name: 'title',
+      label: 'Bikeshed description...',
       className: 'bikeshed-builder-title-input',
       onChange: this._inputChange,
       ...form.get('title').toJS()

@@ -22,7 +22,7 @@ var BikeshedBuilderStore = createStore({
   defaultForm: function () {
     return Immutable.fromJS({
       title: {
-        name: 'title', errorText: '', value: ''
+        errorText: '', value: ''
       }
     })
   },
