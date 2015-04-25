@@ -1,4 +1,5 @@
 var React = require('react/addons'),
+  BikePreview = require('./BikePreview'),
   PureRenderMixin = React.addons.PureRenderMixin,
   {connectToStores} = require('fluxible/addons'),
   BikeshedBuilder = require('./BikeshedBuilder'),
@@ -10,23 +11,39 @@ var Home = React.createClass({
   mixins: [ActionMixin, PureRenderMixin],
 
   render () {
-    var {bikes, form} = this.props
-    var builderProps = {
-      onFormChange: this._onFormChange,
-      onBikeClear: this._onBikeClear,
-      addFiles: this._addFiles,
-      bikes,
-      form
-    }
+    var {bikes, preview, form} = this.props
     return (
       <div className='home'>
-        <BikeshedBuilder {...builderProps}/>
+        <BikeshedBuilder
+          onFormChange={this._onFormChange}
+          onBikeClear={this._onBikeClear}
+          onBikeClick={this._onBikeClick}
+          addFiles={this._addFiles}
+          onSubmit={this._onSubmit}
+          bikes={bikes}
+          form={form}/>
+        <BikePreview
+          closePreview={this._closePreview}
+          preview={preview}
+          bikes={bikes}/>
       </div>
     )
   },
 
   _addFiles (files) {
     this.executeAction(BikeshedBuilderActions.addFiles, files)
+  },
+
+  _onSubmit () {
+    this.executeAction(BikeshedBuilderActions.saveBikeshed)
+  },
+
+  _onBikeClick (name) {
+    this.executeAction(BikeshedBuilderActions.openPreview, name)
+  },
+
+  _closePreview () {
+    this.executeAction(BikeshedBuilderActions.closePreview)
   },
 
   _onFormChange (formField) {

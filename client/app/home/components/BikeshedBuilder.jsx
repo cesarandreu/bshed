@@ -13,12 +13,14 @@ var BikeshedBuilder = React.createClass({
     form: React.PropTypes.object.isRequired,
     bikes: React.PropTypes.object.isRequired,
     addFiles: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired,
+    onBikeClick: React.PropTypes.func.isRequired,
     onBikeClear: React.PropTypes.func.isRequired,
     onFormChange: React.PropTypes.func.isRequired
   },
 
   render () {
-    var {form, bikes, onBikeClear} = this.props
+    var {form, bikes, onBikeClick, onBikeClear, onSubmit} = this.props
     var fileInputProps = {
       type: 'file',
       multiple: true,
@@ -30,8 +32,8 @@ var BikeshedBuilder = React.createClass({
     var saveButton = {
       label: 'save',
       secondary: true,
+      onClick: onSubmit,
       disabled: bikes.count() < 2,
-      onClick: this._clickFileInput,
       className: 'bikeshed-builder-save-button'
     }
     var titleInputProps = {
@@ -49,6 +51,7 @@ var BikeshedBuilder = React.createClass({
           <Grid>
             {bikes.map((bike, key) =>
               <BikeItem
+                onBikeClick={onBikeClick}
                 onBikeClear={onBikeClear}
                 bike={bike}
                 key={key}/>

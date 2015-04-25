@@ -7,13 +7,15 @@ var BikePreview = React.createClass({
   mixins: [PureRenderMixin, hotkey.Mixin('_handleHotkey')],
   propTypes: {
     closePreview: React.PropTypes.func.isRequired,
-    preview: React.PropTypes.object.isRequired
+    preview: React.PropTypes.string.isRequired,
+    bikes: React.PropTypes.object.isRequired
   },
   render: function () {
-    var bike = this.props.preview.get('bike')
-    if (!bike)
+    var {preview, bikes} = this.props
+    if (!preview)
       return null
 
+    var bike = bikes.get(preview)
     return (
       <div className='bike-preview-container'>
         <div className='bike-preview' onClick={this._closeOnClick}>

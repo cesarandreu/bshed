@@ -8,6 +8,7 @@ var BikeItem = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
+    onBikeClick: React.PropTypes.func.isRequired,
     onBikeClear: React.PropTypes.func.isRequired,
     bike: React.PropTypes.object.isRequired
   },
@@ -25,7 +26,7 @@ var BikeItem = React.createClass({
     return (
       <div className='bike-item'>
         <IconButton className='bike-item-clear' icon='md-clear' onClick={this._onBikeClear}/>
-        <div className={cn('bike-item-image-container', imageClass)}>
+        <div className={cn('bike-item-image-container', imageClass)} onClick={this._onBikeClick}>
           <img className='bike-item-image' src={bike.get('url')} alt={bike.get('file').name}/>
         </div>
       </div>
