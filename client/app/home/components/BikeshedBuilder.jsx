@@ -4,7 +4,6 @@ var React = require('react/addons'),
   Grid = require('../../../components/grid/Grid'),
   BikeItemPlaceholder = require('./BikeItemPlaceholder'),
   TextField = require('../../../components/inputs/TextField'),
-  FlatButton = require('../../../components/buttons/FlatButton'),
   RaisedButton = require('../../../components/buttons/RaisedButton')
 
 var BikeshedBuilder = React.createClass({
