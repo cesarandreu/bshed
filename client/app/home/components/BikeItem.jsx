@@ -25,8 +25,8 @@ var BikeItem = React.createClass({
     return (
       <div className='bike-item'>
         <IconButton className='bike-item-clear' icon='md-clear' onClick={this._onBikeClear}/>
-        <div className={cn('bike-item-image', imageClass)}>
-          <img src={bike.get('url')} alt={bike.get('file').name}/>
+        <div className={cn('bike-item-image-container', imageClass)}>
+          <img className='bike-item-image' src={bike.get('url')} alt={bike.get('file').name}/>
         </div>
       </div>
     )
