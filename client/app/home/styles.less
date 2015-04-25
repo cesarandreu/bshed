@@ -43,129 +43,6 @@
   }
 }
 
-// BikeshedBuilderButton
-.bikeshed-builder-button {
-  right: 0;
-  bottom: 0;
-  position: absolute;
-  padding-bottom: @action-button-size / 2;
-  padding-right: @action-button-size / 2;
-}
-
-// AddBikeButton
-.add-bike-button {
-  // top: -1 * (@action-button-size + @labeled-action-button-label-margin);
-  // margin-top: -1 * (@action-button-size + @labeled-action-button-label-margin);
-  margin-bottom: @action-button-size / -2;
-  padding-right: @action-button-size / 2;
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-
-  input {
-    display: none;
-  }
-}
-
-// BikeshedBuilderHero
-.bikeshed-builder-hero {
-  .flexbox;
-  .flex-direction(column);
-  .align-items(center);
-  .justify-content(center);
-  min-height: ~'calc(70vh - 56px)';
-  height: 100%;
-
-  .bikeshed-builder-hero-logo {
-    .icon {
-      font-size: 10em;
-      color: @grey-400;
-    }
-  }
-
-  .bikeshed-builder-hero-heading {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: @dark-black;
-  }
-
-  .bikeshed-builder-hero-create {
-    font-size: 14px;
-  }
-}
-
-.bike-grid-container {
-  &.empty {
-    .bike-grid-subheader {
-      display: none;
-    }
-  }
-}
-
-// BikeGrid
-.bike-grid {
-
-}
-
-// BikeGridItem
-.bike-grid-item {
-  margin: 10px;
-  width: 192px;
-  height: 192px + 48px;
-  background-color: @card-color;
-
-  transition: box-shadow .15s cubic-bezier(.4, 0, .2, 1);
-  .whiteframe-z1;
-  &:hover {
-    .whiteframe-z2;
-  }
-
-  .bike-item-image {
-    .flexbox;
-    .justify-content(center);
-    .align-items(center);
-    cursor: pointer;
-    height: 192px;
-    width: 100%;
-
-    img {
-      max-height: 100%;
-      max-width: 100%;
-    }
-  }
-
-  .bike-item-metadata {
-    .flexbox;
-    .flex-direction(row);
-    .align-items(center);
-    .justify-content(space-between);
-    width: 100%;
-    height: 48px;
-    padding-left: 16px;
-    border-bottom: 1px solid @border-color;
-
-    .bike-item-name {
-      color: @primary-text-color;
-      font-weight: 500;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .bike-item-clear {
-      min-height: 48px;
-      min-width: 48px;
-      color: @grid-action-color;
-
-      opacity: 0.3;
-      &:hover {
-        opacity: 0.8;
-      }
-    }
-  }
-}
-
 // BikeItem
 .bike-item {
   @bike-item-size: 160px;
@@ -258,24 +135,6 @@
   }
 }
 
-// BikeshedBuilderPanel
-.bikeshed-builder-panel-container {
-  // Container is needed to add padding at the bottom
-  min-height: 200px;
-  height: 30vh;
-
-  .bikeshed-builder-panel {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 30vh;
-    min-height: 200px;
-    position: absolute;
-    background-color: @card-color;
-    box-shadow: 0 0 8px rgba(0,0,0,.18),0 8px 16px rgba(0,0,0,.36);
-  }
-}
-
 // BikePreview
 .bike-preview-container {
   .bike-preview-overlay {
@@ -318,27 +177,4 @@
       max-height: 80%;
     }
   }
-}
-
-// BikeshedBuilderDialog
-.bikeshed-builder-dialog {
-  .bikeshed-builder-dialog-body {
-    .flexbox;
-    .flex-direction(column);
-    .align-items(flex-start);
-  }
-
-  .bikeshed-builder-dialog-title-input {
-    width: 100%;
-  }
-
-  .bikeshed-builder-dialog-add-bikes-button {
-    margin-right: auto;
-  }
-}
-
-// BikeshedBuilderForm
-.bikeshed-builder-form {
-
-
 }

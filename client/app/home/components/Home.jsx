@@ -1,3 +1,7 @@
+// TODO
+// * When you've added images, add an unload listener so people don't fuck up
+// * Open image overlay on click
+
 var React = require('react/addons'),
   BikePreview = require('./BikePreview'),
   PureRenderMixin = React.addons.PureRenderMixin,
