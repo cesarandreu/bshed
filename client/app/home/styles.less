@@ -2,8 +2,8 @@
 
 // Home
 .home {
-  .flexbox;
-  .flex-direction(column);
+  display: flex;
+  flex-direction: column;
   min-height: 100%;
   width: 1200px;
   margin: 0 auto;
@@ -37,7 +37,7 @@
   }
 
   .bikeshed-builder-actions {
-    .flexbox;
+    display: flex;
     width: 100%;
     padding: 15px 16px;
   }
@@ -65,9 +65,9 @@
   }
 
   .bike-item-image-container {
-    .flexbox;
-    .align-items(center);
-    .justify-content(center);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: -48px;
     overflow: hidden;
     height: 100%;
@@ -79,14 +79,14 @@
     }
 
     &.longer {
-      .flex-direction(row);
+      flex-direction: row;
       .bike-item-image {
         max-width: 100%;
       }
     }
 
     &.wider {
-      .flex-direction(column);
+      flex-direction: column;
       .bike-item-image {
         max-height: 100%;
       }
@@ -101,10 +101,10 @@
 
 // BikeItemPlaceholder
 .bike-item-placeholder {
-  .flexbox;
-  .flex-direction(column);
-  .align-items(center);
-  .justify-content(center);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   border: dashed 2px @border-color;
   &:hover, &:focus {
@@ -156,10 +156,10 @@
     left: 0;
     top: 0;
 
-    .flexbox;
-    .align-items(center);
-    .flex-direction(column);
-    .justify-content(center);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
     .bike-preview-close {
       top: 0;

@@ -56,8 +56,8 @@
 }
 
 .sidebar {
-  .flexbox;
-  .flex-direction(column);
+  display: flex;
+  flex-direction: column;
   background-color: @sidebar-color;
   box-shadow: @sidebar-shadow;
   white-space: nowrap;
@@ -65,8 +65,8 @@
 }
 
 .sidebar-section {
-  .flexbox;
-  .flex-direction(column);
+  display: flex;
+  flex-direction: column;
 
   margin: 1em 0;
   padding: 0 0 8px 0;
@@ -97,9 +97,9 @@
 
 // Navbar
 .navbar {
-  .flexbox;
-  .flex-direction(row);
-  .align-items(center);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
   box-shadow: @navbar-shadow;
   z-index: @z-index-navbar;
@@ -113,10 +113,10 @@
 }
 
 .navbar-inner {
-  .flexbox;
-  .flex-direction(row);
-  .align-items(center);
-  .justify-content(space-between);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
   :last-child {
     padding: 0 24px;

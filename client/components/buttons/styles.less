@@ -42,10 +42,10 @@
 
 /* IconButton */
 .icon-button {
-  .flexbox;
-  .flex-direction(row);
-  .align-items(center);
-  .justify-content(center);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
   position: relative;
   padding: @icon-size / 2;
@@ -89,30 +89,30 @@
 
 /* LabeledActionButton */
 .labeled-action-button {
-  .flexbox;
-  .align-items(center);
-  .flex-direction(row-reverse);
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
 
   &.left {
-    .flex-direction(row-reverse);
+    flex-direction: row-reverse;
     label {
       margin-right: @labeled-action-button-label-margin;
     }
   }
   &.right {
-    .flex-direction(row);
+    flex-direction: row;
     label {
       margin-left: @labeled-action-button-label-margin;
     }
   }
   &.top {
-    .flex-direction(column-reverse);
+    flex-direction: column-reverse;
     label {
       margin-bottom: @labeled-action-button-label-margin;
     }
   }
   &.bottom {
-    .flex-direction(column);
+    flex-direction: column;
     label {
       margin-top: @labeled-action-button-label-margin;
     }

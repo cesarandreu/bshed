@@ -20,10 +20,10 @@
 
 // BikeshedBuilderHero
 .bikeshed-builder-hero {
-  .flexbox;
-  .flex-direction(column);
-  .align-items(center);
-  .justify-content(center);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   min-height: ~'calc(70vh - 56px)';
   height: 100%;
 
@@ -73,9 +73,9 @@
   }
 
   .bike-item-image {
-    .flexbox;
-    .justify-content(center);
-    .align-items(center);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     height: 192px;
     width: 100%;
@@ -87,10 +87,10 @@
   }
 
   .bike-item-metadata {
-    .flexbox;
-    .flex-direction(row);
-    .align-items(center);
-    .justify-content(space-between);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     height: 48px;
     padding-left: 16px;
@@ -144,9 +144,9 @@
 // BikeshedBuilderDialog
 .bikeshed-builder-dialog {
   .bikeshed-builder-dialog-body {
-    .flexbox;
-    .flex-direction(column);
-    .align-items(flex-start);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .bikeshed-builder-dialog-title-input {
