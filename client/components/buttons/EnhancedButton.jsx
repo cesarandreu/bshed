@@ -6,10 +6,12 @@ var EnhancedButton = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    className: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
     link: React.PropTypes.bool,
-    onClick: React.PropTypes.func
+    onClick: React.PropTypes.func,
+    primary: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
+    secondary: React.PropTypes.bool,
+    className: React.PropTypes.string
   },
 
   render: function () {
