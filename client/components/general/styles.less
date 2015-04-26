@@ -1,7 +1,32 @@
-/* Icon */
+// Icon
 .icon {
   position: relative;
   font-size: @icon-size;
   display: inline-block;
   user-select: none;
 }
+
+// CircularPreloader
+.circular-preloader {
+  @keyframes circular-preloader-rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  width: 48px;
+  height: 48px;
+  border: 8px solid @black;
+  border-right-color: transparent;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  text-indent: -9999px;
+  animation: circular-preloader-rotate 1s linear infinite;
+}
+
