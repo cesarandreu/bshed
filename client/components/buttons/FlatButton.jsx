@@ -1,7 +1,7 @@
 var cn = require('classnames'),
-  React = require('react/addons'),
-  EnhancedButton = require('./EnhancedButton'),
-  PureRenderMixin = React.addons.PureRenderMixin
+var React = require('react/addons')
+var EnhancedButton = require('./EnhancedButton')
+var PureRenderMixin = React.addons.PureRenderMixin
 
 var FlatButton = React.createClass({
   mixins: [PureRenderMixin],
