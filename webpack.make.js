@@ -10,7 +10,7 @@ module.exports = function buildWebpackConfig (options) {
     BUILD = options.BUILD || process.env.BUILD
 
   // shared values
-  var publicPath = BUILD ? '/assets/' : 'http://localhost:8080/assets/'
+  var publicPath = BUILD ? '/assets/' : 'http://localhost:9090/assets/'
   var outputPath = __dirname + '/public/assets'
 
   // base
@@ -48,6 +48,7 @@ module.exports = function buildWebpackConfig (options) {
       })
     ],
     devServer: {
+      port: 9090,
       contentBase: './public',
       stats: {
         modules: false,
