@@ -3,23 +3,23 @@ require('babel/register')({
 })
 
 // modules
-var koa = require('koa'),
-  qs = require('koa-qs'),
-  csrf = require('koa-csrf'),
-  mount = require('koa-mount'),
-  serve = require('koa-static'),
-  session = require('koa-session'),
-  compress = require('koa-compress'),
-  debug = require('debug')('bshed:server'),
-  responseTime = require('koa-response-time')
+var koa = require('koa')
+var qs = require('koa-qs')
+var csrf = require('koa-csrf')
+var mount = require('koa-mount')
+var serve = require('koa-static')
+var session = require('koa-session')
+var compress = require('koa-compress')
+var debug = require('debug')('bshed:server')
+var responseTime = require('koa-response-time')
 
 // application modules
 debug('loading modules')
-var config = require('./config'),
-  models = require('./models'),
-  s3 = require('./lib/s3'),
-  api = require('./api'),
-  client = require('./client/renderer/middleware')
+var config = require('./config')
+var models = require('./models')
+var s3 = require('./lib/s3')
+var api = require('./api')
+var client = require('./client/renderer/middleware')
 
 // initialization
 debug('initializing modules')
