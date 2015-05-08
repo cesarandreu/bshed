@@ -15,74 +15,75 @@ Requires running Postgres. For OSX you can install and run [Postgres.app](http:/
 
 ### Relations
 
-* User has many Bikesheds
-* User has many Votes
-* Bikeshed has one User
-* Bikeshed has many Bikes
-* Bikeshed has many Votes
-* Bike has many Votes
-* Bike belongs to Bikeshed
-* Vote belongs to Bikeshed
-* Vote belongs to Bike
-* Vote belongs to User
+* User has many bikesheds
+* User has many votes
+* Bikeshed belongs to user
+* Bikeshed has many bikes
+* Bikeshed has many votes
+* Bike belongs to bikeshed
+* Bike has many ratings
+* Vote belongs to bikeshed
+* Vote belongs to user
+* Vote has many ratings
+* Rating belongs to bike
+* Rating belongs to vote
 
 ### Schema
 
 ```
 User {
-  id:integer:pk,
-  administrator:boolean,
-  name:string,
-  email:string,
-  hashedPassword:string,
+  id:string:pk
+  name:string:unique
+  email:string
+  hashedPassword:string
 
-  createdAt:date,
-  updateAt:date,
-  deletedAt:date
+  createdAt:date
+  updatedAt:date
 }
 
 Bikeshed {
-  id:integer:pk,
-  name:string,
-  body:text,
-  status:string,
-  size:integer,
+  id:string:pk,
+  description:string
+  status:string
 
-  openedAt:date,
-  closedAt:date,
-  createdAt:date,
-  updatedAt:date,
-  deletedAt:date,
+  createdAt:date
+  updatedAt:date
 
-  UserId:integer
+  UserId:string
 }
 
 Bike {
-  id:integer:pk,
-  name:string,
-  body:text,
-  score:integer,
-  imageType:string,
-  imageLink:string,
+  id:string:pk
+  name:string
+  size:number
+  type:string
+  status:string
 
-  createdAt:date,
-  updatedAt:date,
-  deletedAt:date
+  createdAt:date
+  updatedAt:date
 
-  BikeshedId:integer
+  BikeshedId:string
 }
 
 Vote {
-  id:integer:pk,
-  value:integer,
+  id:string:pk
 
-  createdAt:date,
-  updatedAt:date,
-  deletedAt:date,
+  createdAt:date
+  updatedAt:date
 
-  BikeshedId:integer,
-  BikeId:integer,
-  UserId:integer
+  UserId:string
+  BikeshedId:string
+}
+
+Rating {
+  id:string:pk
+  value:number
+
+  createdAt:date
+  updatedAt:date
+
+  BikeId:string
+  VoteId:string
 }
 ```
 
@@ -99,7 +100,6 @@ Check coverage by running `NODE_ENV=test npm run test:coverage`
 
 Run specific set of tests with:
 
-* `npm run test:client`
 * `npm run test:models`
 * `npm run test:api`
 
