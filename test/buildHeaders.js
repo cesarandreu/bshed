@@ -39,5 +39,4 @@ module.exports = function buildHeadersHelper ({secrets, key}={}) {
 
     return headers
   }
-
 }
