@@ -2,10 +2,6 @@
 
 bikeshedding app
 
-## Application
-
-* Vote is a value 0 to N where N is (Bikeshed.bikes.length - 1). If you have 2 bikes, each time someone votes it'll create two votes. One vote with score 1 and one vote with score 0.
-
 ## Database
 
 Requires running Postgres. For OSX you can install and run [Postgres.app](http://postgresapp.com/).
