@@ -1,43 +1,34 @@
-var debug = require('debug')('bshed:config'),
-  fs = require('fs')
+var debug = require('debug')('bshed:config')
+var _ = require('lodash')
 
-// Base config
-var config = {
-  env: (process.env.NODE_ENV || 'development').toLowerCase()
-}
-debug('using %s env', config.env)
-
-// Get configs and load them
-debug('loader:start')
-fs.readdirSync(__dirname)
-.filter(file => file.indexOf('.') !== 0 && file !== 'index.js')
-.forEach(name => {
-  name = name.split('.js').shift()
-  config[name] = load(name)
-})
-debug('loader:end')
-module.exports = config
+var awsConfig = require('./aws')
+var serverConfig = require('./server')
+var databaseConfig = require('./database')
 
 /**
- * Configuration loader
- * - loads './${name}'
+ * Config generator
+ * Takes optional object to overwrite default configuration
  *
- * Loading strategies in order of execution:
- *  - use nameConfig[env] if env is in nameConfig
- *  - pass env to nameConfig if nameConfig is a function
- *  - keep nameConfig as is
+ * @param {Object} [overwrite={}]
+ * @returns {Object} New configuration object
  */
-function load (name) {
-  debug('loading %s', name)
-  var configuration = require('./' + name)
-  if (config.env in configuration) {
-    debug('using %s env from %s', config.env, name)
-    configuration = configuration[config.env]
-  } else if (typeof configuration === 'function') {
-    debug('using %s env to initialize %s', config.env, name)
-    configuration = configuration(config.env)
-  } else {
-    debug('using %s directly', name)
-  }
-  return configuration
+module.exports = function configGenerator (overwrite={}) {
+  debug('start')
+
+  var env = overwrite.env || process.env.NODE_ENV || 'development'
+  debug(`using ${env} env`)
+
+  var config = _.merge({
+    env: env,
+    middleware: {
+      session: {
+        key: `bshed-${env}`
+      }
+    },
+    aws: awsConfig(env),
+    database: databaseConfig[env]
+  }, serverConfig(env), overwrite)
+
+  debug('end')
+  return config
 }

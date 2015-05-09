@@ -1,33 +1,21 @@
-var path = require('path'),
-  _ = require('lodash')
+var assert = require('assert')
 
-var server = {
-  name: 'bshed-server',
-  assets: path.resolve(__dirname, '../public'),
-  middleware: {
-    serve: {},
-    session: {
-      key: 'bshed'
-    }
-  }
-}
-
-var environment = {
+var config = {
   development: {
-    port: 3000
+    port: 3000,
+    keys: ['secret']
   },
   test: {
-    post: 4000
+    port: 4000,
+    keys: ['secret']
   },
   production: {
     port: process.env.PORT || 3000,
-    serve: {
-      maxage: 1000 * 60 * 60 * 24 * 7 // 7 days
-    }
+    keys: (process.env.SECRET || '').split(',')
   }
 }
 
 module.exports = function serverConfig (env) {
-  server.env = env
-  return _.merge(server, environment[env])
+  assert(env && config[env], `server config env ${env} is invalid`)
+  return config[env]
 }
