@@ -27,14 +27,11 @@
     "dev": "npm run dev:server & npm run dev:client",
     "dev:server": "nodemon --exec babel-node -- server.js",
     "dev:client": "webpack-dev-server --hot --inline --progress -c",
-    "fakes3": "fakes3 --root test/fakes3 -p 10001",
-    "imagemin": "imagemin client/assets/images/**/*",
+    "fakes3": "fakes3 -r test/fakes3 -p 10001",
     "server": "babel-node server.js",
-    "test": "npm run test:base -- {models/,}test/**/*.test.*",
+    "test": "npm run test:base -- {models/,}test/**/*.test.js",
     "test:api": "npm run test:base -- test/api/*.test.js",
-    "test:base": "NODE_ENV=test babel-node node_modules/.bin/_mocha",
-    "test:client": "npm run test:base -- client/**/test/*.test.*",
-    "test:coverage": "NODE_ENV=test babel-node node_modules/.bin/isparta cover --report text --report html node_modules/.bin/_mocha -- --reporter dot {models/,}test/**/*.test.*",
+    "test:base": "NODE_ENV=test mocha",
     "test:models": "npm run test:base -- models/test/*.test.js"
   },
   "dependencies": {
