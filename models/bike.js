@@ -1,59 +1,51 @@
 module.exports = function (sequelize, DataTypes) {
   var Bike = sequelize.define('Bike', {
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: '',
       validate: {
         notEmpty: true
       }
     },
-    body: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      defaultValue: '',
-      validate: {
-        notEmpty: true
-      }
-    },
-    score: {
+    size: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
       validate: {
-        isInt: true,
+        max: 5000000,
         min: 0
       }
     },
-    imageName: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    imageType: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    type: {
+      type: DataTypes.ENUM('image/png', 'image/jpeg'),
+      allowNull: false,
       validate: {
         isIn: [['image/png', 'image/jpeg']]
       }
     },
-
-    // associations
-    BikeshedId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    }
-  }, {
-    // paranoid: true,
-    getterMethods: {
-      bucket: () => 'bikesheds',
-      key: function () {
-        return !this.imageName ? null : `${this.BikeshedId}/${this.imageName}`
+    status: {
+      type: DataTypes.ENUM('uploading', 'success', 'error'),
+      allowNull: false,
+      validate: {
+        isIn: [['uploading', 'success', 'error']]
       }
     },
+    BikeshedId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      validate: {
+        isUUID: true
+      }
+    }
+  }, {
     classMethods: {
       associate: function associate (models) {
         models.Bike.belongsTo(models.Bikeshed)
-        models.Bike.hasMany(models.Vote)
+        models.Bike.hasMany(models.Rating)
       }
     }
   })

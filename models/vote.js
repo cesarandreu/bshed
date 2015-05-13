@@ -1,35 +1,30 @@
 module.exports = function (sequelize, DataTypes) {
   var Vote = sequelize.define('Vote', {
-    value: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-
-    // associations
-    BikeshedId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    BikeId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
     },
     UserId: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+      type: DataTypes.UUID,
+      allowNull: false,
+      validate: {
+        isUUID: true
+      }
+    },
+    BikeshedId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      validate: {
+        isUUID: true
+      }
     }
   }, {
-    // paranoid: true,
     classMethods: {
       associate: function associate (models) {
-        models.Vote.belongsTo(models.Bike)
         models.Vote.belongsTo(models.Bikeshed)
         models.Vote.belongsTo(models.User)
-      },
-      asObject: function asObject (votes) {
-        var result = {}
-        votes.forEach(vote => result[vote.BikeId] = {value: vote.value})
-        return result
+        models.Vote.hasMany(models.Rating)
       }
     }
   })

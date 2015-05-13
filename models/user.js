@@ -1,33 +1,38 @@
 module.exports = function (sequelize, DataTypes) {
   var User = sequelize.define('User', {
-    administrator: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
     },
     name: {
+      unique: true,
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: ''
+      validate: {
+        notEmpty: true
+      }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: ''
+      validate: {
+        isEmail: true
+      }
     },
     hashedPassword: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     }
   }, {
-    // paranoid: true,
     classMethods: {
       associate: function associate (models) {
         models.User.hasMany(models.Bikeshed)
         models.User.hasMany(models.Vote)
       }
-    },
-    instanceMethods: {
     }
   })
 
