@@ -1,19 +1,23 @@
-var React = require('react'),
-  serialize = require('serialize-javascript'),
-  log = require('debug')('bshed:client:renderer'),
-  {FluxibleComponent} = require('fluxible/addons')
+var React = require('react')
+var serialize = require('serialize-javascript')
+var log = require('debug')('bshed:client:renderer')
+var {FluxibleComponent} = require('fluxible/addons')
 
-var NavigateAction = require('../app/application/actions/NavigateAction'),
-  Html = require('./Html'),
-  app = require('../app')
+var NavigateAction = require('../app/application/actions/NavigateAction')
+var Html = require('./Html')
+var app = require('../app')
 
 module.exports = renderer
-
 function* renderer (options) {
-  var {url, host, protocol, cookie, csrf, assets} = options
+  var {url, host, protocol, cookie, assets} = options
 
   log(`creating context with url ${url}`)
-  var context = app.createContext({host, protocol, cookie, csrf, url})
+  var context = app.createContext({
+    protocol,
+    cookie,
+    host,
+    url
+  })
 
   log('running router')
   var {Handler, state} = yield runRouter(context)
