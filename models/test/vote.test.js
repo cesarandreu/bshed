@@ -1,8 +1,7 @@
-'use strict'
-
-var {models: {Vote}} = require('./helper'),
-  {expect} = require('chai'),
-  vote
+var {models} = require('./helper')
+var expect = require('expect.js')
+var {Vote} = models
+var vote
 
 describe('Model:Vote', function () {
 

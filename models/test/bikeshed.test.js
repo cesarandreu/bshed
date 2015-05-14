@@ -1,8 +1,7 @@
-'use strict'
-
-var {models: {Bikeshed}} = require('./helper'),
-  {expect} = require('chai'),
-  bikeshed
+var {models} = require('./helper')
+var expect = require('expect.js')
+var {Bikeshed} = models
+var bikeshed
 
 describe('Model:Bikeshed', function () {
 

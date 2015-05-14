@@ -1,8 +1,7 @@
-'use strict'
-
-var {models: {Bike}} = require('./helper'),
-  {expect} = require('chai'),
-  bike
+var {models} = require('./helper')
+var expect = require('expect.js')
+var {Bike} = models
+var bike
 
 describe('Model:Bike', function () {
 
@@ -14,12 +13,10 @@ describe('Model:Bike', function () {
   })
 
   describe('Schema', function () {
-
     it('should have a valid schema', function () {
       expect(bike).to.be.an('object')
       expect(bike.id).to.be.a('number')
     })
-
   })
 
 
