@@ -9,7 +9,8 @@ var React = require('react/addons'),
   BikeshedBuilder = require('./BikeshedBuilder'),
   ActionMixin = require('../../../utils/mixins/ActionMixin'),
   BikeshedBuilderStore = require('../stores/BikeshedBuilderStore'),
-  BikeshedBuilderActions = require('../actions/BikeshedBuilderActions')
+  BikeshedBuilderActions = require('../actions/BikeshedBuilderActions'),
+  CircularPreloader = require('../../../components/general/CircularPreloader')
 
 var Home = React.createClass({
   mixins: [ActionMixin, PureRenderMixin],
@@ -26,6 +27,7 @@ var Home = React.createClass({
           onSubmit={this._onSubmit}
           bikes={bikes}
           form={form}/>
+        <CircularPreloader secondary={true}/>
         <BikePreview
           closePreview={this._closePreview}
           preview={preview}
