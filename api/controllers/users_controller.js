@@ -1,24 +1,24 @@
-var Router = require('koa-router'),
-  assert = require('assert')
+var Router = require('koa-router')
+var middleware = require('../../utils/middleware')
 
 module.exports = UsersController
-function UsersController ({helpers}) {
-  assert(helpers, 'UsersController requries helpers')
+function UsersController () {
+  var auth = middleware.auth()
+  var routes = new Router()
+  .get(
+    '/api/users/current',
+    auth,
+    UsersController.current
+  )
 
-  var auth = helpers.middleware.auth()
-
-  var userRoutes = new Router()
-    .get('/users/current', auth, current)
-
-  return userRoutes.middleware()
+  return routes.middleware()
 }
 
 /**
  * GET /users/current
  * Returns current user model
  */
-exports.current = current
-function* current () {
+UsersController.current = function* current () {
   var user = this.state.user.toJSON()
   delete user.hashedPassword
   this.body = user
