@@ -1,5 +1,4 @@
 {
   "ignore": "public|node_modules",
-  "blacklist": ["regenerator"],
   "stage": 1
 }
