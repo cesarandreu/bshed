@@ -17,7 +17,7 @@ var apiLoader = require('./api')
 // configuration
 debug('loading and generating config')
 var configGenerator = require('./config')
-var config = configGenerator({})
+var config = configGenerator()
 
 // initialization
 debug('initializing libs and modules')

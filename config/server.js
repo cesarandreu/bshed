@@ -1,6 +1,4 @@
-var assert = require('assert')
-
-var config = {
+module.exports = {
   development: {
     port: 3000,
     keys: ['secret']
@@ -13,9 +11,4 @@ var config = {
     port: process.env.PORT || 3000,
     keys: (process.env.SECRET || '').split(',')
   }
-}
-
-module.exports = function serverConfig (env) {
-  assert(env && config[env], `server config env ${env} is invalid`)
-  return config[env]
 }
