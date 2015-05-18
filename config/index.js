@@ -1,12 +1,12 @@
-var debug = require('debug')('bshed:config')
-var assert = require('assert')
-var _ = require('lodash')
+const debug = require('debug')('bshed:config')
+const assert = require('assert')
+const _ = require('lodash')
 
 /**
  * Configuration objects
  * Each config object has environments as keys
  */
-var config = {
+const config = {
   aws: require('./aws'),
   server: require('./server'),
   database: require('./database')
@@ -24,7 +24,7 @@ module.exports = function configGenerator (env) {
   env = env || process.env.NODE_ENV || 'development'
   debug(`using ${env} env`)
 
-  var config = _.merge({
+  const config = _.merge({
     env: env,
     middleware: {
       session: {

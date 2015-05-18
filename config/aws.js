@@ -1,4 +1,5 @@
-var AWS = require('aws-sdk')
+const AWS = require('aws-sdk')
+
 module.exports = {
   development: {
     accessKeyId: 'ACCESS_KEY_ID',
