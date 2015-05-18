@@ -29,10 +29,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     BikeshedId: {
       type: DataTypes.UUID,
-      allowNull: false,
-      validate: {
-        isUUID: true
-      }
+      allowNull: false
     }
   }, {
     classMethods: {

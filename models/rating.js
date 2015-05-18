@@ -14,17 +14,11 @@ module.exports = function (sequelize, DataTypes) {
     },
     BikeId: {
       type: DataTypes.UUID,
-      allowNull: false,
-      validate: {
-        isUUID: true
-      }
+      allowNull: false
     },
     VoteId: {
       type: DataTypes.UUID,
-      allowNull: false,
-      validate: {
-        isUUID: true
-      }
+      allowNull: false
     }
   }, {
     classMethods: {

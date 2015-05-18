@@ -12,10 +12,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     UserId: {
       type: DataTypes.UUID,
-      allowNull: false,
-      validate: {
-        isUUID: true
-      }
+      allowNull: false
     }
   }, {
     classMethods: {
