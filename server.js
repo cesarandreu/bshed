@@ -22,8 +22,12 @@ var config = configGenerator()
 // initialization
 debug('initializing libs and modules')
 var s3 = s3Loader(config.aws)
-var models = modelLoader(config)
-var api = apiLoader({config, models, s3})
+var models = modelLoader(config.database)
+var api = apiLoader({
+  config,
+  models,
+  s3
+})
 
 /**
  * SERVER
