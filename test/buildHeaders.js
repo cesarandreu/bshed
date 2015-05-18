@@ -8,8 +8,12 @@ var assert = require('assert')
 var csrf = require('csrf')
 var _ = require('lodash')
 
-// key - session cookie name
-// secrets - array of secrets for Keygrip
+/**
+ * Create build session headers helper
+ * @param {String} key Session cookie name
+ * @param {Array<String>} secrets Secrets for Keygrip
+ * @returns {Function} buildHeader
+ */
 module.exports = function buildHeadersHelper ({secrets, key}={}) {
   assert(secrets && key, 'secrets and key are needed')
 
@@ -17,6 +21,12 @@ module.exports = function buildHeadersHelper ({secrets, key}={}) {
   var keys = new Keygrip(secrets)
   var tokens = csrf()
 
+  /**
+   * Build headers for session object
+   * Sets x-xsrf-token and cookie for you
+   * @param {Object} session Session object
+   * @returns {Object} Headers object to use
+   */
   return function buildHeaders (session) {
     // _expire and _maxAge are used by koa-session
     session = _.assign({
