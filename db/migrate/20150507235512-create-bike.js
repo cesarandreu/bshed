@@ -18,10 +18,6 @@ module.exports = {
         allowNull: false,
         type: DataTypes.ENUM('image/png', 'image/jpeg')
       },
-      status: {
-        allowNull: false,
-        type: DataTypes.ENUM('uploading', 'success', 'error')
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

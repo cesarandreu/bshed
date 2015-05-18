@@ -10,10 +10,6 @@ module.exports = {
         allowNull: false,
         type: DataTypes.TEXT
       },
-      status: {
-        allowNull: false,
-        type: DataTypes.ENUM('building', 'success', 'error', 'deleted')
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

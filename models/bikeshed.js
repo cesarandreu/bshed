@@ -10,14 +10,6 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ''
     },
-    status: {
-      type: DataTypes.ENUM('building', 'success', 'error', 'deleted'),
-      allowNull: false,
-      defaultValue: 'building',
-      validate: {
-        isIn: [['building', 'success', 'error', 'deleted']]
-      }
-    },
     UserId: {
       type: DataTypes.UUID,
       allowNull: false,

@@ -44,7 +44,6 @@ User {
 Bikeshed {
   id:string:pk,
   description:string
-  status:string
 
   createdAt:date
   updatedAt:date
@@ -57,7 +56,6 @@ Bike {
   name:string
   size:number
   type:string
-  status:string
 
   createdAt:date
   updatedAt:date

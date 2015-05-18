@@ -27,13 +27,6 @@ module.exports = function (sequelize, DataTypes) {
         isIn: [['image/png', 'image/jpeg']]
       }
     },
-    status: {
-      type: DataTypes.ENUM('uploading', 'success', 'error'),
-      allowNull: false,
-      validate: {
-        isIn: [['uploading', 'success', 'error']]
-      }
-    },
     BikeshedId: {
       type: DataTypes.UUID,
       allowNull: false,
