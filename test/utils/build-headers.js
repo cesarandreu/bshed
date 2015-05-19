@@ -2,11 +2,11 @@
 // https://github.com/pillarjs/cookies/blob/master/lib/cookies.js
 // https://github.com/koajs/session/blob/master/index.js
 // https://github.com/koajs/csrf/blob/master/index.js
-var Cookie = require('cookies').Cookie
-var Keygrip = require('keygrip')
-var assert = require('assert')
-var csrf = require('csrf')
-var _ = require('lodash')
+const Cookie = require('cookies').Cookie
+const Keygrip = require('keygrip')
+const assert = require('assert')
+const csrf = require('csrf')
+const _ = require('lodash')
 
 /**
  * Create build session headers helper
@@ -17,9 +17,9 @@ var _ = require('lodash')
 module.exports = function buildHeadersHelper ({secrets, key}={}) {
   assert(secrets && key, 'secrets and key are needed')
 
-  var maxAge = 24 * 60 * 60 * 1000
-  var keys = new Keygrip(secrets)
-  var tokens = csrf()
+  const maxAge = 24 * 60 * 60 * 1000
+  const keys = new Keygrip(secrets)
+  const tokens = csrf()
 
   /**
    * Build headers for session object
@@ -35,9 +35,9 @@ module.exports = function buildHeadersHelper ({secrets, key}={}) {
       secret: tokens.secretSync()
     }, _.cloneDeep(session))
 
-    var value = (new Buffer(JSON.stringify(session))).toString('base64')
-    var cookie = new Cookie(key, value, {maxAge})
-    var headers = {
+    const value = (new Buffer(JSON.stringify(session))).toString('base64')
+    const cookie = new Cookie(key, value, {maxAge})
+    const headers = {
       'x-csrf-token': tokens.create(session.secret),
       'cookie': `${cookie.toHeader()};`
     }
