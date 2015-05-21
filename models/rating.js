@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  var Rating = sequelize.define('Rating', {
+  const Rating = sequelize.define('Rating', {
     id: {
       primaryKey: true,
       type: DataTypes.UUID,

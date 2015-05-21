@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  var Vote = sequelize.define('Vote', {
+  const Vote = sequelize.define('Vote', {
     id: {
       primaryKey: true,
       type: DataTypes.UUID,
