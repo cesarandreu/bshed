@@ -1,10 +1,10 @@
-var Router = require('koa-router')
-var middleware = require('../../utils/middleware')
+const Router = require('koa-router')
+const middleware = require('../../utils/middleware')
 
 module.exports = UsersController
 function UsersController () {
-  var auth = middleware.auth()
-  var routes = new Router()
+  const auth = middleware.authenticate()
+  const routes = new Router()
   .get(
     '/api/users/current',
     auth,
@@ -19,7 +19,5 @@ function UsersController () {
  * Returns current user model
  */
 UsersController.current = function* current () {
-  var user = this.state.user.toJSON()
-  delete user.hashedPassword
-  this.body = user
+  this.body = this.state.user
 }
