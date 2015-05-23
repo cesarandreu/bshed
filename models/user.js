@@ -29,9 +29,9 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     classMethods: {
-      associate: function associate (models) {
-        models.User.hasMany(models.Bikeshed)
-        models.User.hasMany(models.Vote)
+      associate (models) {
+        User.hasMany(models.Bikeshed)
+        User.hasMany(models.Vote)
       }
     }
   })

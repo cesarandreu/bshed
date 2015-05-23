@@ -23,8 +23,8 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function associate (models) {
-        models.Rating.belongsTo(models.Bike)
-        models.Rating.belongsTo(models.Vote)
+        Rating.belongsTo(models.Bike)
+        Rating.belongsTo(models.Vote)
       }
     }
   })

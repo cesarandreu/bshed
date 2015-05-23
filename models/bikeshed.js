@@ -16,10 +16,10 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     classMethods: {
-      associate: function associate (models) {
-        models.Bikeshed.belongsTo(models.User)
-        models.Bikeshed.hasMany(models.Bike)
-        models.Bikeshed.hasMany(models.Vote)
+      associate (models) {
+        Bikeshed.belongsTo(models.User)
+        Bikeshed.hasMany(models.Bike)
+        Bikeshed.hasMany(models.Vote)
       }
     }
   })

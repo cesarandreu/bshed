@@ -33,9 +33,9 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     classMethods: {
-      associate: function associate (models) {
-        models.Bike.belongsTo(models.Bikeshed)
-        models.Bike.hasMany(models.Rating)
+      associate (models) {
+        Bike.belongsTo(models.Bikeshed)
+        Bike.hasMany(models.Rating)
       }
     }
   })
