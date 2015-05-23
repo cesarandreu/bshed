@@ -5,9 +5,8 @@ var vote
 
 describe('Model:Vote', function () {
 
-  beforeEach(function* () {
-
-    vote = yield Vote.create({
+  beforeEach(async function () {
+    vote = await Vote.create({
       value: 5
     })
   })

@@ -5,8 +5,8 @@ var bike
 
 describe('Model:Bike', function () {
 
-  beforeEach(function* () {
-    bike = yield Bike.create({
+  beforeEach(async function () {
+    bike = await Bike.create({
       name: 'bike',
       body: 'description'
     })

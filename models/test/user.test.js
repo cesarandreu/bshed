@@ -7,8 +7,8 @@ describe('Model:User', function () {
 
   describe('Schema', function () {
 
-    beforeEach(function* () {
-      user = yield User.create({
+    beforeEach(async function () {
+      user = await User.create({
         name: 'Foo',
         email: 'foo@example.com'
       })

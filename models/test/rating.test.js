@@ -5,8 +5,8 @@ var rating
 
 describe('Model:Rating', function () {
 
-  beforeEach(function* () {
-    rating = yield Rating.create()
+  beforeEach(async function () {
+    rating = await Rating.create()
   })
 
   describe('Schema', function () {
