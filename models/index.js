@@ -1,26 +1,28 @@
-var debug = require('debug')('bshed:models')
-var Sequelize = require('sequelize')
-var assert = require('assert')
-var path = require('path')
-var fs = require('fs')
+const ssaclAttributeRoles = require('ssacl-attribute-roles')
+const debug = require('debug')('bshed:models')
+const Sequelize = require('sequelize')
+const assert = require('assert')
+const path = require('path')
+const fs = require('fs')
 
 /**
- * Model loader
- * @param {Object} opts
- * @param {Object} opts.config
+ * Models loader
+ * @param {Object} config
  * @returns {Object} Models
  */
-module.exports = function modelsLoader ({config}={}) {
+module.exports = function modelsLoader (config) {
   assert(config, 'model loader requires config')
   debug('loader:start')
 
-  var models = {}
-  var sequelize = new Sequelize(
+  const models = {}
+  const sequelize = new Sequelize(
     config.database,
     config.username,
     config.password,
     config
   )
+
+  ssaclAttributeRoles(sequelize)
 
   // Load models
   fs.readdirSync(__dirname)
@@ -28,8 +30,8 @@ module.exports = function modelsLoader ({config}={}) {
       file.indexOf('.') !== 0 && file !== 'index.js' && file !== 'test'
     )
     .forEach(file => {
-      var modelPath = path.join(__dirname, file)
-      var model = sequelize.import(modelPath)
+      const modelPath = path.join(__dirname, file)
+      const model = sequelize.import(modelPath)
       models[model.name] = model
       debug(`${model.name} loaded from file ${modelPath}`)
     })

@@ -18,14 +18,16 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         isEmail: true
-      }
+      },
+      roles: false
     },
     hashedPassword: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true
-      }
+      },
+      roles: false
     }
   }, {
     classMethods: {
