@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+
 module.exports = function (sequelize, DataTypes) {
   const User = sequelize.define('User', {
     id: {
@@ -34,6 +36,22 @@ module.exports = function (sequelize, DataTypes) {
       associate (models) {
         User.hasMany(models.Bikeshed)
         User.hasMany(models.Vote)
+      },
+
+      hashPassword (password) {
+        return new Promise((resolve, reject) => {
+          bcrypt.hash(password, 8, (err, hash) => {
+            err ? reject(err) : resolve(hash)
+          })
+        })
+      },
+
+      comparePassword (password, hash) {
+        return new Promise((resolve, reject) => {
+          bcrypt.compare(password, hash, (err, res) => {
+            err ? reject(err) : resolve(res)
+          })
+        })
       }
     }
   })
