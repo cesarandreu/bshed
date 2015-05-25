@@ -7,7 +7,6 @@ module.exports = {
         type: DataTypes.UUID
       },
       name: {
-        unique: true,
         allowNull: false,
         type: DataTypes.STRING
       },

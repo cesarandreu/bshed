@@ -16,7 +16,10 @@ module.exports = {
       },
       type: {
         allowNull: false,
-        type: DataTypes.ENUM('image/png', 'image/jpeg')
+        type: DataTypes.ENUM([
+          'image/png',
+          'image/jpeg'
+        ])
       },
       createdAt: {
         allowNull: false,
