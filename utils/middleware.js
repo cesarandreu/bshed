@@ -1,4 +1,19 @@
-var assert = require('assert')
+const _ = require('lodash')
+const assert = require('assert')
+const helpers = require('./helpers')
+
+/**
+ * Check Joi schema
+ * @param {Object} Joi schema to check
+ * @returns {Middleware} checkSchemaMiddleware
+ */
+exports.checkSchema = function checkSchema (schema) {
+  assert(schema, 'checkSchema requires schema')
+  return function* checkSchemaMiddleware (next) {
+    this.state.body = yield helpers.checkSchema(this.request.body, schema)
+    yield next
+  }
+}
 
 /**
  * Adds all enumerable keys in objects to context
@@ -20,38 +35,11 @@ exports.addToContext = function addToContext (objects={}) {
 exports.authenticate = function authenticate () {
   return function* authenticateMiddleware (next) {
     try {
-      this.state.user = yield this.models.User.find(this.session.user.id)
+      this.state.user = yield this.models.User.findById(this.session.user.id)
     } finally {
-      if (!this.state.user)
-        this.throw(401)
+      this.assert(this.state.user, 401)
     }
     yield next
-  }
-}
-
-/**
- * Handle Joi and Boom errors
- * @returns {Middleware} errorHandlerMiddleware
- */
-exports.errorHandler = function errorHandler () {
-  return function* errorHandlerMiddleware (next) {
-    try {
-      yield next
-    } catch (err) {
-      // console.error('ERR IS', err)
-      var [status, body] = errorHandlerHelper(err)
-      this.status = status
-      this.body = body
-    }
-  }
-
-  function errorHandlerHelper (err) {
-    switch (err.name) {
-      case 'ValidationError':
-        return [422, err.details]
-      default:
-        throw err
-    }
   }
 }
 
@@ -77,9 +65,7 @@ exports.load = function load (resource, {key='id', name=resource.toLowerCase()}=
       }
     })
 
-    if (!this.state[name])
-      this.throw(404, `${resource} not found`)
-
+    this.assert(this.state[name], 404, `${resource} not found`)
     yield next
   }
 }
@@ -103,14 +89,31 @@ exports.setCsrfToken = function setCsrfToken () {
 /**
  * Middleware to set logged_in cookie on every response
  * Used by client to try to guess allowed states
- * @returns {Middleware}
+ * @returns {Middleware} setLoggedInCookieMiddleware
  */
 exports.setLoggedInCookie = function setLoggedInCookie () {
   return function* setLoggedInCookieMiddleware (next) {
     yield next
-    var loggedIn = this.session && this.session.user && this.session.user.name
+    const loggedIn = _.get(this, 'session.user.id', null)
     this.cookies.set('logged_in', loggedIn ? 'yes' : 'no', {
       httpOnly: false
     })
+  }
+}
+
+/**
+ * Middleware to expose errors when not in production mode
+ * @returns {Middleware} exposeErrorMiddleware
+ */
+exports.exposeError = function exposeError () {
+  return function* exposeErrorMiddleware (next) {
+    try {
+      yield next
+    } catch (err) {
+      if (this.env !== 'production')
+        err.expose = true
+
+      throw err
+    }
   }
 }
