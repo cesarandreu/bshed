@@ -41,8 +41,9 @@ module.exports = function buildFactories (models, s3) {
       password: 'password'
     })
 
-    if (!opts.hashedPassword)
-      opts.hashedPassword = await User.hashPassword(opts.password)
+    Object.assign(opts, {
+      hashedPassword: opts.hashedPassword || await User.hashPassword(opts.password)
+    })
 
     return await User.create(opts)
   }
@@ -51,13 +52,16 @@ module.exports = function buildFactories (models, s3) {
    * Create bikeshed
    */
   async function createBikeshed (opts={}) {
-    if (!opts.UserId) {
-      const user = await createUser()
-      opts.UserId = user.id
-    }
-
     _.defaults(opts, {
       description: chance.sentence()
+    })
+
+    const user = opts.UserId
+      ? await User.findById(opts.UserId)
+      : await createUser()
+
+    Object.assign(opts, {
+      UserId: user.id
     })
 
     return await Bikeshed.create(opts)
@@ -67,11 +71,6 @@ module.exports = function buildFactories (models, s3) {
    * Create bike
    */
   async function createBike (opts={}) {
-    if (!opts.BikeshedId) {
-      const bikeshed = await createBikeshed()
-      opts.BikeshedId = bikeshed.id
-    }
-
     _.defaults(opts, {
       file: `${fixtures}/puppy_0${_.random(1, 4)}.jpg`
     })
@@ -80,6 +79,14 @@ module.exports = function buildFactories (models, s3) {
       type: await getFileType(opts.file),
       size: await getFileSize(opts.file),
       name: path.basename(opts.file)
+    })
+
+    const bikeshed = opts.BikeshedId
+      ? await Bikeshed.findById(opts.BikeshedId)
+      : await createBikeshed()
+
+    Object.assign(opts, {
+      BikeshedId: bikeshed.id
     })
 
     const bike = await Bike.create(opts)
@@ -101,17 +108,18 @@ module.exports = function buildFactories (models, s3) {
    * Create vote
    */
   async function createVote (opts={}) {
-    if (!opts.UserId) {
-      const user = await createUser()
-      opts.UserId = user.id
-    }
+    const user = opts.UserId
+      ? await User.findById(opts.UserId)
+      : await createUser()
 
-    if (!opts.BikeshedId) {
-      const bikeshed = await createBikeshed({
-        UserId: opts.UserId
-      })
-      opts.BikeshedId = bikeshed.id
-    }
+    const bikeshed = opts.BikeshedId
+      ? await Bikeshed.findById(opts.BikeshedId)
+      : await createBikeshed({UserId: opts.UserId})
+
+    Object.assign(opts, {
+      BikeshedId: bikeshed.id,
+      UserId: user.id
+    })
 
     return await Vote.create(opts)
   }
@@ -121,19 +129,20 @@ module.exports = function buildFactories (models, s3) {
    */
   async function createRating (opts={}) {
     const vote = opts.VoteId
-      ? await Vote.find(opts.VoteId)
+      ? await Vote.findById(opts.VoteId)
       : await createVote()
-    opts.VoteId = vote.id
 
     const bike = opts.BikeId
-      ? await Bike.find(opts.BikeId)
+      ? await Bike.findById(opts.BikeId)
       : await createBike({BikeshedId: vote.BikeshedId})
-    opts.BikeId = bike.id
 
-    const value = opts.value
-      ? opts.value
-      : await Bike.count({where: {BikeshedId: vote.BikeshedId}})
-    opts.value = value
+    const value = opts.value || await Bike.count({where: {BikeshedId: vote.BikeshedId}})
+
+    Object.assign(opts, {
+      VoteId: vote.id,
+      BikeId: bike.id,
+      value: value
+    })
 
     return await Rating.create(opts)
   }
@@ -143,8 +152,8 @@ module.exports = function buildFactories (models, s3) {
    * @param {Object} opts
    * @param {String} [opts.UserId]
    * @param {String} [opts.BikeshedId]
-   * @param {Number} [opts.bikes=2]
-   * @param {Number} [opts.votes=5]
+   * @param {Number} [opts.bikes=2] Desired bike count
+   * @param {Number} [opts.votes=5] Desired vote count
    * @returns {Promise} Promise to all models
    */
   async function createPopulatedBikeshed (opts={}) {
@@ -154,11 +163,11 @@ module.exports = function buildFactories (models, s3) {
     })
 
     const user = opts.UserId
-      ? await User.find(opts.UserId)
+      ? await User.findById(opts.UserId)
       : await createUser()
 
     const bikeshed = opts.BikeshedId
-      ? await Bikeshed.find(opts.BikeshedId)
+      ? await Bikeshed.findById(opts.BikeshedId)
       : await createBikeshed({UserId: user.id})
 
     const bikes = await Promise.all(_.times(opts.bikes, n =>
@@ -174,8 +183,8 @@ module.exports = function buildFactories (models, s3) {
     ))
 
     const ratings = await Promise.all(votes.map(vote =>
-      Promise.all(_.shuffle(bikes).map((bike, idx) =>
-        createRating({
+      Rating.bulkCreate(_.shuffle(bikes).map((bike, idx) =>
+        ({
           BikeId: bike.id,
           VoteId: vote.id,
           value: idx
