@@ -1,372 +1,268 @@
-var _ = require('lodash'),
-  assert = require('assert'),
-  uuid = require('node-uuid'),
-  Router = require('koa-router'),
-  body = require('koa-better-body')
+const Joi = require('joi')
+const _ = require('lodash')
+const Router = require('koa-router')
+const bodyParser = require('koa-body')
+const middleware = require('../../utils/middleware')
+const uploadBike = require('../../utils/upload-bike')
+const getFullBikeshed = require('../../utils/get-full-bikeshed')
 
+/**
+ * Bikesheds controller
+ */
 module.exports = BikeshedsController
-function BikeshedsController ({helpers}={}) {
-  assert(helpers, 'BikeshedsController requires helpers')
+function BikeshedsController () {
 
-  var {middleware} = helpers,
-    auth = middleware.auth(),
-    loadBikeshed = middleware.load('Bikeshed'),
-    authLoadBikeshed = middleware.load('Bikeshed', {parent: 'User'})
+  // Middleware
+  const auth = middleware.authenticate()
+  const loadBikeshed = middleware.load('Bikeshed')
 
-  var jsonBody = body(),
-    multiBody = body({
-      multipart: true,
-      formidable: {
-        multiples: false
+  const parseJsonForm = bodyParser()
+  const parseFileForm = bodyParser({
+    multipart: true,
+    formidable: {
+      multiples: true
+    }
+  })
+
+  const checkCreateSchema = middleware.checkSchema(
+    BikeshedsController.create.schema
+  )
+  const checkRateSchema = middleware.checkSchema(
+    BikeshedsController.rate.schema
+  )
+
+  // Routes
+  const routes = new Router({
+    prefix: '/api'
+  })
+  .get(
+    '/bikesheds',
+    BikeshedsController.index
+  )
+  .post(
+    '/bikesheds',
+    auth,
+    parseFileForm,
+    checkCreateSchema,
+    BikeshedsController.create
+  )
+  .get(
+    '/bikesheds/:bikeshed',
+    BikeshedsController.show
+  )
+  .post(
+    '/bikesheds/:bikeshed/votes',
+    auth,
+    loadBikeshed,
+    parseJsonForm,
+    checkRateSchema,
+    BikeshedsController.rate
+  )
+
+  return routes.middleware()
+}
+
+/**
+ * GET /api/bikesheds
+ * @query {limit=20}
+ * @query {after=Date.now()}
+ */
+BikeshedsController.index = function* index () {
+  const {Bikeshed} = this.models
+  const query = this.query
+
+  // Query params
+  const limit = BikeshedsController.index.getLimit(query.limit)
+  const after = BikeshedsController.index.getAfter(query.after)
+
+  const bikesheds = yield Bikeshed.findAll({
+    limit: limit,
+    order: [
+      ['createdAt', 'DESC']
+    ],
+    where: {
+      createdAt: {
+        $lt: after
       }
+    }
+  })
+
+  this.body = yield bikesheds.map(bikeshed =>
+    getFullBikeshed({
+      BikeshedId: bikeshed.id,
+      user: this.state.user,
+      models: this.models
+    })
+  )
+}
+
+/**
+ * Get limit
+ * Must be a numer between 0 and 100
+ * @param {Any} [limit] Value to convert to limit
+ * @returns {Number} limit
+ */
+BikeshedsController.index.getLimit = function getLimit (limit) {
+  limit = /^([0-9]{1,3})$/.test(limit) ? Number(limit) : 20
+  return limit < 0 || limit > 100 ? 20 : limit
+}
+
+/**
+ * Get after
+ * Must be a unix timestamp number or Date string
+ * @param {Any} [after] Value to convert to ater
+ * @returns {Date} after
+ */
+BikeshedsController.index.getAfter = function getAfter (after) {
+  after = new Date(/^([0-9]+)$/.test(after) ? Number(after) * 1000 : after)
+  return after.valueOf() ? after : new Date()
+}
+
+/**
+ * POST /api/bikesheds
+ */
+BikeshedsController.create = function* create () {
+  const {Bikeshed, Bike} = this.models
+  const {user, body} = this.state
+  const {fields, files} = body
+
+  // Do everything in a transaction
+  const transaction = yield this.models.sequelize.transaction()
+  try {
+
+    // Create bikeshed
+    const bikeshed = this.state.bikeshed = yield Bikeshed.create({
+      description: fields.description,
+      UserId: user.id
+    }, {
+      transaction
     })
 
-  var bikeshedRoutes = new Router()
-
-    // public
-    .get('/bikesheds', index)
-    .get('/bikesheds/:bikeshed', loadBikeshed, show)
-    .get('/bikesheds/:bikeshed/bikes', loadBikeshed, score)
-
-    // private
-    .post('/bikesheds', auth, jsonBody, create)
-    .del('/bikesheds/:bikeshed', auth, authLoadBikeshed, destroy)
-    .post('/bikesheds/:bikeshed', auth, authLoadBikeshed, multiBody, add)
-    .patch('/bikesheds/:bikeshed', auth, authLoadBikeshed, jsonBody, patch)
-    .post('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, rate)
-    .put('/bikesheds/:bikeshed/bikes', auth, loadBikeshed, jsonBody, change)
-    .get('/bikesheds/:bikeshed/bikes/votes', auth, loadBikeshed, votes)
-    // .del('/bikesheds/:bikeshed/bikes/:bike', auth, authLoadBikeshed, authLoadBike, remove)
-
-  return bikeshedRoutes.middleware()
-}
-
-/**
- * GET /bikesheds
- * Public
- * Parameters: last, limit
- *  limit: default 12, [1..96]
- *  last: default Date.now(), unix timestamp in milliseconds
- */
-exports.index = index
-function* index () {
-  var {Bikeshed} = this.models,
-    {last, limit} = this.query
-
-  var bikesheds = yield Bikeshed.findAll({
-    limit: limit >= 1 ? (limit < 96 ? limit : 96) : 12,
-    order: [['openedAt', 'DESC']],
-    where: {
-      status: {ne: 'incomplete'},
-      openedAt: {
-        lt: new Date(_.parseInt(last) || Date.now()),
-        ne: null
+    // Create bikes
+    const bikes = yield Bike.bulkCreate(Object.keys(files).map(name => {
+      const file = files[name]
+      return {
+        type: file.type,
+        size: file.size,
+        name: file.name,
+        BikeshedId: bikeshed.id
       }
-    }
-  })
+    }), {
+      validate: true,
+      transaction
+    })
 
-  this.body = bikesheds
-}
+    // Upload bikes
+    // @TODO Handle failure
+    yield Promise.all(bikes.map(bike =>
+      uploadBike(this.s3, {
+        file: files[bike.name].path,
+        BikeshedId: bikeshed.id,
+        BikeId: bike.id
+      })
+    ))
 
-/**
- * POST /bikesheds
- * Protected
- * Body: {name: string, body: string}
- */
-exports.create = create
-function* create () {
-  if (!this.request.body.fields) this.throw(400, 'empty body')
-
-  var fields = _.assign({UserId: this.state.user.id},
-    _.pick(this.request.body.fields, ['name', 'body']))
-
-  var bikeshed = this.models.Bikeshed.build(fields),
-    bikeshedValidation = yield bikeshed.validate()
-  if (bikeshedValidation) {
-    this.body = bikeshedValidation
-    this.status = 422
-  } else {
-    this.body = yield bikeshed.save()
-    this.status = 201
-  }
-}
-
-/**
- * GET /bikesheds/:bikeshed
- * Public
- */
-exports.show = show
-function* show () {
-  this.body = this.state.bikeshed
-}
-
-/**
- * POST /bikesheds/:bikeshed
- * Protected
- * Body: {name: string, body: string, image: file}
- */
-exports.add = add
-function* add () {
-  if (!this.request.body.fields) this.throw(400, 'empty body')
-
-  var bikeshed = this.state.bikeshed
-  if (bikeshed.status !== 'incomplete') {
-    this.throw(403, 'can only add bikes to incomplete bikeshed')
-  } else if (bikeshed.size >= 5) {
-    this.throw(403, 'cannot insert over 5 bikes per bikeshed')
-  }
-
-  var image = _.values(this.request.body.files)[0],
-    fields = _.assign({
-      BikeshedId: this.state.bikeshed.id, imageType: image && image.type
-    }, _.pick(this.request.body.fields, ['name', 'body']))
-
-  var bike = this.models.Bike.build(fields),
-    bikeValidation = yield bike.validate()
-  if (bikeValidation) {
-    this.body = bikeValidation
-    if (_.where(bikeValidation.errors, {path: 'imageType'})) {
-      this.throw(415)
-    } else {
-      this.throw(422)
-    }
-  }
-
-  var s3Options = {}
-  if (image) {
-    bike.imageName = uuid.v4()
-    s3Options.upload = {
-      localFile: image.path,
-      s3Params: {
-        ACL: 'public-read',
-        ContentType: bike.imageType,
-        Bucket: bike.bucket,
-        Key: bike.key
-      }
-    }
-    s3Options.destroy = {
-      Delete: {Objects: [{Key: bike.key}]},
-      Bucket: bike.bucket
-    }
-  }
-
-  var t = yield this.models.sequelize.transaction()
-  try {
-    bike = yield bike.save({transaction: t})
-    if (image) yield this.s3.attemptUpload(s3Options)
-    yield t.commit()
+    // Finished
+    yield transaction.commit()
   } catch (err) {
-    yield t.rollback()
-    if (err.message === 'cannot insert over 5 bikes per bikeshed') {
-      this.throw(403, err.message)
-    } else if (err.message === 'can only add bikes to incomplete bikeshed') {
-      this.throw(403, err.message)
-    } else if (err.message === 'could not serialize access due to concurrent update') {
-      this.throw(409, err.message)
-    } else {
-      this.throw(503)
-    }
+    console.log('err', err)
+    yield transaction.rollback()
+    throw err
   }
-  this.body = bike
+
+  this.body = yield getFullBikeshed({
+    BikeshedId: this.state.bikeshed.id,
+    user: this.state.user,
+    models: this.models
+  })
   this.status = 201
 }
 
 /**
- * PATCH /biksheds/:bikeshed
- * Protected
- * Body: {name: string, body: string, status: string}
+ * Create bikeshed schema
+ * Check validation on ctx.request.body
  */
-exports.patch = patch
-function* patch () {
-  if (!this.request.body.fields) this.throw(400, 'empty body')
-
-  var bikeshed = this.state.bikeshed,
-    {name, body, status} = _.pick(this.request.body.fields, ['name', 'body', 'status'])
-
-  if ((name || body) && bikeshed.status !== 'incomplete')
-    this.throw(422, 'can only update name and body on incomplete bikeshed')
-
-  if (bikeshed.status === 'incomplete') {
-    if (_.isString(name)) bikeshed.name = name
-    if (_.isString(body)) bikeshed.body = body
-  }
-
-  if (bikeshed.status === 'incomplete' && status === 'open') bikeshed.openedAt = new Date()
-  if (bikeshed.status === 'open' && status === 'closed') bikeshed.closedAt = new Date()
-  if (_.isString(status)) bikeshed.status = status
-
-  var validation = yield bikeshed.validate()
-  if (validation) {
-    this.body = validation
-    this.throw(422)
-  }
-
-  this.body = yield bikeshed.save()
-  this.status = 200
-}
-
-/**
- * DELETE /bikeshed/:bikeshed
- * Protected
- */
-exports.destroy = destroy
-function* destroy () {
-  yield this.state.bikeshed.destroy()
-  this.status = 204
-}
-
-/**
- * GET /bikesheds/:bikeshed/bikes
- * Public
- */
-exports.score = score
-function* score () {
-  var BikeshedId = this.state.bikeshed.id
-  this.body = yield this.models.Bike.findAll({
-    order: [['score', 'ASC']], where: {BikeshedId}
+BikeshedsController.create.schema = Joi.object().required().keys({
+  files: Joi.object().min(2).max(10).required(),
+  fields: Joi.object().default({}).keys({
+    description: Joi.string().default('')
   })
-}
+})
 
 /**
- * POST /bikesheds/:bikeshed/bikes
- * Protected
- * Body: {[BikeId]: {value: number}}
- * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
+ * GET /api/bikesheds/:bikeshed
  */
-exports.rate = rate
-function* rate () {
-  if (!this.request.body.fields) this.throw(400, 'empty body')
-
-  var {retry} = this.helpers,
-    {Vote, Bike, sequelize} = this.models,
-    {bikeshed, user} = this.state,
-    BikeshedId = bikeshed.id,
-    UserId = user.id
-
-  if (bikeshed.status !== 'open') {
-    this.throw(403, 'bikeshed must be open')
-  } else if (yield Vote.count({where: {BikeshedId, UserId}})) {
-    this.throw(403, 'already voted')
-  }
-
-  var bikes = yield Bike.findAll({where: {BikeshedId}})
-  var votes = _.pairs(this.request.body.fields)
-  .map(function (pair) {
-    var BikeId = _.parseInt(pair[0]), {value} = _.pick(pair[1], ['value'])
-    return Vote.build({BikeshedId, UserId, BikeId, value})
+BikeshedsController.show = function* show () {
+  const bikeshed = yield getFullBikeshed({
+    BikeshedId: this.params.bikeshed,
+    user: this.state.user,
+    models: this.models
   })
 
-  if (bikes.length !== votes.length) {
-    this.throw(422, 'must vote for each bike')
-  } else if (_.difference(_.pluck(votes, 'BikeId'), _.pluck(bikes, 'id')).length) {
-    this.throw(422, 'must vote on bikes')
-  } else if (_.difference(_.range(votes.length), _.pluck(votes, 'value')).length) {
-    this.throw(422, 'must have unique value per bike')
-  }
+  this.assert(bikeshed, 404, 'Bikeshed not found')
+  this.body = bikeshed
+}
 
-  var validations = (yield votes.map(vote => vote.validate())).filter(vote => vote)
-  if (validations.length) {
-    this.body = validations
-    this.throw(422)
-  }
+/**
+ * POST /api/bikesheds/:bikeshed
+ */
+BikeshedsController.rate = function* rate () {
+  const {Bike, Rating, Vote, sequelize} = this.models
+  const {user, bikeshed, body} = this.state
 
-  var saveVotes = function* saveVotes () {
-    var result, transaction = yield sequelize.transaction()
-    try {
-      result = yield votes.map(vote => vote.save({transaction}))
-      yield transaction.commit()
-    } catch (err) {
-      yield transaction.rollback()
-      throw err
+  const ratings = _.indexBy(body.ratings, 'BikeId')
+
+  const bikes = yield Bike.findAll({
+    where: {
+      BikeshedId: bikeshed.id
     }
-    return result
+  })
+
+  // Do everything in a transaction
+  const transaction = yield sequelize.transaction()
+  try {
+    // Create vote
+    const vote = yield Vote.create({
+      BikeshedId: bikeshed.id,
+      UserId: user.id
+    }, {
+      transaction
+    })
+
+    // Create ratings
+    yield Rating.bulkCreate(bikes.map(bike => {
+      return {
+        BikeId: bike.id,
+        VoteId: vote.id,
+        value: _.get(ratings, [bike.id, 'value'])
+      }
+    }, {
+      transaction
+    }))
+
+    yield transaction.commit()
+  } catch (err) {
+    yield transaction.rollback()
+    throw err
   }
 
-  this.body = yield retry(saveVotes)
+  this.body = yield getFullBikeshed({
+    BikeshedId: bikeshed.id,
+    user: this.state.user,
+    models: this.models
+  })
   this.status = 201
 }
 
 /**
- * PUT /bikesheds/:bikeshed/bikes
- * Protected
- * Body: {[BikeId]: {value: number}}
- * Example: {1:{value:0}, 2:{value:1}, 3:{value:2}}
+ * Rate bikeshed schema
+ * Check validation on ctx.request.body
  */
-exports.change = change
-function* change () {
-  if (!this.request.body.fields) {
-    this.throw(400, 'empty body')
-  } else if (this.state.bikeshed.status !== 'open') {
-    this.throw(403, 'bikeshed must be open')
-  }
-
-  var {retry} = this.helpers,
-    {Vote, sequelize} = this.models,
-    {bikeshed, user} = this.state,
-    BikeshedId = bikeshed.id,
-    UserId = user.id
-
-  var fields = _.mapValues(this.request.body.fields, (field) => _.pick(field, 'value')),
-    votes = yield Vote.findAll({where: {BikeshedId, UserId}})
-
-  if (!votes.length) {
-    this.throw(403, 'must vote first')
-  } else if (votes.length !== _.keys(fields).length) {
-    this.throw(422, 'must vote on bikeshed bikes')
-  } else if (_.difference(votes.map(vote => vote.BikeId.toString()), _.keys(fields)).length) {
-    this.throw(422, 'must vote on each bike')
-  } else if (_.difference(_.range(votes.length), _.pluck(fields, 'value')).length) {
-    this.throw(422, 'must use unique value per bike')
-  }
-
-  votes.forEach(vote => vote.value = fields[vote.BikeId].value)
-
-  var validations = (yield votes.map(vote => vote.validate())).filter(vote => vote)
-  if (validations.length) {
-    this.body = validations
-    this.throw(422)
-  }
-
-  var saveVotes = function* saveVotes (votes, sequelize) {
-    var result, transaction = yield sequelize.transaction()
-    try {
-      result = yield votes.map(vote => vote.save({transaction}))
-      yield transaction.commit()
-    } catch (err) {
-      yield transaction.rollback()
-      throw err
-    }
-    return result
-  }
-
-  this.body = yield retry(saveVotes(votes, sequelize))
-  this.status = 200
-}
-
-/**
- * GET /bikesheds/:bikeshed/bikes/votes
- * Protected
- */
-exports.votes = votes
-function* votes () {
-  var {Vote} = this.models,
-    {bikeshed, user} = this.state,
-    BikeshedId = bikeshed.id, UserId = user.id
-
-  var list = yield Vote.findAll({where: {BikeshedId, UserId}})
-  this.body = Vote.asObject(list)
-}
-
-// TODO: add trigger for this to work
-// /**
-//  * DELETE /bikesheds/:bikeshed/bikes/:bike
-//  * Protected
-//  */
-// function* remove () {
-//   if (this.state.bikeshed.status !== 'incomplete') {
-//     this.throw(403, 'can only remove bikes from incomplete bikesheds')
-//   }
-
-//   yield this.state.bike.destroy()
-//   this.status = 204
-// }
+BikeshedsController.rate.schema = Joi.object().required().keys({
+  ratings: Joi.array().min(2).max(10).unique().required().items(
+    Joi.object().required().keys({
+      value: Joi.number().min(1).max(10).required(),
+      BikeId: Joi.string().required()
+    })
+  )
+})
