@@ -44,6 +44,15 @@ Object.assign(server, {
   s3
 })
 
+// Error handler
+server.on('error', function serverError (err, ctx) {
+  const isValidationError = err.name === 'ValidationError'
+  const isHttpError = Object.keys(createError).some(name => err instanceof createError[name])
+
+  if (!isHttpError && !isValidationError)
+    console.error(`\n ${(err.stack || err.toString()).replace(/^/gm, ' ')} \n`)
+})
+
 /**
  * MIDDLEWARE
  */
