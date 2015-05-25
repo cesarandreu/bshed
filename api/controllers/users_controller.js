@@ -4,9 +4,11 @@ const middleware = require('../../utils/middleware')
 module.exports = UsersController
 function UsersController () {
   const auth = middleware.authenticate()
-  const routes = new Router()
+  const routes = new Router({
+    prefix: '/api'
+  })
   .get(
-    '/api/users/current',
+    '/users/current',
     auth,
     UsersController.current
   )
@@ -15,7 +17,7 @@ function UsersController () {
 }
 
 /**
- * GET /users/current
+ * GET /api/users/current
  * Returns current user model
  */
 UsersController.current = function* current () {
