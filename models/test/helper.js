@@ -1,11 +1,14 @@
-var configLoader = require('../../config')
-var modelLoader = require('../index.js')
+const buildFactories = require('../../test/factories')
+const configLoader = require('../../config')
+const modelLoader = require('../index.js')
+const s3Loader = require('../../lib/s3')
 
-var config = configLoader()
-var models = modelLoader({
-  config: config.database
-})
+const config = configLoader()
+const s3 = s3Loader(config.aws)
+const models = modelLoader(config.database)
+const factories = buildFactories(models, s3)
 
 module.exports = {
+  factories,
   models
 }
