@@ -7,6 +7,17 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
+    // @TODO: consider adding username
+    // username: {
+    //   unique: true,
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   validate: {
+    //     len: [2, 256],
+    //     notEmpty: true,
+    //     is: /^[a-z0-9_-]{2,256}$/i
+    //   }
+    // },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
