@@ -94,9 +94,13 @@
     "webpack-dev-server": "^1.7.0"
   },
   "devDependencies": {
+    "babel-eslint": "^3.1.8",
     "chance": "^0.7.5",
     "cookies": "^0.5.0",
     "csrf": "^3.0.0",
+    "eslint": "^0.21.2",
+    "eslint-config-standard": "^1.1.1",
+    "eslint-plugin-react": "^2.3.0",
     "expect.js": "^0.3.1",
     "isparta": "^3.0.0",
     "jsdom": "^5.1.0",
