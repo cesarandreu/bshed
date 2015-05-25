@@ -1,3 +1,6 @@
+const _ = require('lodash')
+const createError = require('http-errors')
+
 module.exports = function (sequelize, DataTypes) {
   const Rating = sequelize.define('Rating', {
     id: {
@@ -21,6 +24,17 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     }
   }, {
+    hooks: {
+      async beforeBulkCreate (ratings, opts) {
+        // Check for missing values
+        const missingValues = _.difference(
+          _.range(1, ratings.length),
+          _.pluck(ratings, 'value')
+        )
+        if (missingValues.length !== 0)
+          throw createError(422, `Missing values ${JSON.stringify(missingValues)}`, {expose: true})
+      }
+    },
     classMethods: {
       associate (models) {
         Rating.belongsTo(models.Bike)
