@@ -21,7 +21,10 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     type: {
-      type: DataTypes.ENUM('image/png', 'image/jpeg'),
+      type: DataTypes.ENUM([
+        'image/png',
+        'image/jpeg'
+      ]),
       allowNull: false,
       validate: {
         isIn: [['image/png', 'image/jpeg']]
