@@ -1,5 +1,5 @@
-var assert = require('assert')
-var fs = require('fs')
+const assert = require('assert')
+const fs = require('fs')
 
 /**
  * Upload bike to s3
@@ -14,10 +14,10 @@ module.exports = async function uploadBike (s3, {BikeId, BikeshedId, file}={}) {
   assert(s3, 'uploadBike requires s3')
   assert(BikeshedId && BikeId && file, 'uploadBike requires BikeshedId, BikeId, and file')
 
-  var Key = `${BikeshedId}/${BikeId}`
-  var Bucket = 'bshed'
+  const Key = `${BikeshedId}/${BikeId}`
+  const Bucket = 'bshed'
 
-  var uploadFileOptions = {
+  const uploadFileOptions = {
     Body: fs.createReadStream(file),
     ACL: 'public-react',
     Bucket, Key
