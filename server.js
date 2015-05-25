@@ -64,6 +64,9 @@ server.use(session(config.middleware.session, server))
 // csrf token
 server.use(csrf())
 
+// Expose errors
+server.use(middleware.exposeError())
+
 // XSRF-TOKEN
 server.use(middleware.setCsrfToken())
 
