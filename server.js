@@ -1,29 +1,30 @@
 // modules
-var koa = require('koa')
-var qs = require('koa-qs')
-var csrf = require('koa-csrf')
-var session = require('koa-session')
-var compress = require('koa-compress')
-var debug = require('debug')('bshed:server')
-var middleware = require('./utils/middleware')
-var responseTime = require('koa-response-time')
+const koa = require('koa')
+const qs = require('koa-qs')
+const csrf = require('koa-csrf')
+const session = require('koa-session')
+const compress = require('koa-compress')
+const createError = require('http-errors')
+const debug = require('debug')('bshed:server')
+const middleware = require('./utils/middleware')
+const responseTime = require('koa-response-time')
 
 // libs and modules
 debug('loading libs and modules')
-var modelLoader = require('./models')
-var s3Loader = require('./lib/s3')
-var apiLoader = require('./api')
+const modelLoader = require('./models')
+const s3Loader = require('./lib/s3')
+const apiLoader = require('./api')
 
 // configuration
 debug('loading and generating config')
-var configGenerator = require('./config')
-var config = configGenerator()
+const configGenerator = require('./config')
+const config = configGenerator()
 
 // initialization
 debug('initializing libs and modules')
-var s3 = s3Loader(config.aws)
-var models = modelLoader(config.database)
-var api = apiLoader({
+const s3 = s3Loader(config.aws)
+const models = modelLoader(config.database)
+const api = apiLoader({
   config,
   models,
   s3
@@ -33,7 +34,7 @@ var api = apiLoader({
  * SERVER
  * Exported so it can be started externally
  */
-var server = module.exports = qs(koa())
+const server = module.exports = qs(koa())
 Object.assign(server, {
   name: config.name,
   keys: config.keys,
