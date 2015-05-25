@@ -10,8 +10,7 @@ function buildUserHeaders (opts) {
   return function (user) {
     return _buildHeaders({
       user: {
-        id: user.id,
-        name: user.name
+        id: user.id
       }
     })
   }
