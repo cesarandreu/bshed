@@ -1,35 +1,32 @@
-var log = require('debug')('bshed:api'),
-  compose = require('koa-compose'),
-  mount = require('koa-mount'),
-  assert = require('assert'),
-  qs = require('koa-qs'),
-  koa = require('koa')
+const debug = require('debug')('bshed:api:loader')
+const compose = require('koa-compose')
+const assert = require('assert')
 
-var controllersLoader = require('./controllers'),
-  helpers = require('./helpers')
+const controllerLoader = require('./controllers')
+const middleware = require('../utils/middleware')
+const helpers = require('../utils/helpers')
 
 /**
  * API loader
- *
- * requires opts.config, opts.models, opts.s3
- * returns api application
+ * @params {Object} opts
+ * @params {Object} opts.s3
+ * @params {Object} opts.config
+ * @params {Object} opts.models
+ * @returns {Application} API routes
  */
-module.exports = function apiLoader ({s3, config, models}={}) {
-  assert(s3 && config && models, 'api requires s3, config, and models')
-  log('loader start')
-  var {name, env, secret, endpoint} = config
-  var {addToContext} = helpers.middleware
-  var controllers = controllersLoader()
-  var api = qs(koa())
-  Object.assign(api, {
-    name, env, secret, config, models, s3, controllers, helpers
-  })
-  var middleware = compose([
-    addToContext({models, s3, helpers}),
-    controllers({helpers})
+module.exports = function apiLoader ({config, models, s3}={}) {
+  assert(config && models && s3, 'api requires config, models, and s3')
+  debug('start')
+
+  const api = compose([
+    middleware.addToContext({
+      helpers,
+      models,
+      s3
+    }),
+    controllerLoader()
   ])
 
-  api.use(mount(endpoint, middleware))
-  log('loader end')
+  debug('end')
   return api
 }
