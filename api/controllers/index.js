@@ -1,33 +1,38 @@
-var fs = require('fs'),
-  path = require('path'),
-  assert = require('assert'),
-  compose = require('koa-compose'),
-  log = require('debug')('bshed:api:controllers')
+const debug = require('debug')('bshed:api:controllers')
+const compose = require('koa-compose')
 
-module.exports = function controllersLoader () {
-  log('load start')
-  fs.readdirSync(__dirname)
-  .filter(file => file.indexOf('.') !== 0 && file !== 'index.js' && file !== 'test')
-  .forEach(file => {
-    var name = file.split('_controller').shift()
-    var controllerPath = path.join(__dirname, file)
-    controllers[name] = require(controllerPath)
-    log(`${name} loaded from ${controllerPath}`)
-  })
-  log('load end')
+/**
+ * List of controllers to load
+ * Kept manually because there's not that many, and it's a little faster
+ */
+const CONTROLLER_LIST = [
+  'authentications',
+  'bikesheds',
+  'users'
+]
 
-  return controllers
+/**
+ * Controller loader
+ * Loads CONTROLLER_LIST
+ * Gets each controller's middleware
+ * @returns Middleware for all controllers
+ */
+module.exports = function controllerLoader () {
+  debug('start')
 
-  function controllers ({helpers}) {
-    assert(helpers, 'controllers require helpers')
+  // Load controllers
+  const controllers = CONTROLLER_LIST.reduce((controllers, name) => {
+    debug(`loading ${name} controller`)
+    controllers[name] = require(`./${name}_controller.js`)
+    return controllers
+  }, {})
 
-    log('middleware start')
-    var middleware = Object.keys(controllers)
-    .map(name => {
-      log(`initializing ${name}`)
-      return controllers[name]({helpers})
-    })
-    log('middleware end')
-    return compose(middleware)
-  }
+  // Get middleware
+  const middleware = compose(Object.keys(controllers).map(name => {
+    debug(`getting middleware for ${name} controller`)
+    return controllers[name]()
+  }))
+
+  debug('end')
+  return middleware
 }
