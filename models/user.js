@@ -8,14 +8,15 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: DataTypes.UUIDV4
     },
     name: {
-      unique: true,
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        max: 255,
         notEmpty: true
       }
     },
     email: {
+      unique: true,
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
