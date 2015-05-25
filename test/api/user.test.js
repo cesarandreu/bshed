@@ -1,39 +1,39 @@
-'use strict'
+// 'use strict'
 
-var {buildHeaders, request, models: {User}} = require('./helper'),
-  {expect} = require('chai'),
-  user, headers, url, res
+// var {buildHeaders, request, models: {User}} = require('./helper'),
+//   {expect} = require('chai'),
+//   user, headers, url, res
 
-describe('Request:User', function () {
+// describe('Request:User', function () {
 
-  describe('GET /api/users/current', function () {
+//   describe('GET /api/users/current', function () {
 
-    beforeEach(function* () {
-      url = '/api/users/current'
-      user = yield User.create({
-        name: 'Bob',
-        email: 'bob@example.com'
-      })
-      headers = buildHeaders({user: {id: user.id}})
-    })
+//     beforeEach(function* () {
+//       url = '/api/users/current'
+//       user = yield User.create({
+//         name: 'Bob',
+//         email: 'bob@example.com'
+//       })
+//       headers = buildHeaders({user: {id: user.id}})
+//     })
 
-    it('returns 200 and current user', function* () {
-      res = yield request.get(url).set(headers).expect(200)
-      expect(res.body).to.be.an('object')
-      ; ['id', 'name', 'email'].forEach(function (value) {
-        expect(res.body[value]).to.equal(user[value])
-      })
-    })
+//     it('returns 200 and current user', function* () {
+//       res = yield request.get(url).set(headers).expect(200)
+//       expect(res.body).to.be.an('object')
+//       ; ['id', 'name', 'email'].forEach(function (value) {
+//         expect(res.body[value]).to.equal(user[value])
+//       })
+//     })
 
-    it('returns 401 without headers', function* () {
-      yield request.get(url).expect(401)
-    })
+//     it('returns 401 without headers', function* () {
+//       yield request.get(url).expect(401)
+//     })
 
-    it('returns 401 when user isn\'t found', function* () {
-      yield user.destroy()
-      yield request.get(url).set(headers).expect(401)
-    })
+//     it('returns 401 when user isn\'t found', function* () {
+//       yield user.destroy()
+//       yield request.get(url).set(headers).expect(401)
+//     })
 
-  })
+//   })
 
-})
+// })
