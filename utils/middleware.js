@@ -50,10 +50,10 @@ exports.authenticate = function authenticate () {
  * @example
  * // Uses Bikeshed model, bikeshed param, sets ctx.state.bikeshed
  * load('Bikeshed')
- * @param {String} resource Model name
+ * @param {string} resource Model name
  * @param {Object} [opts={}] Options
- * @param {String} [opts.name=resource.toLowerCase()] Param value to check
- * @param {String} [opts.key='id'] Searching value to use
+ * @param {string} [opts.name=resource.toLowerCase()] Param value to check
+ * @param {string} [opts.key='id'] Searching value to use
  * @returns {GeneratorFunction} Model loading middleware
  */
 exports.load = function load (resource, {key='id', name=resource.toLowerCase()}={}) {
@@ -72,7 +72,7 @@ exports.load = function load (resource, {key='id', name=resource.toLowerCase()}=
 
 /**
  * Middleware to set XSRF-TOKEN cookie on every response
- * @returns {GeneratorFunction}
+ * @returns {GeneratorFunction} setCsrfCookieMidleware
  */
 exports.setCsrfToken = function setCsrfToken () {
   return function* setCsrfCookieMidleware (next) {
