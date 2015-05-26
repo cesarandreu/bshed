@@ -1,6 +1,6 @@
 module.exports = {
   development: {
-    username: null,
+    username: process.env.DB_USERNAME || null,
     password: null,
     database: 'bshed_development',
     host: '127.0.0.1',
@@ -15,7 +15,7 @@ module.exports = {
     logging: false
   },
   production: {
-    username: null,
+    username: process.env.DB_USERNAME || null,
     password: null,
     database: 'bshed_production',
     host: '127.0.0.1',
