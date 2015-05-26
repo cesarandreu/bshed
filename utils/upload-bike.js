@@ -3,11 +3,11 @@ const fs = require('fs')
 
 /**
  * Upload bike to s3
- * @param {Object} s3 Client for s3
+ * @param {Object} s3 Client instance of s3
  * @param {Object} config
- * @param {String} config.BikeId Bike UUID
- * @param {String} config.BikeshedId Bikeshed UUID
- * @param {String} config.file Image location
+ * @param {string} config.BikeId Bike UUID
+ * @param {string} config.BikeshedId Bikeshed UUID
+ * @param {string} config.file Image location
  * @returns {Promise} Upload bike promise
  */
 module.exports = async function uploadBike (s3, {BikeId, BikeshedId, file}={}) {
