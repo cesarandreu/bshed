@@ -78,11 +78,9 @@ exports.setCsrfToken = function setCsrfToken () {
   return function* setCsrfCookieMidleware (next) {
     yield next
 
-    // Session check needed in case it's null
-    if (this.session)
-      this.cookies.set('XSRF-TOKEN', this.csrf, {
-        httpOnly: false
-      })
+    this.cookies.set('XSRF-TOKEN', this.csrf, {
+      httpOnly: false
+    })
   }
 }
 
