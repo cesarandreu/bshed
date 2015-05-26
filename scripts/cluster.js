@@ -1,15 +1,22 @@
-var cluster = require('cluster'),
-  numCPUs = require('os').cpus().length
+const cluster = require('cluster')
+const numCPUs = require('os').cpus().length
 
 if (cluster.isMaster) {
-  for (var i = 0; i < numCPUs; i++) cluster.fork()
+  times(numCPUs, function () {
+    cluster.fork()
+  })
 
   cluster.on('exit', function (worker, code, signal) {
     console.log('worker ' + worker.process.pid + ' died')
   })
 } else {
-  require('babel/register')({
-    ignore: /public|node_modules/
-  })
+  require('babel/register')()
   require('../server.js').init()
+}
+
+function times (n, fn) {
+  if (n) {
+    fn(n)
+    times(n - 1, fn)
+  }
 }
