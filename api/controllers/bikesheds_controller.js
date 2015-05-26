@@ -98,9 +98,10 @@ BikeshedsController.index = function* index () {
 
 /**
  * Get limit
- * Must be a numer between 0 and 100
- * @param {Any} [limit] Value to convert to limit
- * @returns {Number} limit
+ * Must be a number between 0 and 100
+ * Invalid input will return 20
+ * @param {(number|string)} [limit] Value to convert to limit
+ * @returns {number} limit
  */
 BikeshedsController.index.getLimit = function getLimit (limit) {
   limit = /^([0-9]{1,3})$/.test(limit) ? Number(limit) : 20
@@ -110,7 +111,8 @@ BikeshedsController.index.getLimit = function getLimit (limit) {
 /**
  * Get after
  * Must be a unix timestamp number or Date string
- * @param {Any} [after] Value to convert to ater
+ * Invalid input will return a Date with the current time
+ * @param {*} [after] Value to convert to after
  * @returns {Date} after
  */
 BikeshedsController.index.getAfter = function getAfter (after) {
