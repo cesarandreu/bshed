@@ -1,14 +1,7 @@
 const {request, buildUserHeaders, factories, fixtures} = require('./helper')
 const expect = require('expect.js')
 
-var user
-var bikes
-var votes
-var headers
-var bikeshed
-
 describe('Request:Bikesheds', function () {
-
   describe('GET /api/bikesheds', function () {
     it('returns a list of bikesheds', async function () {
       const res = await request
@@ -24,12 +17,10 @@ describe('Request:Bikesheds', function () {
   })
 
   describe('POST /api/bikesheds', function () {
-    beforeEach(async function () {
-      user = await factories.createUser()
-      headers = buildUserHeaders(user)
-    })
-
     it('lets you create bikeshed and returns 201', async function () {
+      const user = await factories.createUser()
+      const headers = buildUserHeaders(user)
+
       const res = await request
         .post('/api/bikesheds')
         .set(headers)
@@ -44,6 +35,9 @@ describe('Request:Bikesheds', function () {
     })
 
     it('fails with < 2 file', async function () {
+      const user = await factories.createUser()
+      const headers = buildUserHeaders(user)
+
       await request
         .post('/api/bikesheds')
         .set(headers)
@@ -58,13 +52,9 @@ describe('Request:Bikesheds', function () {
   })
 
   describe('GET /api/bikesheds/:bikeshed', function () {
-
-    beforeEach(async function () {
-      const result = await factories.createPopulatedBikeshed()
-      bikeshed = result.bikeshed
-    })
-
     it('returns a bikeshed with bikes and votes', async function () {
+      const {bikeshed} = await factories.createPopulatedBikeshed()
+
       const res = await request
         .get(`/api/bikesheds/${bikeshed.id}`)
         .expect(200)
@@ -77,16 +67,10 @@ describe('Request:Bikesheds', function () {
   })
 
   describe('POST /api/bikesheds/:bikeshed/votes', function () {
-    beforeEach(async function () {
-      const result = await factories.createPopulatedBikeshed()
-      bikeshed = result.bikeshed
-      bikes = result.bikes
-      votes = result.votes
-    })
-
-    it('allows you to vote once', async function () {
-      user = await factories.createUser()
-      headers = buildUserHeaders(user)
+    it('allows you to vote', async function () {
+      const {bikeshed, bikes} = await factories.createPopulatedBikeshed()
+      const user = await factories.createUser()
+      const headers = buildUserHeaders(user)
 
       const ratings = bikes.map((bike, idx) => {
         return {
@@ -105,25 +89,24 @@ describe('Request:Bikesheds', function () {
     })
 
     it('returns 409 when you already voted', async function () {
-      headers = buildUserHeaders({
+      const {bikeshed, bikes, votes} = await factories.createPopulatedBikeshed()
+      const headers = buildUserHeaders({
         id: votes[0].UserId
       })
 
-      const ratings = bikes.map((bike, idx) =>
-        ({
+      const ratings = bikes.map((bike, idx) => {
+        return ({
           BikeId: bike.id,
           value: idx + 1
         })
-      )
+      })
 
       await request
         .post(`/api/bikesheds/${bikeshed.id}/votes`)
         .send({ratings})
         .set(headers)
         .expect(409)
-
     })
-
   })
 })
 
