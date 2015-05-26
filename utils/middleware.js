@@ -4,8 +4,8 @@ const helpers = require('./helpers')
 
 /**
  * Check Joi schema
- * @param {Object} Joi schema to check
- * @returns {Middleware} checkSchemaMiddleware
+ * @param {Object} schema Joi schema to check
+ * @returns {GeneratorFunction} checkSchemaMiddleware
  */
 exports.checkSchema = function checkSchema (schema) {
   assert(schema, 'checkSchema requires schema')
@@ -18,7 +18,7 @@ exports.checkSchema = function checkSchema (schema) {
 /**
  * Adds all enumerable keys in objects to context
  * @param {Object} [objects={}]
- * @returns {Middleware} addToContextMiddleware
+ * @returns {GeneratorFunction} addToContextMiddleware
  */
 exports.addToContext = function addToContext (objects={}) {
   return function* addToContextMiddleware (next) {
@@ -30,7 +30,7 @@ exports.addToContext = function addToContext (objects={}) {
 /**
  * Loads user to ctx.state.user using session user.id
  * Throw 401 if session isn't set or user isn't found
- * @returns {Middleware} authenticateMiddleware
+ * @returns {GeneratorFunction} authenticateMiddleware
  */
 exports.authenticate = function authenticate () {
   return function* authenticateMiddleware (next) {
@@ -54,7 +54,7 @@ exports.authenticate = function authenticate () {
  * @param {Object} [opts={}] Options
  * @param {String} [opts.name=resource.toLowerCase()] Param value to check
  * @param {String} [opts.key='id'] Searching value to use
- * @returns {Middleware} Model loading middleware
+ * @returns {GeneratorFunction} Model loading middleware
  */
 exports.load = function load (resource, {key='id', name=resource.toLowerCase()}={}) {
   assert(resource, 'load middleware requires a resource')
@@ -72,7 +72,7 @@ exports.load = function load (resource, {key='id', name=resource.toLowerCase()}=
 
 /**
  * Middleware to set XSRF-TOKEN cookie on every response
- * @returns {Middleware}
+ * @returns {GeneratorFunction}
  */
 exports.setCsrfToken = function setCsrfToken () {
   return function* setCsrfCookieMidleware (next) {
@@ -89,7 +89,7 @@ exports.setCsrfToken = function setCsrfToken () {
 /**
  * Middleware to set logged_in cookie on every response
  * Used by client to try to guess allowed states
- * @returns {Middleware} setLoggedInCookieMiddleware
+ * @returns {GeneratorFunction} setLoggedInCookieMiddleware
  */
 exports.setLoggedInCookie = function setLoggedInCookie () {
   return function* setLoggedInCookieMiddleware (next) {
@@ -103,7 +103,7 @@ exports.setLoggedInCookie = function setLoggedInCookie () {
 
 /**
  * Middleware to expose errors when not in production mode
- * @returns {Middleware} exposeErrorMiddleware
+ * @returns {GeneratorFunction} exposeErrorMiddleware
  */
 exports.exposeError = function exposeError () {
   return function* exposeErrorMiddleware (next) {
