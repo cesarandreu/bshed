@@ -42,7 +42,7 @@ module.exports = function (sequelize, DataTypes) {
    * Confirm Vote.count matches expected value
    * @param {Instance} vote Model instance
    * @param {Object} opts Model options
-   * @param {Number} value Expected count
+   * @param {number} value Expected count
    * @returns {Promise}
    */
   async function confirmVoteCount (vote, opts, value) {

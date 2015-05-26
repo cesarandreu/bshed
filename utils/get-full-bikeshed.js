@@ -2,10 +2,12 @@ const assert = require('assert')
 const _ = require('lodash')
 
 /**
- * Get full bikeshed
- * @param {Number} BikeshedId Bikeshed ID
- * @params {Object} models
- * @returns {Promise}
+ * Get bikeshed with votes
+ * @param {Object} params
+ * @param {Object} params.models Models
+ * @param {number} params.BikeshedId Bikeshed ID
+ * @param {Object} params.user Current user instance
+ * @returns {Promise<Object>}
  */
 module.exports = async function getFullBikeshed ({user, BikeshedId, models}={}) {
   assert(BikeshedId, 'BikeshedId required')

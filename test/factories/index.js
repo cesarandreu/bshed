@@ -149,12 +149,12 @@ module.exports = function buildFactories (models, s3) {
 
   /**
    * Create populated Bikeshed
-   * @param {Object} opts
-   * @param {String} [opts.UserId]
-   * @param {String} [opts.BikeshedId]
-   * @param {Number} [opts.bikes=2] Desired bike count
-   * @param {Number} [opts.votes=5] Desired vote count
-   * @returns {Promise} Promise to all models
+   * @param {Object} [opts={}]
+   * @param {string} [opts.UserId]
+   * @param {string} [opts.BikeshedId]
+   * @param {number} [opts.bikes=2] Desired bike count
+   * @param {number} [opts.votes=5] Desired vote count
+   * @returns {Promise<Object>} Promise to all created instances
    */
   async function createPopulatedBikeshed (opts={}) {
     _.defaults(opts, {
@@ -207,8 +207,8 @@ module.exports = function buildFactories (models, s3) {
 
 /**
  * Get file mime type
- * @param {String} file File path
- * @returns {Promise<String>} File type promise
+ * @param {string} file File path
+ * @returns {Promise<string>} File type promise
  */
 function getFileType (file) {
   return new Promise((resolve, reject) => {
@@ -221,7 +221,7 @@ function getFileType (file) {
 /**
  * Get file size
  * @param {String} file File path
- * @returns {Promise<Number>} File size promise
+ * @returns {Promise<number>} File size promise
  */
 function getFileSize (file) {
   return new Promise((resolve, reject) => {
