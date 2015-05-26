@@ -32,9 +32,8 @@ const api = apiLoader({
 
 /**
  * SERVER
- * Exported so it can be started externally
  */
-const server = module.exports = qs(koa())
+const server = qs(koa())
 Object.assign(server, {
   name: config.name,
   keys: config.keys,
@@ -95,7 +94,6 @@ server.use(api)
 
 /**
  * SERVER INITIALIZER
- *
  * Listen for connections
  * returns server instance
  */
@@ -104,6 +102,9 @@ server.init = function init (port=config.port) {
   server.server = server.listen(port, () => debug(`listening on port ${port}`))
   return server.server
 }
+
+// Export server so it can be started externally
+module.exports = server
 
 // initialize server if called directly
 if (require.main === module)
