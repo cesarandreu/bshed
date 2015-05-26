@@ -6,6 +6,15 @@ bikeshedding app
 
 Requires running Postgres. For OSX you can install and run [Postgres.app](http://postgresapp.com/).
 
+## Environment variables
+
+* `NODE_ENV` - application environment
+  * Allowed values: `production`, `development`, `test`
+  * Default value: `development`
+
+* `DB_USERNAME` - database username
+  * Default value: null
+
 ### Commands
 
 * `NODE_ENV=(development|test|production) npm run db:create` - creates database for NODE_ENV
