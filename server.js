@@ -47,11 +47,15 @@ Object.assign(server, {
 
 // Error handler
 server.on('error', function serverError (err, ctx) {
-  const isValidationError = err.name === 'ValidationError'
-  const isHttpError = Object.keys(createError).some(name => err instanceof createError[name])
+  const isKnownError = [
+    'ValidationError'
+  ].some(name => err.name === name)
+  if (isKnownError) return
 
-  if (!isHttpError && !isValidationError)
-    console.error(`\n ${(err.stack || err.toString()).replace(/^/gm, ' ')} \n`)
+  const isHttpError = Object.keys(createError).some(name => err instanceof createError[name])
+  if (isHttpError) return
+
+  console.error(`\n ${(err.stack || err.toString()).replace(/^/gm, ' ')} \n`)
 })
 
 /**
