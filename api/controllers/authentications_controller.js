@@ -17,7 +17,9 @@ function AuthenticationsController () {
   )
 
   // Routes
-  const routes = new Router()
+  const routes = new Router({
+    prefix: '/auth'
+  })
   .post(
     '/login',
     parseJsonForm,
