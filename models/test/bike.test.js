@@ -1,26 +1,21 @@
-var {models} = require('./helper')
-var expect = require('expect.js')
-var {Bike} = models
-var bike
+const {factories} = require('./helper')
+const expect = require('expect.js')
+
+const BIKE_SCHEMA_KEYS = [
+  'id',
+  'name',
+  'size',
+  'type',
+  'createdAt',
+  'updatedAt',
+  'BikeshedId'
+]
 
 describe('Model:Bike', function () {
 
-  beforeEach(async function () {
-    bike = await Bike.create({
-      name: 'bike',
-      body: 'description'
-    })
+  it('should have expected schema', async function () {
+    const bike = await factories.createBike()
+    expect(JSON.parse(JSON.stringify(bike)))
+      .to.only.have.keys(BIKE_SCHEMA_KEYS)
   })
-
-  describe('Schema', function () {
-    it('should have a valid schema', function () {
-      expect(bike).to.be.an('object')
-      expect(bike.id).to.be.a('number')
-    })
-  })
-
-
-  describe('methods', function () {
-  })
-
 })

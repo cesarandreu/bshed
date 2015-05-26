@@ -1,27 +1,18 @@
-var {models} = require('./helper')
-var expect = require('expect.js')
-var {User} = models
-var user
+const {factories} = require('./helper')
+const expect = require('expect.js')
+
+const USER_SCHEMA_KEYS = [
+  'id',
+  'name',
+  'createdAt',
+  'updatedAt'
+]
 
 describe('Model:User', function () {
 
-  describe('Schema', function () {
-
-    beforeEach(async function () {
-      user = await User.create({
-        name: 'Foo',
-        email: 'foo@example.com'
-      })
-    })
-
-    it('should have a valid schema', function () {
-      expect(user).to.be.an('object')
-      expect(user.id).to.be.a('number')
-      expect(user.name).to.be.a('string').and.to.equal('Foo')
-      expect(user.email).to.be.a('string').and.to.equal('foo@example.com')
-      expect(user.administrator).to.be.a('boolean').and.to.equal(false)
-    })
-
+  it('should have expected schema', async function () {
+    const user = await factories.createUser()
+    expect(JSON.parse(JSON.stringify(user)))
+      .to.only.have.keys(USER_SCHEMA_KEYS)
   })
-
 })
