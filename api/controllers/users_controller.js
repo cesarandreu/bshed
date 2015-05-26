@@ -3,7 +3,11 @@ const middleware = require('../../utils/middleware')
 
 module.exports = UsersController
 function UsersController () {
+
+  // Middleware
   const auth = middleware.authenticate()
+
+  // Routes
   const routes = new Router({
     prefix: '/api'
   })
