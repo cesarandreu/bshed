@@ -1,29 +1,30 @@
-var RouterPlugin = require('./utils/plugins/RouterPlugin')
-var FetchPlugin = require('./utils/plugins/FetchPlugin')
-var fetch = require('isomorphic-fetch')
-var Fluxible = require('fluxible')
+require('./styles/imports.less')
+require('./styles/base.less')
 
-var app = new Fluxible({
-  component: require('./app/routes')
+const RequestPlugin = require('./lib/RequestPlugin')
+const RouterPlugin = require('./lib/RouterPlugin')
+const Fluxible = require('fluxible')
+
+const app = new Fluxible({
+  component: require('./routes')
 })
 
 app.plug(RouterPlugin({
   location: require('react-router').HistoryLocation
 }))
 
-app.plug(FetchPlugin({
-  fetch: typeof fetch === 'function' ? fetch : global.fetch
+app.plug(RequestPlugin({
+  fetch: require('isomorphic-fetch'),
+  host: 'localhost:3000',
+  protocol: 'http:'
 }))
 
-// Application
-app.registerStore(require('./app/application/stores/ApplicationStore'))
-app.registerStore(require('./app/application/stores/LayoutStore'))
-app.registerStore(require('./app/application/stores/RequestStore'))
-
-// Bikesheds
-app.registerStore(require('./app/bikesheds/stores/BikeshedListStore'))
-
-// Home
-app.registerStore(require('./app/home/stores/BikeshedBuilderStore'))
+const stores = [
+  require('./stores/ApplicationStore'),
+  require('./stores/BikeshedBuilderStore'),
+  require('./stores/BikeshedListStore'),
+  require('./stores/LayoutStore')
+]
+stores.forEach(store => app.registerStore(store))
 
 module.exports = app

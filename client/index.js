@@ -1,74 +1,77 @@
-var co = require('co'),
-  React = require('react'),
-  debug = require('debug'),
-  log = debug('bshed:client'),
-  hotkey = require('react-hotkey'),
-  {FluxibleComponent} = require('fluxible/addons')
-
-var NavigateAction = require('./app/application/actions/NavigateAction'),
-  app = require('./app')
+// Modules
+const app = require('./app')
+const debug = require('debug')
+const log = debug('bshed:client')
+const React = require('react/addons')
+const hotkey = require('react-hotkey')
+const {FluxibleComponent} = require('fluxible/addons')
+const NavigateActions = require('./actions/NavigateActions')
 
 // needed for onTouchTap
 // breaks with react v0.13
 // require('react-tap-event-plugin')()
 
-// assets
-require('./styles/imports.less')
-require('./styles/base.less')
-require('./components/styles.less')
-require('./app/application/styles.less')
-require('./app/home/styles.less')
+// Get application node, create application context
+const mountNode = document.getElementById('bshed')
 
-var mountNode = document.getElementById('bshed') // render node
+// Debug messages
+if (process.env.NODE_ENV !== 'production')
+  debug.enable('bshed:*,Fluxible:*')
 
-if (process.env.NODE_ENV !== 'production') {
-  global.React = React // For chrome dev tool support
-  debug.enable('bshed:*')
-}
+// Rehydrate if global.BSHED is defined
+// Otherwise bootstrap with a new context
+if (global.BSHED)
+  app.rehydrate(global.BSHED, bootstrap)
+else
+  bootstrap(null, app.createContext())
 
-log('rehydrating application')
-app.rehydrate(global.BSHED, (err, context) => {
+/**
+ * bootstrap
+ * Start router and get everything going
+ */
+function bootstrap (err, context) {
   if (err) throw err
-  if (process.env.NODE_ENV !== 'production')
-    global.context = context // For debugging
 
+  // For chrome dev tool support and debugging
+  global.context = context
+  global.React = React
+
+  // Global hotkeys
   log('activating hotkeys')
   hotkey.activate()
 
+  // Start router
   log('starting router')
-  context.getActionContext().router.run(co.wrap(routerAction(context)))
-})
+  context.getActionContext().router.run(routerAction(context))
+}
 
-var firstRender = true
+/**
+ * routerAction
+ * Calls navigate action and then render the app
+ */
 function routerAction (context) {
-  return function* (Handler, state) {
-    // Don't call the action on the first render on top of the server rehydration
-    // Otherwise there is a race condition where the action gets executed before
-    // render has been called, which can cause the checksum to fail.
-    if (!firstRender) {
-      try {
-        log('executing navigate action')
-        yield context.executeAction(NavigateAction, state)
-      } catch (err) {
-        console.error('Error executing navigate action', err)
-        throw err
-      }
-    } else {
-      firstRender = false
-    }
+  return async function runRouterAction (Root, state) {
+    log('executing navigate action')
+    await context.executeAction(NavigateActions.router, state)
 
     log('rendering application')
-    yield render({context, Handler})
-
+    await render({context, Root})
     log('navigation and rendering finished')
   }
 }
 
-function render ({context, Handler}={}) {
-  var element = (
-    <FluxibleComponent context={context.getComponentContext()}>
-      <Handler/>
-    </FluxibleComponent>
-  )
-  return new Promise(resolve => React.render(element, mountNode, resolve))
+/**
+ * render
+ * Render Root with context
+ */
+function render ({Root, context}={}) {
+  return new Promise(resolve => {
+    const element = (
+      <FluxibleComponent context={context.getComponentContext()}>
+        <Root/>
+      </FluxibleComponent>
+    )
+
+    React.render(element, mountNode, resolve)
+  })
 }
