@@ -1,39 +1,68 @@
-var fs = require('fs')
-var mkdirp = require('mkdirp')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+const fs = require('fs')
+const mkdirp = require('mkdirp')
+const webpack = require('webpack')
+const autoprefixer = require('autoprefixer-core')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = function buildWebpackConfig (options) {
   options = options || {}
 
-  var ENV = options.ENV || process.env.NODE_ENV || 'development',
-    BUILD = options.BUILD || process.env.BUILD
+  const NODE_ENV = options.NODE_ENV || process.env.NODE_ENV || 'development'
+  const SERVER = !!(options.SERVER || process.env.SERVER)
+  const BUILD = !!(options.BUILD || process.env.BUILD)
 
   // shared values
-  var publicPath = BUILD ? '/assets/' : 'http://localhost:9090/assets/'
-  var outputPath = __dirname + '/public/assets'
+  const publicPath = BUILD ? '/assets/' : 'http://localhost:9090/assets/'
+
+  // Output filename
+  // server.js, [name].[hash].js, [name].bundle.js
+  const filename = SERVER
+    ? 'server.js'
+    : (BUILD
+        ? '[name].[hash].js'
+        : '[name].bundle.js'
+      )
 
   // base
-  var config = {
+  const config = {
+
+    context: __dirname,
+
     entry: {
-      bshed: './client'
+      bshed: SERVER ? './client/renderer/server.js' : './client/index.js'
     },
 
     output: {
-      path: outputPath,
-      pathinfo: !BUILD,
+      filename: filename,
       publicPath: publicPath,
-      filename: BUILD ? '[name].[hash].js' : '[name].bundle.js',
-      chunkFilename: BUILD ? '[id].[hash].js' : '[id].bundle.js'
+      pathinfo: !BUILD || SERVER,
+      path: __dirname + (SERVER ? '/build' : '/public/assets')
     },
 
-    target: 'web',
+    target: SERVER ? 'node' : 'web',
 
-    devtool: BUILD ? 'source-map' : 'eval',
+    devtool: BUILD || SERVER ? 'source-map' : 'eval',
 
-    externals: [],
+    externals: [{
+      './stats.json': 'commonjs ./stats.json'
+    }],
+
     module: {
       loaders: [{
+        test: /\.js$/,
+        loader: 'babel?optional=runtime&cacheDirectory',
+        exclude: /node_modules/
+      }, {
+        test: /\.jsx$/,
+        loader: (BUILD || SERVER ? '' : 'react-hot!') + 'babel?optional=runtime&cacheDirectory',
+        exclude: /node_modules/
+      }, {
+        test: /\.less$/,
+        loader: SERVER ? 'null' : ExtractTextPlugin.extract(
+          'style',
+          'css?sourceMap!postcss!less?sourceMap'
+        )
+      }, {
         test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
         loader: 'file'
       }]
