@@ -75,14 +75,18 @@ module.exports = function buildWebpackConfig (options) {
     ],
 
     resolve: {
-      extensions: ['', '.js', '.jsx', '.less']
+      extensions: ['', '.js', '.jsx', '.less'],
+      fallback: [
+        __dirname + '/models'
+      ]
     },
+
     plugins: [
-      StatsPlugin(),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(ENV)
+      new ExtractTextPlugin('[name].[hash].css', {
+        disable: !BUILD || SERVER
       })
     ],
+
     devServer: {
       port: 9090,
       contentBase: './public',
@@ -94,51 +98,76 @@ module.exports = function buildWebpackConfig (options) {
     }
   }
 
-  // loaders
-  var babelLoader = 'babel?optional=runtime&breakConfig=true&stage=1'
-  config.module.loaders.push({
-    test: /\.js$/,
-    loader: babelLoader,
-    exclude: /node_modules/
-  })
+  // Externals
+  // http://jlongster.com/Backend-Apps-with-Webpack--Part-I
+  if (SERVER) {
+    config.externals.push(
+      fs.readdirSync('node_modules')
+        .filter(function (x) {
+          return ['.bin', 'react'].indexOf(x) === -1
+        })
+        .reduce(function (nodeModules, mod) {
+          nodeModules[mod] = 'commonjs ' + mod
+          return nodeModules
+        }, {
+          'react/addons': 'commonjs react/addons',
+          'react': 'commonjs react/addons'
+        })
+    )
 
-  config.module.loaders.push({
-    test: /\.jsx$/,
-    loader: (BUILD ? '' : 'react-hot!') + babelLoader,
-    exclude: /node_modules/
-  })
+  }
 
-  var lessLoader = 'css?sourceMap!autoprefixer!less?sourceMap'
-  config.module.loaders.push({
-    test: /\.less$/,
-    loader: BUILD ? ExtractTextPlugin.extract(lessLoader) : 'style!' + lessLoader
-  })
+  /**
+   * PLUGINS
+   */
 
-  if (BUILD) {
-    // Minifify, dedupe, extract css
+  // http://jlongster.com/Backend-Apps-with-Webpack--Part-I
+  if (SERVER) {
     config.plugins.push(
-      new ExtractTextPlugin('[name].[hash].css'),
-      new webpack.NoErrorsPlugin(),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin()
+      // new webpack.NormalModuleReplacementPlugin(/\.less$/, require.resolve('node-noop')),
+      new webpack.BannerPlugin('require("source-map-support").install();', {
+        entryOnly: true,
+        raw: true
+      })
+    )
+  } else {
+    config.plugins.push(
+      ClientStatsPlugin({
+        publicPath: publicPath
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
+      })
     )
   }
 
+  // Minifify and dedupe
+  if (BUILD && !SERVER) {
+    config.plugins.push([
+      new webpack.NoErrorsPlugin(),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin()
+    ])
+  }
+
   return config
+}
 
-  function StatsPlugin () {
-    return function () {
-      this.plugin('done', saveStats)
-    }
+/**
+ * Client stats.json plugin
+ */
+function ClientStatsPlugin (params) {
+  return function () {
+    this.plugin('done', saveStats)
+  }
 
-    function saveStats (stats) {
-      var jsonStats = stats.toJson({
-        chunks: false,
-        modules: false
-      })
-      jsonStats.publicPath = publicPath
-      mkdirp.sync(outputPath)
-      fs.writeFileSync(outputPath + '/stats.json', JSON.stringify(jsonStats))
-    }
+  function saveStats (stats) {
+    const jsonStats = stats.toJson({
+      chunks: false,
+      modules: false
+    })
+    jsonStats.publicPath = params.publicPath
+    mkdirp.sync(__dirname + '/build')
+    fs.writeFileSync(__dirname + '/build/stats.json', JSON.stringify(jsonStats))
   }
 }
