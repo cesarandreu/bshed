@@ -38,6 +38,13 @@ module.exports = function buildWebpackConfig (options) {
         loader: 'file'
       }]
     },
+
+    postcss: [
+      autoprefixer({
+        browsers: ['last 2 version']
+      })
+    ],
+
     resolve: {
       extensions: ['', '.js', '.jsx', '.less']
     },
