@@ -189,7 +189,7 @@ BikeshedsController.create = function* create () {
 BikeshedsController.create.schema = Joi.object().required().keys({
   files: Joi.object().min(2).max(10).required(),
   fields: Joi.object().default({}).keys({
-    description: Joi.string().default('')
+    description: Joi.string().allow('').default('')
   })
 })
 
