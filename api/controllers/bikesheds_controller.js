@@ -17,6 +17,8 @@ function BikeshedsController () {
   const loadBikeshed = middleware.load('Bikeshed')
 
   const parseJsonForm = bodyParser()
+
+  // @TODO: use multer to set file size limit
   const parseFileForm = bodyParser({
     multipart: true,
     formidable: {
