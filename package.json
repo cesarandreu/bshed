@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "npm run build:client",
-    "build:client": "webpack --config webpack.build.js -c",
+    "build:server": "webpack --config webpack.server.js",
+    "build:client": "webpack --config webpack.build.js",
     "clean": "rm -rf public/assets build",
     "cluster": "babel-node scripts/cluster",
     "db:create": "create_database",
