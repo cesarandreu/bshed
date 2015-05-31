@@ -22,8 +22,9 @@ app.plug(RequestPlugin({
 const stores = [
   require('./stores/ApplicationStore'),
   require('./stores/BikeshedBuilderStore'),
-  require('./stores/BikeshedListStore'),
-  require('./stores/LayoutStore')
+  require('./stores/BikeshedStore'),
+  require('./stores/NavbarStore'),
+  require('./stores/SidebarStore')
 ]
 stores.forEach(store => app.registerStore(store))
 
