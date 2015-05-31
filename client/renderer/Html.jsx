@@ -1,18 +1,13 @@
-var React = require('react'),
-  StoreMixin = require('../utils/mixins/StoreMixin'),
-  ApplicationStore = require('../app/application/stores/ApplicationStore')
+const React = require('react')
 
-var Html = React.createClass({
-  mixins: [StoreMixin],
+const Html = React.createClass({
   propTypes: {
     assets: React.PropTypes.object.isRequired,
     markup: React.PropTypes.string.isRequired,
     BSHED: React.PropTypes.string.isRequired
   },
-  render: function () {
-    var title = this.getStore(ApplicationStore).getPageTitle(),
-      {scripts, styles} = this.props.assets
 
+  render () {
     return (
       <html lang='en'>
         <head>
@@ -23,15 +18,17 @@ var Html = React.createClass({
             content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
           />
           <meta name='description' content='An app for bikeshedding'/>
-          <title>{title}</title>
-          {styles.map((href, key) =>
+          <title>
+            bshed
+          </title>
+          {this.props.assets.styles.map((href, key) =>
             <link href={href} key={key} rel='stylesheet'></link>
           )}
         </head>
         <body>
           <div id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
           <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
-          {scripts.map((src, key) =>
+          {this.props.assets.scripts.map((src, key) =>
             <script src={src} key={key}></script>
           )}
         </body>
