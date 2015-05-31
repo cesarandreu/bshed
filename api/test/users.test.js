@@ -16,10 +16,10 @@ describe('Request:Users', function () {
         .to.eql(JSON.parse(JSON.stringify(user)))
     })
 
-    it('returns 401 when not logged in', async function () {
+    it('creates a user for you', async function () {
       await request
         .get('/api/users/current')
-        .expect(401)
+        .expect(200)
     })
   })
 })
