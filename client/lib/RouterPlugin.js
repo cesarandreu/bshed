@@ -1,13 +1,16 @@
-var Router = require('react-router')
+const Router = require('react-router')
 
+/**
+ * RouterPlugin
+ */
 module.exports = function RouterPlugin ({location}={}) {
   return {
     name: 'RouterPlugin',
     plugContext
   }
 
-  function plugContext ({url, app}={}) {
-    var router = Router.create({
+  function plugContext ({url, app}={}, context) {
+    const router = context.router = Router.create({
       location: url || location,
       routes: app.getComponent()
     })

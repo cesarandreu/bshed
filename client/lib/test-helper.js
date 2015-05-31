@@ -1,8 +1,11 @@
-module.exports = {testdom, cleanup}
+module.exports = {
+  testdom,
+  cleanup
+}
 
 function testdom (markup='') {
   if (typeof document === 'undefined') {
-    var jsdom = require('jsdom').jsdom
+    const jsdom = require('jsdom').jsdom
     global.document = jsdom(markup)
     global.window = document.defaultView
     global.navigator = window.navigator
@@ -10,7 +13,7 @@ function testdom (markup='') {
 }
 
 function cleanup () {
-  var React = require('react')
+  const React = require('react')
   React.unmountComponentAtNode(document.body)
   document.body.innerHTML = ''
 }

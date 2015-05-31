@@ -1,7 +1,7 @@
 // ORIGINAL SOURCE: https://github.com/yahoo/fluxible-immutable-utils
-var createStore = require('fluxible/addons/createStore')
-var merge = require('lodash/object/merge')
-var Immutable = require('immutable')
+const {createStore} = require('fluxible/addons')
+const merge = require('lodash/object/merge')
+const Immutable = require('immutable')
 
 function initialize () {
   this._state = Immutable.Map()
@@ -22,7 +22,7 @@ function getState () {
 function setState (newState) {
   newState = Immutable.fromJS(newState)
 
-  var isEqual = this._state.equals(newState)
+  const isEqual = this._state.equals(newState)
   if (!isEqual) {
     this._state = newState
     this.emitChange(this._state)
@@ -37,7 +37,7 @@ function mergeState (stateFragment) {
 /**
  * Helper for creating an immutable store class
  *
- * @method createStore
+ * @method createImmutableStore
  * @param {Object} spec of the created Store class
  * @param {String} spec.storeName The name of the store
  * @param {Object} spec.handlers Hash of action name to method name of action handlers
