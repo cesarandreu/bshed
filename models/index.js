@@ -2,8 +2,18 @@ const ssaclAttributeRoles = require('ssacl-attribute-roles')
 const debug = require('debug')('bshed:models')
 const Sequelize = require('sequelize')
 const assert = require('assert')
-const path = require('path')
-const fs = require('fs')
+
+/**
+ * List of models to load
+ * Kept manually because there's not that many, and it's a little faster
+ */
+const MODEL_LIST = [
+  'bike',
+  'bikeshed',
+  'rating',
+  'user',
+  'vote'
+]
 
 /**
  * Models loader
@@ -14,7 +24,6 @@ module.exports = function modelsLoader (config) {
   assert(config, 'model loader requires config')
   debug('loader:start')
 
-  const models = {}
   const sequelize = new Sequelize(
     config.database,
     config.username,
@@ -24,30 +33,23 @@ module.exports = function modelsLoader (config) {
 
   ssaclAttributeRoles(sequelize)
 
-  // Load models
-  fs.readdirSync(__dirname)
-    .filter(file =>
-      file.indexOf('.') !== 0 && file !== 'index.js' && file !== 'test'
-    )
-    .forEach(file => {
-      const modelPath = path.join(__dirname, file)
-      const model = sequelize.import(modelPath)
-      models[model.name] = model
-      debug(`${model.name} loaded from file ${modelPath}`)
-    })
+  const models = MODEL_LIST.reduce((models, name) => {
+    debug(`loading ${name} model`)
+    const model = require(`./${name}.js`)(sequelize, Sequelize)
+    models[model.name] = model
+    return models
+  }, {
+    sequelize,
+    Sequelize
+  })
 
   // Associate and initialize models
   Object.keys(models).forEach(name => {
-    ['associate', 'initialize'].forEach(action => {
-      if (action in models[name]) {
-        debug(`${action} ${name}`)
-        models[name][action](models)
-      }
-    })
+    if ('associate' in models[name]) {
+      debug(`associate ${name}`)
+      models[name].associate(models)
+    }
   })
-
-  models.sequelize = sequelize
-  models.Sequelize = Sequelize
 
   debug('loader:end')
   return models
