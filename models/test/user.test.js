@@ -5,7 +5,8 @@ const USER_SCHEMA_KEYS = [
   'id',
   'name',
   'createdAt',
-  'updatedAt'
+  'updatedAt',
+  'registered'
 ]
 
 describe('Model:User', function () {
