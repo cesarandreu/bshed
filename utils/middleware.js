@@ -1,5 +1,6 @@
 const _ = require('lodash')
 const assert = require('assert')
+const uuid = require('node-uuid')
 const helpers = require('./helpers')
 
 /**
@@ -35,7 +36,13 @@ exports.addToContext = function addToContext (objects={}) {
 exports.authenticate = function authenticate () {
   return function* authenticateMiddleware (next) {
     try {
-      this.state.user = yield this.models.User.findById(this.session.user.id)
+      const [user] = yield this.models.User.findOrCreate({
+        where: {
+          id: this.session.user.id
+        }
+      })
+
+      this.state.user = user
     } finally {
       this.assert(this.state.user, 401)
     }
