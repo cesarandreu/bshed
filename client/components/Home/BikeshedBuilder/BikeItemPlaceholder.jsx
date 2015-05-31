@@ -2,7 +2,6 @@ require('./bike-item-placeholder.less')
 
 const MAXIMUM_BIKE_COUNT = 12
 const React = require('react/addons')
-const Immutable = require('immutable')
 const Icon = require('../../general/Icon')
 const PureRenderMixin = React.addons.PureRenderMixin
 const EnhancedButton = require('../../general/Buttons/EnhancedButton')
@@ -14,7 +13,6 @@ const BikeItem = React.createClass({
 
   propTypes: {
     bikeCount: React.PropTypes.number,
-    bikes: React.PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
     onClick: React.PropTypes.func.isRequired
   },
 
