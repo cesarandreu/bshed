@@ -7,16 +7,16 @@ module.exports = {
         type: DataTypes.UUID
       },
       name: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING
       },
       email: {
         unique: true,
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING
       },
       hashedPassword: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING
       },
       createdAt: {
