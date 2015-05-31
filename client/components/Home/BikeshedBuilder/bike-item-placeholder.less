@@ -1,0 +1,37 @@
+@import "../../../styles/styles.less";
+
+// BikeItemPlaceholder
+.bike-item-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: dashed 2px @border-color;
+  &:hover, &:focus {
+    border-color: @grey-400;
+
+    .bike-item-placeholder-icon .icon {
+      color: @grey-400;
+    }
+
+    .bike-item-placeholder-text {
+      color: @grey-600;
+    }
+  }
+
+  .bike-item-placeholder-icon {
+    margin: auto;
+
+    .icon {
+      color: @border-color;
+      font-size: @display-3-font-size;
+    }
+  }
+
+  .bike-item-placeholder-text {
+    font-size: @button-font-size;
+    padding: 0 16px 8px;
+    color: @grey-500;
+  }
+}
