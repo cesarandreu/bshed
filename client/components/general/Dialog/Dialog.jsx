@@ -1,9 +1,11 @@
-var cn = require('classnames'),
-  React = require('react/addons'),
-  hotkey = require('react-hotkey'),
-  PureRenderMixin = React.addons.PureRenderMixin
+require('./dialog.less')
 
-var Dialog = React.createClass({
+const cn = require('classnames')
+const React = require('react/addons')
+const hotkey = require('react-hotkey')
+const PureRenderMixin = React.addons.PureRenderMixin
+
+const Dialog = React.createClass({
   mixins: [
     PureRenderMixin,
     hotkey.Mixin('_handleHotkey')
@@ -13,8 +15,8 @@ var Dialog = React.createClass({
     onClose: React.PropTypes.func.isRequired
   },
 
-  render: function () {
-    var {children, className, ...other} = this.props
+  render () {
+    const {children, className, ...other} = this.props
     return (
       <div className={cn('dialog-wrapper', className)} {...other}>
         <div className='dialog-overlay'></div>
@@ -27,12 +29,12 @@ var Dialog = React.createClass({
     )
   },
 
-  _onClick: function (e) {
+  _onClick (e) {
     if (e.target.classList.contains('dialog-container'))
       this.props.onClose()
   },
 
-  _handleHotkey: function (e) {
+  _handleHotkey (e) {
     if (e.key === 'Escape') {
       this.props.onClose()
       e.stopPropagation()

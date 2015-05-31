@@ -1,10 +1,12 @@
-var React = require('react/addons'),
-  classnames = require('classnames'),
-  Icon = require('../general/Icon'),
-  EnhancedButton = require('./EnhancedButton'),
-  PureRenderMixin = React.addons.PureRenderMixin
+require('./icon-button')
 
-var IconButton = React.createClass({
+const Icon = require('../Icon')
+const React = require('react/addons')
+const classnames = require('classnames')
+const EnhancedButton = require('./EnhancedButton')
+const PureRenderMixin = React.addons.PureRenderMixin
+
+const IconButton = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
@@ -13,8 +15,8 @@ var IconButton = React.createClass({
     icon: React.PropTypes.string.isRequired
   },
 
-  render: function () {
-    var {icon, className, ...other} = this.props
+  render () {
+    const {icon, className, ...other} = this.props
     return (
       <EnhancedButton {...other} className={classnames('icon-button', className)}>
         <Icon icon={icon}/>

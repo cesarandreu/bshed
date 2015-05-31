@@ -1,8 +1,10 @@
-var cn = require('classnames'),
-  React = require('react/addons'),
-  PureRenderMixin = React.addons.PureRenderMixin
+require('./grid.less')
 
-var Grid = React.createClass({
+const cn = require('classnames')
+const React = require('react/addons')
+const PureRenderMixin = React.addons.PureRenderMixin
+
+const Grid = React.createClass({
   mixin: [PureRenderMixin],
 
   propTypes: {
@@ -10,8 +12,8 @@ var Grid = React.createClass({
     subheader: React.PropTypes.string
   },
 
-  render: function () {
-    var {children, className, subheader, ...props} = this.props
+  render () {
+    const {children, className, subheader, ...props} = this.props
     return (
       <div className={cn('grid-container', className)} {...props}>
         {subheader ? <div className='grid-subheader'>{subheader}</div> : null}

@@ -1,0 +1,36 @@
+@import "../../../styles/styles.less";
+
+.dialog-overlay {
+  z-index: @z-index-fullscreen-overlay - 1;
+  background-color: @black;
+  position: absolute;
+  opacity: 0.9;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.dialog-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: @z-index-fullscreen-overlay;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: @card-color;
+  border-radius: 2px;
+  max-height: 1280px;
+  min-height: 256px;
+  overflow: auto;
+  width: 768px;
+}

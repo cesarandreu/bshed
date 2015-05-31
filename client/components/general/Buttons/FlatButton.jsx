@@ -1,4 +1,7 @@
-var cn = require('classnames'),
+require('./rectangle-button.less')
+require('./flat-button.less')
+
+var cn = require('classnames')
 var React = require('react/addons')
 var EnhancedButton = require('./EnhancedButton')
 var PureRenderMixin = React.addons.PureRenderMixin
@@ -11,7 +14,7 @@ var FlatButton = React.createClass({
     label: React.PropTypes.string
   },
 
-  render: function () {
+  render () {
     var {label, children, className, ...other} = this.props
 
     return (

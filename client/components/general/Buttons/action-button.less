@@ -1,0 +1,34 @@
+@import "../../../styles/styles.less";
+
+// ActionButton
+.action-button {
+  background-color: @action-button-color;
+  border-radius: 50%;
+  padding: 0;
+
+  // order matters, :active must be last
+  box-shadow: @action-button-shadow;
+  &:hover, &:focus {
+    box-shadow: @action-button-hover-shadow;
+    transition: @action-button-hover-transition;
+  }
+  &:active {
+    box-shadow: @action-button-active-shadow;
+  }
+
+  height: @action-button-size;
+  width: @action-button-size;
+  &.mini {
+    height: @action-button-mini-size;
+    width: @action-button-mini-size;
+
+    span {
+      line-height: @action-button-mini-size;
+    }
+  }
+
+  span {
+    color: @action-button-icon-color;
+    line-height: @action-button-size;
+  }
+}

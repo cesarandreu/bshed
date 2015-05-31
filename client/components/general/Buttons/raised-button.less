@@ -1,0 +1,58 @@
+@import "../../../styles/styles.less";
+
+// RaisedButton
+.raised-button {
+  .button-label {
+    min-width: 88px;
+  }
+
+  &[disabled] .button-label {
+    background-color: @raised-button-background-color-disabled;
+  }
+
+  &:not([disabled]) {
+    .button-label {
+      background-color: @raised-button-background-color;
+      transition: @raised-button-transition;
+      box-shadow: @raised-button-box-shadow;
+    }
+    &:hover .button-label,
+    &:focus .button-label {
+      background-color: @raised-button-background-color-hover;
+      box-shadow: @raised-button-box-shadow-hover;
+    }
+    &:active .button-label {
+      background-color: @raised-button-background-color-active;
+      box-shadow: @raised-button-box-shadow-active;
+    }
+
+    &.primary,
+    &.secondary {
+      color: @raised-button-color-alternate;
+    }
+    &.primary {
+      .button-label {
+        background-color: @raised-button-background-color-primary;
+      }
+      &:hover .button-label,
+      &:focus .button-label {
+        background-color: @raised-button-background-color-primary-hover;
+      }
+      &:active .button-label {
+        background-color: @raised-button-background-color-primary-active;
+      }
+    }
+    &.secondary {
+      .button-label {
+        background-color: @raised-button-background-color-secondary;
+      }
+      &:hover .button-label,
+      &:focus .button-label {
+        background-color: @raised-button-background-color-secondary-hover;
+      }
+      &:active .button-label {
+        background-color: @raised-button-background-color-secondary-active;
+      }
+    }
+  }
+}

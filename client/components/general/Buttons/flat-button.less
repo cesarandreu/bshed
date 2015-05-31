@@ -1,0 +1,31 @@
+@import "../../../styles/styles.less";
+
+// FlatButton
+.flat-button {
+  &[disabled] {
+    &.primary,
+    &.secondary {
+      opacity: 0.3;
+    }
+  }
+
+  &.primary {
+    color: @flat-button-primary-text-color;
+  }
+  &.secondary {
+    color: @flat-button-secondary-text-color;
+  }
+
+  .button-label {
+    background-color: @flat-button-background-color;
+  }
+  &:not([disabled]) {
+    &:hover .button-label,
+    &:focus .button-label {
+      background-color: @flat-button-hover-background-color;
+    }
+    &:active .button-label {
+      background-color: @flat-button-active-background-color;
+    }
+  }
+}

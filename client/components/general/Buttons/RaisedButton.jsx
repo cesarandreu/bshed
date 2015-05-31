@@ -1,9 +1,12 @@
-var cn = require('classnames'),
-  React = require('react/addons'),
-  EnhancedButton = require('./EnhancedButton'),
-  PureRenderMixin = React.addons.PureRenderMixin
+require('./rectangle-button.less')
+require('./raised-button.less')
 
-var RaisedButton = React.createClass({
+const cn = require('classnames')
+const React = require('react/addons')
+const EnhancedButton = require('./EnhancedButton')
+const PureRenderMixin = React.addons.PureRenderMixin
+
+const RaisedButton = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
@@ -11,8 +14,8 @@ var RaisedButton = React.createClass({
     label: React.PropTypes.string
   },
 
-  render: function () {
-    var {label, children, className, ...other} = this.props
+  render () {
+    const {label, children, className, ...other} = this.props
 
     return (
       <EnhancedButton {...other} className={cn(className, 'raised-button', 'rectangle-button')}>

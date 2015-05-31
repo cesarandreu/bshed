@@ -1,8 +1,10 @@
-var cn = require('classnames')
-var React = require('react/addons')
-var PureRenderMixin = React.addons.PureRenderMixin
+require('./dialog-part.less')
 
-var DialogPart = React.createClass({
+const cn = require('classnames')
+const React = require('react/addons')
+const PureRenderMixin = React.addons.PureRenderMixin
+
+const DialogPart = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
@@ -10,7 +12,7 @@ var DialogPart = React.createClass({
     className: React.PropTypes.string
   },
 
-  render: function () {
+  render () {
     return (
       <div className={cn(`dialog-${this.props.type}`, this.props.className)}>
         {this.props.children}

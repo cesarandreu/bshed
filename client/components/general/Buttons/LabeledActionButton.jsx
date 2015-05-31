@@ -1,10 +1,12 @@
-var React = require('react/addons'),
-  classnames = require('classnames'),
-  ActionButton = require('./ActionButton'),
-  PureRenderMixin = React.addons.PureRenderMixin
+require('./labeled-action-button.less')
+
+const React = require('react/addons')
+const classnames = require('classnames')
+const ActionButton = require('./ActionButton')
+const PureRenderMixin = React.addons.PureRenderMixin
 
 // TODO: allow setting label position, currently sets position to the left
-var LabeledActionButton = React.createClass({
+const LabeledActionButton = React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
     position: React.PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
@@ -13,16 +15,17 @@ var LabeledActionButton = React.createClass({
     className: React.PropTypes.string,
     mini: React.PropTypes.bool
   },
-  getDefaultProps: function () {
+
+  getDefaultProps () {
     return {
       position: 'left'
     }
   },
-  render: function () {
-    var {children, label, className, mini, position, ...props} = this.props
-    className = classnames('labeled-action-button', {mini}, className, position)
+
+  render () {
+    const {children, label, className, mini, position, ...props} = this.props
     return (
-      <div className={className}>
+      <div className={classnames('labeled-action-button', {mini}, className, position)}>
         <ActionButton mini={mini} {...props}/>
         <label>{label}</label>
         {children}

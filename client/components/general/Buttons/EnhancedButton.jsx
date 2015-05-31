@@ -1,9 +1,14 @@
-var React = require('react/addons'),
-  classnames = require('classnames'),
-  PureRenderMixin = React.addons.PureRenderMixin
+require('./base-button.less')
+require('./enhanced-button.less')
 
-var EnhancedButton = React.createClass({
-  mixins: [PureRenderMixin],
+const cn = require('classnames')
+const React = require('react/addons')
+const PureRenderMixin = React.addons.PureRenderMixin
+
+const EnhancedButton = React.createClass({
+  mixins: [
+    PureRenderMixin
+  ],
 
   propTypes: {
     link: React.PropTypes.bool,
@@ -14,15 +19,16 @@ var EnhancedButton = React.createClass({
     className: React.PropTypes.string
   },
 
-  render: function () {
-    var {children, className, link, disabled, primary, secondary, ...other} = this.props
-    className = classnames('base-button', 'enhanced-button', className, {
-      disabled, link, primary, secondary
-    })
+  render () {
+    const {children, className, link, disabled, primary, secondary, ...other} = this.props
 
-    var props = {
-      ...other, disabled, className,
-      onClick: this._onClick
+    const props = {
+      ...other,
+      disabled,
+      onClick: this._onClick,
+      className: cn('base-button', 'enhanced-button', className, {
+        disabled, link, primary, secondary
+      })
     }
 
     var enhancedButton
@@ -37,7 +43,7 @@ var EnhancedButton = React.createClass({
     return enhancedButton
   },
 
-  _onClick: function (e) {
+  _onClick (e) {
     if (!this.props.disabled && this.props.onClick)
       this.props.onClick(e)
   }

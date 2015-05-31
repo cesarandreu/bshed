@@ -1,0 +1,27 @@
+@import "../../../styles/styles.less";
+
+// EnhancedButton
+.enhanced-button {
+  height: @button-height;
+  font-size: @button-font-size;
+  background-color: transparent;
+  color: @button-text-color;
+
+  &.link {
+    display: inline-block;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .button-label {
+    font-weight: @button-font-weight;
+    text-transform: uppercase;
+    display: inline-block;
+    border-radius: 2px;
+    line-height: 36px;
+    padding: 0px 8px;
+  }
+}

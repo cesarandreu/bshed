@@ -1,0 +1,64 @@
+@import "../../../styles/styles.less";
+
+// LabeledActionButton
+.labeled-action-button {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+
+  &.left {
+    flex-direction: row-reverse;
+    label {
+      margin-right: @labeled-action-button-label-margin;
+    }
+  }
+  &.right {
+    flex-direction: row;
+    label {
+      margin-left: @labeled-action-button-label-margin;
+    }
+  }
+  &.top {
+    flex-direction: column-reverse;
+    label {
+      margin-bottom: @labeled-action-button-label-margin;
+    }
+  }
+  &.bottom {
+    flex-direction: column;
+    label {
+      margin-top: @labeled-action-button-label-margin;
+    }
+  }
+
+  /**
+   * From when label was left-only
+   * Breaks top and bottom label
+   */
+  // height: @action-button-size;
+  // &.mini {
+  //   height: @action-button-mini-size;
+  // }
+
+  label {
+    background-color: @labeled-action-button-label-color;
+    transition: @labeled-action-button-label-transition;
+    box-shadow: @labeled-action-button-label-shadow;
+    color: @labeled-action-button-text-color;
+    border-radius: 2px;
+    padding: 6px 8px;
+    font-weight: bold;
+    font-size: @tooltip-font-size;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 200px;
+    opacity: 0;
+  }
+
+  button:hover~label {
+    transition-delay: @labeled-action-button-label-transition-delay;
+    transition: @labeled-action-button-label-leave-transition;
+    opacity: 1;
+  }
+}

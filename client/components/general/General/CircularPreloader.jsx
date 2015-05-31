@@ -1,8 +1,10 @@
-var cn = require('classnames')
-var React = require('react/addons')
-var PureRenderMixin = React.addons.PureRenderMixin
+require('./circular-preloader.less')
 
-var CircularPreloader = React.createClass({
+const cn = require('classnames')
+const React = require('react/addons')
+const PureRenderMixin = React.addons.PureRenderMixin
+
+const CircularPreloader = React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
@@ -12,7 +14,7 @@ var CircularPreloader = React.createClass({
   },
 
   render: function () {
-    var {className, primary, secondary, ...props} = this.props
+    const {className, primary, secondary, ...props} = this.props
     return (
       <div className={cn('circular-preloader', className, {primary, secondary})} {...props}/>
     )
