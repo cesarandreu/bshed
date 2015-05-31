@@ -20,7 +20,6 @@ module.exports = function (sequelize, DataTypes) {
     // },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
       validate: {
         max: 255,
         notEmpty: true
@@ -29,7 +28,6 @@ module.exports = function (sequelize, DataTypes) {
     email: {
       unique: true,
       type: DataTypes.STRING,
-      allowNull: false,
       validate: {
         isEmail: true
       },
@@ -37,7 +35,6 @@ module.exports = function (sequelize, DataTypes) {
     },
     hashedPassword: {
       type: DataTypes.STRING,
-      allowNull: false,
       validate: {
         notEmpty: true
       },
