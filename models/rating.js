@@ -12,7 +12,8 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        min: 0
+        max: 12,
+        min: 1
       }
     },
     BikeId: {

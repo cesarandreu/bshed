@@ -187,7 +187,7 @@ BikeshedsController.create = function* create () {
  * Check validation on ctx.request.body
  */
 BikeshedsController.create.schema = Joi.object().required().keys({
-  files: Joi.object().min(2).max(10).required(),
+  files: Joi.object().min(2).max(12).required(),
   fields: Joi.object().default({}).keys({
     description: Joi.string().allow('').default('')
   })
@@ -263,9 +263,9 @@ BikeshedsController.rate = function* rate () {
  * Check validation on ctx.request.body
  */
 BikeshedsController.rate.schema = Joi.object().required().keys({
-  ratings: Joi.array().min(2).max(10).unique().required().items(
+  ratings: Joi.array().min(2).max(12).unique().required().items(
     Joi.object().required().keys({
-      value: Joi.number().min(1).max(10).required(),
+      value: Joi.number().min(1).max(12).required(),
       BikeId: Joi.string().required()
     })
   )
