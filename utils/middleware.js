@@ -44,6 +44,20 @@ exports.authenticate = function authenticate () {
 }
 
 /**
+ * Assign session.user.id for every request
+ * Gives the user a UUID if they don't have one
+ * @returns {GeneratorFunction} setUserMiddleware
+ */
+exports.setUser = function setUser () {
+  return function* setUserMiddleware (next) {
+    const userId = _.get(this.session, 'user.id', uuid.v4())
+    _.set(this.session, 'user.id', userId)
+
+    yield next
+  }
+}
+
+/**
  * Searches for name param using resource model
  * Sets result to ctx.state[name]
  * Throws 404 on failure
