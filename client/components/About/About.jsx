@@ -1,8 +1,13 @@
-var React = require('react'),
-  {Link} = require('react-router')
+const React = require('react')
+const {Link} = require('react-router')
+const PureRenderMixin = React.addons.PureRenderMixin
 
-var About = React.createClass({
-  render: function () {
+const About = React.createClass({
+  mixins: [
+    PureRenderMixin
+  ],
+
+  render () {
     return (
       <div className='home'>
         <header>

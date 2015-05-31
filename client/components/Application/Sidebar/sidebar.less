@@ -1,17 +1,4 @@
-@import "../../styles/styles.less";
-
-// Application
-.layout {
-  line-height: 1.5;
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.content {
-  padding: @navbar-height 0 1px;
-  height: 100%;
-}
+@import "../../../styles/styles.less";
 
 // Sidebar
 .sidebar-container {
@@ -92,63 +79,5 @@
       background-color: rgba(0, 0, 0, 0.05);
       outline: none;
     }
-  }
-}
-
-// Navbar
-.navbar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  box-shadow: @navbar-shadow;
-  z-index: @z-index-navbar;
-  height: @navbar-height;
-  width: 100%;
-  position: fixed;
-  top: 0;
-
-  background-color: @navbar-color;
-  color: @navbar-text-color;
-}
-
-.navbar-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  :last-child {
-    padding: 0 24px;
-  }
-
-  .navbar-title {
-    font-size: @headline-font-size;
-    color: @white;
-  }
-}
-
-.navbar-menu-button {
-  margin: 4px 12px;
-
-  opacity: 0.75;
-  &:hover {
-    opacity: 1;
-  }
-
-  &::before {
-    position: absolute;
-    top: @icon-size * 0.25;
-    left: @icon-size * 0.25;
-    height: @icon-size * 1.5;
-    width: @icon-size * 1.5;
-    background-color: @black;
-    border-radius: 50%;
-    content: ' ';
-    opacity: 0;
-  }
-
-  &:focus::before {
-    opacity: 0.1;
   }
 }
