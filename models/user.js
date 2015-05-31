@@ -39,6 +39,9 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: true
       },
       roles: false
+    },
+    registeredAt: {
+      type: DataTypes.DATE
     }
   }, {
     instanceMethods: {
