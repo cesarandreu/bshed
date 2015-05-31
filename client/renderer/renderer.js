@@ -1,67 +1,76 @@
-var React = require('react')
-var serialize = require('serialize-javascript')
-var log = require('debug')('bshed:client:renderer')
-var {FluxibleComponent} = require('fluxible/addons')
+const React = require('react')
+const serialize = require('serialize-javascript')
+const log = require('debug')('bshed:client:renderer')
+const {FluxibleComponent} = require('fluxible/addons')
 
-var NavigateAction = require('../app/application/actions/NavigateAction')
-var Html = require('./Html')
-var app = require('../app')
+const NavigateActions = require('../actions/NavigateActions')
+const Html = require('./Html')
+const app = require('../app')
 
-module.exports = renderer
-function* renderer (options) {
-  var {url, host, protocol, cookie, assets} = options
-
+module.exports = async function renderer ({rootUrl, url, cookie, assets}={}) {
   log(`creating context with url ${url}`)
-  var context = app.createContext({
-    protocol,
+  const context = app.createContext({
+    rootUrl,
     cookie,
-    host,
     url
   })
 
   log('running router')
-  var {Handler, state} = yield runRouter(context)
+  const {Root, state} = await runRouter(context)
 
-  try {
-    log('executing navigate action')
-    yield context.executeAction(NavigateAction, state)
-  } catch (err) {
-    console.error('Error executing navigate action', err)
-    throw err
+  log('executing navigate action')
+  await context.executeAction(NavigateActions.router, state)
+
+  log('running render')
+  const result = render({context, Root, assets})
+
+  return {
+    body: result,
+    type: 'html',
+    status: 200
   }
-
-  return render({context, Handler, assets})
 }
 
+/**
+ * Run router
+ * @param {Object} context Application context
+ * @returns {Promise} Promise of resulting Handler and state
+ */
 function runRouter (context) {
   return new Promise(resolve => {
-    context.getActionContext().router.run((Handler, state) => {
-      resolve({Handler, state})
+    context.router.run((Root, state) => {
+      resolve({
+        Root,
+        state
+      })
     })
   })
 }
 
-function render ({context, Handler, assets}={}) {
+/**
+ * Render app
+ * @returns {Object} Resulting body, type, and status
+ */
+function render ({context, Root, assets}={}) {
   log('generating component context')
-  var componentContext = context.getComponentContext()
+  const componentContext = context.getComponentContext()
 
   log('generating BSHED')
-  var BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
+  const BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
 
   log('generating markup')
-  var markup = React.renderToString(
+  const markup = React.renderToString(
     <FluxibleComponent context={componentContext}>
-      <Handler/>
+      <Root/>
     </FluxibleComponent>
   )
 
   log('generating html')
-  var html = React.renderToStaticMarkup(
+  const html = React.renderToStaticMarkup(
     <FluxibleComponent context={componentContext}>
-      <Html markup={markup} assets={assets} BSHED={BSHED} context={componentContext}/>
+      <Html markup={markup} assets={assets} BSHED={BSHED}/>
     </FluxibleComponent>
   )
 
-  log('render finished')
-  return {body: `<!DOCTYPE html>${html}`, type: 'html', status: 200}
+  return `<!DOCTYPE html>${html}`
 }
