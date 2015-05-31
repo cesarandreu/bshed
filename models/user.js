@@ -7,17 +7,6 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    // @TODO: consider adding username
-    // username: {
-    //   unique: true,
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   validate: {
-    //     len: [2, 256],
-    //     notEmpty: true,
-    //     is: /^[a-z0-9_-]{2,256}$/i
-    //   }
-    // },
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -41,9 +30,16 @@ module.exports = function (sequelize, DataTypes) {
       roles: false
     },
     registeredAt: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      roles: false
     }
   }, {
+    getterMethods: {
+      registered () {
+        return !!this.getDataValue('registeredAt')
+      }
+    },
+
     instanceMethods: {
       /**
        * Check if password is valid or not
@@ -54,6 +50,7 @@ module.exports = function (sequelize, DataTypes) {
         return User.comparePassword(password, this.getDataValue('hashedPassword'))
       }
     },
+
     classMethods: {
       associate (models) {
         User.hasMany(models.Bikeshed)

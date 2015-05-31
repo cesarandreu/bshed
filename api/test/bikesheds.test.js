@@ -131,6 +131,7 @@ function checkBikeshedStructure (bikeshed) {
 
   expect(bikeshed.User)
     .to.only.have.keys([
+      'registered',
       'name',
       'id'
     ])

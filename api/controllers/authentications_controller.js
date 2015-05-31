@@ -8,6 +8,7 @@ function AuthenticationsController () {
 
   // Middleware
   const parseJsonForm = bodyParser()
+  const auth = middleware.authenticate()
 
   const checkLoginSchema = middleware.checkSchema(
     AuthenticationsController.login.schema
@@ -28,6 +29,7 @@ function AuthenticationsController () {
   )
   .post(
     '/register',
+    auth,
     parseJsonForm,
     checkRegisterSchema,
     AuthenticationsController.register
@@ -80,23 +82,17 @@ AuthenticationsController.login.schema = Joi.object().required().keys({
  * POST /register
  */
 AuthenticationsController.register = function* register () {
-  const {body} = this.state
+  const {body, user} = this.state
   const {User} = this.models
+  this.assert(!user.registered, 403)
 
-  const hashedPassword = yield User.hashPassword(body.password)
-
-  const user = yield User.create({
+  this.body = yield user.update({
+    hashedPassword: yield User.hashPassword(body.password),
+    registeredAt: new Date(),
     email: body.email,
-    name: body.name,
-    hashedPassword
+    name: body.name
   })
-
-  this.session.user = {
-    id: user.id
-  }
-
   this.status = 201
-  this.body = user
 }
 
 /**
