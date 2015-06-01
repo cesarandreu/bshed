@@ -1,3 +1,5 @@
+const imageSize = require('image-size')
+
 module.exports = function (sequelize, DataTypes) {
   const Bike = sequelize.define('Bike', {
     id: {
@@ -47,6 +49,21 @@ module.exports = function (sequelize, DataTypes) {
       associate (models) {
         Bike.belongsTo(models.Bikeshed)
         Bike.hasMany(models.Rating)
+      },
+
+      /**
+       * Get dimensions
+       * Returns width and height
+       * @param {string} File path
+       * @returns {Promise<Object>} File dimensions promise
+       */
+      getDimensions (path) {
+        return new Promise((resolve, reject) => {
+          imageSize(path, (err, result) => {
+            err ? reject(err) : resolve(result)
+          })
+        })
+      },
       }
     }
   })
