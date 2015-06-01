@@ -1,3 +1,5 @@
+const fs = require('fs')
+const assert = require('assert')
 const imageSize = require('image-size')
 
 module.exports = function (sequelize, DataTypes) {
@@ -64,6 +66,35 @@ module.exports = function (sequelize, DataTypes) {
           })
         })
       },
+      /**
+       * Upload image to s3
+       * @param {Object} s3 Client instance of s3
+       * @param {Object} config
+       * @param {string} config.BikeId Bike UUID
+       * @param {string} config.BikeshedId Bikeshed UUID
+       * @param {string} config.path Image location
+       * @returns {Promise} Upload image promise
+       */
+      async uploadImage (s3, {BikeshedId, BikeId, path}={}) {
+        assert(s3, 'uploadBike requires s3')
+        assert(BikeshedId && BikeId && path, 'uploadImage requires BikeshedId, BikeId, and path')
+
+        const Key = `${BikeshedId}/${BikeId}`
+        const Bucket = 'bshed'
+
+        const uploadFileOptions = {
+          Body: fs.createReadStream(path),
+          ACL: 'public-react',
+          Bucket,
+          Key
+        }
+
+        try {
+          await s3.uploadFilePromise(uploadFileOptions)
+        } catch (err) {
+          await s3.deleteObjectPromise({Bucket, Key})
+          throw err
+        }
       }
     }
   })
