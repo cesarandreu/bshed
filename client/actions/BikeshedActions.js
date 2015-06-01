@@ -36,3 +36,11 @@ exports.listNavigateAction = async function listNavigateAction (context, state) 
   // if (context.getStore(BikeshedStore).waitForList(state.query))
   await request
 }
+
+/**
+ * Set preview bike
+ * @param {string} name
+ */
+exports.preview = function preview (context, name) {
+  context.dispatch('BIKESHED_PREVIEW', name)
+}
