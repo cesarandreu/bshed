@@ -12,6 +12,14 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: true
       }
     },
+    width: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    height: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     size: {
       type: DataTypes.INTEGER,
       allowNull: false,
