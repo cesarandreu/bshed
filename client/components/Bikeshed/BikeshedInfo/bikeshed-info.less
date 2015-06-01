@@ -1,0 +1,32 @@
+@import "../../../styles/styles.less";
+
+.bikeshed-info {
+  .whiteframe-z1;
+  margin: 40px 0;
+  background-color: @white;
+  border-radius: 2px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.bikeshed-info-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bikeshed-info-author {
+  color: @secondary-text-color;
+  &.registered {
+    color: @primary-text-color;
+  }
+}
+
+.bikeshed-info-description {
+  font-size: 1.6rem;
+}
+
+.bikeshed-info-actions {
+  display: flex;
+}

@@ -1,0 +1,21 @@
+@import "../../styles/styles.less";
+
+.bikeshed {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 1200px;
+  margin: 0 auto;
+  @media @device-x-large {
+    width: 66.66%;
+  }
+
+  @media @device-large {
+    width: 840px;
+  }
+
+  @media @device-medium {
+    width: auto;
+    margin: 0 40px;
+  }
+}

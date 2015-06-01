@@ -8,8 +8,8 @@ const Home = require('./components/Home/Home')
 const NotFound = require('./components/NotFound/NotFound')
 
 // Bikesheds
-const BikeshedInfo = require('./components/Bikesheds/BikeshedInfo')
-const BikeshedList = require('./components/Bikesheds/BikeshedList')
+const Bikeshed = require('./components/Bikeshed/Bikeshed')
+const BikeshedList = require('./components/BikeshedList/BikeshedList')
 
 const routes = (
   <Route handler={Application}>
@@ -33,9 +33,9 @@ const routes = (
         handler={BikeshedList}
       />
       <Route
-        name='bikeshed-info'
+        name='bikeshed'
         path=':bikeshedId/?'
-        handler={BikeshedInfo}
+        handler={Bikeshed}
       />
     </Route>
 
