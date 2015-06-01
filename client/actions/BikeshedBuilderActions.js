@@ -73,7 +73,7 @@ exports.submit = async function submit (context) {
     context.dispatch('BIKESHED_INFO_RECEIVED', result.parsedBody)
     context.dispatch('BIKESHED_BUILDER_RESET')
 
-    context.router.transitionTo('bikeshed-info', {
+    context.router.transitionTo('bikeshed', {
       bikeshedId: result.parsedBody.id
     })
 
