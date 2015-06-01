@@ -129,8 +129,8 @@ const BikeshedBuilderStore = createImmutableStore({
 
   /**
    * Updates bike preview
-   * Clears preview if bike isn't found
-   * @param {string} [name] Bike to preview
+   * Cleared if bike isn't found
+   * @param {string} name Bike to preview
    */
   _preview (name) {
     const hasBike = this._state.hasIn(['bikes', name])
