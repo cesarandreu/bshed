@@ -1,62 +1,126 @@
 const createImmutableStore = require('../lib/createImmutableStore')
 const Immutable = require('immutable')
-const _ = require('lodash')
+
+const {Schema, arrayOf, normalize} = require('normalizr')
+
+const bikeshed = new Schema('bikesheds')
+const bike = new Schema('bikes')
+const user = new Schema('users')
+
+bikeshed.define({
+  Bikes: arrayOf(bike),
+  User: user
+})
 
 const BikeshedStore = createImmutableStore({
   storeName: 'BikeshedStore',
 
   handlers: {
-    BIKESHED_INFO_START: '_infoStart',
+    BIKESHED_INFO_START: '_startItem',
+    BIKESHED_INFO_RECEIVED: '_receiveItem',
 
+    BIKESHED_LIST_START: '_startList',
     BIKESHED_LIST_RECEIVED: '_receiveList',
-    BIKESHED_INFO_RECEIVED: '_receive'
+
+    BIKESHED_PREVIEW: '_preview'
   },
 
   initialize () {
     this._state = Immutable.fromJS({
-      _bikes: Immutable.OrderedMap(),
+      bikesheds: {},
+      users: {},
+      bikes: {},
+
       currentList: [],
-      current: null
+      current: '',
+      preview: ''
     })
   },
 
   waitForInfo (id) {
-    return !this._state.hasIn(['_bikes', id])
+    return !this._state.hasIn(['bikesheds', id])
+  },
+
+  getPreview () {
+    return this._state.getIn(['bikes', this._state.get('preview')], null)
   },
 
   getCurrent () {
-    return this._state.getIn(['_bikes', this._state.get('current')], Immutable.Map())
+    const bikeshed = this._state.getIn(['bikesheds', this._state.get('current')])
+    const user = this._state.getIn(['users', bikeshed.get('User')])
+    const bikes = this._state.get('bikes').filter(bike =>
+      bikeshed.get('Bikes').includes(bike.get('id'))
+    )
+
+    return {
+      bikeshed,
+      bikes,
+      user
+    }
   },
 
   getCurrentList () {
-    return {}
+    return Immutable.List()
   },
 
-  _infoStart (bikeshedId) {
+  /**
+   * Updates bike preview
+   * Cleared if bike isn't found
+   * @param {string} name Bike to preview
+   */
+  _preview (name) {
+    const hasBike = this._state.hasIn(['bikes', name])
     this.mergeState({
-      current: bikeshedId
+      preview: hasBike ? name : ''
+    })
+  },
+
+  /**
+   * Navigating to bikeshed
+   */
+  _startItem (bikeshedId) {
+    this.mergeState({
+      current: bikeshedId,
+      preview: ''
+    })
+  },
+
+  /**
+   * Navigating to bikeshed list
+   */
+  _startList () {
+    this.mergeState({
+      currentList: Immutable.List(),
+      preview: ''
     })
   },
 
   /**
    * Receive bikeshed
    */
-  _receive (item) {
-    item = Immutable.fromJS(item)
+  _receiveItem (bikeshedItem) {
+    const {result, entities} = normalize(bikeshedItem, bikeshed)
     this.setState(
-      this._state.setIn(['_bikes', item.get('id')], item)
+      this._state
+        .set('current', result)
+        .mergeDeep(
+          Immutable.fromJS(entities)
+        )
     )
   },
 
   /**
    * Receive bikesheds
    */
-  _receiveList (list) {
-    this.mergeState({
-      _bikes: this._state.get('_bikes').merge(
-        Immutable.fromJS(_.indexBy(list, 'id'))
-      )
-    })
+  _receiveList (bikeshedList) {
+    const {result, entities} = normalize(bikeshedList, arrayOf(bikeshed))
+    this.setState(
+      this._state
+        .set('currentList', result)
+        .mergeDeep(
+          Immutable.fromJS(entities)
+        )
+    )
   }
 })
 
