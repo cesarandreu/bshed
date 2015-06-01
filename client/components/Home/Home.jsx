@@ -1,15 +1,17 @@
 require('./home.less')
 
 const React = require('react/addons')
-const BikePreview = require('./BikePreview')
+const BikePreview = require('../shared/BikePreview')
 const PureRenderMixin = React.addons.PureRenderMixin
 const {connectToStores} = require('fluxible/addons')
 const BikeshedBuilder = require('./BikeshedBuilder')
+const ActionMixin = require('../../lib/ActionMixin')
 const BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 const BikeshedBuilderActions = require('../../actions/BikeshedBuilderActions')
 
 const Home = React.createClass({
   mixins: [
+    ActionMixin,
     PureRenderMixin
   ],
 
@@ -27,9 +29,14 @@ const Home = React.createClass({
         />
         <BikePreview
           preview={preview}
+          onClose={this._closePreview}
         />
       </div>
     )
+  },
+
+  _closePreview () {
+    this.executeAction(BikeshedBuilderActions.preview, '')
   }
 })
 
