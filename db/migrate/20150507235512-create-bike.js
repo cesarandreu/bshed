@@ -14,6 +14,14 @@ module.exports = {
         allowNull: false,
         type: DataTypes.INTEGER
       },
+      width: {
+        allowNull: false,
+        type: DataTypes.INTEGER
+      },
+      height: {
+        allowNull: false,
+        type: DataTypes.INTEGER
+      },
       type: {
         allowNull: false,
         type: DataTypes.ENUM([
