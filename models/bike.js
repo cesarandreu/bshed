@@ -66,6 +66,44 @@ module.exports = function (sequelize, DataTypes) {
           })
         })
       },
+
+      /**
+       * Create bike and upload image to s3
+       * @param {Object} config
+       * @param {string} config.BikeshedId
+       * @param {Object} config.file
+       * @param {Object} options
+       * @param {Object} options.s3
+       * @param {Object} [options.transaction]
+       * @returns {Promise} Bike creation and upload promise
+       */
+      async createAndUpload ({BikeshedId, file}={}, {s3, transaction}={}) {
+        assert(BikeshedId && file, 'createAndUpload requires BikeshedId and file')
+        assert(s3, 'createAndUpload requires s3')
+
+        const {width, height} = await Bike.getDimensions(file.path)
+        const {type, size, name} = file
+
+        const bike = await Bike.create({
+          BikeshedId,
+          height,
+          width,
+          type,
+          size,
+          name
+        }, {
+          transaction
+        })
+
+        await Bike.uploadImage(s3, {
+          path: file.path,
+          BikeId: bike.id,
+          BikeshedId
+        })
+
+        return bike
+      },
+
       /**
        * Upload image to s3
        * @param {Object} s3 Client instance of s3

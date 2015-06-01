@@ -6,6 +6,8 @@ const BIKE_SCHEMA_KEYS = [
   'name',
   'size',
   'type',
+  'width',
+  'height',
   'createdAt',
   'updatedAt',
   'BikeshedId'

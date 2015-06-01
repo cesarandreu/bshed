@@ -4,7 +4,6 @@ const path = require('path')
 const mmm = require('mmmagic')
 const assert = require('assert')
 const chance = require('chance').Chance()
-const uploadBike = require('../../utils/upload-bike')
 const fixtures = path.resolve(__dirname, '../fixtures')
 
 const Magic = mmm.Magic
@@ -70,36 +69,27 @@ module.exports = function buildFactories (models, s3) {
   /**
    * Create bike
    */
-  async function createBike (opts={}) {
-    _.defaults(opts, {
-      file: `${fixtures}/puppy_0${_.random(1, 4)}.jpg`
+  async function createBike ({BikeshedId, file={}}={}) {
+    _.defaults(file, {
+      path: `${fixtures}/puppy_0${_.random(1, 4)}.jpg`
     })
 
-    _.defaults(opts, {
-      type: await getFileType(opts.file),
-      size: await getFileSize(opts.file),
-      name: path.basename(opts.file)
+    _.defaults(file, {
+      type: await getFileType(file.path),
+      size: await getFileSize(file.path),
+      name: path.basename(file.path)
     })
 
-    const bikeshed = opts.BikeshedId
-      ? await Bikeshed.findById(opts.BikeshedId)
+    const bikeshed = BikeshedId
+      ? await Bikeshed.findById(BikeshedId)
       : await createBikeshed()
 
-    Object.assign(opts, {
-      BikeshedId: bikeshed.id
+    const bike = await Bike.createAndUpload({
+      BikeshedId: bikeshed.id,
+      file
+    }, {
+      s3
     })
-
-    const bike = await Bike.create(opts)
-    try {
-      await uploadBike(s3, {
-        file: opts.file,
-        BikeId: bike.id,
-        BikeshedId: bike.BikeshedId
-      })
-    } catch (err) {
-      await bike.destroy()
-      throw err
-    }
 
     return bike
   }

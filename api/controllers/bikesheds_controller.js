@@ -3,7 +3,6 @@ const _ = require('lodash')
 const Router = require('koa-router')
 const bodyParser = require('koa-body')
 const middleware = require('../../utils/middleware')
-const uploadBike = require('../../utils/upload-bike')
 const getFullBikeshed = require('../../utils/get-full-bikeshed')
 
 /**
@@ -143,28 +142,15 @@ BikeshedsController.create = function* create () {
     })
 
     // Create bikes
-    const bikes = yield Bike.bulkCreate(Object.keys(files).map(name => {
-      const file = files[name]
-      return {
-        type: file.type,
-        size: file.size,
-        name: file.name,
-        BikeshedId: bikeshed.id
-      }
-    }), {
-      validate: true,
-      transaction
-    })
-
-    // Upload bikes
-    // @TODO Handle failure
-    yield Promise.all(bikes.map(bike =>
-      uploadBike(this.s3, {
-        file: files[bike.name].path,
+    yield Object.keys(files).map(name => {
+      return Bike.createAndUpload({
         BikeshedId: bikeshed.id,
-        BikeId: bike.id
+        file: files[name]
+      }, {
+        s3: this.s3,
+        transaction
       })
-    ))
+    })
 
     // Finished
     yield transaction.commit()
