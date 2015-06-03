@@ -27,7 +27,9 @@ module.exports = async function getFullBikeshed ({user, BikeshedId, models}={}) 
         'id',
         'name',
         'size',
-        'type'
+        'type',
+        'width',
+        'height'
       ]
     }, {
       model: User,
