@@ -9,7 +9,7 @@ const ActionMixin = require('../../lib/ActionMixin')
 const BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 const BikeshedBuilderActions = require('../../actions/BikeshedBuilderActions')
 
-const Home = React.createClass({
+var Home = React.createClass({
   mixins: [
     ActionMixin,
     PureRenderMixin
@@ -40,9 +40,11 @@ const Home = React.createClass({
   }
 })
 
-module.exports = connectToStores(Home, [BikeshedBuilderStore], stores => {
+Home = connectToStores(Home, [BikeshedBuilderStore], stores => {
   return {
     preview: stores.BikeshedBuilderStore.getPreviewState(),
     state: stores.BikeshedBuilderStore.getState()
   }
 })
+
+module.exports = Home
