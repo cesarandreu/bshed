@@ -1,6 +1,7 @@
 require('./home.less')
 
 const React = require('react/addons')
+const Immutable = require('immutable')
 const BikePreview = require('../shared/BikePreview')
 const PureRenderMixin = React.addons.PureRenderMixin
 const {connectToStores} = require('fluxible/addons')
@@ -17,6 +18,11 @@ var Home = React.createClass({
 
   statics: {
     navigateAction: BikeshedBuilderActions.builderNavigateAction
+  },
+
+  propTypes: {
+    preview: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+    state: React.PropTypes.instanceOf(Immutable.Map).isRequired
   },
 
   render () {
