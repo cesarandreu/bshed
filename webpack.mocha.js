@@ -1,5 +1,5 @@
 module.exports = require('./webpack.make')({
-  SERVER: false,
+  SERVER: true,
   BUILD: false,
-  TEST: false
+  TEST: true
 })
