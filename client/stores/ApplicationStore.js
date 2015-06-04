@@ -5,12 +5,21 @@ const ApplicationStore = createImmutableStore({
   storeName: 'ApplicationStore',
 
   handlers: {
-    'NAVIGATE_SUCCESS': 'handleNavigate'
+    NAVIGATE_FAIL: '_fail',
+    NAVIGATE_START: '_start',
+    NAVIGATE_SUCCESS: '_success'
   },
 
-  handleNavigate (route) {
-    // this.state = this.state.set('route', route)
-    // this.emitChange()
+  _success () {
+
+  },
+
+  _fail () {
+
+  },
+
+  _start () {
+
   },
 
   getPageTitle () {
