@@ -34,7 +34,11 @@
     "server": "babel-node server.js",
     "test": "NODE_ENV=test mocha {models,api}/test/**/*.test.js",
     "test:api": "NODE_ENV=test mocha api/test/*.test.js",
-    "test:models": "NODE_ENV=test mocha models/test/*.test.js"
+    "test:models": "NODE_ENV=test mocha models/test/*.test.js",
+    "test:client:mocha": "NODE_ENV=test ",
+    "test:client:webpack": "webpack ",
+    "test:client:karma": "NODE_ENV=test karma start",
+    "test:client:karma:live": "npm run test:client:karma -- --auto-watch --no-single-run"
   },
   "dependencies": {
     "autoprefixer-core": "^5.2.0",
