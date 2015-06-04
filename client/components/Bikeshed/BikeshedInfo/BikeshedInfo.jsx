@@ -54,6 +54,7 @@ const BikeshedInfo = React.createClass({
         </div>
 
         {/* Description */}
+        {/* @TODO: update style to be more similar to text input */}
         <p className='bikeshed-info-description'>
           {description}
         </p>
