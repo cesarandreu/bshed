@@ -1,3 +1,58 @@
+@import "../../../styles/styles.less";
+
+.bike-grid-item {
+  @bike-item-size: 160px;
+  width: @bike-item-size;
+  height: @bike-item-size;
+  margin: 2px 4px 2px 0;
+}
+
+.bike-grid-item-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -48px;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+
+  &.small {
+    border: solid 1px @border-color;
+  }
+
+  &.longer {
+    flex-direction: row;
+    .bike-grid-item-image {
+      max-width: 100%;
+    }
+  }
+
+  &.wider {
+    flex-direction: column;
+    .bike-grid-item-image {
+      max-height: 100%;
+    }
+  }
+
+  &.square .bike-grid-item-image {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
 .bike-grid {
+
+}
+
+.bike-grid-item {
+
+}
+
+.bike-grid-item-image-container {
+
+}
+
+.bike-grid-item-image {
 
 }
