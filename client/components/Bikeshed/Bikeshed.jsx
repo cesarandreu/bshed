@@ -8,6 +8,7 @@ const PureRenderMixin = React.addons.PureRenderMixin
 const BikePreview = require('../shared/BikePreview')
 const ActionMixin = require('../../lib/ActionMixin')
 const {connectToStores} = require('fluxible/addons')
+const RateBikesButton = require('./RateBikesButton')
 const BikeshedStore = require('../../stores/BikeshedStore')
 const BikeshedActions = require('../../actions/BikeshedActions')
 
@@ -40,6 +41,9 @@ const Bikeshed = React.createClass({
           bikeshed={bikeshed}
           bikes={bikes}
         />
+
+        <RateBikesButton/>
+
         <BikePreview
           onClose={this._closePreview}
           preview={preview}
