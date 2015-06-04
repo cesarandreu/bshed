@@ -146,6 +146,8 @@ function checkBikeshedStructure (bikeshed) {
     expect(bike)
       .to.only.have.keys([
         'rating',
+        'height',
+        'width',
         'score',
         'type',
         'name',
