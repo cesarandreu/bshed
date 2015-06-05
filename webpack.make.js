@@ -10,6 +10,7 @@ module.exports = function buildWebpackConfig (options) {
   const NODE_ENV = options.NODE_ENV || process.env.NODE_ENV || 'development'
   const SERVER = !!(options.SERVER || process.env.SERVER)
   const BUILD = !!(options.BUILD || process.env.BUILD)
+  const TEST = !!(options.TEST || process.env.TEST)
 
   // shared values
   const publicPath = BUILD ? '/assets/' : 'http://localhost:9090/assets/'
@@ -28,11 +29,11 @@ module.exports = function buildWebpackConfig (options) {
 
     context: __dirname,
 
-    entry: {
+    entry: TEST ? {} : {
       bshed: SERVER ? './client/renderer/server.js' : './client/index.js'
     },
 
-    output: {
+    output: TEST ? {} : {
       filename: filename,
       publicPath: publicPath,
       pathinfo: !BUILD || SERVER,
@@ -41,7 +42,7 @@ module.exports = function buildWebpackConfig (options) {
 
     target: SERVER ? 'node' : 'web',
 
-    devtool: BUILD || SERVER ? 'source-map' : 'eval',
+    devtool: BUILD || SERVER ? 'source-map' : (TEST ? 'inline-source-map' : 'eval'),
 
     externals: [{
       './stats.json': 'commonjs ./stats.json'
@@ -54,7 +55,7 @@ module.exports = function buildWebpackConfig (options) {
         exclude: /node_modules/
       }, {
         test: /\.jsx$/,
-        loader: (BUILD || SERVER ? '' : 'react-hot!') + 'babel?optional=runtime&cacheDirectory',
+        loader: (BUILD || SERVER || TEST ? '' : 'react-hot!') + 'babel?optional=runtime&cacheDirectory',
         exclude: /node_modules/
       }, {
         test: /\.less$/,
@@ -83,7 +84,7 @@ module.exports = function buildWebpackConfig (options) {
 
     plugins: [
       new ExtractTextPlugin('[name].[hash].css', {
-        disable: !BUILD || SERVER
+        disable: !BUILD || SERVER || TEST
       })
     ],
 
@@ -122,7 +123,7 @@ module.exports = function buildWebpackConfig (options) {
    */
 
   // http://jlongster.com/Backend-Apps-with-Webpack--Part-I
-  if (SERVER) {
+  if (SERVER)
     config.plugins.push(
       // new webpack.NormalModuleReplacementPlugin(/\.less$/, require.resolve('node-noop')),
       new webpack.BannerPlugin('require("source-map-support").install();', {
@@ -130,11 +131,21 @@ module.exports = function buildWebpackConfig (options) {
         raw: true
       })
     )
-  } else {
+
+  if (!SERVER) {
+    if (!TEST)
+      config.plugins.push(
+        ClientStatsPlugin({
+          publicPath: publicPath
+        })
+      )
+
+    if (TEST)
+      config.plugins.push(
+        new webpack.IgnorePlugin(/jsdom$/)
+      )
+
     config.plugins.push(
-      ClientStatsPlugin({
-        publicPath: publicPath
-      }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
       })
@@ -142,13 +153,12 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // Minifify and dedupe
-  if (BUILD && !SERVER) {
-    config.plugins.push([
+  if (BUILD && !SERVER)
+    config.plugins.push(
       new webpack.NoErrorsPlugin(),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin()
-    ])
-  }
+    )
 
   return config
 }
