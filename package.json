@@ -35,6 +35,10 @@
     "test": "NODE_ENV=test mocha {models,api}/test/**/*.test.js",
     "test:api": "NODE_ENV=test mocha api/test/*.test.js",
     "test:models": "NODE_ENV=test mocha models/test/*.test.js",
+    "test:client:node": "npm run test:client:node:webpack && npm run test:client:node:mocha",
+    "test:client:node:live": "npm run test:client:node:webpack -- -w & npm run test:client:node:mocha -- -w",
+    "test:client:node:mocha": "NODE_ENV=test mocha build/tests.js",
+    "test:client:node:webpack": "NODE_ENV=test webpack client/tests.js build/tests.js --config webpack.mocha.js",
     "test:client:browser": "NODE_ENV=test karma start",
     "test:client:browser:live": "npm run test:client:karma -- --auto-watch --no-single-run"
   },
