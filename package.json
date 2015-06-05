@@ -67,6 +67,7 @@
     "is-promise": "^2.0.0",
     "isomorphic-fetch": "^2.1.0",
     "joi": "^6.4.3",
+    "karma": "^0.12.36",
     "koa": "^0.21.0",
     "koa-better-body": "^1.0.17",
     "koa-body": "^1.2.1",
