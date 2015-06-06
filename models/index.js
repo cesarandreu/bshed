@@ -24,6 +24,7 @@ module.exports = function modelsLoader (config) {
   assert(config, 'model loader requires config')
   debug('loader:start')
 
+  // Create sequelize instance
   const sequelize = new Sequelize(
     config.database,
     config.username,
@@ -31,6 +32,8 @@ module.exports = function modelsLoader (config) {
     config
   )
 
+  // Reference: https://github.com/mickhansen/ssacl-attribute-roles
+  // Attribute whitelisting/blacklisting with roles
   ssaclAttributeRoles(sequelize)
 
   const models = MODEL_LIST.reduce((models, name) => {
