@@ -10,12 +10,11 @@ const helpers = require('../utils/helpers')
  * API loader
  * @params {Object} opts
  * @params {Object} opts.s3
- * @params {Object} opts.config
  * @params {Object} opts.models
  * @returns {Application} API routes
  */
-module.exports = function apiLoader ({config, models, s3}={}) {
-  assert(config && models && s3, 'api requires config, models, and s3')
+module.exports = function apiLoader ({models, s3}={}) {
+  assert(models && s3, 'api requires models and s3')
   debug('start')
 
   const api = compose([

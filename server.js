@@ -25,7 +25,6 @@ debug('initializing libs and modules')
 const s3 = s3Loader(config.aws)
 const models = modelLoader(config.database)
 const api = apiLoader({
-  config,
   models,
   s3
 })
