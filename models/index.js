@@ -36,6 +36,7 @@ module.exports = function modelsLoader (config) {
   // Attribute whitelisting/blacklisting with roles
   ssaclAttributeRoles(sequelize)
 
+  // Load all the models
   const models = MODEL_LIST.reduce((models, name) => {
     debug(`loading ${name} model`)
     const model = require(`./${name}.js`)(sequelize, Sequelize)
