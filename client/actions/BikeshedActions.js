@@ -44,3 +44,11 @@ exports.listNavigateAction = async function listNavigateAction (context, state) 
 exports.preview = function preview (context, name) {
   context.dispatch('BIKESHED_PREVIEW', name)
 }
+
+// exports.nextPreview = function nextPreview (context) {
+//   context.dispatch('BIKESHED_PREVIEW_NEXT')
+// }
+
+// exports.previousPreview = function previousPreview (context) {
+//   context.dispatch('BIKESHED_PREVIEW_PREVIOUS')
+// }
