@@ -1,4 +1,4 @@
-require('./grid.less')
+require('./Grid.less')
 
 const cn = require('classnames')
 const React = require('react/addons')
