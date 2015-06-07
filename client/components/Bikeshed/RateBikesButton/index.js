@@ -1,1 +1,1 @@
-module.exports = require('./RateBikesButton')
+module.exports = require('./RateBikesButton.jsx')

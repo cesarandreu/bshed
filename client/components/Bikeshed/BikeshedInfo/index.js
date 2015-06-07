@@ -1,1 +1,1 @@
-module.exports = require('./BikeshedInfo')
+module.exports = require('./BikeshedInfo.jsx')
