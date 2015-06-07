@@ -46,11 +46,12 @@ const BikeshedStore = createImmutableStore({
   },
 
   getCurrent () {
+    const state = this._state
     const bikeshed = this._state.getIn(['bikesheds', this._state.get('current')])
     const user = this._state.getIn(['users', bikeshed.get('User')])
-    const bikes = this._state.get('bikes').filter(bike =>
-      bikeshed.get('Bikes').includes(bike.get('id'))
-    )
+    const bikes = bikeshed.get('Bikes').reduceRight((bikes, id) => {
+      return bikes.set(id, state.getIn(['bikes', id]))
+    }, Immutable.OrderedMap())
 
     return {
       bikeshed,
