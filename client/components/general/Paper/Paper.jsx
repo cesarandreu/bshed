@@ -3,7 +3,7 @@ const React = require('react')
 const cn = require('classnames')
 
 const Paper = React.createClass({
-  propTyes: {
+  propTypes: {
     zDepth: React.PropTypes.number
   },
 
