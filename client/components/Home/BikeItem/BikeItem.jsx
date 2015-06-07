@@ -29,11 +29,12 @@ const BikeItem = React.createClass({
           icon='md-clear'
         />
         <BikeImage
+          onClick={this._preview}
+          className='bike-item-image'
           height={bike.getIn(['size', 'height'])}
           width={bike.getIn(['size', 'width'])}
           name={bike.get('name')}
           url={bike.get('url')}
-          onClick={this._preview}
         />
       </GridItem>
     )
