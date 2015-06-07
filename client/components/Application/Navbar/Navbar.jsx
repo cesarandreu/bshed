@@ -1,4 +1,4 @@
-require('./navbar.less')
+require('./Navbar.less')
 
 const React = require('react/addons')
 const {Link} = require('react-router')
