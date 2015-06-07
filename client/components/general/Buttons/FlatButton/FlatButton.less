@@ -1,18 +1,18 @@
-@import "../../../styles/styles.less";
+@import "../../../../styles/styles.less";
 
 // FlatButton
 .flat-button {
   &[disabled] {
-    &.primary,
-    &.secondary {
+    &.flat-button-primary,
+    &.flat-button-secondary {
       opacity: 0.3;
     }
   }
 
-  &.primary {
+  &.flat-button-primary {
     color: @flat-button-primary-text-color;
   }
-  &.secondary {
+  &.flat-button-secondary {
     color: @flat-button-secondary-text-color;
   }
 
