@@ -1,10 +1,9 @@
-@import "../../../styles/styles.less";
+@import "../../../../styles/styles.less";
 
 // LabeledActionButton
 .labeled-action-button {
   display: flex;
   align-items: center;
-  flex-direction: row-reverse;
 
   &.left {
     flex-direction: row-reverse;
@@ -30,15 +29,6 @@
       margin-top: @labeled-action-button-label-margin;
     }
   }
-
-  /**
-   * From when label was left-only
-   * Breaks top and bottom label
-   */
-  // height: @action-button-size;
-  // &.mini {
-  //   height: @action-button-mini-size;
-  // }
 
   label {
     background-color: @labeled-action-button-label-color;
