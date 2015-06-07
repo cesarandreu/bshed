@@ -1,4 +1,4 @@
-require('./bikeshed.less')
+require('./Bikeshed.less')
 
 const React = require('react/addons')
 const Immutable = require('immutable')
