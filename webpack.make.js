@@ -115,7 +115,6 @@ module.exports = function buildWebpackConfig (options) {
           'react': 'commonjs react/addons'
         })
     )
-
   }
 
   /**
@@ -123,27 +122,29 @@ module.exports = function buildWebpackConfig (options) {
    */
 
   // http://jlongster.com/Backend-Apps-with-Webpack--Part-I
-  if (SERVER)
+  if (SERVER) {
     config.plugins.push(
-      // new webpack.NormalModuleReplacementPlugin(/\.less$/, require.resolve('node-noop')),
       new webpack.BannerPlugin('require("source-map-support").install();', {
         entryOnly: true,
         raw: true
       })
     )
+  }
 
   if (!SERVER) {
-    if (!TEST)
+    if (!TEST) {
       config.plugins.push(
         ClientStatsPlugin({
           publicPath: publicPath
         })
       )
+    }
 
-    if (TEST)
+    if (TEST) {
       config.plugins.push(
         new webpack.IgnorePlugin(/jsdom$/)
       )
+    }
 
     config.plugins.push(
       new webpack.DefinePlugin({
