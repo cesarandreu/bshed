@@ -7,7 +7,7 @@ const Paper = React.createClass({
     zDepth: React.PropTypes.number
   },
 
-  getDefaultProp () {
+  getDefaultProps () {
     return {
       zDepth: 1
     }
