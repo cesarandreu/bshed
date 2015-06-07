@@ -1,14 +1,14 @@
-require('./bikeshed-builder.less')
+require('./BikeshedBuilder.less')
 
 const React = require('react/addons')
-const BikeItem = require('./BikeItem')
 const Immutable = require('immutable')
 const BikeItem = require('../BikeItem')
 const Grid = require('../../general/Grid')
+const Paper = require('../../general/Paper')
 const TextField = require('../../general/TextField')
 const ActionMixin = require('../../../lib/ActionMixin')
 const PureRenderMixin = React.addons.PureRenderMixin
-const BikeItemPlaceholder = require('./BikeItemPlaceholder')
+const BikeItemPlaceholder = require('../BikePlaceholder')
 const RaisedButton = require('../../general/Buttons/RaisedButton')
 const BikeshedBuilderActions = require('../../../actions/BikeshedBuilderActions')
 
@@ -26,7 +26,7 @@ const BikeshedBuilder = React.createClass({
   render () {
     const {form, bikes} = this.props
     return (
-      <div className='bikeshed-builder'>
+      <Paper zDepth={1} className='bikeshed-builder'>
         <div className='bikeshed-builder-content'>
           <TextField
             name='description'
@@ -69,7 +69,7 @@ const BikeshedBuilder = React.createClass({
           onChange={this._addFiles}
           accept='image/jpeg,image/png'
         />
-      </div>
+      </Paper>
     )
   },
 
