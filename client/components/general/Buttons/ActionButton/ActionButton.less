@@ -1,4 +1,4 @@
-@import "../../../styles/styles.less";
+@import "../../../../styles/styles.less";
 
 // ActionButton
 .action-button {
@@ -18,16 +18,8 @@
 
   height: @action-button-size;
   width: @action-button-size;
-  &.mini {
-    height: @action-button-mini-size;
-    width: @action-button-mini-size;
 
-    span {
-      line-height: @action-button-mini-size;
-    }
-  }
-
-  span {
+  .icon {
     color: @action-button-icon-color;
     line-height: @action-button-size;
   }
