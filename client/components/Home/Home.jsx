@@ -1,5 +1,3 @@
-require('./home.less')
-
 const React = require('react/addons')
 const Immutable = require('immutable')
 const BikePreview = require('../shared/BikePreview')
@@ -7,6 +5,7 @@ const PureRenderMixin = React.addons.PureRenderMixin
 const {connectToStores} = require('fluxible/addons')
 const BikeshedBuilder = require('./BikeshedBuilder')
 const ActionMixin = require('../../lib/ActionMixin')
+const RegularPage = require('../general/RegularPage')
 const BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 const BikeshedBuilderActions = require('../../actions/BikeshedBuilderActions')
 
@@ -28,7 +27,7 @@ var Home = React.createClass({
   render () {
     const {state, preview} = this.props
     return (
-      <div className='home'>
+      <RegularPage>
         <BikeshedBuilder
           bikes={state.get('bikes')}
           form={state.get('form')}
@@ -37,7 +36,7 @@ var Home = React.createClass({
           preview={preview}
           onClose={this._closePreview}
         />
-      </div>
+      </RegularPage>
     )
   },
 
