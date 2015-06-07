@@ -1,4 +1,4 @@
-require('./rate-bikes-button.less')
+require('./RateBikesButton.less')
 
 const React = require('react/addons')
 const PureRenderMixin = React.addons.PureRenderMixin
