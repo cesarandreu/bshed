@@ -1,8 +1,8 @@
-@import "../../../styles/styles.less";
+@bike-preview-z-index: 1000;
 
 .bike-preview-overlay {
-  z-index: @z-index-fullscreen-overlay - 1;
-  background-color: @black;
+  z-index: @bike-preview-z-index - 1;
+  background-color: #000;
   position: absolute;
   opacity: 0.9;
   height: 100%;
@@ -12,7 +12,7 @@
 }
 
 .bike-preview {
-  z-index: @z-index-fullscreen-overlay;
+  z-index: @bike-preview-z-index;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -28,8 +28,9 @@
 .bike-preview-close {
   top: 0;
   right: 0;
+  color: #fff;
   position: absolute;
-  color: @white;
+
   opacity: 0.6;
   &:hover {
     opacity: 0.8;

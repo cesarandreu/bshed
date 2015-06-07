@@ -1,1 +1,1 @@
-module.exports = require('./BikePreview')
+module.exports = require('./BikePreview.jsx')

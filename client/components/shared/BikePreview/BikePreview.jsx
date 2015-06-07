@@ -1,11 +1,13 @@
-require('./bike-preview.less')
-
+require('./BikePreview.less')
 const React = require('react/addons')
-const Immutable = require('immutable')
 const hotkey = require('react-hotkey')
 const PureRenderMixin = React.addons.PureRenderMixin
 const IconButton = require('../../general/Buttons/IconButton')
 
+/**
+ * Bike preview
+ * Full-screen image
+ */
 const BikePreview = React.createClass({
   mixins: [
     PureRenderMixin,
@@ -13,13 +15,33 @@ const BikePreview = React.createClass({
   ],
 
   propTypes: {
-    preview: React.PropTypes.instanceOf(Immutable.Map),
+    /**
+     * Image url
+     */
+    url: React.PropTypes.string,
+
+    /**
+     * Image name
+     */
+    name: React.PropTypes.string,
+
+    /**
+     * Closing action
+     * Called when you press Escape, hit the X button, or you click outside the image
+     */
     onClose: React.PropTypes.func.isRequired
   },
 
+  getDefaultProps () {
+    return {
+      name: '',
+      url: ''
+    }
+  },
+
   render () {
-    const {preview, onClose} = this.props
-    if (!preview)
+    const {name, url, onClose} = this.props
+    if (!url || !name)
       return null
 
     return (
@@ -31,8 +53,8 @@ const BikePreview = React.createClass({
             icon='md-clear'/>
           <img
             className='bike-preview-image'
-            alt={preview.get('name')}
-            src={preview.get('url')}
+            alt={name}
+            src={url}
           />
         </div>
         <div className='bike-preview-overlay'/>
