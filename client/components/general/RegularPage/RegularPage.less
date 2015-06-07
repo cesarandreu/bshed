@@ -1,0 +1,29 @@
+// Device sizes
+@device-x-large: ~"only screen and (max-width: 1800px)";
+@device-large:   ~"only screen and (max-width: 1260px)";
+@device-medium:  ~"only screen and (max-width: 920px)";
+@device-small:   ~"only screen and (max-width: 768px)";
+
+// RegularPage
+.regular-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0;
+  // padding-top: 40px;
+
+  @media @device-x-large {
+    width: 66.66%;
+  }
+
+  @media @device-large {
+    width: 840px;
+  }
+
+  @media @device-medium {
+    width: auto;
+    margin: 0 40px;
+  }
+}
