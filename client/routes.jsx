@@ -2,14 +2,14 @@ const React = require('react')
 const {Route, RouteHandler, DefaultRoute, NotFoundRoute} = require('react-router')
 
 // Application
-const Application = require('./components/Application/Application')
-const About = require('./components/About/About')
-const Home = require('./components/Home/Home')
-const NotFound = require('./components/NotFound/NotFound')
+const Application = require('./components/Application')
+const About = require('./components/About')
+const Home = require('./components/Home')
+const NotFound = require('./components/NotFound')
 
 // Bikesheds
-const Bikeshed = require('./components/Bikeshed/Bikeshed')
-const BikeshedList = require('./components/BikeshedList/BikeshedList')
+const Bikeshed = require('./components/Bikeshed')
+const BikeshedList = require('./components/BikeshedList')
 
 const routes = (
   <Route handler={Application}>
