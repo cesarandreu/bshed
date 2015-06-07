@@ -1,4 +1,4 @@
-require('./bikeshed-info.less')
+require('./BikeshedInfo.less')
 
 const cn = require('classnames')
 const moment = require('moment')
@@ -6,6 +6,7 @@ const React = require('react/addons')
 const {Link} = require('react-router')
 const Immutable = require('immutable')
 const inflection = require('inflection')
+const Paper = require('../../general/Paper')
 const PureRenderMixin = React.addons.PureRenderMixin
 
 const BikeshedInfo = React.createClass({
@@ -29,7 +30,7 @@ const BikeshedInfo = React.createClass({
     const votes = bikeshed.get('votes')
 
     return (
-      <div className='bikeshed-info'>
+      <Paper className='bikeshed-info'>
 
         {/* Tagline and votes */}
         <div className='bikeshed-info-head'>
@@ -70,7 +71,7 @@ const BikeshedInfo = React.createClass({
           </Link>
         </div>
 
-      </div>
+      </Paper>
     )
   }
 })
