@@ -110,7 +110,7 @@ const BikeshedStore = createImmutableStore({
   },
 
   /**
-   * Receive bikesheds
+   * Receive bikeshed list
    */
   _receiveList (bikeshedList) {
     const {result, entities} = normalize(bikeshedList, arrayOf(bikeshed))
