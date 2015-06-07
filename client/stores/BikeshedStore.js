@@ -42,7 +42,7 @@ const BikeshedStore = createImmutableStore({
   },
 
   getPreview () {
-    return this._state.getIn(['bikes', this._state.get('preview')], null)
+    return this._state.get('preview')
   },
 
   getCurrent () {
