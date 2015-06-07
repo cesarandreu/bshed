@@ -18,8 +18,8 @@ const BikeImage = React.createClass({
   },
 
   render () {
-    const {height, width, name, url, ...props} = this.props
-    const imageClassName = cn('bike-image-container', {
+    const {className, height, width, name, url, ...props} = this.props
+    const imageClassName = cn('bike-image-container', className, {
       small: width < GRID_ITEM_SIZE || height < GRID_ITEM_SIZE,
       square: width === height,
       longer: height > width,
