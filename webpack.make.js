@@ -37,7 +37,8 @@ module.exports = function buildWebpackConfig (options) {
       filename: filename,
       publicPath: publicPath,
       pathinfo: !BUILD || SERVER,
-      path: __dirname + (SERVER ? '/build' : '/public/assets')
+      path: __dirname + (SERVER ? '/build' : '/public/assets'),
+      libraryTarget: SERVER ? 'commonjs2' : 'var'
     },
 
     target: SERVER ? 'node' : 'web',
