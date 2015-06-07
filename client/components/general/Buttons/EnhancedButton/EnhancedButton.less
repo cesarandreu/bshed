@@ -1,0 +1,23 @@
+@import "../../../../styles/styles.less";
+
+// EnhancedButton
+.enhanced-button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  text-align: center;
+
+  height: @button-height;
+  font-size: @button-font-size;
+  background-color: transparent;
+  color: @button-text-color;
+
+  &:focus {
+    outline: none;
+  }
+  &[disabled] {
+    cursor: default;
+  }
+}
