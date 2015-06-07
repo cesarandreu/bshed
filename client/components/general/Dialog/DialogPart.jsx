@@ -1,4 +1,4 @@
-require('./dialog-part.less')
+require('./DialogPart.less')
 
 const cn = require('classnames')
 const React = require('react/addons')
