@@ -1,9 +1,9 @@
-require('./bike-item.less')
+require('./BikeItem.less')
 
-const BIKE_ITEM_SIZE = 160
-const cn = require('classnames')
 const React = require('react/addons')
 const Immutable = require('immutable')
+const GridItem = require('../../general/GridItem')
+const BikeImage = require('../../shared/BikeImage')
 const PureRenderMixin = React.addons.PureRenderMixin
 const ActionMixin = require('../../../lib/ActionMixin')
 const IconButton = require('../../general/Buttons/IconButton')
@@ -21,33 +21,21 @@ const BikeItem = React.createClass({
 
   render () {
     const {bike} = this.props
-    const width = bike.getIn(['size', 'width'])
-    const height = bike.getIn(['size', 'height'])
-    const imageClassName = cn('bike-item-image-container', {
-      small: width < BIKE_ITEM_SIZE || height < BIKE_ITEM_SIZE,
-      square: width === height,
-      longer: height > width,
-      wider: width > height
-    })
-
     return (
-      <div className='bike-item'>
+      <GridItem>
         <IconButton
           onClick={this._remove}
           className='bike-item-clear'
           icon='md-clear'
         />
-        <div
-          className={imageClassName}
+        <BikeImage
+          height={bike.getIn(['size', 'height'])}
+          width={bike.getIn(['size', 'width'])}
+          name={bike.get('name')}
+          url={bike.get('url')}
           onClick={this._preview}
-        >
-          <img
-            className='bike-item-image'
-            alt={bike.get('name')}
-            src={bike.get('url')}
-          />
-        </div>
-      </div>
+        />
+      </GridItem>
     )
   },
 
