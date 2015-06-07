@@ -1,4 +1,4 @@
-require('./sidebar.less')
+require('./Sidebar.less')
 
 const cn = require('classnames')
 const React = require('react/addons')
