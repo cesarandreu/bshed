@@ -1,7 +1,12 @@
 @import "../../../styles/styles.less";
 
-// BikeItemPlaceholder
-.bike-item-placeholder {
+// BikePlaceholder
+.bike-placeholder-container .bike-placeholder {
+  height: 100%;
+  width: 100%;
+}
+
+.bike-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,16 +16,16 @@
   &:hover, &:focus {
     border-color: @grey-400;
 
-    .bike-item-placeholder-icon .icon {
+    .bike-placeholder-icon .icon {
       color: @grey-400;
     }
 
-    .bike-item-placeholder-text {
+    .bike-placeholder-text {
       color: @grey-600;
     }
   }
 
-  .bike-item-placeholder-icon {
+  .bike-placeholder-icon {
     margin: auto;
 
     .icon {
@@ -29,7 +34,7 @@
     }
   }
 
-  .bike-item-placeholder-text {
+  .bike-placeholder-text {
     font-size: @button-font-size;
     padding: 0 16px 8px;
     color: @grey-500;
