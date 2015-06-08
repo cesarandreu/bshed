@@ -1,4 +1,6 @@
-@import "../../../styles/styles.less";
+@import "../../styles/typography.less";
+@import "../../styles/colors.less";
+@import "../../styles/sizes.less";
 
 // Navbar
 .navbar {
@@ -6,15 +8,15 @@
   flex-direction: row;
   align-items: center;
 
-  box-shadow: @navbar-shadow;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
   z-index: @z-index-navbar;
   height: @navbar-height;
   width: 100%;
   position: fixed;
   top: 0;
 
-  background-color: @navbar-color;
-  color: @navbar-text-color;
+  background-color: @primary-1-color;
+  color: @text-color;
 }
 
 .navbar-inner {
@@ -29,7 +31,7 @@
 
   .navbar-title {
     font-size: @headline-font-size;
-    color: @white;
+    color: white;
   }
 }
 
@@ -47,7 +49,7 @@
     left: @icon-size * 0.25;
     height: @icon-size * 1.5;
     width: @icon-size * 1.5;
-    background-color: @black;
+    background-color: black;
     border-radius: 50%;
     content: ' ';
     opacity: 0;

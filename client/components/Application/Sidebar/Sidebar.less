@@ -1,8 +1,10 @@
-@import "../../../styles/styles.less";
+@import "../../styles/sizes.less";
+@import "../../styles/colors.less";
 
 // Sidebar
 .sidebar-container {
   @sidebar-transition-duration: 0.20s;
+  @sidebar-width: 256px;
 
   .sidebar {
     position: fixed;
@@ -45,8 +47,8 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  background-color: @sidebar-color;
-  box-shadow: @sidebar-shadow;
+  background-color: @card-color;
+  box-shadow: 0 0 4px rgba(0,0,0,.14),2px 4px 8px rgba(0,0,0,.28);
   white-space: nowrap;
   line-height: 40px;
 }
@@ -66,7 +68,7 @@
   a {
     font-weight: bold;
     padding: 4px 24px;
-    color: @sidebar-text-color;
+    color: @secondary-text-color;
     &.active {
       color: @accent-1-color;
     }
