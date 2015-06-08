@@ -39,10 +39,10 @@ exports.listNavigateAction = async function listNavigateAction (context, state) 
 
 /**
  * Set preview bike
- * @param {string} name
+ * @param {string} bikeId Bike ID
  */
-exports.preview = function preview (context, name) {
-  context.dispatch('BIKESHED_PREVIEW', name)
+exports.preview = function preview (context, bikeId) {
+  context.dispatch('BIKESHED_PREVIEW', bikeId)
 }
 
 // exports.nextPreview = function nextPreview (context) {
