@@ -1,4 +1,5 @@
-@import "../../../../styles/styles.less";
+@import "../../../styles/colors.less";
+@import "../../../styles/typography.less";
 
 // LabeledActionButton
 .labeled-action-button {
@@ -8,33 +9,33 @@
   &.left {
     flex-direction: row-reverse;
     label {
-      margin-right: @labeled-action-button-label-margin;
+      margin-right: 8px;
     }
   }
   &.right {
     flex-direction: row;
     label {
-      margin-left: @labeled-action-button-label-margin;
+      margin-left: 8px;
     }
   }
   &.top {
     flex-direction: column-reverse;
     label {
-      margin-bottom: @labeled-action-button-label-margin;
+      margin-bottom: 8px;
     }
   }
   &.bottom {
     flex-direction: column;
     label {
-      margin-top: @labeled-action-button-label-margin;
+      margin-top: 8px;
     }
   }
 
   label {
-    background-color: @labeled-action-button-label-color;
-    transition: @labeled-action-button-label-transition;
-    box-shadow: @labeled-action-button-label-shadow;
-    color: @labeled-action-button-text-color;
+    background-color: fade(@grey-800, 90%);
+    transition: opacity 150ms cubic-bezier(.4,0,1,1);
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    color: @grey-200;
     border-radius: 2px;
     padding: 6px 8px;
     font-weight: bold;
@@ -47,8 +48,8 @@
   }
 
   button:hover~label {
-    transition-delay: @labeled-action-button-label-transition-delay;
-    transition: @labeled-action-button-label-leave-transition;
+    transition-delay: 10ms;
+    transition: opacity 150ms cubic-bezier(0,0,.2,1);
     opacity: 1;
   }
 }
