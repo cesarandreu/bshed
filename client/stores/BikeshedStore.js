@@ -67,12 +67,12 @@ const BikeshedStore = createImmutableStore({
   /**
    * Updates bike preview
    * Cleared if bike isn't found
-   * @param {string} name Bike to preview
+   * @param {string} bikeId Bike ID to preview
    */
-  _preview (name) {
-    const hasBike = this._state.hasIn(['bikes', name])
+  _preview (bikeId) {
+    const hasBike = this._state.hasIn(['bikes', bikeId])
     this.mergeState({
-      preview: hasBike ? name : ''
+      preview: hasBike ? bikeId : ''
     })
   },
 
