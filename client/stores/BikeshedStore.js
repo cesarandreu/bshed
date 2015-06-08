@@ -22,7 +22,8 @@ const BikeshedStore = createImmutableStore({
     BIKESHED_LIST_START: '_startList',
     BIKESHED_LIST_RECEIVED: '_receiveList',
 
-    BIKESHED_PREVIEW: '_preview'
+    BIKESHED_PREVIEW: '_preview',
+    BIKESHED_PREVIEW_DELTA: '_changePreview'
   },
 
   initialize () {
@@ -74,6 +75,24 @@ const BikeshedStore = createImmutableStore({
     this.mergeState({
       preview: hasBike ? bikeId : ''
     })
+  },
+
+  /**
+   * Change bike in preview
+   * Use 1 to show the next image and -1 for the previous
+   * @param {number} [delta=0] Positions by which to change preview
+   */
+  _changePreview (delta=0) {
+    const preview = this._state.get('preview')
+    const current = this._state.get('current')
+    const bikes = this._state.getIn(['bikesheds', current, 'Bikes'])
+    const bikeIndex = bikes.findIndex(bikeId => bikeId === preview)
+    if (bikeIndex !== -1) {
+      const bikesCount = bikes.count()
+      this.mergeState({
+        preview: bikes.get((bikeIndex + delta) % bikesCount)
+      })
+    }
   },
 
   /**
