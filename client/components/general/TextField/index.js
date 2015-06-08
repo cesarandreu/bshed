@@ -1,1 +1,1 @@
-module.exports = require('./TextField')
+module.exports = require('./TextField.jsx')

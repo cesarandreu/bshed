@@ -1,4 +1,4 @@
-require('./text-field.less')
+require('./TextField.less')
 
 const cn = require('classnames')
 const React = require('react/addons')
