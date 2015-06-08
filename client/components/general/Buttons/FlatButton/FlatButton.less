@@ -1,4 +1,4 @@
-@import "../../../../styles/styles.less";
+@import "../../../styles/colors.less";
 
 // FlatButton
 .flat-button {
@@ -10,22 +10,22 @@
   }
 
   &.flat-button-primary {
-    color: @flat-button-primary-text-color;
+    color: @primary-1-color;
   }
   &.flat-button-secondary {
-    color: @flat-button-secondary-text-color;
+    color: @accent-1-color;
   }
 
   .button-label {
-    background-color: @flat-button-background-color;
+    background-color: transparent;
   }
   &:not([disabled]) {
     &:hover .button-label,
     &:focus .button-label {
-      background-color: @flat-button-hover-background-color;
+      background-color: @grey-100;
     }
     &:active .button-label {
-      background-color: @flat-button-active-background-color;
+      background-color: @grey-200;
     }
   }
 }
