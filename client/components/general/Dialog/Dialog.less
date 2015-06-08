@@ -1,7 +1,8 @@
-@import "../../../styles/styles.less";
+@import "../../styles/colors.less";
+@import "../../styles/sizes.less";
 
 .dialog-overlay {
-  z-index: @z-index-fullscreen-overlay - 1;
+  z-index: @z-index-fullscreen-overlay;
   background-color: @black;
   position: absolute;
   opacity: 0.9;
@@ -15,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: @z-index-fullscreen-overlay;
+  z-index: @z-index-fullscreen-overlay + 1;
   position: fixed;
   height: 100%;
   width: 100%;
