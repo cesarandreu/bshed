@@ -1,5 +1,5 @@
-require('./styles/imports.less')
-require('./styles/base.less')
+require('./components/styles/imports.less')
+require('./components/styles/base.less')
 
 const RequestPlugin = require('./lib/RequestPlugin')
 const RouterPlugin = require('./lib/RouterPlugin')
