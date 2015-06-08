@@ -23,19 +23,21 @@ const BikeItem = React.createClass({
     const {bike} = this.props
     return (
       <GridItem>
-        <IconButton
-          onClick={this._remove}
-          className='bike-item-clear'
-          icon='md-clear'
-        />
-        <BikeImage
-          onClick={this._preview}
-          className='bike-item-image'
-          height={bike.getIn(['size', 'height'])}
-          width={bike.getIn(['size', 'width'])}
-          name={bike.get('name')}
-          url={bike.get('url')}
-        />
+        <div className='bike-item-wrapper'>
+          <BikeImage
+            onClick={this._preview}
+            className='bike-item-image'
+            height={bike.getIn(['size', 'height'])}
+            width={bike.getIn(['size', 'width'])}
+            name={bike.get('name')}
+            url={bike.get('url')}
+          />
+          <IconButton
+            onClick={this._remove}
+            className='bike-item-clear'
+            icon='md-clear'
+          />
+        </div>
       </GridItem>
     )
   },

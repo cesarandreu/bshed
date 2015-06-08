@@ -1,11 +1,17 @@
 @import "../../styles/colors.less";
 
 // BikeItem
-.bike-item-clear {
+.bike-item-wrapper {
   position: relative;
-  margin-left: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.bike-item-clear {
+  position: absolute;
   height: 48px;
   width: 48px;
+  right: 0;
   color: white;
   text-shadow: 0px 0px 6px @full-black;
 
@@ -16,5 +22,6 @@
 }
 
 .bike-item-image {
-  margin-top: -48px;
+  position: absolute;
+  top: 0;
 }
