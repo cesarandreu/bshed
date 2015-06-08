@@ -48,9 +48,19 @@ var Bikeshed = React.createClass({
           name={preview}
           url={preview && `http://localhost:10001/bshed/${bikeshed.get('id')}/${preview}`}
           onClose={this._closePreview}
+          onNext={this._nextPreview}
+          onPrevious={this._previousPreview}
         />
       </RegularPage>
     )
+  },
+
+  _nextPreview () {
+    this.executeAction(BikeshedActions.nextPreview)
+  },
+
+  _previousPreview () {
+    this.executeAction(BikeshedActions.previousPreview)
   },
 
   _closePreview () {
