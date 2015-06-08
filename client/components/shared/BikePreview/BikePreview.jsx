@@ -3,6 +3,7 @@ const React = require('react/addons')
 const hotkey = require('react-hotkey')
 const PureRenderMixin = React.addons.PureRenderMixin
 const IconButton = require('../../general/Buttons/IconButton')
+const eventHasModifier = require('../../../lib/eventHasModifier')
 
 /**
  * Bike preview
@@ -29,7 +30,19 @@ const BikePreview = React.createClass({
      * Closing action
      * Called when you press Escape, hit the X button, or you click outside the image
      */
-    onClose: React.PropTypes.func.isRequired
+    onClose: React.PropTypes.func,
+
+    /**
+     * Next action
+     * Called when you press RightArrow
+     */
+     onNext: React.PropTypes.func,
+
+     /**
+      * Previous action
+      * Called when you press LeftArrow
+      */
+    onPrevious: React.PropTypes.func
   },
 
   getDefaultProps () {
@@ -68,9 +81,17 @@ const BikePreview = React.createClass({
   },
 
   _handleHotkey (e) {
-    if (e.key === 'Escape') {
-      this.props.onClose()
-      e.stopPropagation()
+    if (!eventHasModifier(e)) {
+      if (e.key === 'Escape' && this.props.onClose) {
+        this.props.onClose(e)
+        e.stopPropagation()
+      } else if (e.key === 'ArrowLeft' && this.props.onPrevious) {
+        this.props.onPrevious(e)
+        e.stopPropagation()
+      } else if (e.key === 'ArrowRight' && this.props.onNext) {
+        this.props.onNext(e)
+        e.stopPropagation()
+      }
     }
   }
 })
