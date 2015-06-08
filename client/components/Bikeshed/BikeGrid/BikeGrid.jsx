@@ -3,12 +3,15 @@ require('./BikeGrid.less')
 const React = require('react/addons')
 const Immutable = require('immutable')
 const Grid = require('../../general/Grid')
-const GridItem = require('../../general/GridItem')
+const GridCard = require('../../general/GridCard')
 const BikeImage = require('../../shared/BikeImage')
 const PureRenderMixin = React.addons.PureRenderMixin
+const ActionMixin = require('../../../lib/ActionMixin')
+const BikeshedActions = require('../../../actions/BikeshedActions')
 
 const BikeGrid = React.createClass({
   mixins: [
+    ActionMixin,
     PureRenderMixin
   ],
 
@@ -21,22 +24,40 @@ const BikeGrid = React.createClass({
     const {bikeshed, bikes} = this.props
 
     return (
-      <Grid className='bike-grid'>
+      <Grid
+        className='bike-grid'
+        subheader='Bikes'
+      >
         {bikeshed.get('Bikes').map(id => {
           const bike = bikes.get(id)
           return (
-            <GridItem className='bike-grid-item' key={id}>
+            <GridCard
+              key={id}
+              width={212}
+              height={260}
+              className='bike-grid-item'
+              onClick={() => this._preview(id)}
+            >
               <BikeImage
+                size={212}
+                className='bike-grid-image'
                 height={bike.get('height')}
                 width={bike.get('width')}
                 name={bike.get('name')}
                 url={`http://localhost:10001/bshed/${bikeshed.get('id')}/${id}`}
               />
-            </GridItem>
+              <div className='bike-grid-item-details'>
+                Score {bike.get('score')}
+              </div>
+            </GridCard>
           )
         })}
       </Grid>
     )
+  },
+
+  _preview (bikeId) {
+    this.executeAction(BikeshedActions.preview, bikeId)
   }
 })
 

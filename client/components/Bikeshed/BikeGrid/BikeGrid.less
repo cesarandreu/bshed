@@ -1,51 +1,18 @@
-// @import "../../../styles/styles.less";
+@import "../../styles/typography.less";
 
-// .bike-grid-item-image-container {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   margin-top: -48px;
-//   overflow: hidden;
-//   height: 100%;
-//   width: 100%;
-//   cursor: pointer;
+.bike-grid {
+  margin: 0 -8px;
+}
 
-//   &.small {
-//     border: solid 1px @border-color;
-//   }
+.bike-grid-image {
+  position: relative;
+  border-radius: 2px 2px 0 0;
+}
 
-//   &.longer {
-//     flex-direction: row;
-//     .bike-grid-item-image {
-//       max-width: 100%;
-//     }
-//   }
-
-//   &.wider {
-//     flex-direction: column;
-//     .bike-grid-item-image {
-//       max-height: 100%;
-//     }
-//   }
-
-//   &.square .bike-grid-item-image {
-//     max-width: 100%;
-//     max-height: 100%;
-//   }
-// }
-
-// .bike-grid {
-
-// }
-
-// .bike-grid-item {
-
-// }
-
-// .bike-grid-item-image-container {
-
-// }
-
-// .bike-grid-item-image {
-
-// }
+.bike-grid-item-details {
+  user-select: none;
+  position: relative;
+  padding: 16px;
+  line-height: 18px;
+  font-size: @card-font-size;
+}
