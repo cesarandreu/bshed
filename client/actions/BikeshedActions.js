@@ -45,10 +45,16 @@ exports.preview = function preview (context, bikeId) {
   context.dispatch('BIKESHED_PREVIEW', bikeId)
 }
 
-// exports.nextPreview = function nextPreview (context) {
-//   context.dispatch('BIKESHED_PREVIEW_NEXT')
-// }
+/**
+ * Show the next bike in the preview
+ */
+exports.nextPreview = function nextPreview (context) {
+  context.dispatch('BIKESHED_PREVIEW_DELTA', 1)
+}
 
-// exports.previousPreview = function previousPreview (context) {
-//   context.dispatch('BIKESHED_PREVIEW_PREVIOUS')
-// }
+/**
+ * Show the previous bike in the preview
+ */
+exports.previousPreview = function previousPreview (context) {
+  context.dispatch('BIKESHED_PREVIEW_DELTA', -1)
+}
