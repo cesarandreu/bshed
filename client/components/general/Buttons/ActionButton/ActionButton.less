@@ -1,26 +1,27 @@
-@import "../../../../styles/styles.less";
+@import "../../../styles/colors.less";
 
 // ActionButton
 .action-button {
-  background-color: @action-button-color;
+  background-color: @accent-2-color;
   border-radius: 50%;
   padding: 0;
 
   // order matters, :active must be last
-  box-shadow: @action-button-shadow;
+  box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
   &:hover, &:focus {
-    box-shadow: @action-button-hover-shadow;
-    transition: @action-button-hover-transition;
+    box-shadow: 0 0 6px rgba(0,0,0,.16),0 6px 12px rgba(0,0,0,.32);
+    transition: box-shadow 150ms cubic-bezier(0,0,.2,1);
   }
   &:active {
-    box-shadow: @action-button-active-shadow;
+    box-shadow: 0 0 8px rgba(0,0,0,.18),0 8px 16px rgba(0,0,0,.36);
   }
 
+  @action-button-size: 56px;
   height: @action-button-size;
   width: @action-button-size;
 
   .icon {
-    color: @action-button-icon-color;
+    color: white;
     line-height: @action-button-size;
   }
 }

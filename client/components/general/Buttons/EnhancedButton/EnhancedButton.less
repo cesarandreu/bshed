@@ -1,4 +1,5 @@
-@import "../../../../styles/styles.less";
+@import "../../../styles/typography.less";
+@import "../../../styles/colors.less";
 
 // EnhancedButton
 .enhanced-button {
@@ -9,10 +10,11 @@
   background: none;
   text-align: center;
 
-  height: @button-height;
+  // @TODO: change to min-height?
+  height: 48px;
   font-size: @button-font-size;
   background-color: transparent;
-  color: @button-text-color;
+  color: @primary-text-color;
 
   &:focus {
     outline: none;
