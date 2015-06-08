@@ -40,7 +40,7 @@
     "test:client:node:mocha": "NODE_ENV=test mocha --opts test/client.opts build/tests.js",
     "test:client:node:webpack": "NODE_ENV=test webpack client/tests.js build/tests.js --config webpack.mocha.js",
     "test:client:browser": "NODE_ENV=test karma start",
-    "test:client:browser:live": "npm run test:client:karma -- --auto-watch --no-single-run"
+    "test:client:browser:live": "npm run test:client:browser -- --auto-watch --no-single-run"
   },
   "dependencies": {
     "autoprefixer-core": "^5.2.0",
@@ -102,6 +102,7 @@
     "react-hot-loader": "^1.2.7",
     "react-hotkey": "^0.3.0",
     "react-router": "^0.13.1",
+    "react-tap-event-plugin": "^0.1.7",
     "sequelize": "^3.2.0",
     "sequelize-cli": "^1.3.0",
     "sequelize-migration-pg-extras": "^1.0.0",
