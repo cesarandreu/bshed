@@ -1,4 +1,4 @@
-require('./icon.less')
+require('./Icon.less')
 
 const React = require('react/addons')
 const classnames = require('classnames')
