@@ -1,4 +1,4 @@
-require('./application.less')
+require('./Application.less')
 
 const Navbar = require('./Navbar')
 const Sidebar = require('./Sidebar')
