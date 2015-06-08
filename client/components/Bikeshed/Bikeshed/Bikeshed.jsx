@@ -46,7 +46,7 @@ var Bikeshed = React.createClass({
 
         <BikePreview
           name={preview}
-          url={bikes.getIn([preview, 'url'], '')}
+          url={preview && `http://localhost:10001/bshed/${bikeshed.get('id')}/${preview}`}
           onClose={this._closePreview}
         />
       </RegularPage>
