@@ -1,4 +1,4 @@
-@import "../../../../styles/styles.less";
+@import "../../../styles/colors.less";
 
 // RaisedButton
 .raised-button {
@@ -7,51 +7,51 @@
   }
 
   &[disabled] .raised-button-label {
-    background-color: @raised-button-background-color-disabled;
+    background-color: @faint-black;
   }
 
   &:not([disabled]) {
     .raised-button-label {
-      background-color: @raised-button-background-color;
-      transition: @raised-button-transition;
-      box-shadow: @raised-button-box-shadow;
+      background-color: @white;
+      transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      box-shadow: 0 0 2px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.24);
     }
     &:hover .raised-button-label,
     &:focus .raised-button-label {
-      background-color: @raised-button-background-color-hover;
-      box-shadow: @raised-button-box-shadow-hover;
+      background-color: @grey-100;
+      box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
     }
     &:active .raised-button-label {
-      background-color: @raised-button-background-color-active;
-      box-shadow: @raised-button-box-shadow-active;
+      background-color: @grey-200;
+      box-shadow: 0 0 6px rgba(0,0,0,.16), 0 6px 12px rgba(0,0,0,.32);
     }
 
     &.raised-button-primary,
     &.raised-button-secondary {
-      color: @raised-button-color-alternate;
+      color: @white;
     }
     &.raised-button-primary {
       .raised-button-label {
-        background-color: @raised-button-background-color-primary;
+        background-color: @red-500;
       }
       &:hover .raised-button-label,
       &:focus .raised-button-label {
-        background-color: @raised-button-background-color-primary-hover;
+        background-color: @red-600;
       }
       &:active .raised-button-label {
-        background-color: @raised-button-background-color-primary-active;
+        background-color: @red-700;
       }
     }
     &.raised-button-secondary {
       .raised-button-label {
-        background-color: @raised-button-background-color-secondary;
+        background-color: @blue-500;
       }
       &:hover .raised-button-label,
       &:focus .raised-button-label {
-        background-color: @raised-button-background-color-secondary-hover;
+        background-color: @blue-600;
       }
       &:active .raised-button-label {
-        background-color: @raised-button-background-color-secondary-active;
+        background-color: @blue-700;
       }
     }
   }
