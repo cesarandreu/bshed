@@ -1,8 +1,14 @@
 require('./Paper.less')
-const React = require('react')
+
 const cn = require('classnames')
+const React = require('react/addons')
+const PureRenderMixin = React.addons.PureRenderMixin
 
 const Paper = React.createClass({
+  mixins: [
+    PureRenderMixin
+  ],
+
   propTypes: {
     zDepth: React.PropTypes.number
   },
@@ -17,7 +23,7 @@ const Paper = React.createClass({
     const {zDepth, children, className, ...props} = this.props
     return (
       <div
-        className={cn(`paper paper-z${zDepth}`, className)}
+        className={cn(`paper paper-depth-${zDepth}`, className)}
         {...props}
       >
         {children}
