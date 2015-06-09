@@ -3,11 +3,11 @@ require('./ActionButton.less')
 const cn = require('classnames')
 const React = require('react/addons')
 const IconButton = require('../IconButton')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const ActionButton = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

@@ -7,11 +7,11 @@ const {Link} = require('react-router')
 const Immutable = require('immutable')
 const inflection = require('inflection')
 const Paper = require('../../general/Paper')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const BikeshedInfo = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

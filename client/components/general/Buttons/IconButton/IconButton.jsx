@@ -4,11 +4,11 @@ const cn = require('classnames')
 const Icon = require('../../Icon')
 const React = require('react/addons')
 const EnhancedButton = require('../EnhancedButton')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const IconButton = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

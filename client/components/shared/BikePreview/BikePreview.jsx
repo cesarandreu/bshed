@@ -1,9 +1,10 @@
 require('./BikePreview.less')
+
 const React = require('react/addons')
 const hotkey = require('react-hotkey')
-const PureRenderMixin = React.addons.PureRenderMixin
 const IconButton = require('../../general/Buttons/IconButton')
 const eventHasModifier = require('../../../lib/eventHasModifier')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 /**
  * Bike preview
@@ -11,7 +12,7 @@ const eventHasModifier = require('../../../lib/eventHasModifier')
  */
 const BikePreview = React.createClass({
   mixins: [
-    PureRenderMixin,
+    ImmutableRenderMixin,
     hotkey.Mixin('_handleHotkey')
   ],
 

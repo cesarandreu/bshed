@@ -2,11 +2,11 @@ require('./BikeImage.less')
 
 const cn = require('classnames')
 const React = require('react/addons')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const BikeImage = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

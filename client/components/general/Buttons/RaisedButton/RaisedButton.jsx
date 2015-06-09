@@ -3,12 +3,12 @@ require('./RaisedButton.less')
 const cn = require('classnames')
 const React = require('react/addons')
 const ButtonLabel = require('../ButtonLabel')
-const PureRenderMixin = React.addons.PureRenderMixin
 const RectangleButton = require('../RectangleButton')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const RaisedButton = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

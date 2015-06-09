@@ -2,11 +2,11 @@ require('./ButtonLabel.less')
 
 const cn = require('classnames')
 const React = require('react/addons')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const ButtonLabel = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   render () {

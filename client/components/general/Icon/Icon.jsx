@@ -2,11 +2,11 @@ require('./Icon.less')
 
 const React = require('react/addons')
 const classnames = require('classnames')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const Icon = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

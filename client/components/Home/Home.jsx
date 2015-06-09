@@ -1,18 +1,18 @@
 const React = require('react/addons')
 const Immutable = require('immutable')
 const BikePreview = require('../shared/BikePreview')
-const PureRenderMixin = React.addons.PureRenderMixin
 const {connectToStores} = require('fluxible/addons')
 const BikeshedBuilder = require('./BikeshedBuilder')
 const ActionMixin = require('../../lib/ActionMixin')
 const RegularPage = require('../general/RegularPage')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 const BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 const BikeshedBuilderActions = require('../../actions/BikeshedBuilderActions')
 
 var Home = React.createClass({
   mixins: [
     ActionMixin,
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   statics: {

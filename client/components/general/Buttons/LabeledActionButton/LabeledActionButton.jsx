@@ -3,12 +3,12 @@ require('./LabeledActionButton.less')
 const cn = require('classnames')
 const React = require('react/addons')
 const ActionButton = require('../ActionButton')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 // TODO: allow setting label position, currently sets position to the left
 const LabeledActionButton = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

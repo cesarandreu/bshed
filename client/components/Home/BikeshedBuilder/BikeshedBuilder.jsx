@@ -7,15 +7,15 @@ const Grid = require('../../general/Grid')
 const Paper = require('../../general/Paper')
 const TextField = require('../../general/TextField')
 const ActionMixin = require('../../../lib/ActionMixin')
-const PureRenderMixin = React.addons.PureRenderMixin
 const BikeItemPlaceholder = require('../BikePlaceholder')
 const RaisedButton = require('../../general/Buttons/RaisedButton')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 const BikeshedBuilderActions = require('../../../actions/BikeshedBuilderActions')
 
 const BikeshedBuilder = React.createClass({
   mixins: [
     ActionMixin,
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

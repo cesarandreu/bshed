@@ -4,15 +4,15 @@ const React = require('react/addons')
 const Immutable = require('immutable')
 const GridItem = require('../../general/GridItem')
 const BikeImage = require('../../shared/BikeImage')
-const PureRenderMixin = React.addons.PureRenderMixin
 const ActionMixin = require('../../../lib/ActionMixin')
 const IconButton = require('../../general/Buttons/IconButton')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 const BikeshedBuilderActions = require('../../../actions/BikeshedBuilderActions')
 
 const BikeItem = React.createClass({
   mixins: [
     ActionMixin,
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

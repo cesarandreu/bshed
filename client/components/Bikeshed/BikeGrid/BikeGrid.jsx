@@ -1,18 +1,18 @@
 require('./BikeGrid.less')
 
-const React = require('react/addons')
+const React = require('react')
 const Immutable = require('immutable')
 const Grid = require('../../general/Grid')
 const GridCard = require('../../general/GridCard')
 const BikeImage = require('../../shared/BikeImage')
-const PureRenderMixin = React.addons.PureRenderMixin
 const ActionMixin = require('../../../lib/ActionMixin')
 const BikeshedActions = require('../../../actions/BikeshedActions')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const BikeGrid = React.createClass({
   mixins: [
     ActionMixin,
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

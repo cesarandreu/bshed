@@ -1,12 +1,12 @@
 const React = require('react/addons')
-const PureRenderMixin = React.addons.PureRenderMixin
 const {connectToStores} = require('fluxible/addons')
 const BikeshedStore = require('../../stores/BikeshedStore')
 const BikeshedActions = require('../../actions/BikeshedActions')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const BikeshedList = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   statics: {

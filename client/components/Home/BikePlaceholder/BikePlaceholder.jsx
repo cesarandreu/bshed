@@ -4,12 +4,12 @@ const MAXIMUM_BIKE_COUNT = 12
 const React = require('react/addons')
 const Icon = require('../../general/Icon')
 const GridItem = require('../../general/GridItem')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 const EnhancedButton = require('../../general/Buttons/EnhancedButton')
 
 const BikePlaceholder = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

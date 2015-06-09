@@ -1,8 +1,7 @@
-const React = require('react/addons')
+const React = require('react')
 const Immutable = require('immutable')
 const BikeGrid = require('../BikeGrid')
 const BikeshedInfo = require('../BikeshedInfo')
-const PureRenderMixin = React.addons.PureRenderMixin
 const {connectToStores} = require('fluxible/addons')
 const RateBikesButton = require('../RateBikesButton')
 const BikePreview = require('../../shared/BikePreview')
@@ -10,11 +9,12 @@ const ActionMixin = require('../../../lib/ActionMixin')
 const RegularPage = require('../../general/RegularPage')
 const BikeshedStore = require('../../../stores/BikeshedStore')
 const BikeshedActions = require('../../../actions/BikeshedActions')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 var Bikeshed = React.createClass({
   mixins: [
     ActionMixin,
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   statics: {

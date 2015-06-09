@@ -3,11 +3,11 @@ require('./RectangleButton.less')
 const cn = require('classnames')
 const React = require('react/addons')
 const EnhancedButton = require('../EnhancedButton')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const RectangleButton = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   render () {
