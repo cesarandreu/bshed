@@ -11,7 +11,6 @@ const RATING_SCHEMA_KEYS = [
 ]
 
 describe('Model:Rating', function () {
-
   it('should have expected schema', async function () {
     const rating = await factories.createRating()
     expect(JSON.parse(JSON.stringify(rating)))

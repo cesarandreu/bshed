@@ -10,7 +10,6 @@ const VOTE_SCHEMA_KEYS = [
 ]
 
 describe('Model:Vote', function () {
-
   it('should have expected schema', async function () {
     const vote = await factories.createVote()
     expect(JSON.parse(JSON.stringify(vote)))

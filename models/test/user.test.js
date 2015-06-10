@@ -10,7 +10,6 @@ const USER_SCHEMA_KEYS = [
 ]
 
 describe('Model:User', function () {
-
   it('should have expected schema', async function () {
     const user = await factories.createUser()
     expect(JSON.parse(JSON.stringify(user)))

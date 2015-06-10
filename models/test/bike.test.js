@@ -14,7 +14,6 @@ const BIKE_SCHEMA_KEYS = [
 ]
 
 describe('Model:Bike', function () {
-
   it('should have expected schema', async function () {
     const bike = await factories.createBike()
     expect(JSON.parse(JSON.stringify(bike)))
