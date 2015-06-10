@@ -55,8 +55,9 @@ const BikePreview = React.createClass({
 
   render () {
     const {name, url, onClose} = this.props
-    if (!url || !name)
+    if (!url || !name) {
       return null
+    }
 
     return (
       <div className='bike-preview-container'>
@@ -77,12 +78,14 @@ const BikePreview = React.createClass({
   },
 
   _closeOnClick (e) {
-    if (e.target.classList.contains('bike-preview'))
+    if (e.target.classList.contains('bike-preview')) {
       this.props.onClose()
+    }
   },
 
   _handleHotkey (e) {
-    if (!eventHasModifier(e)) {
+    const {url, name} = this.props
+    if (!eventHasModifier(e) && url && name) {
       if (e.key === 'Escape' && this.props.onClose) {
         this.props.onClose(e)
         e.stopPropagation()
