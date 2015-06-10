@@ -52,13 +52,16 @@ const TextField = React.createClass({
   },
 
   _onFocus () {
-    this.setState({focused: true})
+    this.setState({
+      focused: true
+    })
   },
 
   _onBlur () {
-    this.setState({focused: false})
+    this.setState({
+      focused: false
+    })
   }
-
 })
 
 module.exports = TextField
