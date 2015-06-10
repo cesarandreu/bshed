@@ -41,6 +41,10 @@ module.exports = function RequestPlugin (options={}) {
  * @return {Function} executeRequest Request creator
  */
 function executeRequestFactory ({fetch, rootUrl, cookie}) {
+  // node-fetch exposes Headers on the fetch object
+  // whatwg-fetch polyfills Headers on the window
+  const Headers = fetch.Headers || global.Headers
+
   /**
    * Execute a request with payload
    * @param {Function} request Request to execute
@@ -61,13 +65,17 @@ function executeRequestFactory ({fetch, rootUrl, cookie}) {
       url = `${rootUrl}${url}`
     }
 
-    options.credentials = 'include'
+    _.defaults(options, {
+      credentials: 'include'
+    })
 
-    if (cookie)
-      _.set(options, 'headers.cookie', cookie)
-
-    if (shouldSetXsrfToken(options))
-      _.set(options, 'headers.x-xsrf-token', cookies.get('XSRF-TOKEN'))
+    options.headers = new Headers(options.headers || {})
+    if (!options.headers.has('cookie') && cookie) {
+      options.headers.set('cookie', cookie)
+    }
+    if (!options.headers.has('x-xsrf-token') && shouldSetXsrfToken(options.method)) {
+      options.headers.set('x-xsrf-token', cookies.get('XSRF-TOKEN'))
+    }
 
     return fetch(url, options)
       .then(status)
@@ -80,9 +88,8 @@ function executeRequestFactory ({fetch, rootUrl, cookie}) {
  * @param {Object} options Request creator options
  * @returns {boolean} if it should be set
  */
-function shouldSetXsrfToken (options) {
-  const method = (options.method || 'GET').toUpperCase()
-  return !_.includes(['GET', 'HEAD', 'OPTIONS'], method)
+function shouldSetXsrfToken (method='GET') {
+  return ['GET', 'HEAD', 'OPTIONS'].indexOf(method.toUpperCase()) === -1
 }
 
 /**
