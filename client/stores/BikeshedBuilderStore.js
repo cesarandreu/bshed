@@ -129,7 +129,7 @@ const BikeshedBuilderStore = createImmutableStore({
    * Remove image from list
    * @param {string} name Bike to remove
    */
-   _remove (name) {
+  _remove (name) {
     if (this._state.hasIn(['bikes', name])) {
       URL.revokeObjectURL(
         this._state.getIn(['bikes', name, 'url'])
@@ -138,7 +138,7 @@ const BikeshedBuilderStore = createImmutableStore({
         this._state.deleteIn(['bikes', name])
       )
     }
-   },
+  },
 
   /**
    * Receive form updates
