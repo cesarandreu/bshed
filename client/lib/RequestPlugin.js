@@ -57,8 +57,9 @@ function executeRequestFactory ({fetch, rootUrl, cookie}) {
   }
 
   function requestCreator (url, options={}) {
-    if (url.charAt(0) === '/')
+    if (url.charAt(0) === '/') {
       url = `${rootUrl}${url}`
+    }
 
     options.credentials = 'include'
 
