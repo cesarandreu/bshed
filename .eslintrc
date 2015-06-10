@@ -1,25 +1,11 @@
 {
   "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ],
+  "extends": "standard",
   "rules": {
-    "strict": 0,
-    "no-console": 0,
-    "no-multiple-empty-lines": 0,
-    "react/jsx-quotes": [1, "single"],
-    "react/no-unknown-property": 1,
-    "react/self-closing-comp": 1,
-    "react/jsx-uses-react": 1,
-    "react/jsx-uses-vars": 1,
-    "react/jsx-no-undef": 1
-  },
-  "ecmaFeatures": {
-    "jsx": true
+    "no-console": 0
   },
   "env": {
     "browser": true,
-    "mocha": true,
-    "node": true
+    "mocha": true
   }
 }
