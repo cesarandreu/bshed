@@ -16,7 +16,7 @@ exports.builderNavigateAction = function builderNavigateAction (context) {
  * @param {FileList} payload
  */
 exports.add = async function add (context, payload) {
-  await Promise.all(
+  const results = await Promise.all(
     Array.from(payload)
     .filter(file =>
       _.includes(['image/png', 'image/jpeg'], file.type)
@@ -24,12 +24,11 @@ exports.add = async function add (context, payload) {
     .map(file =>
       browserImageSize(file)
         .then(size => {
-          const result = {file, size}
-          context.dispatch('BIKESHED_BUILDER_ADD', result)
-          return result
+          return {file, size}
         })
     )
   )
+  context.dispatch('BIKESHED_BUILDER_ADD', results)
 }
 
 /**

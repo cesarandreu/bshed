@@ -88,25 +88,41 @@ const BikeshedBuilderStore = createImmutableStore({
   },
 
   /**
-   * Add image to list
+   * Add images to list
    * Fails when count is over limit
    * Fails with file of pre-existing name
-   * @param {Object} image
-   * @param {File} image.file
-   * @param {Object} image.size
-   * @param {number} image.size.width
-   * @param {number} image.size.height
+   * @param {Array<Object>} images[]
+   * @param {File} images[].file
+   * @param {Object} images[].size
+   * @param {number} images[].size.width
+   * @param {number} images[].size.height
    */
-  _add (image) {
-    const name = image.file.name
+  _add (images) {
     const bikes = this._state.get('bikes')
-    if (!bikes.has(name) && bikes.count() < 12)
-      this.setState(
-        this._state.setIn(
-          ['bikes', name],
-          generateBike(image)
+    const bikesCount = bikes.count()
+    const bikeList = images.reduce((list, image) => {
+      if (!bikes.has(image.file.name) && (bikesCount + list.length) < 12) {
+        list = list.concat(
+          Immutable.Map({
+            url: URL.createObjectURL(image.file),
+            size: Immutable.Map(image.size),
+            name: image.file.name,
+            _file: image.file
+          })
         )
-      )
+      }
+      return list
+    }, [])
+
+    const resultingBikes = bikes.withMutations(bikes => {
+      bikeList.forEach(bike => {
+        bikes.set(bike.get('name'), bike)
+      })
+    })
+
+    this.setState(
+      this._state.set('bikes', resultingBikes)
+    )
   },
 
   /**
@@ -153,16 +169,3 @@ const BikeshedBuilderStore = createImmutableStore({
 })
 
 module.exports = BikeshedBuilderStore
-
-// HELPERS
-function generateBike (image) {
-  return Immutable
-    .fromJS({
-      url: URL.createObjectURL(image.file),
-      name: image.file.name,
-      size: image.size
-    })
-    .merge({
-      _file: image.file
-    })
-}
