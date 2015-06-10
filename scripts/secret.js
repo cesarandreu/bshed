@@ -1,9 +1,10 @@
 // Print to stdout if called directly
-if (require.main === module)
+if (require.main === module) {
   generateSecret(function (err, secret) {
     if (err) throw err
     console.log(secret)
   })
+}
 
 module.exports = generateSecret
 

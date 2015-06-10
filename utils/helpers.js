@@ -14,14 +14,15 @@ const createError = require('http-errors')
  * @param {number} [interval=300] Time interval to wait
  * @param {number} [delta=150] Range in which time interval can vary
  */
-exports.retry = function* retry (fn, {attempts=3, interval=300, delta=150}={}) {
-  while (true)
+exports.retry = function * retry (fn, {attempts=3, interval=300, delta=150}={}) {
+  while (true) {
     try {
       return yield co(fn)
     } catch (err) {
       if (!(attempts--)) throw err
       yield wait(_.random(interval - delta, interval + delta))
     }
+  }
 }
 
 /**

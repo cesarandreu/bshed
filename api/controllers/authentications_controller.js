@@ -45,7 +45,7 @@ function AuthenticationsController () {
 /**
  * POST /login
  */
-AuthenticationsController.login = function* login () {
+AuthenticationsController.login = function * login () {
   const {body} = this.state
   const {User} = this.models
 
@@ -81,7 +81,7 @@ AuthenticationsController.login.schema = Joi.object().required().keys({
 /**
  * POST /register
  */
-AuthenticationsController.register = function* register () {
+AuthenticationsController.register = function * register () {
   const {body, user} = this.state
   const {User} = this.models
   this.assert(!user.registered, 403)
@@ -108,7 +108,7 @@ AuthenticationsController.register.schema = Joi.object().required().keys({
 /**
  * DELETE /logout
  */
-AuthenticationsController.logout = function* logout () {
+AuthenticationsController.logout = function * logout () {
   this.session = null
   this.status = 204
 }

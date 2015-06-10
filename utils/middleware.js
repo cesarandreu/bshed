@@ -10,7 +10,7 @@ const helpers = require('./helpers')
  */
 exports.checkSchema = function checkSchema (schema) {
   assert(schema, 'checkSchema requires schema')
-  return function* checkSchemaMiddleware (next) {
+  return function * checkSchemaMiddleware (next) {
     this.state.body = yield helpers.checkSchema(this.request.body, schema)
     yield next
   }
@@ -22,7 +22,7 @@ exports.checkSchema = function checkSchema (schema) {
  * @returns {GeneratorFunction} addToContextMiddleware
  */
 exports.addToContext = function addToContext (objects={}) {
-  return function* addToContextMiddleware (next) {
+  return function * addToContextMiddleware (next) {
     Object.assign(this, objects)
     yield next
   }
@@ -34,7 +34,7 @@ exports.addToContext = function addToContext (objects={}) {
  * @returns {GeneratorFunction} authenticateMiddleware
  */
 exports.authenticate = function authenticate () {
-  return function* authenticateMiddleware (next) {
+  return function * authenticateMiddleware (next) {
     try {
       const [user] = yield this.models.User.findOrCreate({
         where: {
@@ -56,7 +56,7 @@ exports.authenticate = function authenticate () {
  * @returns {GeneratorFunction} setUserMiddleware
  */
 exports.setUser = function setUser () {
-  return function* setUserMiddleware (next) {
+  return function * setUserMiddleware (next) {
     const userId = _.get(this.session, 'user.id', uuid.v4())
     _.set(this.session, 'user.id', userId)
 
@@ -79,7 +79,7 @@ exports.setUser = function setUser () {
  */
 exports.load = function load (resource, {key='id', name=resource.toLowerCase()}={}) {
   assert(resource, 'load middleware requires a resource')
-  return function* loadMiddleware (next) {
+  return function * loadMiddleware (next) {
     this.state[name] = yield this.models[resource].find({
       where: {
         [key]: this.params[name]
@@ -96,7 +96,7 @@ exports.load = function load (resource, {key='id', name=resource.toLowerCase()}=
  * @returns {GeneratorFunction} setCsrfCookieMidleware
  */
 exports.setCsrfToken = function setCsrfToken () {
-  return function* setCsrfCookieMidleware (next) {
+  return function * setCsrfCookieMidleware (next) {
     yield next
 
     this.cookies.set('XSRF-TOKEN', this.csrf, {
@@ -111,7 +111,7 @@ exports.setCsrfToken = function setCsrfToken () {
  * @returns {GeneratorFunction} setLoggedInCookieMiddleware
  */
 exports.setLoggedInCookie = function setLoggedInCookie () {
-  return function* setLoggedInCookieMiddleware (next) {
+  return function * setLoggedInCookieMiddleware (next) {
     yield next
     const loggedIn = _.get(this, 'session.user.id', null)
     this.cookies.set('logged_in', loggedIn ? 'yes' : 'no', {
@@ -125,12 +125,13 @@ exports.setLoggedInCookie = function setLoggedInCookie () {
  * @returns {GeneratorFunction} exposeErrorMiddleware
  */
 exports.exposeError = function exposeError () {
-  return function* exposeErrorMiddleware (next) {
+  return function * exposeErrorMiddleware (next) {
     try {
       yield next
     } catch (err) {
-      if (this.env !== 'production')
+      if (this.env !== 'production') {
         err.expose = true
+      }
 
       throw err
     }

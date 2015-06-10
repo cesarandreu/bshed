@@ -53,7 +53,8 @@ module.exports = function (sequelize, DataTypes) {
         UserId: vote.UserId
       }
     })
-    if (voteCount !== value)
+    if (voteCount !== value) {
       throw createError(409, 'Can only vote once per Bikeshed', {expose: true})
+    }
   }
 }

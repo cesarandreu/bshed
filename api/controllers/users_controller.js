@@ -24,6 +24,6 @@ function UsersController () {
  * GET /api/users/current
  * Returns current user model
  */
-UsersController.current = function* current () {
+UsersController.current = function * current () {
   this.body = this.state.user
 }

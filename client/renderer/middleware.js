@@ -2,7 +2,7 @@ const renderer = require('./renderer')
 const log = require('debug')('bshed:client:middleware')
 
 module.exports = function clientRenderer ({assets}={}) {
-  return function* clientRendererMiddleware () {
+  return function * clientRendererMiddleware () {
     try {
       log('starting renderer')
       const result = yield renderer({

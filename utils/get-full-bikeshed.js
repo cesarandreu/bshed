@@ -42,8 +42,9 @@ module.exports = async function getFullBikeshed ({user, BikeshedId, models}={}) 
 
   // Return null if no bikeshed is found
   // Same behavior as Sequelize
-  if (!bikeshed)
+  if (!bikeshed) {
     return null
+  }
 
   // Get vote count
   const votes = await Vote.count({

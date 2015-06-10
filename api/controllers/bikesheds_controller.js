@@ -68,7 +68,7 @@ function BikeshedsController () {
  * @query {limit=20}
  * @query {after=Date.now()}
  */
-BikeshedsController.index = function* index () {
+BikeshedsController.index = function * index () {
   const {Bikeshed} = this.models
   const query = this.query
 
@@ -124,7 +124,7 @@ BikeshedsController.index.getAfter = function getAfter (after) {
 /**
  * POST /api/bikesheds
  */
-BikeshedsController.create = function* create () {
+BikeshedsController.create = function * create () {
   const {Bikeshed, Bike} = this.models
   const {user, body} = this.state
   const {fields, files} = body
@@ -182,7 +182,7 @@ BikeshedsController.create.schema = Joi.object().required().keys({
 /**
  * GET /api/bikesheds/:bikeshed
  */
-BikeshedsController.show = function* show () {
+BikeshedsController.show = function * show () {
   const bikeshed = yield getFullBikeshed({
     BikeshedId: this.params.bikeshed,
     user: this.state.user,
@@ -196,7 +196,7 @@ BikeshedsController.show = function* show () {
 /**
  * POST /api/bikesheds/:bikeshed
  */
-BikeshedsController.rate = function* rate () {
+BikeshedsController.rate = function * rate () {
   const {Bike, Rating, Vote, sequelize} = this.models
   const {user, bikeshed, body} = this.state
 
