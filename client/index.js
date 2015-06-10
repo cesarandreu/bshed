@@ -15,15 +15,17 @@ const NavigateActions = require('./actions/NavigateActions')
 const mountNode = document.getElementById('bshed')
 
 // Debug messages
-if (process.env.NODE_ENV !== 'production')
+if (process.env.NODE_ENV !== 'production') {
   debug.enable('bshed:*,Fluxible:*')
+}
 
 // Rehydrate if global.BSHED is defined
 // Otherwise bootstrap with a new context
-if (global.BSHED)
+if (global.BSHED) {
   app.rehydrate(global.BSHED, bootstrap)
-else
+} else {
   bootstrap(null, app.createContext())
+}
 
 /**
  * bootstrap
