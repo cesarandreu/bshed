@@ -46,11 +46,6 @@ const BikeshedBuilderStore = createImmutableStore({
     return this._state.get('form')
   },
 
-  getPreviewState () {
-    const preview = this._state.get('preview')
-    return this._state.getIn(['bikes', preview], null)
-  },
-
   getFormData () {
     const body = new FormData()
 
