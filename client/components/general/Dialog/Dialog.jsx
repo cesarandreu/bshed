@@ -1,13 +1,13 @@
 require('./Dialog.less')
 
+const React = require('react')
 const cn = require('classnames')
-const React = require('react/addons')
 const hotkey = require('react-hotkey')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const Dialog = React.createClass({
   mixins: [
-    PureRenderMixin,
+    ImmutableRenderMixin,
     hotkey.Mixin('_handleHotkey')
   ],
 

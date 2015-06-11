@@ -1,12 +1,12 @@
 require('./Grid.less')
 
 const cn = require('classnames')
-const React = require('react/addons')
-const PureRenderMixin = React.addons.PureRenderMixin
+const React = require('react')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const Grid = React.createClass({
   mixin: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   propTypes: {

@@ -1,11 +1,13 @@
 require('./TextField.less')
 
+const React = require('react')
 const cn = require('classnames')
-const React = require('react/addons')
-const {PureRenderMixin} = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const TextField = React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [
+    ImmutableRenderMixin
+  ],
 
   propTypes: {
     label: React.PropTypes.string,

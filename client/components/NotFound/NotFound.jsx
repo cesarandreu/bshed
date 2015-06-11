@@ -1,9 +1,9 @@
-const React = require('react/addons')
-const PureRenderMixin = React.addons.PureRenderMixin
+const React = require('react')
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const NotFound = React.createClass({
   mixins: [
-    PureRenderMixin
+    ImmutableRenderMixin
   ],
 
   render () {

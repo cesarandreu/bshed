@@ -1,11 +1,13 @@
 require('./DialogPart.less')
 
+const React = require('react')
 const cn = require('classnames')
-const React = require('react/addons')
-const PureRenderMixin = React.addons.PureRenderMixin
+const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const DialogPart = React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [
+    ImmutableRenderMixin
+  ],
 
   propTypes: {
     type: React.PropTypes.oneOf(['header', 'body', 'footer']).isRequired,
