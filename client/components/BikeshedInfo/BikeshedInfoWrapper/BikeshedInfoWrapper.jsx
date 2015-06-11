@@ -3,7 +3,6 @@ const Immutable = require('immutable')
 const BikeGrid = require('../BikeGrid')
 const BikeshedInfo = require('../BikeshedInfo')
 const {connectToStores} = require('fluxible/addons')
-const RateBikesButton = require('../RateBikesButton')
 const BikePreview = require('../../shared/BikePreview')
 const ActionMixin = require('../../../lib/ActionMixin')
 const RegularPage = require('../../general/RegularPage')
@@ -11,15 +10,11 @@ const BikeshedStore = require('../../../stores/BikeshedStore')
 const BikeshedActions = require('../../../actions/BikeshedActions')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
-var Bikeshed = React.createClass({
+var BikeshedInfoWrapper = React.createClass({
   mixins: [
     ActionMixin,
     ImmutableRenderMixin
   ],
-
-  statics: {
-    navigateAction: BikeshedActions.infoNavigateAction
-  },
 
   propTypes: {
     bikes: React.PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
@@ -41,8 +36,6 @@ var Bikeshed = React.createClass({
           bikeshed={bikeshed}
           bikes={bikes}
         />
-
-        <RateBikesButton/>
 
         <BikePreview
           name={preview}
@@ -68,7 +61,7 @@ var Bikeshed = React.createClass({
   }
 })
 
-Bikeshed = connectToStores(Bikeshed, [BikeshedStore], stores => {
+BikeshedInfoWrapper = connectToStores(BikeshedInfoWrapper, [BikeshedStore], stores => {
   const {bikeshed, user, bikes} = stores.BikeshedStore.getCurrent()
   const preview = stores.BikeshedStore.getPreview()
   return {
@@ -79,4 +72,4 @@ Bikeshed = connectToStores(Bikeshed, [BikeshedStore], stores => {
   }
 })
 
-module.exports = Bikeshed
+module.exports = BikeshedInfoWrapper

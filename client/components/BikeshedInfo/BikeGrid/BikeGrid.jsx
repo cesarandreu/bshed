@@ -28,8 +28,8 @@ const BikeGrid = React.createClass({
         className='bike-grid'
         subheader='Bikes'
       >
-        {bikeshed.get('Bikes').map(id => {
-          const bike = bikes.get(id)
+        {bikes.sort(bike => bike.get('score')).map(bike => {
+          const id = bike.get('id')
           return (
             <GridCard
               key={id}
@@ -51,7 +51,7 @@ const BikeGrid = React.createClass({
               </div>
             </GridCard>
           )
-        })}
+        }).toArray()}
       </Grid>
     )
   },

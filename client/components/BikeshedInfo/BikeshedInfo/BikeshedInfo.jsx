@@ -1,13 +1,14 @@
 require('./BikeshedInfo.less')
 
+const React = require('react')
 const cn = require('classnames')
 const moment = require('moment')
-const React = require('react/addons')
 const {Link} = require('react-router')
 const Immutable = require('immutable')
 const inflection = require('inflection')
 const Paper = require('../../general/Paper')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')
+const LabeledActionButton = require('../../general/Buttons/LabeledActionButton')
 
 const BikeshedInfo = React.createClass({
   mixins: [
@@ -21,13 +22,11 @@ const BikeshedInfo = React.createClass({
 
   render () {
     const {bikeshed, user} = this.props
-
-    const registered = user.get('registered')
-    const author = user.get('name')
-
-    const description = bikeshed.get('description')
-    const createdAt = bikeshed.get('createdAt')
     const votes = bikeshed.get('votes')
+    const createdAt = bikeshed.get('createdAt')
+    const authorClassNames = cn('bikeshed-info-author', {
+      'bikeshed-info-author-is-registered': user.get('registered')
+    })
 
     return (
       <Paper className='bikeshed-info'>
@@ -36,16 +35,21 @@ const BikeshedInfo = React.createClass({
         <div className='bikeshed-info-head'>
           <span className='bikeshed-info-tagline'>
             {'Created '}
-            <time
-              title={moment(createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}
-              className='bikeshed-info-timestamp'
-              dateTime={createdAt}
+            <Link
+              to='bikeshed'
+              params={{bikeshedId: bikeshed.get('id')}}
             >
-              {moment(createdAt).fromNow()}
-            </time>
+              <time
+                title={moment(createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                className='bikeshed-info-timestamp'
+                dateTime={createdAt}
+              >
+                {moment(createdAt).fromNow()}
+              </time>
+            </Link>
             {' by '}
-            <span className={cn('bikeshed-info-author', {registered})}>
-              {author || 'anonymous'}
+            <span className={authorClassNames}>
+              {user.get('name') || 'anonymous'}
             </span>
           </span>
 
@@ -55,24 +59,22 @@ const BikeshedInfo = React.createClass({
         </div>
 
         {/* Description */}
-        {/* @TODO: update style to be more similar to text input */}
         <p className='bikeshed-info-description'>
-          {description}
+          {bikeshed.get('description')}
         </p>
 
-        {/* Actions */}
-        <div className='bikeshed-info-actions'>
-          <Link
-            to='bikeshed'
-            className='bikeshed-info-permalink'
-            params={{bikeshedId: bikeshed.get('id')}}
-          >
-            permalink
-          </Link>
-        </div>
-
+        <LabeledActionButton
+          className='bikeshed-info-rate-bikes-button'
+          label='Rate bikes'
+          icon='md-directions-bike'
+          onClick={this._onRate}
+        />
       </Paper>
     )
+  },
+
+  _onRate () {
+
   }
 })
 
