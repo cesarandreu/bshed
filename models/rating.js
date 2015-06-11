@@ -32,8 +32,11 @@ module.exports = function (sequelize, DataTypes) {
           _.range(1, ratings.length),
           _.pluck(ratings, 'value')
         )
-        if (missingValues.length !== 0)
-          throw createError(422, `Missing values ${JSON.stringify(missingValues)}`, {expose: true})
+        if (missingValues.length !== 0) {
+          throw createError(422, `Missing values ${JSON.stringify(missingValues)}`, {
+            expose: true
+          })
+        }
       }
     },
     classMethods: {
