@@ -1,7 +1,7 @@
 require('./Icon.less')
 
-const React = require('react/addons')
-const classnames = require('classnames')
+const cn = require('classnames')
+const React = require('react')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const Icon = React.createClass({
@@ -15,8 +15,12 @@ const Icon = React.createClass({
 
   render () {
     const {className, icon, ...other} = this.props
-    const classes = classnames('icon', icon, className, {md: !icon.indexOf('md')})
-    return <span {...other} className={classes}></span>
+    return (
+      <span
+        className={cn('icon', icon, className, {md: !icon.indexOf('md')})}
+        {...other}
+      />
+    )
   }
 })
 
