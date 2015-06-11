@@ -24,6 +24,12 @@ const TextField = React.createClass({
     }
   },
 
+  getDefaultProps () {
+    return {
+      error: ''
+    }
+  },
+
   render () {
     const {name, error, label, value, onChange, className} = this.props
     const wrapperClassNames = cn('text-field', className, {
