@@ -10,6 +10,8 @@ const Card = React.createClass({
   ],
 
   propTypes: {
+    className: React.PropTypes.string,
+    children: React.PropTypes.node,
     zDepth: React.PropTypes.number
   },
 

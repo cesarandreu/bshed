@@ -12,7 +12,9 @@ const Dialog = React.createClass({
   ],
 
   propTypes: {
-    onClose: React.PropTypes.func.isRequired
+    onClose: React.PropTypes.func.isRequired,
+    className: React.PropTypes.string,
+    children: React.PropTypes.node
   },
 
   render () {

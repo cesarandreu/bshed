@@ -10,7 +10,9 @@ const Grid = React.createClass({
   ],
 
   propTypes: {
-    subheader: React.PropTypes.string
+    subheader: React.PropTypes.string,
+    className: React.PropTypes.string,
+    children: React.PropTypes.node
   },
 
   render () {

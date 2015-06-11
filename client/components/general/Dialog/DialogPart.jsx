@@ -11,13 +11,15 @@ const DialogPart = React.createClass({
 
   propTypes: {
     type: React.PropTypes.oneOf(['header', 'body', 'footer']).isRequired,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    children: React.PropTypes.node
   },
 
   render () {
+    const {children, className, type} = this.props
     return (
-      <div className={cn(`dialog-${this.props.type}`, this.props.className)}>
-        {this.props.children}
+      <div className={cn(`dialog-${type}`, className)}>
+        {children}
       </div>
     )
   }

@@ -11,6 +11,8 @@ const GridCard = React.createClass({
   ],
 
   propTypes: {
+    className: React.PropTypes.string,
+    children: React.PropTypes.node,
     height: React.PropTypes.number,
     width: React.PropTypes.number
   },
