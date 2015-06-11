@@ -5,9 +5,9 @@ const ApplicationStore = createImmutableStore({
   storeName: 'ApplicationStore',
 
   handlers: {
-    NAVIGATE_FAIL: '_fail',
-    NAVIGATE_START: '_start',
-    NAVIGATE_SUCCESS: '_success'
+    // NAVIGATE_FAIL: '_fail',
+    // NAVIGATE_START: '_start',
+    // NAVIGATE_SUCCESS: '_success'
   },
 
   _success () {
@@ -20,10 +20,6 @@ const ApplicationStore = createImmutableStore({
 
   _start () {
 
-  },
-
-  getPageTitle () {
-    return 'Bikeshed it!'
   }
 })
 
