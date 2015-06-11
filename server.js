@@ -61,8 +61,9 @@ server.on('error', function serverError (err, ctx) {
  */
 
 // request logging
-if (server.env === 'development')
+if (server.env === 'development') {
   server.use(require('koa-logger')())
+}
 
 // x-response-time
 server.use(responseTime())
@@ -109,5 +110,6 @@ server.init = function init (port=config.port) {
 module.exports = server
 
 // initialize server if called directly
-if (require.main === module)
+if (require.main === module) {
   server.init()
+}

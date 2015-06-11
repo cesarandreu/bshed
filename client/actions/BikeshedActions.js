@@ -16,8 +16,9 @@ exports.infoNavigateAction = async function infoNavigateAction (context, state) 
     context.router.transitionTo('bikeshed-list')
   })
 
-  if (context.getStore(BikeshedStore).waitForInfo(bikeshedId))
+  if (context.getStore(BikeshedStore).waitForInfo(bikeshedId)) {
     await request
+  }
 }
 
 exports.listNavigateAction = async function listNavigateAction (context, state) {
