@@ -17,7 +17,7 @@ const BikeGrid = React.createClass({
 
   propTypes: {
     bikeshed: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    bikes: React.PropTypes.instanceOf(Immutable.Map).isRequired
+    bikes: React.PropTypes.instanceOf(Immutable.List).isRequired
   },
 
   render () {
@@ -28,7 +28,7 @@ const BikeGrid = React.createClass({
         className='bike-grid'
         subheader='Bikes'
       >
-        {bikes.sort(bike => bike.get('score')).map(bike => {
+        {bikes.map(bike => {
           const id = bike.get('id')
           return (
             <GridCard
