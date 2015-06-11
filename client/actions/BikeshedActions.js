@@ -13,10 +13,7 @@ exports.infoNavigateAction = async function infoNavigateAction (context, state) 
   const {bikeshedId} = state.params
 
   context.dispatch('BIKESHED_INFO_START', bikeshedId)
-  const request = context.executeRequest(
-    BikeshedApiUtils.fetchBikeshedInfo,
-    {bikeshedId}
-  )
+  const request = context.executeRequest(BikeshedApiUtils.fetchBikeshedInfo, {bikeshedId})
   .then(request => {
     context.dispatch('BIKESHED_INFO_RECEIVED', request.parsedBody)
   }, request => {
