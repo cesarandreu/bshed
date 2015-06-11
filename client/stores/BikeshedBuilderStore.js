@@ -1,5 +1,6 @@
 const createImmutableStore = require('../lib/createImmutableStore')
 const Immutable = require('immutable')
+const MAXIMUM_BIKE_COUNT = 5
 
 const BikeshedBuilderStore = createImmutableStore({
   storeName: 'BikeshedBuilderStore',
@@ -96,7 +97,7 @@ const BikeshedBuilderStore = createImmutableStore({
     const bikes = this._state.get('bikes')
     const bikesCount = bikes.count()
     const bikeList = images.reduce((list, image) => {
-      if (!bikes.has(image.file.name) && (bikesCount + list.length) < 12) {
+      if (!bikes.has(image.file.name) && (bikesCount + list.length) < MAXIMUM_BIKE_COUNT) {
         list = list.concat(
           Immutable.Map({
             url: URL.createObjectURL(image.file),

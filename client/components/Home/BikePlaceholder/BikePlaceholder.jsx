@@ -1,6 +1,6 @@
 require('./BikePlaceholder.less')
 
-const MAXIMUM_BIKE_COUNT = 12
+const MAXIMUM_BIKE_COUNT = 5
 const React = require('react')
 const Icon = require('../../general/Icon')
 const GridItem = require('../../general/GridItem')
