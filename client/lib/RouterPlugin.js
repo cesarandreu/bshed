@@ -1,9 +1,10 @@
 const Router = require('react-router')
+const {HistoryLocation} = Router
 
 /**
  * RouterPlugin
  */
-module.exports = function RouterPlugin ({location}={}) {
+module.exports = function RouterPlugin () {
   return {
     name: 'RouterPlugin',
     plugContext
@@ -11,7 +12,7 @@ module.exports = function RouterPlugin ({location}={}) {
 
   function plugContext ({url, app}={}, context) {
     const router = context.router = Router.create({
-      location: url || location,
+      location: url || HistoryLocation,
       routes: app.getComponent()
     })
 

@@ -9,9 +9,7 @@ const app = new Fluxible({
   component: require('./routes')
 })
 
-app.plug(RouterPlugin({
-  location: require('react-router').HistoryLocation
-}))
+app.plug(RouterPlugin())
 
 app.plug(RequestPlugin({
   fetch: require('isomorphic-fetch'),
