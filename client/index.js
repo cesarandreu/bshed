@@ -11,7 +11,6 @@ const {FluxibleComponent} = require('fluxible/addons')
 const NavigateActions = require('./actions/NavigateActions')
 
 // needed for onTouchTap
-// breaks with react v0.13
 // require('react-tap-event-plugin')()
 
 // Get application node, create application context
