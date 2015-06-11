@@ -97,7 +97,7 @@ const BikeshedBuilderStore = createImmutableStore({
         const hasValidCount = imageList.count() < MAXIMUM_BIKE_COUNT
         const imageNameTaken = imageList.has(image.file.name)
         if (!imageNameTaken && hasValidCount) {
-          const imageItem = Image.Map({
+          const imageItem = Immutable.Map({
             url: URL.createObjectURL(image.file),
             size: Immutable.Map(image.size),
             name: image.file.name,
