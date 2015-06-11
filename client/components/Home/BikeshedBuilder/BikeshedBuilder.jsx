@@ -48,7 +48,7 @@ const BikeshedBuilder = React.createClass({
 
             <BikeItemPlaceholder
               onClick={this._clickFileInput}
-              bikeCount={imageCount}
+              itemCount={imageCount}
             />
           </Grid>
         </div>

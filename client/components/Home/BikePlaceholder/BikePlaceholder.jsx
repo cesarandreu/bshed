@@ -13,13 +13,13 @@ const BikePlaceholder = React.createClass({
   ],
 
   propTypes: {
-    bikeCount: React.PropTypes.number.isRequired,
+    itemCount: React.PropTypes.number.isRequired,
     onClick: React.PropTypes.func.isRequired
   },
 
   render () {
-    const {bikeCount, onClick} = this.props
-    if (bikeCount >= MAXIMUM_BIKE_COUNT) {
+    const {itemCount, onClick} = this.props
+    if (itemCount >= MAXIMUM_BIKE_COUNT) {
       return null
     }
 
@@ -32,9 +32,9 @@ const BikePlaceholder = React.createClass({
           <div className='bike-placeholder-icon'>
             <Icon icon='md-add'/>
           </div>
-          {bikeCount < 2 && (
+          {itemCount < 2 && (
             <div className='bike-placeholder-text'>
-              {`Please add at least ${bikeCount ? '1 more image' : '2 images'}`}
+              {`Please add at least ${itemCount ? '1 more image' : '2 images'}`}
             </div>
           )}
         </EnhancedButton>
