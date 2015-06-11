@@ -11,22 +11,19 @@ const BikeshedBuilderStore = createImmutableStore({
     BIKESHED_BUILDER_SUBMIT_START: '_submitStart',
     BIKESHED_BUILDER_SUBMIT_ERROR: '_submitError',
 
-    BIKESHED_BUILDER_ADD: '_add',
-    BIKESHED_BUILDER_REMOVE: '_remove',
+    BIKESHED_BUILDER_ADD: '_addImages',
+    BIKESHED_BUILDER_REMOVE: '_removeImage',
     BIKESHED_BUILDER_PREVIEW: '_preview',
     BIKESHED_BUILDER_FORM_CHANGE: '_formChange'
   },
 
   cleanState () {
     return Immutable.fromJS({
-      bikes: Immutable.OrderedMap(),
+      submitting: false,
       preview: '',
       form: {
-        submitting: false,
-        description: {
-          error: '',
-          value: ''
-        }
+        images: Immutable.OrderedMap(),
+        description: ''
       }
     })
   },
@@ -36,11 +33,7 @@ const BikeshedBuilderStore = createImmutableStore({
   },
 
   getPreview () {
-    return this._state.get('preview', '')
-  },
-
-  getBikes () {
-    return this._state.get('bikes')
+    return this._state.get('preview')
   },
 
   getForm () {
@@ -49,90 +42,86 @@ const BikeshedBuilderStore = createImmutableStore({
 
   getFormData () {
     const body = new FormData()
-
-    this._state.get('bikes').forEach(bike => {
-      const file = bike.get('_file')
-      const name = bike.get('name')
-      body.append(name, file)
+    const form = this.getForm()
+    form.get('images').forEach(image => {
+      body.append(image.get('name'), image.get('_file'))
     })
-
-    const description = this._state.getIn(['form', 'description', 'value'], '')
-    body.append('description', description)
-
+    body.append('description', form.get('description'))
     return body
   },
 
+  /**
+   * Revoke any image URLs and reset builder state
+   */
   _reset () {
-    this._state.get('bikes').forEach(bike => {
-      URL.revokeObjectURL(bike.get('url'))
+    this._state.getIn(['form', 'images']).forEach(image => {
+      URL.revokeObjectURL(image.get('url'))
     })
-    this.setState(
-      this.cleanState()
-    )
+    this.setState(this.cleanState())
   },
 
+  /**
+   * Form is submitting
+   */
   _submitStart () {
-    this.setState(
-      this._state.setIn(['form', 'submitting'], true)
-    )
+    this.mergeState({
+      submitting: true
+    })
   },
 
-  _submitError (res) {
-    this.setState(
-      this._state.setIn(['form', 'submitting'], false)
-    )
+  /**
+   * Form is not submitting
+   */
+  _submitError () {
+    this.setState({
+      submitting: false
+    })
   },
 
   /**
    * Add images to list
+   * Fails with file of same name
    * Fails when count is over limit
-   * Fails with file of pre-existing name
    * @param {Array<Object>} images[]
    * @param {File} images[].file
    * @param {Object} images[].size
    * @param {number} images[].size.width
    * @param {number} images[].size.height
    */
-  _add (images) {
-    const bikes = this._state.get('bikes')
-    const bikesCount = bikes.count()
-    const bikeList = images.reduce((list, image) => {
-      if (!bikes.has(image.file.name) && (bikesCount + list.length) < MAXIMUM_BIKE_COUNT) {
-        list = list.concat(
-          Immutable.Map({
+  _addImages (images) {
+    const state = this._state
+    const imageList = state.getIn(['form', 'images'])
+
+    const resultingImageList = imageList.withMutations(imageList => {
+      images.forEach(image => {
+        const hasValidCount = imageList.count() < MAXIMUM_BIKE_COUNT
+        const imageNameTaken = imageList.has(image.file.name)
+        if (!imageNameTaken && hasValidCount) {
+          const imageItem = Image.Map({
             url: URL.createObjectURL(image.file),
             size: Immutable.Map(image.size),
             name: image.file.name,
             _file: image.file
           })
-        )
-      }
-      return list
-    }, [])
 
-    const resultingBikes = bikes.withMutations(bikes => {
-      bikeList.forEach(bike => {
-        bikes.set(bike.get('name'), bike)
+          imageList.set(image.file.name, imageItem)
+        }
       })
     })
 
-    this.setState(
-      this._state.set('bikes', resultingBikes)
-    )
+    this.setState(state.setIn(['form', 'images'], resultingImageList))
   },
 
   /**
    * Remove image from list
-   * @param {string} name Bike to remove
+   * @param {string} name Image to remove
    */
-  _remove (name) {
-    if (this._state.hasIn(['bikes', name])) {
-      URL.revokeObjectURL(
-        this._state.getIn(['bikes', name, 'url'])
-      )
-      this.setState(
-        this._state.deleteIn(['bikes', name])
-      )
+  _removeImage (name) {
+    const state = this._state
+    const imageUrl = state.getIn(['form', 'images', name, 'url'])
+    if (imageUrl) {
+      URL.revokeObjectURL(imageUrl)
+      this.setState(state.deleteIn(['form', 'images', name]))
     }
   },
 
@@ -142,24 +131,21 @@ const BikeshedBuilderStore = createImmutableStore({
    * @param {string} update.name Form field name
    * @param {string} update.value Form field value
    */
-  _formChange (update) {
-    this.setState(
-      this._state.setIn(['form', update.name], Immutable.fromJS({
-        value: update.value,
-        error: ''
-      }))
-    )
+  _formChange ({name, value}={}) {
+    const state = this._state
+    this.setState(state.setIn(['form', name], value))
   },
 
   /**
-   * Updates bike preview
-   * Cleared if bike isn't found
-   * @param {string} name Bike to preview
+   * Update image preview
+   * Cleared if image isn't found
+   * @param {string} name Image to preview
    */
   _preview (name) {
-    const hasBike = this._state.hasIn(['bikes', name])
+    const state = this._state
+    const hasImage = state.hasIn(['form', 'images', name])
     this.mergeState({
-      preview: hasBike ? name : ''
+      preview: hasImage ? name : ''
     })
   }
 })

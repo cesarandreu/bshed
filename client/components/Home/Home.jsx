@@ -22,22 +22,20 @@ var Home = React.createClass({
 
   propTypes: {
     preview: React.PropTypes.string.isRequired,
-    form: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    bikes: React.PropTypes.instanceOf(Immutable.OrderedMap).isRequired
+    form: React.PropTypes.instanceOf(Immutable.Map).isRequired
   },
 
   render () {
-    const {form, bikes, preview} = this.props
+    const {form, preview} = this.props
     return (
       <RegularPage>
         <BikeshedBuilder
-          bikes={bikes}
           form={form}
         />
         <BikePreview
           name={preview}
-          url={bikes.getIn([preview, 'url'], '')}
           onClose={this._closePreview}
+          url={form.getIn(['images', preview, 'url'])}
         />
       </RegularPage>
     )
@@ -51,7 +49,6 @@ var Home = React.createClass({
 Home = connectToStores(Home, [BikeshedBuilderStore], stores => {
   return {
     preview: stores.BikeshedBuilderStore.getPreview(),
-    bikes: stores.BikeshedBuilderStore.getBikes(),
     form: stores.BikeshedBuilderStore.getForm()
   }
 })

@@ -32,7 +32,7 @@ exports.add = async function add (context, payload) {
 }
 
 /**
- * Remove bike from bikeshed builder list
+ * Remove image from bikeshed builder list
  * @param {string} name
  */
 exports.remove = function remove (context, name) {
@@ -50,7 +50,7 @@ exports.formChange = function formChange (context, payload) {
 }
 
 /**
- * Set preview bike
+ * Set preview image
  * @param {string} name
  */
 exports.preview = function preview (context, name) {
@@ -64,18 +64,14 @@ exports.submit = async function submit (context) {
   try {
     context.dispatch('BIKESHED_BUILDER_SUBMIT_START')
 
-    const result = await context.executeRequest(
-      BikeshedApiUtils.createBikeshed, {
-      body: context.getStore(BikeshedBuilderStore).getFormData()
-    })
-
+    const body = context.getStore(BikeshedBuilderStore).getFormData()
+    const result = await context.executeRequest(BikeshedApiUtils.createBikeshed, {body})
     context.dispatch('BIKESHED_INFO_RECEIVED', result.parsedBody)
     context.dispatch('BIKESHED_BUILDER_RESET')
 
     context.router.transitionTo('bikeshed', {
       bikeshedId: result.parsedBody.id
     })
-
   } catch (err) {
     context.dispatch('BIKESHED_BUILDER_SUBMIT_ERROR', err)
   }

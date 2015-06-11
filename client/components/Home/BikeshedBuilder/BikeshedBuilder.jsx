@@ -19,12 +19,14 @@ const BikeshedBuilder = React.createClass({
   ],
 
   propTypes: {
-    form: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    bikes: React.PropTypes.instanceOf(Immutable.OrderedMap).isRequired
+    form: React.PropTypes.instanceOf(Immutable.Map).isRequired
   },
 
   render () {
-    const {form, bikes} = this.props
+    const {form} = this.props
+    const images = form.get('images')
+    const imageCount = images.count()
+
     return (
       <Paper zDepth={1} className='bikeshed-builder'>
         <div className='bikeshed-builder-content'>
@@ -32,22 +34,21 @@ const BikeshedBuilder = React.createClass({
             name='description'
             onChange={this._formChange}
             label='Bikeshed description'
-            error={form.getIn(['description', 'error'])}
-            value={form.getIn(['description', 'value'])}
+            value={form.get('description')}
             className='bikeshed-builder-description-input'
           />
 
           <Grid>
-            {bikes.map((bike, key) =>
+            {images.map((image, key) =>
               <BikeItem
-                bike={bike}
+                bike={image}
                 key={key}
               />
             ).toArray()}
 
             <BikeItemPlaceholder
               onClick={this._clickFileInput}
-              bikeCount={bikes.count()}
+              bikeCount={imageCount}
             />
           </Grid>
         </div>
@@ -56,7 +57,7 @@ const BikeshedBuilder = React.createClass({
             label='save'
             secondary={true}
             onClick={this._submit}
-            disabled={bikes.count() < 2}
+            disabled={imageCount < 2}
             className='bikeshed-builder-save-button'
           />
         </div>
