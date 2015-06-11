@@ -1,6 +1,6 @@
 require('./BikePreview.less')
 
-const React = require('react/addons')
+const React = require('react')
 const hotkey = require('react-hotkey')
 const IconButton = require('../../general/Buttons/IconButton')
 const eventHasModifier = require('../../../lib/eventHasModifier')

@@ -1,7 +1,7 @@
 require('./RaisedButton.less')
 
+const React = require('react')
 const cn = require('classnames')
-const React = require('react/addons')
 const ButtonLabel = require('../ButtonLabel')
 const RectangleButton = require('../RectangleButton')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')

@@ -1,7 +1,7 @@
 require('./Paper.less')
 
+const React = require('react')
 const cn = require('classnames')
-const React = require('react/addons')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')
 
 const Paper = React.createClass({

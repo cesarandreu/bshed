@@ -1,7 +1,7 @@
 require('./BikePlaceholder.less')
 
 const MAXIMUM_BIKE_COUNT = 12
-const React = require('react/addons')
+const React = require('react')
 const Icon = require('../../general/Icon')
 const GridItem = require('../../general/GridItem')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')

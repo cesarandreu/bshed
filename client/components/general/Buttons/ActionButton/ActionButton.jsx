@@ -1,7 +1,7 @@
 require('./ActionButton.less')
 
+const React = require('react')
 const cn = require('classnames')
-const React = require('react/addons')
 const IconButton = require('../IconButton')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')
 

@@ -1,7 +1,7 @@
 require('./RectangleButton.less')
 
+const React = require('react')
 const cn = require('classnames')
-const React = require('react/addons')
 const EnhancedButton = require('../EnhancedButton')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')
 

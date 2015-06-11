@@ -1,4 +1,4 @@
-const React = require('react/addons')
+const React = require('react')
 const {connectToStores} = require('fluxible/addons')
 const BikeshedStore = require('../../stores/BikeshedStore')
 const BikeshedActions = require('../../actions/BikeshedActions')

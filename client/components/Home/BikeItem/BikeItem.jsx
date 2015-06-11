@@ -1,6 +1,6 @@
 require('./BikeItem.less')
 
-const React = require('react/addons')
+const React = require('react')
 const Immutable = require('immutable')
 const GridItem = require('../../general/GridItem')
 const BikeImage = require('../../shared/BikeImage')

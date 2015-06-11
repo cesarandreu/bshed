@@ -1,7 +1,7 @@
 require('./LabeledActionButton.less')
 
 const cn = require('classnames')
-const React = require('react/addons')
+const React = require('react')
 const ActionButton = require('../ActionButton')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')
 

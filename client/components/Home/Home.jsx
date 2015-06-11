@@ -1,4 +1,5 @@
-const React = require('react/addons')
+// TODO: Rename to BikeshedBuilder
+const React = require('react')
 const Immutable = require('immutable')
 const BikePreview = require('../shared/BikePreview')
 const {connectToStores} = require('fluxible/addons')

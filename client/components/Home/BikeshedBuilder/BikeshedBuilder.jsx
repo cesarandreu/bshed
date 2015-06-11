@@ -1,6 +1,6 @@
 require('./BikeshedBuilder.less')
 
-const React = require('react/addons')
+const React = require('react')
 const Immutable = require('immutable')
 const BikeItem = require('../BikeItem')
 const Grid = require('../../general/Grid')
