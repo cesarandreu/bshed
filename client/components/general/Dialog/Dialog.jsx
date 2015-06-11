@@ -32,8 +32,9 @@ const Dialog = React.createClass({
   },
 
   _onClick (e) {
-    if (e.target.classList.contains('dialog-container'))
+    if (e.target.classList.contains('dialog-container')) {
       this.props.onClose()
+    }
   },
 
   _handleHotkey (e) {
