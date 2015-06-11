@@ -7,6 +7,10 @@ const RegularPage = React.createClass({
     ImmutableRenderMixin
   ],
 
+  propTypes: {
+    children: React.PropTypes.node.isRequired
+  },
+
   render () {
     return (
       <div className='regular-page'>
