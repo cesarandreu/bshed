@@ -16,6 +16,7 @@ app.plug(RequestPlugin())
 const stores = [
   require('./stores/ApplicationStore'),
   require('./stores/BikeshedBuilderStore'),
+  require('./stores/BikeshedRateStore'),
   require('./stores/BikeshedStore'),
   require('./stores/NavbarStore'),
   require('./stores/SidebarStore')
