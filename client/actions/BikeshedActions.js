@@ -1,6 +1,14 @@
 const BikeshedApiUtils = require('../utils/BikeshedApiUtils')
 const BikeshedStore = require('../stores/BikeshedStore')
 
+/**
+ * Rate mavigate action
+ * Tell store to start with a clean slate
+ */
+exports.rateNavigateAction = function rateNavigateAction (context) {
+  context.dispatch('BIKESHED_RATE_RESET')
+}
+
 exports.infoNavigateAction = async function infoNavigateAction (context, state) {
   const {bikeshedId} = state.params
 
