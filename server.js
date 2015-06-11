@@ -2,6 +2,7 @@
 const koa = require('koa')
 const qs = require('koa-qs')
 const csrf = require('koa-csrf')
+const serve = require('koa-static')
 const session = require('koa-session')
 const compress = require('koa-compress')
 const createError = require('http-errors')
@@ -70,6 +71,9 @@ server.use(responseTime())
 
 // compression
 server.use(compress())
+
+// file server
+server.use(serve('./public'))
 
 // cookie sessions
 server.use(session(config.middleware.session, server))
