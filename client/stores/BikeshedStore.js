@@ -85,12 +85,19 @@ const BikeshedStore = createImmutableStore({
   _changePreview (delta=0) {
     const preview = this._state.get('preview')
     const current = this._state.get('current')
-    const bikes = this._state.getIn(['bikesheds', current, 'Bikes'])
-    const bikeIndex = bikes.findIndex(bikeId => bikeId === preview)
+    const bikeList = this._state.getIn(['bikesheds', current, 'Bikes'])
+    const bikes = bikeList
+      .reduceRight((bikes, id) => {
+        return bikes.push(this._state.getIn(['bikes', id]))
+      }, Immutable.List().asMutable())
+      .asImmutable()
+      .sort(bike => bike.get('score'))
+
+    const bikeIndex = bikes.findIndex(bike => bike.get('id') === preview)
     if (bikeIndex !== -1) {
       const bikesCount = bikes.count()
       this.mergeState({
-        preview: bikes.get((bikeIndex + delta) % bikesCount)
+        preview: bikes.getIn([(bikeIndex + delta) % bikesCount, 'id'])
       })
     }
   },
