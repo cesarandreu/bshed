@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": "standard",
+  "extends": ["standard", "standard-react"],
   "rules": {
     "no-console": 0
   },
