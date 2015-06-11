@@ -18,27 +18,28 @@ const BikePlaceholder = React.createClass({
   },
 
   render () {
-      const {bikeCount, onClick} = this.props
-      if (bikeCount >= MAXIMUM_BIKE_COUNT)
-        return null
+    const {bikeCount, onClick} = this.props
+    if (bikeCount >= MAXIMUM_BIKE_COUNT) {
+      return null
+    }
 
-      return (
-        <GridItem className='bike-placeholder-container'>
-          <EnhancedButton
-            className='bike-placeholder'
-            onClick={onClick}
-          >
-            <div className='bike-placeholder-icon'>
-              <Icon icon='md-add'/>
+    return (
+      <GridItem className='bike-placeholder-container'>
+        <EnhancedButton
+          className='bike-placeholder'
+          onClick={onClick}
+        >
+          <div className='bike-placeholder-icon'>
+            <Icon icon='md-add'/>
+          </div>
+          {bikeCount < 2 && (
+            <div className='bike-placeholder-text'>
+              {`Please add at least ${bikeCount ? '1 more image' : '2 images'}`}
             </div>
-            {bikeCount < 2 && (
-              <div className='bike-placeholder-text'>
-                {`Please add at least ${bikeCount ? '1 more image' : '2 images'}`}
-              </div>
-            )}
-          </EnhancedButton>
-        </GridItem>
-      )
+          )}
+        </EnhancedButton>
+      </GridItem>
+    )
   }
 })
 
