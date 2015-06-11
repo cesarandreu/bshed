@@ -1,4 +1,5 @@
 const React = require('react')
+const fetch = require('node-fetch')
 const serialize = require('serialize-javascript')
 const log = require('debug')('bshed:client:renderer')
 const {FluxibleComponent} = require('fluxible/addons')
@@ -12,6 +13,7 @@ module.exports = async function renderer ({rootUrl, url, cookie, assets}={}) {
   const context = app.createContext({
     rootUrl,
     cookie,
+    fetch,
     url
   })
 

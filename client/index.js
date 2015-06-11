@@ -1,3 +1,6 @@
+// Polyfill
+require('whatwg-fetch')
+
 // Modules
 const app = require('./app')
 const debug = require('debug')

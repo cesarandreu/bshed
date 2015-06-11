@@ -11,11 +11,7 @@ const app = new Fluxible({
 
 app.plug(RouterPlugin())
 
-app.plug(RequestPlugin({
-  fetch: require('isomorphic-fetch'),
-  host: 'localhost:3000',
-  protocol: 'http:'
-}))
+app.plug(RequestPlugin())
 
 const stores = [
   require('./stores/ApplicationStore'),

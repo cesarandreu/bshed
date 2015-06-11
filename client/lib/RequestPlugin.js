@@ -6,11 +6,8 @@ const log = require('debug')('bshed:client:request')
 /**
  * RequestPlugin
  * Adds executeRequest(fn, params) to action context
- * @param {Object} config
- * @param {Fetch} config.fetch Fetch
  */
 module.exports = function RequestPlugin (options={}) {
-  invariant(options.fetch, 'RequestPlugin requires fetch')
   return {
     name: 'RequestPlugin',
     plugContext
@@ -18,7 +15,7 @@ module.exports = function RequestPlugin (options={}) {
 
   function plugContext (contextOptions={}) {
     const request = _.defaults(contextOptions, {
-      fetch: options.fetch,
+      fetch: global.fetch,
       rootUrl: '',
       cookie: ''
     })
@@ -51,16 +48,16 @@ function executeRequestFactory ({fetch, rootUrl, cookie}) {
    * @param {Object} payload Request payload
    * @returns {Promise}
    */
-  return function executeRequest (request, payload={}) {
-    invariant(typeof request === 'function', 'executeRequest requires a function')
-    log(`Executing request ${request.displayName || request.name} with payload`, payload)
+  return function executeRequest (fn, payload={}) {
+    invariant(typeof fn === 'function', 'executeRequest requires a function')
+    log(`Executing request ${fn.displayName || fn.name} with payload`, payload)
 
     return new Promise((resolve, reject) => {
-      request(requestCreator, payload).then(resolve, reject)
+      fn(requestCreator, payload).then(resolve, reject)
     })
   }
 
-  function requestCreator (url, options={}) {
+  function requestCreator (url='', options={}) {
     if (url.charAt(0) === '/') {
       url = `${rootUrl}${url}`
     }
