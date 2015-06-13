@@ -17,8 +17,8 @@ var BikeshedInfoWrapper = React.createClass({
   ],
 
   propTypes: {
-    bikes: React.PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
     bikeshed: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+    bikes: React.PropTypes.instanceOf(Immutable.List).isRequired,
     user: React.PropTypes.instanceOf(Immutable.Map).isRequired,
     preview: React.PropTypes.string.isRequired
   },
@@ -40,9 +40,9 @@ var BikeshedInfoWrapper = React.createClass({
         <BikePreview
           name={preview}
           url={preview && `http://localhost:10001/bshed/${bikeshed.get('id')}/${preview}`}
+          onPrevious={this._previousPreview}
           onClose={this._closePreview}
           onNext={this._nextPreview}
-          onPrevious={this._previousPreview}
         />
       </RegularPage>
     )
