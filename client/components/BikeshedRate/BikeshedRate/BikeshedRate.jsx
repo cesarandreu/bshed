@@ -6,9 +6,9 @@ const {connectToStores} = require('fluxible/addons')
 const RegularPage = require('../../general/RegularPage')
 const ActionMixin = require('../../../lib/ActionMixin')
 const BikeshedStore = require('../../../stores/BikeshedStore')
+const BikeshedActions = require('../../../actions/BikeshedActions')
 const ImmutableRenderMixin = require('react-immutable-render-mixin')
 const BikeshedRateStore = require('../../../stores/BikeshedRateStore')
-// const BikeshedActions = require('../../../actions/BikeshedActions')
 
 var BikeshedRate = React.createClass({
   mixins: [
@@ -16,9 +16,13 @@ var BikeshedRate = React.createClass({
     ImmutableRenderMixin
   ],
 
+  statics: {
+    navigateAction: BikeshedActions.rateNavigateAction
+  },
+
   propTypes: {
-    votes: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    bikes: React.PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
+    ratings: React.PropTypes.instanceOf(Immutable.List).isRequired,
+    bikes: React.PropTypes.instanceOf(Immutable.List).isRequired,
     bikeshed: React.PropTypes.instanceOf(Immutable.Map).isRequired,
     user: React.PropTypes.instanceOf(Immutable.Map).isRequired,
     preview: React.PropTypes.string.isRequired
@@ -27,7 +31,7 @@ var BikeshedRate = React.createClass({
   render () {
     return (
       <RegularPage>
-        THIS IS BIKESHED VOTE
+        THIS IS BIKESHED RATE
       </RegularPage>
     )
   }
@@ -37,11 +41,13 @@ BikeshedRate = connectToStores(BikeshedRate, [
     BikeshedRateStore,
     BikeshedStore
   ], stores => {
-    const {bikeshed, user, bikes} = stores.BikeshedStore.getCurrent()
-    const ratings = stores.BikeshedRateStore.getRatings(bikes)
+    const {ratings, bikes} = stores.BikeshedRateStore.getCurrent()
+    const {bikeshed, user} = stores.BikeshedStore.getCurrent()
+    const preview = stores.BikeshedRateStore.getPreview()
     return {
       bikeshed,
       ratings,
+      preview,
       bikes,
       user
     }
