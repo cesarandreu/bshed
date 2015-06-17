@@ -120,7 +120,6 @@
     "chance": "^0.7.5",
     "cookies": "^0.5.0",
     "csrf": "^3.0.0",
-    "eslint": "git://github.com/eslint/eslint.git#fff52aecaf1d073952201b3f128e6664f529a24e",
     "eslint-config-standard": "^3.1.0",
     "eslint-config-standard-react": "^1.0.0",
     "eslint-plugin-react": "^2.5.0",
