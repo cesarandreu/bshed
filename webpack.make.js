@@ -155,12 +155,13 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   // Minifify and dedupe
-  if (BUILD && !SERVER)
+  if (BUILD && !SERVER) {
     config.plugins.push(
       new webpack.NoErrorsPlugin(),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin()
     )
+  }
 
   return config
 }
