@@ -1,10 +1,10 @@
 require('./FlatButton.less')
 
-const React = require('react')
-const cn = require('classnames')
+import React, { PropTypes } from 'react'
+import cn from 'classnames'
 const ButtonLabel = require('../ButtonLabel')
 const RectangleButton = require('../RectangleButton')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const FlatButton = React.createClass({
   mixins: [
@@ -12,9 +12,11 @@ const FlatButton = React.createClass({
   ],
 
   propTypes: {
-    label: React.PropTypes.string,
-    primary: React.PropTypes.bool,
-    secondary: React.PropTypes.bool
+    label: PropTypes.string,
+    primary: PropTypes.bool,
+    secondary: PropTypes.bool,
+    className: PropTypes.string,
+    children: PropTypes.node
   },
 
   render () {

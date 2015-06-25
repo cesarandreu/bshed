@@ -1,8 +1,8 @@
 require('./Icon.less')
 
-const cn = require('classnames')
-const React = require('react')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import cn from 'classnames'
+import React, { PropTypes } from 'react'
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const Icon = React.createClass({
   mixins: [
@@ -10,7 +10,8 @@ const Icon = React.createClass({
   ],
 
   propTypes: {
-    icon: React.PropTypes.string.isRequired
+    icon: PropTypes.string.isRequired,
+    className: PropTypes.string
   },
 
   render () {

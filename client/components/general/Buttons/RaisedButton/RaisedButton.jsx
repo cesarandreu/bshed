@@ -1,10 +1,10 @@
 require('./RaisedButton.less')
 
-const React = require('react')
-const cn = require('classnames')
+import React, { PropTypes } from 'react'
+import cn from 'classnames'
 const ButtonLabel = require('../ButtonLabel')
 const RectangleButton = require('../RectangleButton')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const RaisedButton = React.createClass({
   mixins: [
@@ -12,9 +12,11 @@ const RaisedButton = React.createClass({
   ],
 
   propTypes: {
-    label: React.PropTypes.string,
-    primary: React.PropTypes.bool,
-    secondary: React.PropTypes.bool
+    secondary: PropTypes.bool,
+    primary: PropTypes.bool,
+    label: PropTypes.string,
+    children: PropTypes.node,
+    className: PropTypes.string
   },
 
   render () {

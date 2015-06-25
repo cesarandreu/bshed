@@ -1,13 +1,13 @@
 require('./BikeGrid.less')
 
-const React = require('react')
-const Immutable = require('immutable')
+import React, { PropTypes } from 'react'
+import Immutable from 'immutable'
 const Grid = require('../../general/Grid')
 const GridCard = require('../../general/GridCard')
 const BikeImage = require('../../shared/BikeImage')
 const ActionMixin = require('../../../lib/ActionMixin')
 const BikeshedActions = require('../../../actions/BikeshedActions')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const BikeGrid = React.createClass({
   mixins: [
@@ -16,8 +16,8 @@ const BikeGrid = React.createClass({
   ],
 
   propTypes: {
-    bikeshed: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    bikes: React.PropTypes.instanceOf(Immutable.List).isRequired
+    bikeshed: PropTypes.instanceOf(Immutable.Map).isRequired,
+    bikes: PropTypes.instanceOf(Immutable.List).isRequired
   },
 
   render () {

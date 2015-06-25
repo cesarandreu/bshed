@@ -1,8 +1,8 @@
-const React = require('react')
+import React from 'react'
 const {connectToStores} = require('fluxible/addons')
 const BikeshedStore = require('../../stores/BikeshedStore')
 const BikeshedActions = require('../../actions/BikeshedActions')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const BikeshedList = React.createClass({
   mixins: [

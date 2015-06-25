@@ -1,9 +1,9 @@
 require('./Application.less')
 
-const React = require('react')
+import React from 'react'
 const Navbar = require('./Navbar')
 const Sidebar = require('./Sidebar')
-const {RouteHandler} = require('react-router')
+const { RouteHandler } = require('react-router')
 
 const Application = React.createClass({
   render () {

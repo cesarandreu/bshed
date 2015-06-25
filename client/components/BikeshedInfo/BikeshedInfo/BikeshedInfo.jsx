@@ -1,13 +1,13 @@
 require('./BikeshedInfo.less')
 
-const React = require('react')
-const cn = require('classnames')
+import React, { PropTypes } from 'react'
+import cn from 'classnames'
 const moment = require('moment')
 const {Link} = require('react-router')
-const Immutable = require('immutable')
+import Immutable from 'immutable'
 const inflection = require('inflection')
 const Paper = require('../../general/Paper')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 const LabeledActionButton = require('../../general/Buttons/LabeledActionButton')
 
 const BikeshedInfo = React.createClass({
@@ -16,8 +16,8 @@ const BikeshedInfo = React.createClass({
   ],
 
   propTypes: {
-    bikeshed: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    user: React.PropTypes.instanceOf(Immutable.Map).isRequired
+    bikeshed: PropTypes.instanceOf(Immutable.Map).isRequired,
+    user: PropTypes.instanceOf(Immutable.Map).isRequired
   },
 
   render () {

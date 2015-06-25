@@ -1,17 +1,22 @@
 require('./RectangleButton.less')
 
-const React = require('react')
-const cn = require('classnames')
+import React, { PropTypes } from 'react'
+import cn from 'classnames'
 const EnhancedButton = require('../EnhancedButton')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const RectangleButton = React.createClass({
   mixins: [
     ImmutableRenderMixin
   ],
 
+  propTypes: {
+    className: PropTypes.string,
+    children: PropTypes.node
+  },
+
   render () {
-    const {children, className, ...props} = this.props
+    const { children, className, ...props } = this.props
     return (
       <EnhancedButton
         className={cn('rectangle-button', className)}

@@ -1,10 +1,10 @@
 require('./IconButton.less')
 
-const React = require('react')
-const cn = require('classnames')
+import React, { PropTypes } from 'react'
+import cn from 'classnames'
 const Icon = require('../../Icon')
 const EnhancedButton = require('../EnhancedButton')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const IconButton = React.createClass({
   mixins: [
@@ -12,7 +12,8 @@ const IconButton = React.createClass({
   ],
 
   propTypes: {
-    icon: React.PropTypes.string.isRequired
+    icon: PropTypes.string.isRequired,
+    className: PropTypes.string
   },
 
   render () {

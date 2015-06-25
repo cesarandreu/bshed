@@ -1,13 +1,13 @@
 require('./BikeshedRate.less')
 
-const React = require('react')
-const Immutable = require('immutable')
-const {connectToStores} = require('fluxible/addons')
+import React, { PropTypes } from 'react'
+import Immutable from 'immutable'
+const { connectToStores } = require('fluxible/addons')
 const RegularPage = require('../../general/RegularPage')
 const ActionMixin = require('../../../lib/ActionMixin')
 const BikeshedStore = require('../../../stores/BikeshedStore')
 const BikeshedActions = require('../../../actions/BikeshedActions')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 const BikeshedRateStore = require('../../../stores/BikeshedRateStore')
 
 var BikeshedRate = React.createClass({
@@ -21,11 +21,11 @@ var BikeshedRate = React.createClass({
   },
 
   propTypes: {
-    ratings: React.PropTypes.instanceOf(Immutable.List).isRequired,
-    bikes: React.PropTypes.instanceOf(Immutable.List).isRequired,
-    bikeshed: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    user: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    preview: React.PropTypes.string.isRequired
+    ratings: PropTypes.instanceOf(Immutable.List).isRequired,
+    bikes: PropTypes.instanceOf(Immutable.List).isRequired,
+    bikeshed: PropTypes.instanceOf(Immutable.Map).isRequired,
+    user: PropTypes.instanceOf(Immutable.Map).isRequired,
+    preview: PropTypes.string.isRequired
   },
 
   render () {

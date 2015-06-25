@@ -1,8 +1,8 @@
 require('./DialogPart.less')
 
-const React = require('react')
-const cn = require('classnames')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import React from 'react'
+import cn from 'classnames'
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const DialogPart = React.createClass({
   mixins: [
@@ -16,7 +16,7 @@ const DialogPart = React.createClass({
   },
 
   render () {
-    const {children, className, type} = this.props
+    const { children, className, type } = this.props
     return (
       <div className={cn(`dialog-${type}`, className)}>
         {children}

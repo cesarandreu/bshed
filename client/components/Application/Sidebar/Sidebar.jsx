@@ -1,15 +1,15 @@
 require('./Sidebar.less')
 
-const React = require('react')
-const cn = require('classnames')
+import React, { PropTypes } from 'react'
+import cn from 'classnames'
 const hotkey = require('react-hotkey')
 const {Link} = require('react-router')
-const Immutable = require('immutable')
+import Immutable from 'immutable'
 const {connectToStores} = require('fluxible/addons')
 const ActionMixin = require('../../../lib/ActionMixin')
 const SidebarStore = require('../../../stores/SidebarStore')
 const SidebarActions = require('../../../actions/SidebarActions')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 var Sidebar = React.createClass({
   mixins: [
@@ -19,7 +19,7 @@ var Sidebar = React.createClass({
   ],
 
   propTypes: {
-    sidebar: React.PropTypes.instanceOf(Immutable.Map).isRequired
+    sidebar: PropTypes.instanceOf(Immutable.Map).isRequired
   },
 
   render () {

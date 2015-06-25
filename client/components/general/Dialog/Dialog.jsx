@@ -1,9 +1,9 @@
 require('./Dialog.less')
 
-const React = require('react')
-const cn = require('classnames')
+import React from 'react'
+import cn from 'classnames'
 const hotkey = require('react-hotkey')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const Dialog = React.createClass({
   mixins: [
@@ -18,7 +18,7 @@ const Dialog = React.createClass({
   },
 
   render () {
-    const {children, className, ...other} = this.props
+    const { children, className, ...other } = this.props
     return (
       <div className={cn('dialog-wrapper', className)} {...other}>
         <div className='dialog-overlay'></div>

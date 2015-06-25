@@ -1,14 +1,14 @@
 require('./Navbar.less')
 
-const React = require('react')
+import React, { PropTypes } from 'react'
 const {Link} = require('react-router')
-const Immutable = require('immutable')
+import Immutable from 'immutable'
 const {connectToStores} = require('fluxible/addons')
 const ActionMixin = require('../../../lib/ActionMixin')
 const NavbarStore = require('../../../stores/NavbarStore')
 const IconButton = require('../../general/Buttons/IconButton')
 const SidebarActions = require('../../../actions/SidebarActions')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 var Navbar = React.createClass({
   mixins: [
@@ -17,7 +17,7 @@ var Navbar = React.createClass({
   ],
 
   propTypes: {
-    navbar: React.PropTypes.instanceOf(Immutable.Map).isRequired
+    navbar: PropTypes.instanceOf(Immutable.Map).isRequired
   },
 
   render () {

@@ -1,8 +1,8 @@
 require('./Paper.less')
 
-const React = require('react')
-const cn = require('classnames')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import cn from 'classnames'
+import React, { PropTypes } from 'react'
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const Paper = React.createClass({
   mixins: [
@@ -10,7 +10,9 @@ const Paper = React.createClass({
   ],
 
   propTypes: {
-    zDepth: React.PropTypes.number
+    zDepth: PropTypes.number,
+    children: PropTypes.node,
+    className: PropTypes.string
   },
 
   getDefaultProps () {

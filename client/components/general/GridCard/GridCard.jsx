@@ -1,9 +1,9 @@
 require('./GridCard.less')
 
-const React = require('react')
-const Card = require('../Card')
-const cn = require('classnames')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import React from 'react'
+import Card from '../Card'
+import cn from 'classnames'
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const GridCard = React.createClass({
   mixin: [
