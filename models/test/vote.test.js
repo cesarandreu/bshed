@@ -1,4 +1,5 @@
-const {factories} = require('./helper')
+const { describe, it } = require('mocha')
+const { factories } = require('./helper')
 const expect = require('expect.js')
 
 const VOTE_SCHEMA_KEYS = [

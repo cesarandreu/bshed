@@ -1,8 +1,9 @@
-const {testdom, cleanup} = require('../../../../lib/test-helper')
+const { testdom, cleanup } = require('../../../../lib/test-helper')
+const { afterEach, describe, it } = require('mocha')
 const EnhancedButton = require('../EnhancedButton')
 const React = require('react/addons')
 const expect = require('expect.js')
-const {TestUtils} = React.addons
+const { TestUtils } = React.addons
 
 testdom('<html><body></body></html>')
 describe('Component:EnhancedButton', function () {
