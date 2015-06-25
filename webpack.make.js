@@ -70,11 +70,13 @@ module.exports = function buildWebpackConfig (options) {
       }]
     },
 
-    postcss: [
-      autoprefixer({
-        browsers: ['last 2 version']
-      })
-    ],
+    postcss: function postcss () {
+      return [
+        autoprefixer({
+          browsers: ['last 2 version']
+        })
+      ]
+    },
 
     resolve: {
       extensions: ['', '.js', '.jsx', '.less'],
