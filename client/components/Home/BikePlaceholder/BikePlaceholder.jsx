@@ -1,10 +1,10 @@
 require('./BikePlaceholder.less')
 
 const MAXIMUM_BIKE_COUNT = 5
-const React = require('react')
+import React from 'react'
 const Icon = require('../../general/Icon')
 const GridItem = require('../../general/GridItem')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 const EnhancedButton = require('../../general/Buttons/EnhancedButton')
 
 const BikePlaceholder = React.createClass({

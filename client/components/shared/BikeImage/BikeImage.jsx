@@ -1,8 +1,8 @@
 require('./BikeImage.less')
 
-const React = require('react')
-const cn = require('classnames')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import React, { PropTypes } from 'react'
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
+import cn from 'classnames'
 
 const BikeImage = React.createClass({
   mixins: [
@@ -10,11 +10,12 @@ const BikeImage = React.createClass({
   ],
 
   propTypes: {
-    height: React.PropTypes.number.isRequired,
-    width: React.PropTypes.number.isRequired,
-    name: React.PropTypes.string.isRequired,
-    url: React.PropTypes.string.isRequired,
-    size: React.PropTypes.number
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    size: PropTypes.number
   },
 
   getDefaultProps () {

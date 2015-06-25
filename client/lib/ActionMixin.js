@@ -1,4 +1,4 @@
-const React = require('react')
+import React from 'react'
 const invariant = require('invariant')
 
 /**

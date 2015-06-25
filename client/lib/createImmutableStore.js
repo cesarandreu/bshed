@@ -1,7 +1,7 @@
 // ORIGINAL SOURCE: https://github.com/yahoo/fluxible-immutable-utils
 const {createStore} = require('fluxible/addons')
 const merge = require('lodash/object/merge')
-const Immutable = require('immutable')
+import Immutable from 'immutable'
 
 function initialize () {
   this._state = Immutable.Map()

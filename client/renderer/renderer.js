@@ -1,4 +1,4 @@
-const React = require('react')
+import React from 'react'
 const fetch = require('node-fetch')
 const serialize = require('serialize-javascript')
 const log = require('debug')('bshed:client:renderer')

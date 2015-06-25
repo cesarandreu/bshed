@@ -1,12 +1,12 @@
 // TODO: Rename to BikeshedBuilder
-const React = require('react')
-const Immutable = require('immutable')
+import React from 'react'
+import Immutable from 'immutable'
 const BikePreview = require('../shared/BikePreview')
 const {connectToStores} = require('fluxible/addons')
 const BikeshedBuilder = require('./BikeshedBuilder')
 const ActionMixin = require('../../lib/ActionMixin')
 const RegularPage = require('../general/RegularPage')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 const BikeshedBuilderStore = require('../../stores/BikeshedBuilderStore')
 const BikeshedBuilderActions = require('../../actions/BikeshedBuilderActions')
 

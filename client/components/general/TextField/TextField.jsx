@@ -1,8 +1,8 @@
 require('./TextField.less')
 
-const React = require('react')
-const cn = require('classnames')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import React from 'react'
+import cn from 'classnames'
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const TextField = React.createClass({
   mixins: [

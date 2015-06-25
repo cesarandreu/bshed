@@ -1,7 +1,7 @@
 require('./BikeshedBuilder.less')
 
-const React = require('react')
-const Immutable = require('immutable')
+import React from 'react'
+import Immutable from 'immutable'
 const BikeItem = require('../BikeItem')
 const Grid = require('../../general/Grid')
 const Paper = require('../../general/Paper')
@@ -9,7 +9,7 @@ const TextField = require('../../general/TextField')
 const ActionMixin = require('../../../lib/ActionMixin')
 const BikeItemPlaceholder = require('../BikePlaceholder')
 const RaisedButton = require('../../general/Buttons/RaisedButton')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 const BikeshedBuilderActions = require('../../../actions/BikeshedBuilderActions')
 
 const BikeshedBuilder = React.createClass({

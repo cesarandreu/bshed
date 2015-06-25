@@ -1,5 +1,5 @@
 const createImmutableStore = require('../lib/createImmutableStore')
-const Immutable = require('immutable')
+import Immutable from 'immutable'
 
 const NavbarStore = createImmutableStore({
   storeName: 'NavbarStore',

@@ -1,5 +1,5 @@
-const React = require('react')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import React from 'react'
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const NotFound = React.createClass({
   mixins: [

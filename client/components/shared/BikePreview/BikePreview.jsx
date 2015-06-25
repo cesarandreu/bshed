@@ -1,10 +1,10 @@
 require('./BikePreview.less')
 
-const React = require('react')
+import React from 'react'
 const hotkey = require('react-hotkey')
 const IconButton = require('../../general/Buttons/IconButton')
 const eventHasModifier = require('../../../lib/eventHasModifier')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 /**
  * Bike preview

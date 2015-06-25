@@ -1,12 +1,12 @@
 require('./BikeItem.less')
 
-const React = require('react')
-const Immutable = require('immutable')
+import React from 'react'
+import Immutable from 'immutable'
 const GridItem = require('../../general/GridItem')
 const BikeImage = require('../../shared/BikeImage')
 const ActionMixin = require('../../../lib/ActionMixin')
 const IconButton = require('../../general/Buttons/IconButton')
-const ImmutableRenderMixin = require('react-immutable-render-mixin')
+import ImmutableRenderMixin from 'react-immutable-render-mixin'
 const BikeshedBuilderActions = require('../../../actions/BikeshedBuilderActions')
 
 const BikeItem = React.createClass({
