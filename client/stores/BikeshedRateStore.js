@@ -1,6 +1,6 @@
 const createImmutableStore = require('../lib/createImmutableStore')
 // const BikeshedStore = require('./BikeshedStore')
-const Immutable = require('immutable')
+import Immutable from 'immutable'
 
 const BikeshedRateStore = createImmutableStore({
   storeName: 'BikeshedRateStore',

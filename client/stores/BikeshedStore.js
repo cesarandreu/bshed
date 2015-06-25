@@ -1,8 +1,7 @@
 const createImmutableStore = require('../lib/createImmutableStore')
-const Immutable = require('immutable')
+import Immutable from 'immutable'
 
-const {Schema, arrayOf, normalize} = require('normalizr')
-
+const { Schema, arrayOf, normalize } = require('normalizr')
 const bikeshed = new Schema('bikesheds')
 const bike = new Schema('bikes')
 const user = new Schema('users')
