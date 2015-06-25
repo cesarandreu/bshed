@@ -41,6 +41,7 @@ const BikeshedBuilderStore = createImmutableStore({
   },
 
   getFormData () {
+    const FormData = global.FormData
     const body = new FormData()
     const form = this.getForm()
     form.get('images').forEach(image => {
@@ -54,6 +55,7 @@ const BikeshedBuilderStore = createImmutableStore({
    * Revoke any image URLs and reset builder state
    */
   _reset () {
+    const URL = global.URL
     this._state.getIn(['form', 'images']).forEach(image => {
       URL.revokeObjectURL(image.get('url'))
     })
@@ -89,6 +91,7 @@ const BikeshedBuilderStore = createImmutableStore({
    * @param {number} images[].size.height
    */
   _addImages (images) {
+    const URL = global.URL
     const state = this._state
     const imageList = state.getIn(['form', 'images'])
 
@@ -117,6 +120,7 @@ const BikeshedBuilderStore = createImmutableStore({
    * @param {string} name Image to remove
    */
   _removeImage (name) {
+    const URL = global.URL
     const state = this._state
     const imageUrl = state.getIn(['form', 'images', name, 'url'])
     if (imageUrl) {
