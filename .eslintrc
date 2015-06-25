@@ -1,11 +1,4 @@
 {
   "parser": "babel-eslint",
-  "extends": ["standard", "standard-react"],
-  "rules": {
-    "no-console": 0
-  },
-  "env": {
-    "browser": true,
-    "mocha": true
-  }
+  "extends": ["standard", "standard-react"]
 }

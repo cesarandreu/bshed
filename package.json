@@ -42,6 +42,9 @@
     "test:client:browser": "NODE_ENV=test karma start",
     "test:client:browser:live": "npm run test:client:browser -- --auto-watch --no-single-run"
   },
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "dependencies": {
     "autoprefixer-core": "^5.2.0",
     "aws-sdk": "^2.1.34",
