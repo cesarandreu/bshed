@@ -1,7 +1,7 @@
 const fs = require('fs')
-const mkdirp = require('mkdirp')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer-core')
+const StatsPlugin = require('stats-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = function buildWebpackConfig (options) {
@@ -137,9 +137,7 @@ module.exports = function buildWebpackConfig (options) {
   if (!SERVER) {
     if (!TEST) {
       config.plugins.push(
-        ClientStatsPlugin({
-          publicPath: publicPath
-        })
+        new StatsPlugin(__dirname + '/build/stats.json')
       )
     }
 
@@ -166,23 +164,4 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   return config
-}
-
-/**
- * Client stats.json plugin
- */
-function ClientStatsPlugin (params) {
-  return function () {
-    this.plugin('done', saveStats)
-  }
-
-  function saveStats (stats) {
-    const jsonStats = stats.toJson({
-      chunks: false,
-      modules: false
-    })
-    jsonStats.publicPath = params.publicPath
-    mkdirp.sync(__dirname + '/build')
-    fs.writeFileSync(__dirname + '/build/stats.json', JSON.stringify(jsonStats))
-  }
 }
