@@ -7,13 +7,18 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = function buildWebpackConfig (options) {
   options = options || {}
 
+  // Environment
   const NODE_ENV = options.NODE_ENV || process.env.NODE_ENV || 'development'
-  const SERVER = !!(options.SERVER || process.env.SERVER)
-  const BUILD = !!(options.BUILD || process.env.BUILD)
-  const TEST = !!(options.TEST || process.env.TEST)
+
+  // Build type
+  const SERVER = !!options.SERVER
+  const BUILD = !!options.BUILD
+  const TEST = !!options.TEST
 
   // shared values
-  const publicPath = BUILD ? '/assets/' : 'http://localhost:9090/assets/'
+  const publicPath = BUILD || (BUILD && SERVER)
+    ? '/assets/'
+    : 'http://localhost:8080/assets/'
 
   // Output filename
   // server.js, [name].[hash].js, [name].bundle.js
@@ -60,7 +65,7 @@ module.exports = function buildWebpackConfig (options) {
         exclude: /node_modules/
       }, {
         test: /\.less$/,
-        loader: SERVER ? 'null' : ExtractTextPlugin.extract(
+        loader: SERVER || TEST ? 'null' : ExtractTextPlugin.extract(
           'style',
           'css?sourceMap!postcss!less?sourceMap'
         )
@@ -79,10 +84,7 @@ module.exports = function buildWebpackConfig (options) {
     },
 
     resolve: {
-      extensions: ['', '.js', '.jsx', '.less'],
-      fallback: [
-        __dirname + '/models'
-      ]
+      extensions: ['', '.js', '.jsx', '.less']
     },
 
     plugins: [
@@ -92,13 +94,17 @@ module.exports = function buildWebpackConfig (options) {
     ],
 
     devServer: {
-      port: 9090,
       contentBase: './public',
       stats: {
         modules: false,
         cached: false,
         chunk: false
       }
+    },
+
+    node: !SERVER ? {} : {
+      __filename: true,
+      __dirname: true
     }
   }
 
@@ -115,7 +121,8 @@ module.exports = function buildWebpackConfig (options) {
           return nodeModules
         }, {
           'react/addons': 'commonjs react/addons',
-          'react': 'commonjs react/addons'
+          'react': 'commonjs react/addons',
+          './stats.json': 'commonjs ./stats.json'
         })
     )
   }
