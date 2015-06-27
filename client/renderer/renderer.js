@@ -1,35 +1,36 @@
+import app from '../app'
 import React from 'react'
-const fetch = require('node-fetch')
-const serialize = require('serialize-javascript')
-const log = require('debug')('bshed:client:renderer')
-const {FluxibleComponent} = require('fluxible/addons')
+import debug from 'debug'
+import Html from './Html'
+import fetch from 'node-fetch'
+// import Helmet from 'react-helmet'
+import serialize from 'serialize-javascript'
+import { FluxibleComponent } from 'fluxible/addons'
+import NavigateActions from '../actions/NavigateActions'
 
-const NavigateActions = require('../actions/NavigateActions')
-const Html = require('./Html')
-const app = require('../app')
+const log = debug('bshed:client:renderer')
+export default function renderer ({scripts=[], styles=[]}={}) {
+  return function * rendererMiddleware () {
+    const rootUrl = `${this.protocol}://${this.host}`
+    const cookie = this.get('cookie')
+    const url = this.url
 
-module.exports = async function renderer ({rootUrl, url, cookie, assets}={}) {
-  log(`creating context with url ${url}`)
-  const context = app.createContext({
-    rootUrl,
-    cookie,
-    fetch,
-    url
-  })
+    log('creating context')
+    const context = app.createContext({ fetch, rootUrl, url, cookie })
 
-  log('running router')
-  const {Root, state} = await runRouter(context)
+    log('running router')
+    const { Root, state } = yield runRouter(context)
 
-  log('executing navigate action')
-  await context.executeAction(NavigateActions.router, state)
+    log('executing navigate action')
+    yield context.executeAction(NavigateActions.router, state)
 
-  log('running render')
-  const result = render({context, Root, assets})
+    log('running render')
+    const html = render({ context, Root, scripts, styles })
 
-  return {
-    body: result,
-    type: 'html',
-    status: 200
+    log('sending response')
+    this.status = 200
+    this.type = 'html'
+    this.body = `<!DOCTYPE html>${html}`
   }
 }
 
@@ -53,11 +54,11 @@ function runRouter (context) {
  * Render app
  * @returns {Object} Resulting body, type, and status
  */
-function render ({context, Root, assets}={}) {
+function render ({ context, Root, styles, scripts }={}) {
   log('generating component context')
   const componentContext = context.getComponentContext()
 
-  log('generating BSHED')
+  log('generating state')
   const BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
 
   log('generating markup')
@@ -70,9 +71,14 @@ function render ({context, Root, assets}={}) {
   log('generating html')
   const html = React.renderToStaticMarkup(
     <FluxibleComponent context={componentContext}>
-      <Html markup={markup} assets={assets} BSHED={BSHED}/>
+      <Html
+        scripts={scripts}
+        styles={styles}
+        markup={markup}
+        BSHED={BSHED}
+      />
     </FluxibleComponent>
   )
 
-  return `<!DOCTYPE html>${html}`
+  return html
 }

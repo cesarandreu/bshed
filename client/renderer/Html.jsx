@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 const Html = React.createClass({
   propTypes: {
-    assets: React.PropTypes.object.isRequired,
+    scripts: PropTypes.arrayOf(PropTypes.string),
+    styles: PropTypes.arrayOf(PropTypes.string),
     markup: React.PropTypes.string.isRequired,
     BSHED: React.PropTypes.string.isRequired
   },
 
   render () {
+    const { scripts, styles, markup, BSHED } = this.props
+
     return (
       <html lang='en'>
         <head>
@@ -21,14 +24,14 @@ const Html = React.createClass({
           <title>
             bshed
           </title>
-          {this.props.assets.styles.map((href, key) =>
+          {styles.map((href, key) =>
             <link href={href} key={key} rel='stylesheet'></link>
           )}
         </head>
         <body>
-          <div id='bshed' dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-          <script dangerouslySetInnerHTML={{__html: this.props.BSHED}}></script>
-          {this.props.assets.scripts.map((src, key) =>
+          <div id='bshed' dangerouslySetInnerHTML={{__html: markup}}></div>
+          <script dangerouslySetInnerHTML={{__html: BSHED}}></script>
+          {scripts.map((src, key) =>
             <script src={src} key={key}></script>
           )}
         </body>
