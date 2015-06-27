@@ -38,25 +38,43 @@ const BikeshedStore = createImmutableStore({
   },
 
   waitForInfo (id) {
-    return !this._state.hasIn(['bikesheds', id])
+    const state = this._state
+    return !state.hasIn(['bikesheds', id])
   },
 
   getPreview () {
-    return this._state.get('preview')
+    const state = this._state
+    return state.get('preview')
+  },
+
+  getCurrentBikeshed () {
+    const state = this._state
+    return state.getIn(['bikesheds', state.get('current')])
+  },
+
+  getCurrentUser () {
+    const state = this._state
+    const bikeshed = this.getCurrentBikeshed()
+    return state.getIn(['users', bikeshed.get('User')])
+  },
+
+  getCurrentBikes () {
+    const state = this._state
+    const bikeshed = this.getCurrentBikeshed()
+    return bikeshed.get('Bikes')
+      .map(id =>
+        state.getIn(['bikes', id])
+      )
+      .sortBy(bike =>
+        bike.get('score')
+      )
   },
 
   getCurrent () {
-    const state = this._state
-    const bikeshed = this._state.getIn(['bikesheds', this._state.get('current')])
-    const user = this._state.getIn(['users', bikeshed.get('User')])
-    const bikes = bikeshed.get('Bikes').reduceRight((bikes, id) => {
-      return bikes.set(id, state.getIn(['bikes', id]))
-    }, Immutable.OrderedMap())
-
     return {
-      bikeshed,
-      bikes,
-      user
+      bikeshed: this.getCurrentBikeshed(),
+      bikes: this.getCurrentBikes(),
+      user: this.getCurrentUser()
     }
   },
 
@@ -70,7 +88,8 @@ const BikeshedStore = createImmutableStore({
    * @param {string} bikeId Bike ID to preview
    */
   _preview (bikeId) {
-    const hasBike = this._state.hasIn(['bikes', bikeId])
+    const state = this._state
+    const hasBike = state.hasIn(['bikes', bikeId])
     this.mergeState({
       preview: hasBike ? bikeId : ''
     })
@@ -82,23 +101,17 @@ const BikeshedStore = createImmutableStore({
    * @param {number} [delta=0] Positions by which to change preview
    */
   _changePreview (delta=0) {
-    const preview = this._state.get('preview')
-    const current = this._state.get('current')
-    const bikeList = this._state.getIn(['bikesheds', current, 'Bikes'])
-    const bikes = bikeList
-      .reduceRight((bikes, id) => {
-        return bikes.push(this._state.getIn(['bikes', id]))
-      }, Immutable.List().asMutable())
-      .asImmutable()
-      .sort(bike => bike.get('score'))
+    const state = this._state
+    const bikeList = this.getCurrentBikes()
+    const currentPreview = state.get('preview')
+    const bikeIndex = bikeList.findIndex(bike =>
+      bike.get('id') === currentPreview
+    )
 
-    const bikeIndex = bikes.findIndex(bike => bike.get('id') === preview)
-    if (bikeIndex !== -1) {
-      const bikesCount = bikes.count()
-      this.mergeState({
-        preview: bikes.getIn([(bikeIndex + delta) % bikesCount, 'id'])
-      })
-    }
+    const newPreview = bikeList.getIn([(bikeIndex + delta) % bikeList.count(), 'id'])
+    this.mergeState({
+      preview: newPreview
+    })
   },
 
   /**
@@ -125,9 +138,10 @@ const BikeshedStore = createImmutableStore({
    * Receive bikeshed
    */
   _receiveItem (bikeshedItem) {
+    const state = this._state
     const {result, entities} = normalize(bikeshedItem, bikeshed)
     this.setState(
-      this._state
+      state
         .set('current', result)
         .mergeDeep(
           Immutable.fromJS(entities)
@@ -139,9 +153,10 @@ const BikeshedStore = createImmutableStore({
    * Receive bikeshed list
    */
   _receiveList (bikeshedList) {
+    const state = this._state
     const {result, entities} = normalize(bikeshedList, arrayOf(bikeshed))
     this.setState(
-      this._state
+      state
         .set('currentList', result)
         .mergeDeep(
           Immutable.fromJS(entities)
