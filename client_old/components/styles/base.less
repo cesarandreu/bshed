@@ -1,10 +1,11 @@
-@import (less)"~normalize.css/normalize.css";
-// @import (less)"~material-design-iconfont/style.css";
-
 @import "./typography";
 @import "./colors";
 
 // Reset the box-sizing
+//
+// Heads up! This reset may cause conflicts with some third-party widgets.
+// For recommendations on resolving such conflicts, see
+// http://getbootstrap.com/getting-started/#third-box-sizing
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -21,23 +22,24 @@ html, #bshed {
 // Not sure if I should be using this or not...
 html {
   -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
-  // font-size: @base-font-size;
-  font-size: 10px;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: @base-font-size;
 }
 
 body {
   height: 100%;
   color: @primary-text-color;
   background-color: @canvas-color;
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
-  // font-size: @body-1-font-size;
-
+  font-family: @font-family;
+  font-size: @body-font-size;
   min-width: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
+}
 
-  .body-1-font;
+hr {
+  border: none;
+  border-bottom: solid 1px @border-color;
 }
 
 a {
