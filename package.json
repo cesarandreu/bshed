@@ -100,7 +100,7 @@
     "pg": "^4.4.0",
     "pg-hstore": "^2.3.1",
     "postcss-loader": "^0.5.1",
-    "qs": "^3.1.0",
+    "qs": "^4.0.0",
     "react": "^0.13.3",
     "react-hot-loader": "^1.2.7",
     "react-hotkey": "^0.3.0",
