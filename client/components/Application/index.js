@@ -1,1 +1,1 @@
-module.exports = require('./Application')
+export default from './Application.jsx'

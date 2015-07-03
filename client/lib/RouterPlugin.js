@@ -1,27 +1,41 @@
-const Router = require('react-router')
-const {HistoryLocation} = Router
+// import React from 'react'
+// import { Router } from 'react-router'
+// import BrowserHistory from 'react-router/lib/BrowserHistory'
+// import MemoryHistory from 'react-router/lib/MemoryHistory'
 
-/**
- * RouterPlugin
- */
-module.exports = function RouterPlugin () {
-  return {
-    name: 'RouterPlugin',
-    plugContext
-  }
+// /**
+//  * RouterPlugin
+//  */
+// module.exports = function RouterPlugin ({ routes }) {
+//   return {
+//     name: 'RouterPlugin',
+//     plugContext
+//   }
 
-  function plugContext ({url, app}={}, context) {
-    const router = context.router = Router.create({
-      location: url || HistoryLocation,
-      routes: app.getComponent()
-    })
+//   function plugContext ({ url }={}, context) {
+//     const history = context._history = url
+//       ? new BrowserHistory()
+//       : new MemoryHistory([url])
 
-    return {
-      plugActionContext
-    }
+//     context.getRouter = function getRouter () {
+//       return (
+//         <Router
+//           history={history}
+//         />
+//       )
+//     }
 
-    function plugActionContext (actionContext) {
-      actionContext.router = router
-    }
-  }
-}
+//     // const router = context.router = Router.create({
+//     //   location: url || HistoryLocation,
+//     //   routes: app.getComponent()
+//     // })
+
+//     // return {
+//     //   plugActionContext
+//     // }
+
+//     // function plugActionContext (actionContext) {
+//     //   actionContext.router = router
+//     // }
+//   }
+// }
