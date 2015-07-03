@@ -1,22 +1,35 @@
-require('./Application.less')
+// import './Application.less'
 
-import React from 'react'
-const Navbar = require('./Navbar')
-const Sidebar = require('./Sidebar')
-const { RouteHandler } = require('react-router')
+import { provideContext } from 'fluxible-addons-react'
+import React, { PropTypes } from 'react'
+import { Router } from 'react-router'
+import routes from '../routes.jsx'
+// import AppBar from '../AppBar'
+// import Drawer from '../Drawer'
+// import Immutable from 'immutable'
 
-const Application = React.createClass({
+let Application = React.createClass({
+  propTypes: {
+    // currentRoute: PropTypes.instanceOf(Immutable.Map).isRequired,
+    // children: PropTypes.node.isRequired
+  },
+
   render () {
+    // const { children } = this.props
     return (
-      <div className='layout'>
-        <Navbar/>
-        <Sidebar/>
-        <div className='content'>
-          <RouteHandler/>
-        </div>
-      </div>
+      <Router
+        routes={routes}
+        onUpdate={function (...args) {
+          console.log('onUpdate', args)
+        }}
+        onError={() => console.log('onError')}
+        onAbort={() => console.log('onAbort')}
+        { ...this.props }
+      />
     )
   }
 })
 
-module.exports = Application
+Application = provideContext(Application)
+
+export default Application
