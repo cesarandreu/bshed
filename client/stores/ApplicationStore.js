@@ -1,9 +1,26 @@
-import createImmutableStore from '../lib/createImmutableStore'
+const createImmutableStore = require('../lib/createImmutableStore')
 // import Immutable from 'immutable'
 
 const ApplicationStore = createImmutableStore({
   storeName: 'ApplicationStore',
-  handlers: {}
+
+  handlers: {
+    // NAVIGATE_FAIL: '_fail',
+    // NAVIGATE_START: '_start',
+    // NAVIGATE_SUCCESS: '_success'
+  },
+
+  _success () {
+
+  },
+
+  _fail () {
+
+  },
+
+  _start () {
+
+  }
 })
 
-export default ApplicationStore
+module.exports = ApplicationStore

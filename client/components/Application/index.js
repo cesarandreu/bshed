@@ -1,1 +1,1 @@
-export default from './Application'
+module.exports = require('./Application')

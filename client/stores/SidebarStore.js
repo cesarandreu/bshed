@@ -1,33 +1,32 @@
-import createImmutableStore from '../lib/createImmutableStore'
-import SidebarConstants from '../constants/SidebarConstants'
+const createImmutableStore = require('../lib/createImmutableStore')
 import Immutable from 'immutable'
 
 const SidebarStore = createImmutableStore({
   storeName: 'SidebarStore',
+
   handlers: {
-    [SidebarConstants.OPEN]: '_open',
-    [SidebarConstants.CLOSE]: '_close',
-    [SidebarConstants.TOGGLE]: '_toggle'
+    NAVIGATE_START: '_close',
+    SIDEBAR_CLOSE: '_close',
+    SIDEBAR_TOGGLE: '_toggle'
   },
 
   initialize () {
-    console.log('initialize~')
     this._state = Immutable.fromJS({
-      active: false
+      isOpen: false
     })
   },
 
-  _open (state) {
-    return state.set('active', true)
+  _close () {
+    this.mergeState({
+      isOpen: false
+    })
   },
 
-  _close (state) {
-    return state.set('active', false)
-  },
-
-  _toggle (state) {
-    return state.update('active', active => !active)
+  _toggle () {
+    this.setState(
+      this._state.update('isOpen', isOpen => !isOpen)
+    )
   }
 })
 
-export default SidebarStore
+module.exports = SidebarStore

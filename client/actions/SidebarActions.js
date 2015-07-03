@@ -1,13 +1,13 @@
-import SidebarConstants from '../constants/SidebarConstants'
-
-export function open (context) {
-  context.dispatch(SidebarConstants.OPEN)
+/**
+ * Sidebar toggle
+ */
+exports.toggle = function toggle (context) {
+  context.dispatch('SIDEBAR_TOGGLE')
 }
 
-export function close (context) {
-  context.dispatch(SidebarConstants.CLOSE)
-}
-
-export function toggle (context) {
-  context.dispatch(SidebarConstants.TOGGLE)
+/**
+ * Sidebar close
+ */
+exports.close = function close (context) {
+  context.dispatch('SIDEBAR_CLOSE')
 }

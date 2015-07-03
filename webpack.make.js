@@ -35,7 +35,7 @@ module.exports = function buildWebpackConfig (options) {
     context: __dirname,
 
     entry: TEST ? {} : {
-      bshed: SERVER ? './client/renderer/server.js' : './client/client.js'
+      bshed: SERVER ? './client/renderer/server.js' : './client/index.js'
     },
 
     output: TEST ? {} : {

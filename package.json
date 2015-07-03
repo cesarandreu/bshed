@@ -64,7 +64,6 @@
     "file-loader": "^0.8.4",
     "fluxible": "^0.4.12",
     "html-webpack-plugin": "^1.5.2",
-    "fluxible-router": "^0.1.9",
     "http-errors": "^1.3.1",
     "image-size": "^0.3.5",
     "immutable": "^3.7.4",
