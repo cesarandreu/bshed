@@ -1,14 +1,16 @@
 // Polyfill
-require('whatwg-fetch')
+import 'whatwg-fetch'
 
 // Modules
-const app = require('./app')
-const debug = require('debug')
+import app from './app'
+import debug from 'debug'
+import React from 'react'
+import hotkey from 'react-hotkey'
+import { createElementWithContext } from 'fluxible-addons-react'
+// import { FluxibleComponent } from 'fluxible/addons'
+import BrowserHistory from 'react-router/lib/BrowserHistory'
+
 const log = debug('bshed:client')
-const React = require('react/addons')
-const hotkey = require('react-hotkey')
-const {FluxibleComponent} = require('fluxible/addons')
-const NavigateActions = require('./actions/NavigateActions')
 
 // needed for onTouchTap
 // require('react-tap-event-plugin')()
@@ -44,38 +46,88 @@ function bootstrap (err, context) {
   log('activating hotkeys')
   hotkey.activate()
 
+  // Router history
+  const history = new BrowserHistory()
+
   // Start router
   log('starting router')
-  context.getActionContext().router.run(routerAction(context))
+  React.render(createElementWithContext(context, { history }), mountNode, () => {
+    log('React rendered')
+  })
+  // context.getActionContext().router.run(routerAction(context))
 }
 
 /**
  * routerAction
  * Calls navigate action and then render the app
  */
-function routerAction (context) {
-  return async function runRouterAction (Root, state) {
-    log('executing navigate action')
-    await context.executeAction(NavigateActions.router, state)
+// function routerAction (context) {
+//   return async function runRouterAction (Root, state) {
+//     log('executing navigate action')
+//     await context.executeAction(NavigateActions.router, state)
 
-    log('rendering application')
-    await render({context, Root})
-    log('navigation and rendering finished')
-  }
-}
+//     log('rendering application')
+//     await render({context, Root})
+//     log('navigation and rendering finished')
+//   }
+// }
 
 /**
  * render
  * Render Root with context
  */
-function render ({Root, context}={}) {
-  return new Promise(resolve => {
-    const element = (
-      <FluxibleComponent context={context.getComponentContext()}>
-        <Root/>
-      </FluxibleComponent>
-    )
+// function render ({Root, context}={}) {
+//   return new Promise(resolve => {
+//     const element = (
+//       <FluxibleComponent context={context.getComponentContext()}>
+//         <Root/>
+//       </FluxibleComponent>
+//     )
 
-    React.render(element, mountNode, resolve)
-  })
-}
+//     React.render(element, mountNode, resolve)
+//   })
+// }
+
+/* ****************************************************************** */
+
+// // Polyfills
+// import 'whatwg-fetch'
+
+// // Modules
+// import React from 'react'
+// import debug from 'debug'
+// import app from './app'
+
+// const log = debug('bshed:client:bootstrap')
+
+// // Get application node
+// const mountNode = document.getElementById('bshed')
+
+// // Debug messages
+// if (process.env.NODE_ENV !== 'production') {
+//   debug.enable('bshed:*,Fluxible:*')
+// }
+
+// // Rehydrate if global.app is defined
+// // Otherwise bootstrap with a new context
+// if (global.app) {
+//   app.rehydrate(global.app, bootstrap)
+// } else {
+//   bootstrap(null, app.createContext())
+// }
+
+// /**
+//  * Bootstrap the app
+//  */
+// function bootstrap (err, context) {
+//   if (err) throw err
+
+//   // For chrome dev tool support and debugging
+//   global.context = context
+//   global.React = React
+
+//   log('React rendering')
+//   React.render(context.createElement(), mountNode, () => {
+//     log('React rendered')
+//   })
+// }

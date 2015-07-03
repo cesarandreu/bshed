@@ -1,26 +1,29 @@
-require('./components/styles/imports.less')
-require('./components/styles/base.less')
+// Styles
+import './components/styles/base.less'
 
-const RequestPlugin = require('./lib/RequestPlugin')
-const RouterPlugin = require('./lib/RouterPlugin')
-const Fluxible = require('fluxible')
+// Modules
+import Fluxible from 'fluxible'
 
+// Plugins
+import RequestPlugin from './lib/RequestPlugin'
+
+// Routes
+// import routes from './components/routes.jsx'
+import Application from './components/Application'
+
+// Stores
+// import ApplicationStore from './stores/ApplicationStore'
+import SidebarStore from './stores/SidebarStore'
+
+// Initialize application
 const app = new Fluxible({
-  component: require('./routes')
+  component: Application,
+  stores: [
+    // ApplicationStore,
+    SidebarStore
+  ]
 })
-
-app.plug(RouterPlugin())
 
 app.plug(RequestPlugin())
 
-const stores = [
-  require('./stores/ApplicationStore'),
-  require('./stores/BikeshedBuilderStore'),
-  require('./stores/BikeshedRateStore'),
-  require('./stores/BikeshedStore'),
-  require('./stores/NavbarStore'),
-  require('./stores/SidebarStore')
-]
-stores.forEach(store => app.registerStore(store))
-
-module.exports = app
+export default app
