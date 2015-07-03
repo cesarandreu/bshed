@@ -6,8 +6,8 @@ import app from './app'
 import debug from 'debug'
 import React from 'react'
 import hotkey from 'react-hotkey'
-import { createElementWithContext } from 'fluxible-addons-react'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
+import { createElementWithContext } from 'fluxible-addons-react'
 
 const log = debug('bshed:client')
 
