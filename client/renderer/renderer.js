@@ -23,10 +23,8 @@ export default function renderer ({ scripts=[], styles=[] }={}) {
     const location = new Location(this.url, this.query)
     const state = yield runRouter({ location })
 
-    // console.log('routerState', JSON.stringify(state))
-    // console.log('state', Object.keys(state))
     log('running navigateAction')
-    yield context.executeAction(navigateAction, { location, state })
+    yield context.executeAction(navigateAction, { location, ...state })
 
     log('generating state')
     const appState = `window.BSHED=${serialize(app.dehydrate(context))}`

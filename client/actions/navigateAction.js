@@ -1,11 +1,11 @@
 import NavigateConstants from '../constants/NavigateConstants'
 import { ClientError } from '../lib/errors'
 
-export default async function navigateAction (context, { location, state }) {
-  // console.log('payload', location, state)
-  context.dispatch(NavigateConstants.START, { location, state })
+export default async function navigateAction (context, payload) {
+  const { location, branch, components, params } = payload
+  context.dispatch(NavigateConstants.START, { ...payload })
 
-  if (!state) {
+  if (!components || !branch) {
     const err = ClientError({
       title: `URL ${location.pathname} does not match any routes`,
       status: 404
@@ -14,5 +14,5 @@ export default async function navigateAction (context, { location, state }) {
     throw err
   }
 
-  context.dispatch(NavigateConstants.SUCCESS, state)
+  context.dispatch(NavigateConstants.SUCCESS, { ...payload })
 }
