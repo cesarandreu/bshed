@@ -1,5 +1,5 @@
 import React from 'react'
-const invariant = require('invariant')
+import invariant from 'invariant'
 
 /**
  * ActionMixin

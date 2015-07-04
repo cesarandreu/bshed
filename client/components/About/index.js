@@ -1,1 +1,1 @@
-module.exports = require('./About')
+export default from './About.jsx'

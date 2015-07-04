@@ -1,13 +1,15 @@
-const _ = require('lodash')
-const cookies = require('cookies-js')
-const invariant = require('invariant')
-const log = require('debug')('bshed:client:request')
+import cookies from 'cookies-js'
+import invariant from 'invariant'
+import debug from 'debug'
+import _ from 'lodash'
+
+const log = debug('bshed:client:request')
 
 /**
  * RequestPlugin
  * Adds executeRequest(fn, params) to action context
  */
-module.exports = function RequestPlugin (options={}) {
+export default function RequestPlugin () {
   return {
     name: 'RequestPlugin',
     plugContext
@@ -75,8 +77,8 @@ function executeRequestFactory ({fetch, rootUrl, cookie}) {
     }
 
     return fetch(url, options)
-      .then(status)
-      .then(parseJsonBody)
+      // .then(status)
+      // .then(parseJsonBody)
   }
 }
 
@@ -94,20 +96,20 @@ function shouldSetXsrfToken (method='GET') {
  * @param {Response} response Fetch response
  * @return {Promise}
  */
-function parseJsonBody (res) {
-  return res.json().then(parsedBody => {
-    res.parsedBody = parsedBody
-    return res
-  })
-}
+// function parseJsonBody (res) {
+//   return res.json().then(parsedBody => {
+//     res.parsedBody = parsedBody
+//     return res
+//   })
+// }
 
 /**
  * Resolve when status code is 2XX, otherwise reject
  * @param {Response} response Fetch response
  * @return {Promise}
  */
-function status (res) {
-  return res.status >= 200 && res.status < 300
-    ? Promise.resolve(res)
-    : Promise.reject(res)
-}
+// function status (res) {
+//   return res.status >= 200 && res.status < 300
+//     ? Promise.resolve(res)
+//     : Promise.reject(res)
+// }

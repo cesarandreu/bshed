@@ -1,1 +1,1 @@
-module.exports = require('./Home')
+export default from './Home.jsx'

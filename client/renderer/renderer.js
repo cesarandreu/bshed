@@ -1,31 +1,46 @@
 import app from '../app'
 import React from 'react'
 import debug from 'debug'
-import Html from './Html'
 import fetch from 'node-fetch'
-// import Helmet from 'react-helmet'
+import Html from '../components/Html'
+import { Router } from 'react-router'
 import serialize from 'serialize-javascript'
-import { FluxibleComponent } from 'fluxible/addons'
-import NavigateActions from '../actions/NavigateActions'
+import routes from '../components/routes.jsx'
+import Location from 'react-router/lib/Location'
+import { createElementWithContext } from 'fluxible-addons-react'
+import navigateAction from '../actions/navigateAction'
 
 const log = debug('bshed:client:renderer')
-export default function renderer ({scripts=[], styles=[]}={}) {
+export default function renderer ({ scripts=[], styles=[] }={}) {
   return function * rendererMiddleware () {
     const rootUrl = `${this.protocol}://${this.host}`
     const cookie = this.get('cookie')
-    const url = this.url
 
     log('creating context')
-    const context = app.createContext({ fetch, rootUrl, url, cookie })
+    const context = app.createContext({ fetch, rootUrl, cookie })
 
     log('running router')
-    const { Root, state } = yield runRouter(context)
+    const location = new Location(this.url, this.query)
+    const state = yield runRouter({ location })
 
-    log('executing navigate action')
-    yield context.executeAction(NavigateActions.router, state)
+    log('running navigateAction')
+    yield context.executeAction(navigateAction, { location, ...state })
 
-    log('running render')
-    const html = render({ context, Root, scripts, styles })
+    log('generating state')
+    const appState = `window.BSHED=${serialize(app.dehydrate(context))}`
+
+    log('generating markup')
+    const markup = React.renderToString(createElementWithContext(context, state))
+
+    log('generating html')
+    const html = React.renderToStaticMarkup(
+      <Html
+        state={appState}
+        markup={markup}
+        styles={styles}
+        scripts={scripts}
+      />
+    )
 
     log('sending response')
     this.status = 200
@@ -34,51 +49,11 @@ export default function renderer ({scripts=[], styles=[]}={}) {
   }
 }
 
-/**
- * Run router
- * @param {Object} context Application context
- * @returns {Promise} Promise of resulting Handler and state
- */
-function runRouter (context) {
-  return new Promise(resolve => {
-    context.router.run((Root, state) => {
-      resolve({
-        Root,
-        state
-      })
+function runRouter ({ location }) {
+  return new Promise((resolve, reject) => {
+    Router.run(routes, location, (error, state) => {
+      error ? reject(error) : resolve(state)
     })
   })
 }
 
-/**
- * Render app
- * @returns {Object} Resulting body, type, and status
- */
-function render ({ context, Root, styles, scripts }={}) {
-  log('generating component context')
-  const componentContext = context.getComponentContext()
-
-  log('generating state')
-  const BSHED = `window.BSHED=${serialize(app.dehydrate(context))}`
-
-  log('generating markup')
-  const markup = React.renderToString(
-    <FluxibleComponent context={componentContext}>
-      <Root/>
-    </FluxibleComponent>
-  )
-
-  log('generating html')
-  const html = React.renderToStaticMarkup(
-    <FluxibleComponent context={componentContext}>
-      <Html
-        scripts={scripts}
-        styles={styles}
-        markup={markup}
-        BSHED={BSHED}
-      />
-    </FluxibleComponent>
-  )
-
-  return html
-}

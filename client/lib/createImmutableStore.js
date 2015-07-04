@@ -1,6 +1,5 @@
 // ORIGINAL SOURCE: https://github.com/yahoo/fluxible-immutable-utils
-const {createStore} = require('fluxible/addons')
-const merge = require('lodash/object/merge')
+import { createStore } from 'fluxible/addons'
 import Immutable from 'immutable'
 
 function initialize () {
@@ -45,7 +44,7 @@ function mergeState (stateFragment) {
  * @return {Store} Store class
  **/
 module.exports = function createImmutableStore (spec) {
-  return createStore(merge({
+  return createStore(Object.assign({
     initialize: initialize,
     rehydrate: rehydrate,
     dehydrate: dehydrate,

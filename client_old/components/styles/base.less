@@ -1,0 +1,47 @@
+@import "./typography";
+@import "./colors";
+
+// Reset the box-sizing
+//
+// Heads up! This reset may cause conflicts with some third-party widgets.
+// For recommendations on resolving such conflicts, see
+// http://getbootstrap.com/getting-started/#third-box-sizing
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html, #bshed {
+  height: 100%;
+}
+
+// Not sure if I should be using this or not...
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: @base-font-size;
+}
+
+body {
+  height: 100%;
+  color: @primary-text-color;
+  background-color: @canvas-color;
+  font-family: @font-family;
+  font-size: @body-font-size;
+  min-width: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+hr {
+  border: none;
+  border-bottom: solid 1px @border-color;
+}
+
+a {
+  text-decoration: none;
+}
