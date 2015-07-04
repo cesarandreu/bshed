@@ -1,3 +1,51 @@
+@import "../styles/sizes.less";
+@import "../styles/colors.less";
+
+.app-bar-placeholder {
+  position: relative;
+
+  padding-top: 64px;
+  @media @device-small {
+    padding-top: 56px;
+  }
+}
+
+.app-bar {
+  display: flex;
+  align-items: center;
+
+  background-color: @primary-1-color;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+
+  position: fixed;
+  width: 100%;
+  top: 0;
+
+  height: 64px; // AppBar height
+  .app-bar-menu-button {
+    margin: auto 20px auto 12px; // Left total 24px, right total 80xp
+
+    height: 48px;
+    opacity: 0.75;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @media @device-small {
+    height: 56px; // AppBar height
+    .app-bar-menu-button {
+      margin: auto 12px auto 4px; // Left total 16px, right total 72xp
+    }
+  }
+}
+
+.app-bar-title {
+  font-weight: 500;
+  font-size: 2.0rem;
+  color: @dark-white;
+}
+
 // @import "../../styles/typography.less";
 // @import "../../styles/colors.less";
 // @import "../../styles/sizes.less";

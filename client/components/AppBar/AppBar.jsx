@@ -1,59 +1,64 @@
 import './AppBar.less'
 
-import React, { PropTypes } from 'react'
-// import { Link } from 'react-router'
-// import Immutable from 'immutable'
-// const {connectToStores} = require('fluxible/addons')
-// const ActionMixin = require('../../../lib/ActionMixin')
-// const NavbarStore = require('../../../stores/NavbarStore')
-// const IconButton = require('../../general/Buttons/IconButton')
-// const SidebarActions = require('../../../actions/SidebarActions')
-import ImmutableRenderMixin from 'react-immutable-render-mixin'
+import React from 'react'
+import { Link } from 'react-router'
+import BaseButton from '../common/BaseButton'
+import ActionMixin from '../../lib/ActionMixin'
+import * as SidebarActions from '../../actions/SidebarActions'
 
-const AppBar = React.createClass({
+export const AppBarMenuButton = React.createClass({
   mixins: [
-    // ActionMixin,
-    ImmutableRenderMixin
+    ActionMixin
   ],
 
-  propTypes: {
-    // navbar: PropTypes.instanceOf(Immutable.Map).isRequired
+  shouldComponentUpdate () {
+    return false
   },
 
   render () {
-    const { appbar } = this.props
     return (
-      <nav className='appbar'>
-        {/*
-        <IconButton
-          className='navbar-menu-button'
-          onClick={this._toggleSidebar}
-          icon='md-menu'
+      <BaseButton
+        onClick={() => this.executeAction(SidebarActions.toggle)}
+        className='app-bar-menu-button'
+      >
+        <img
+          src={require('./ic_menu_white_24px.svg')}
+          className='app-bar-menu-button-icon'
         />
-        */}
-        <div className='appbar-inner'>
-        {/*
-          <Link
-            className='navbar-title'
-            to={navbar.get('to')}
-          >
-            {navbar.get('title')}
-          </Link>
-          */}
-        </div>
-      </nav>
+      </BaseButton>
     )
   }
-
-  // _toggleSidebar () {
-  //   this.executeAction(SidebarActions.toggle)
-  // }
 })
 
-// Navbar = connectToStores(Navbar, [NavbarStore], stores => {
-//   return {
-//     navbar: stores.NavbarStore.getState()
-//   }
-// })
+export const AppBarTitle = React.createClass({
+  shouldComponentUpdate () {
+    return false
+  },
 
-module.exports = AppBar
+  render () {
+    return (
+      <Link to='home' className='app-bar-title'>
+        Bikeshed it!
+      </Link>
+    )
+  }
+})
+
+export const AppBar = React.createClass({
+  shouldComponentUpdate () {
+    return false
+  },
+
+  render () {
+    return (
+      <div className='app-bar-placeholder'>
+        <nav className='app-bar'>
+          <AppBarMenuButton/>
+          <AppBarTitle/>
+        </nav>
+      </div>
+    )
+  }
+})
+
+export default AppBar
