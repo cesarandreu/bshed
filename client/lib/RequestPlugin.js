@@ -1,7 +1,7 @@
+import debug from 'debug'
 import cookies from 'cookies-js'
 import invariant from 'invariant'
-import debug from 'debug'
-import _ from 'lodash'
+import defaults from 'lodash/object/defaults'
 
 const log = debug('bshed:client:request')
 
@@ -16,7 +16,7 @@ export default function RequestPlugin () {
   }
 
   function plugContext (contextOptions={}) {
-    const request = _.defaults(contextOptions, {
+    const request = defaults(contextOptions, {
       fetch: global.fetch,
       rootUrl: '',
       cookie: ''
@@ -64,9 +64,7 @@ function executeRequestFactory ({fetch, rootUrl, cookie}) {
       url = `${rootUrl}${url}`
     }
 
-    _.defaults(options, {
-      credentials: 'include'
-    })
+    defaults(options, { credentials: 'include' })
 
     options.headers = new Headers(options.headers || {})
     if (!options.headers.has('cookie') && cookie) {
