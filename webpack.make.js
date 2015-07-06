@@ -56,12 +56,12 @@ module.exports = function buildWebpackConfig (options) {
 
     module: {
       loaders: [{
-        test: /\.js$/,
-        loader: 'babel?optional=runtime&cacheDirectory',
-        exclude: /node_modules/
-      }, {
-        test: /\.jsx$/,
-        loader: (BUILD || SERVER || TEST ? '' : 'react-hot!') + 'babel?optional=runtime&cacheDirectory',
+      //   test: /\.js$/,
+      //   loader: 'babel?optional=runtime&cacheDirectory',
+      //   exclude: /node_modules/
+      // }, {
+        test: /\.(jsx|js)$/,
+        loader: BUILD || SERVER || TEST ? 'babel?optional=runtime&cacheDirectory' : 'react-hot!babel!flowcheck!babel?{ "optional": "runtime", "blacklist": ["flow"], "cacheDirectory": true }',
         exclude: /node_modules/
       }, {
         test: /\.less$/,
