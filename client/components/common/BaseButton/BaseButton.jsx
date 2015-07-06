@@ -1,4 +1,4 @@
-require('./BaseButton.less')
+import './BaseButton.less'
 
 import cn from 'classnames'
 import React, { PropTypes } from 'react'

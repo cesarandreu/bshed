@@ -19,4 +19,4 @@ const ActionMixin = {
   }
 }
 
-module.exports = ActionMixin
+export default ActionMixin
