@@ -50,7 +50,7 @@
     "aws-sdk": "^2.1.36",
     "babel": "^5.6.14",
     "babel-core": "^5.6.15",
-    "babel-loader": "^5.3.0",
+    "babel-loader": "^5.3.1",
     "babel-runtime": "^5.6.15",
     "bcrypt": "^0.8.3",
     "browser-image-size": "^1.1.0",
@@ -129,7 +129,7 @@
     "csrf": "^3.0.0",
     "expect.js": "^0.3.1",
     "isparta": "^3.0.0",
-    "jsdom": "^5.5.0",
+    "jsdom": "^5.6.0",
     "karma": "^0.12.37",
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.0",
@@ -145,6 +145,6 @@
     "standard": "^4.5.2",
     "style-loader": "^0.12.2",
     "supertest": "^1.0.1",
-    "supertest-as-promised": "^2.0.1"
+    "supertest-as-promised": "^2.0.2"
   }
 }
