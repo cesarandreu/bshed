@@ -1,3 +1,6 @@
 import constantCreator from '../lib/constantCreator'
 
-export default {}
+const ApplicationConstants = constantCreator('APPLICATION', {
+})
+
+export default ApplicationConstants
