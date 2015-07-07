@@ -68,7 +68,7 @@ export default function BikeshedsController () {
  * @query {after=Date.now()}
  */
 BikeshedsController.index = function * index () {
-  const {Bikeshed} = this.models
+  const { Bikeshed } = this.models
   const query = this.query
 
   // Query params
@@ -124,9 +124,9 @@ BikeshedsController.index.getAfter = function getAfter (after) {
  * POST /api/bikesheds
  */
 BikeshedsController.create = function * create () {
-  const {Bikeshed, Bike} = this.models
-  const {user, body} = this.state
-  const {fields, files} = body
+  const { Bikeshed, Bike } = this.models
+  const { user, body } = this.state
+  const { fields, files } = body
 
   // Do everything in a transaction
   const transaction = yield this.models.sequelize.transaction()
@@ -197,8 +197,8 @@ BikeshedsController.show = function * show () {
  * POST /api/bikesheds/:bikeshed
  */
 BikeshedsController.rate = function * rate () {
-  const {Bike, Rating, Vote, sequelize} = this.models
-  const {user, bikeshed, body} = this.state
+  const { Bike, Rating, Vote, sequelize } = this.models
+  const { user, bikeshed, body } = this.state
 
   const ratings = _.indexBy(body.ratings, 'BikeId')
 

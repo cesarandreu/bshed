@@ -48,8 +48,8 @@ export default function AuthenticationsController () {
  * POST /login
  */
 AuthenticationsController.login = function * login () {
-  const {body} = this.state
-  const {User} = this.models
+  const { body } = this.state
+  const { User } = this.models
 
   // Find user
   const user = yield User.findOne({
@@ -84,8 +84,8 @@ AuthenticationsController.login.schema = Joi.object().required().keys({
  * POST /register
  */
 AuthenticationsController.register = function * register () {
-  const {body, user} = this.state
-  const {User} = this.models
+  const { body, user } = this.state
+  const { User } = this.models
   this.assert(!user.registered, 403)
 
   this.body = yield user.update({

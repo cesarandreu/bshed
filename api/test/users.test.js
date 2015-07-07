@@ -1,4 +1,4 @@
-const {request, buildUserHeaders, factories} = require('./helper')
+const { request, buildUserHeaders, factories } = require('./helper')
 const { describe, it } = require('mocha')
 const expect = require('expect.js')
 
