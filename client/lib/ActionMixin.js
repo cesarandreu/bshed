@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react'
 import invariant from 'invariant'
 
@@ -10,12 +12,12 @@ const ActionMixin = {
     executeAction: React.PropTypes.func.isRequired
   },
 
-  executeAction (...args) {
+  executeAction (action: Function, payload: any): void {
     invariant(
       this.context.executeAction,
-      'executeAction was called but was not found in the context'
+      `executeAction not found in the context`
     )
-    return this.context.executeAction.apply(this.context, args)
+    this.context.executeAction(action, payload)
   }
 }
 
