@@ -1,7 +1,6 @@
 import './Layout.less'
-
-import React, { PropTypes } from 'react'
 import AppBar from '../AppBar'
+import React, { PropTypes } from 'react'
 // import Drawer from '../Drawer'
 // import Immutable from 'immutable'
 
@@ -13,8 +12,6 @@ const Layout = React.createClass({
 
   render () {
     const { children, ...other } = this.props
-    // console.log('Layout other props', JSON.stringify(other))
-    // console.log('other', Object.keys(other))
 
     return (
       <div className='layout'>
@@ -23,8 +20,7 @@ const Layout = React.createClass({
         <Drawer/>
         */}
         <main className='layout-main'>
-          LAYOUT MAIN
-          { children }
+          {children}
         </main>
       </div>
     )
