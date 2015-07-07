@@ -1,8 +1,10 @@
-const Router = require('koa-router')
-const middleware = require('../../utils/middleware')
+import Router from 'koa-router'
+import middleware from '../../utils/middleware'
 
-module.exports = UsersController
-function UsersController () {
+/**
+ * Users controller
+ */
+export default function UsersController () {
 
   // Middleware
   const auth = middleware.authenticate()

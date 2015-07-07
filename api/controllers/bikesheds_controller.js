@@ -1,15 +1,14 @@
-const Joi = require('joi')
-const _ = require('lodash')
-const Router = require('koa-router')
-const bodyParser = require('koa-body')
-const middleware = require('../../utils/middleware')
-const getFullBikeshed = require('../../utils/get-full-bikeshed')
+import Joi from 'joi'
+import _ from 'lodash'
+import Router from 'koa-router'
+import bodyParser from 'koa-body'
+import middleware from '../../utils/middleware'
+import getFullBikeshed from '../../utils/get-full-bikeshed'
 
 /**
  * Bikesheds controller
  */
-module.exports = BikeshedsController
-function BikeshedsController () {
+export default function BikeshedsController () {
 
   // Middleware
   const auth = middleware.authenticate()

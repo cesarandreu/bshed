@@ -1,10 +1,12 @@
-const debug = require('debug')('bshed:api:loader')
-const compose = require('koa-compose')
-const assert = require('assert')
+import compose from 'koa-compose'
+import assert from 'assert'
+import debug from 'debug'
 
-const controllerLoader = require('./controllers')
-const middleware = require('../utils/middleware')
-const helpers = require('../utils/helpers')
+import controllerLoader from './controllers'
+import middleware from '../utils/middleware'
+import helpers from '../utils/helpers'
+
+const log = debug('bshed:api:loader')
 
 /**
  * API loader
@@ -13,9 +15,9 @@ const helpers = require('../utils/helpers')
  * @params {Object} opts.models
  * @returns {Application} API routes
  */
-module.exports = function apiLoader ({models, s3}={}) {
+export default function apiLoader ({models, s3}={}) {
   assert(models && s3, 'api requires models and s3')
-  debug('start')
+  log('start')
 
   const api = compose([
     middleware.addToContext({
@@ -26,6 +28,6 @@ module.exports = function apiLoader ({models, s3}={}) {
     controllerLoader()
   ])
 
-  debug('end')
+  log('end')
   return api
 }

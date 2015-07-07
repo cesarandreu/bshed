@@ -1,10 +1,12 @@
-const Joi = require('joi')
-const Router = require('koa-router')
-const bodyParser = require('koa-body')
-const middleware = require('../../utils/middleware')
+import Joi from 'joi'
+import Router from 'koa-router'
+import bodyParser from 'koa-body'
+import middleware from '../../utils/middleware'
 
-module.exports = AuthenticationsController
-function AuthenticationsController () {
+/**
+ * Authentications controller
+ */
+export default function AuthenticationsController () {
 
   // Middleware
   const parseJsonForm = bodyParser()

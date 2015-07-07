@@ -1,11 +1,12 @@
-const debug = require('debug')('bshed:api:controllers')
-const compose = require('koa-compose')
+import debug from 'debug'
+import compose from 'koa-compose'
+const log = debug('bshed:api:controllers')
 
 /**
  * List of controllers to load
  * Kept manually because there's not that many, and it's a little faster
  */
-const CONTROLLER_LIST = [
+export const CONTROLLER_LIST = [
   'authentications',
   'bikesheds',
   'users'
@@ -17,22 +18,22 @@ const CONTROLLER_LIST = [
  * Gets each controller's middleware
  * @returns Middleware for all controllers
  */
-module.exports = function controllerLoader () {
-  debug('start')
+export default function controllerLoader () {
+  log('start')
 
   // Load controllers
   const controllers = CONTROLLER_LIST.reduce((controllers, name) => {
-    debug(`loading ${name} controller`)
+    log(`loading ${name} controller`)
     controllers[name] = require(`./${name}_controller.js`)
     return controllers
   }, {})
 
   // Get middleware
   const middleware = compose(Object.keys(controllers).map(name => {
-    debug(`getting middleware for ${name} controller`)
+    log(`getting middleware for ${name} controller`)
     return controllers[name]()
   }))
 
-  debug('end')
+  log('end')
   return middleware
 }
