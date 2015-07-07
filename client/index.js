@@ -9,6 +9,9 @@ import hotkey from 'react-hotkey'
 import BrowserHistory from 'react-router/lib/BrowserHistory'
 import { createElementWithContext } from 'fluxible-addons-react'
 
+import ReactRAFBatchingStrategy from './vendor/react-raf-batching'
+ReactRAFBatchingStrategy.inject()
+
 const log = debug('bshed:client')
 
 // needed for onTouchTap
