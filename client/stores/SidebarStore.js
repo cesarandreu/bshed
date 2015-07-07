@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 const SidebarStore = createImmutableStore({
   storeName: 'SidebarStore',
+
   handlers: {
     [SidebarConstants.OPEN]: '_open',
     [SidebarConstants.CLOSE]: '_close',
