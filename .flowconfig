@@ -1,0 +1,10 @@
+[ignore]
+.*/client_old/.*
+.*/public/.*
+.*/build/.*
+
+[include]
+
+[libs]
+
+[options]
