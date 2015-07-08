@@ -43,7 +43,7 @@ function mergeState (stateFragment) {
  * @param {Function} [spec.initialize] Function called during construction for setting the default `_state` (optional).
  * @return {Store} Store class
  **/
-module.exports = function createImmutableStore (spec) {
+export default function createImmutableStore (spec) {
   return createStore(Object.assign({
     initialize: initialize,
     rehydrate: rehydrate,
