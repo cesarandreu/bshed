@@ -13,6 +13,7 @@ import Application from './components/Application'
 
 // Stores
 // import ApplicationStore from './stores/ApplicationStore'
+import BikeshedBuilderStore from './stores/BikeshedBuilderStore'
 import SidebarStore from './stores/SidebarStore'
 
 // Initialize application
@@ -20,6 +21,7 @@ const app = new Fluxible({
   component: Application,
   stores: [
     // ApplicationStore,
+    BikeshedBuilderStore,
     SidebarStore
   ]
 })
