@@ -7,8 +7,8 @@ import { Router } from 'react-router'
 import serialize from 'serialize-javascript'
 import routes from '../components/routes.jsx'
 import Location from 'react-router/lib/Location'
-import { createElementWithContext } from 'fluxible-addons-react'
 import navigateAction from '../actions/navigateAction'
+import { createElementWithContext } from 'fluxible-addons-react'
 
 const log = debug('bshed:client:renderer')
 export default function renderer ({ scripts=[], styles=[] }={}) {
