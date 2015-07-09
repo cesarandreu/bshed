@@ -1,6 +1,6 @@
 import './RegularView.less'
-
-import React from 'react'
+import cn from 'classnames'
+import React, { PropTypes } from 'react'
 import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const RegularView = React.createClass({
@@ -9,14 +9,15 @@ const RegularView = React.createClass({
   ],
 
   propTypes: {
-    children: React.PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    className: PropTypes.string
   },
 
   render () {
-    const { children } = this.props
+    const { children, className } = this.props
 
     return (
-      <div className='regular-view'>
+      <div className={cn('regular-view', className)}>
         {children}
       </div>
     )
