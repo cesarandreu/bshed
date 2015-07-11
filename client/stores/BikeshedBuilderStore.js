@@ -138,7 +138,7 @@ export default class BikeshedBuilderStore extends ImmutableStore {
 }
 
 // Types
-type BikeshedBuilderImage = {
+type BikeshedBuilderImageObject = {
   height: number;
   width: number;
   file: File;
@@ -149,4 +149,4 @@ type FormInput = {
   name: string;
 };
 
-type BikeshedBuilderAddImages = Array<BikeshedBuilderImage>;
+type BikeshedBuilderAddImages = Array<BikeshedBuilderImageObject>;
