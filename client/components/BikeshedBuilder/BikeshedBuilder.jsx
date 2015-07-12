@@ -1,8 +1,13 @@
 import './BikeshedBuilder.less'
+
+import cn from 'classnames'
 import Immutable from 'immutable'
+import Grid from '../common/Grid'
 import Paper from '../common/Paper'
 import React, { PropTypes } from 'react'
+import GridItem from '../common/GridItem'
 import TextField from '../common/TextField'
+import BaseButton from '../common/BaseButton'
 import RegularView from '../common/RegularView'
 import ActionMixin from '../../lib/ActionMixin'
 import RaisedButton from '../common/RaisedButton'
@@ -51,10 +56,9 @@ export const BikeshedBuilderDescription = React.createClass({
 })
 
 /**
- * BikeshedBuilderItemPlaceholder
- * @TODO
+ * BikeshedBuilderPlaceholder
  */
-export const BikeshedBuilderItemPlaceholder = React.createClass({
+export const BikeshedBuilderPlaceholder = React.createClass({
   mixins: [
     ActionMixin,
     ImmutableRenderMixin
@@ -62,6 +66,13 @@ export const BikeshedBuilderItemPlaceholder = React.createClass({
 
   propTypes: {
     imageCount: PropTypes.number.isRequired
+  },
+
+  statics: {
+    getText (imageCount) {
+      const missing = ApplicationConstants.MINIMUM_IMAGE_COUNT - imageCount
+      return missing === 1 ? '1 image' : `${missing} images`
+    }
   },
 
   render () {
@@ -72,8 +83,28 @@ export const BikeshedBuilderItemPlaceholder = React.createClass({
     }
 
     return (
-      <GridItem>
-        THIS IS MY PLACEHOLDER~
+      <GridItem className='bikeshed-builder-placeholder'>
+        <BaseButton
+          className='bikeshed-builder-placeholder-button'
+          onClick={this.selectImages}
+        >
+          <svg
+            className='bikeshed-builder-placeholder-icon'
+            viewBox='0 0 24 24'
+            height='48'
+            width='48'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/>
+            <path d='M0 0h24v24H0z' fill='none'/>
+          </svg>
+
+          {imageCount < ApplicationConstants.MINIMUM_IMAGE_COUNT && (
+            <div className='bikeshed-builder-placeholder-text'>
+              {`Add ${BikeshedBuilderPlaceholder.getText(imageCount)}`}
+            </div>
+          )}
+        </BaseButton>
 
         <input
           type='file'
@@ -83,7 +114,6 @@ export const BikeshedBuilderItemPlaceholder = React.createClass({
           style={{display: 'none'}}
           accept='image/jpeg,image/png'
         />
-
       </GridItem>
     )
   },
@@ -100,7 +130,6 @@ export const BikeshedBuilderItemPlaceholder = React.createClass({
 
 /**
  * BikeshedBuilderItem
- * @TODO
  */
 export const BikeshedBuilderItem = React.createClass({
   mixins: [
@@ -111,10 +140,45 @@ export const BikeshedBuilderItem = React.createClass({
     image: PropTypes.instanceOf(BikeshedBuilderImage).isRequired
   },
 
+  statics: {
+    getImageClassNames ({ height, width }) {
+      const size = ApplicationConstants.BIKESHED_BUILDER_IMAGE_SIZE
+
+      return cn('bikeshed-builder-item', {
+        'bikeshed-builder-item-small': width < size || height < size,
+        'bikeshed-builder-item-wider': width > height,
+        'bikeshed-builder-item-longer': height > width,
+        'bikeshed-builder-item-square': height === width
+      })
+    }
+  },
+
   render () {
-    <GridItem>
-      THIS IS MY IMAGE~
-    </GridItem>
+    const { image } = this.props
+
+    const size = {
+      width: image.get('width'),
+      height: image.get('height')
+    }
+
+    return (
+      <GridItem className={BikeshedBuilderItem.getImageClassNames(size)}>
+        <img
+          className='bikeshed-builder-item-image'
+          src={image.get('url')}
+        />
+      </GridItem>
+    )
+  },
+
+  preview () {
+    const { image } = this.props
+    this.executeAction(BikeshedBuilderActions.preview, image.get('name'))
+  },
+
+  removeImage () {
+    const { image } = this.props
+    this.executeAction(BikeshedBuilderActions.removeImage, image.get('name'))
   }
 })
 
@@ -132,14 +196,14 @@ export const BikeshedBuilderGrid = React.createClass({
 
     return (
       <Grid className='bikeshed-builder-grid'>
-        {images.map((image, key) => {
+        {images.map((image, key) =>
           <BikeshedBuilderItem
             image={image}
             key={key}
           />
-        }).toArray()}
+        ).toArray()}
 
-        <BikeshedBuilderItemPlaceholder
+        <BikeshedBuilderPlaceholder
           imageCount={images.count()}
         />
       </Grid>
@@ -198,7 +262,7 @@ export const BikeshedBuilderButtons = React.createClass({
           label='Save'
           secondary={true}
           onClick={this.submit}
-          disabled={imageCount < 2}
+          disabled={imageCount < ApplicationConstants.MINIMUM_IMAGE_COUNT}
           className='bikeshed-builder-save-button'
         />
       </div>
@@ -211,9 +275,9 @@ export const BikeshedBuilderButtons = React.createClass({
 })
 
 /**
- * BikeshedBuilderForm
+ * BikeshedBuilderPaper
  */
-export const BikeshedBuilderForm = React.createClass({
+export const BikeshedBuilderPaper = React.createClass({
   mixins: [
     ImmutableRenderMixin
   ],
@@ -227,7 +291,7 @@ export const BikeshedBuilderForm = React.createClass({
     const { description, images } = this.props
 
     return (
-      <Paper className='bikeshed-builder-form'>
+      <Paper className='bikeshed-builder-paper'>
         <BikeshedBuilderContent
           description={description}
           images={images}
@@ -260,9 +324,8 @@ export let BikeshedBuilder = React.createClass({
     const { state } = this.props
 
     return (
-      <RegularView>
-        BIKESHED BUILDERRRR~
-        <BikeshedBuilderForm
+      <RegularView className='bikeshed-builder'>
+        <BikeshedBuilderPaper
           description={state.description}
           images={state.images}
         />
@@ -272,6 +335,7 @@ export let BikeshedBuilder = React.createClass({
 })
 
 BikeshedBuilder = connectToStores(BikeshedBuilder, [BikeshedBuilderStore], context => {
+  console.log('context.getStore(BikeshedBuilderStore).getState()', JSON.stringify(context.getStore(BikeshedBuilderStore).getState().toJSON()))
   return {
     state: context.getStore(BikeshedBuilderStore).getState()
   }
