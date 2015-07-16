@@ -27,11 +27,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Rehydrate if global.BSHED is defined
 // Otherwise bootstrap with a new context
-if (global.BSHED) {
-  app.rehydrate(global.BSHED, bootstrap)
-} else {
-  bootstrap(null, app.createContext())
-}
+app.rehydrate(global.BSHED || {}, bootstrap)
 
 /**
  * bootstrap
