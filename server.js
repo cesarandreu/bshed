@@ -4,7 +4,7 @@ const qs = require('koa-qs')
 const csrf = require('koa-csrf')
 const serve = require('koa-static')
 const session = require('koa-session')
-const compress = require('koa-compress')
+// const compress = require('koa-compress')
 const createError = require('http-errors')
 const debug = require('debug')('bshed:server')
 const middleware = require('./utils/middleware')
@@ -70,7 +70,7 @@ if (server.env === 'development') {
 server.use(responseTime())
 
 // compression
-server.use(compress())
+// server.use(compress())
 
 // file server
 server.use(serve('./public'))
