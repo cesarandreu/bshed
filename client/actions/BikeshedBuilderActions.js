@@ -1,5 +1,6 @@
 import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
 import browserImageSize from 'browser-image-size'
+const { FileList, File } = global
 
 export function navigateAction (context) {
   context.dispatch(BikeshedBuilderConstants.RESET)
@@ -13,7 +14,6 @@ export function submit () {
   console.warn('@TODO submit')
 }
 
-const { FileList, File } = global
 export async function addImages (context, images: FileList) {
   images = await Promise.all(
     Array.from(images).map(getImageSize)
