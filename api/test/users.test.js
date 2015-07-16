@@ -13,8 +13,7 @@ describe('Request:Users', () => {
         .set(headers)
         .expect(200)
 
-      expect(res.body)
-        .to.eql(JSON.parse(JSON.stringify(user)))
+      expect(res.body).to.eql(JSON.parse(JSON.stringify(user)))
     })
 
     it('creates a user for you', async () => {
