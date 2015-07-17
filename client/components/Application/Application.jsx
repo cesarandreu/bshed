@@ -3,7 +3,7 @@
 import { provideContext } from 'fluxible-addons-react'
 import React, { PropTypes } from 'react'
 import { Router } from 'react-router'
-import routes from '../routes.jsx'
+import routes from '../routes'
 // import AppBar from '../AppBar'
 // import Drawer from '../Drawer'
 // import Immutable from 'immutable'
