@@ -5,6 +5,7 @@ import fetch from 'node-fetch'
 import Html from '../components/Html'
 import { Router } from 'react-router'
 import routes from '../components/routes'
+// import { ClientError } from '../lib/errors'
 import serialize from 'serialize-javascript'
 import Location from 'react-router/lib/Location'
 import navigateAction from '../actions/navigateAction'
@@ -21,7 +22,8 @@ export default function renderer ({ scripts=[], styles=[] }={}) {
 
     log('running router')
     const location = new Location(this.url, this.query)
-    const state = yield runRouter({ location })
+    const { state, transition } = yield runRouter({ location })
+    console.log('transition', transition, state)
 
     log('running navigateAction')
     yield context.executeAction(navigateAction, { location, ...state })
@@ -51,8 +53,8 @@ export default function renderer ({ scripts=[], styles=[] }={}) {
 
 function runRouter ({ location }) {
   return new Promise((resolve, reject) => {
-    Router.run(routes, location, (error, state) => {
-      error ? reject(error) : resolve(state)
+    Router.run(routes, location, (error, state, transition) => {
+      error ? reject(error) : resolve({state, transition})
     })
   })
 }
