@@ -4,7 +4,7 @@ import { ClientError } from '../lib/errors'
 export default async function navigateAction (context, payload) {
   // const { location, branch, components, params } = payload
   const { location, branch, components } = payload
-  context.dispatch(NavigateConstants.START, { ...payload })
+  context.dispatch(NavigateConstants.START, payload)
 
   if (!components || !branch) {
     const err = ClientError({
@@ -15,5 +15,5 @@ export default async function navigateAction (context, payload) {
     throw err
   }
 
-  context.dispatch(NavigateConstants.SUCCESS, { ...payload })
+  context.dispatch(NavigateConstants.SUCCESS, payload)
 }
