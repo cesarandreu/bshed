@@ -73,6 +73,7 @@
     "invariant": "^2.1.0",
     "joi": "^6.5.0",
     "koa": "^0.21.0",
+    "koa-add-to-context": "^1.0.0",
     "koa-better-body": "^1.0.17",
     "koa-body": "^1.2.1",
     "koa-compose": "^2.3.0",

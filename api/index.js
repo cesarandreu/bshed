@@ -1,9 +1,9 @@
+import addToContext from 'koa-add-to-context'
 import compose from 'koa-compose'
 import assert from 'assert'
 import debug from 'debug'
 
 import controllerLoader from './controllers'
-import middleware from '../utils/middleware'
 import helpers from '../utils/helpers'
 
 const log = debug('bshed:api:loader')
@@ -20,7 +20,7 @@ export default function apiLoader ({models, s3}={}) {
   log('start')
 
   const api = compose([
-    middleware.addToContext({
+    addToContext({
       helpers,
       models,
       s3
