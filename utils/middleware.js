@@ -17,18 +17,6 @@ exports.checkSchema = function checkSchema (schema) {
 }
 
 /**
- * Adds all enumerable keys in objects to context
- * @param {Object} [objects={}]
- * @returns {GeneratorFunction} addToContextMiddleware
- */
-exports.addToContext = function addToContext (objects={}) {
-  return function * addToContextMiddleware (next) {
-    Object.assign(this, objects)
-    yield next
-  }
-}
-
-/**
  * Loads user to ctx.state.user using session user.id
  * Throw 401 if session isn't set or user isn't found
  * @returns {GeneratorFunction} authenticateMiddleware
