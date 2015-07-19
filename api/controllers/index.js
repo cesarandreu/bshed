@@ -1,38 +1,56 @@
-import debug from 'debug'
+/**
+ * Controller loader
+ * @flow
+ */
 import compose from 'koa-compose'
-const log = debug('bshed:api:controllers')
+import debug from 'debug'
+
+const GeneratorFunction = Object.getPrototypeOf(function * () {}).constructor
+const log = debug('app:server:controllers')
 
 /**
  * List of controllers to load
- * Kept manually because there's not that many, and it's a little faster
+ * @TODO: Change type to Array<string> when babel-sublime supports it
  */
-export const CONTROLLER_LIST = [
+export const CONTROLLER_LIST: Array = [
   'authentications',
   'bikesheds',
   'users'
 ]
 
 /**
- * Controller loader
- * Loads CONTROLLER_LIST
- * Gets each controller's middleware
- * @returns Middleware for all controllers
+ * Get all controllers in the list
+ * @param {Array<string>} controllerList
+ * @return {Object} controllers
  */
-export default function controllerLoader () {
-  log('start')
-
-  // Load controllers
-  const controllers = CONTROLLER_LIST.reduce((controllers, name) => {
-    log(`loading ${name} controller`)
+export function getControllers (controllerList: Array<string>): Object {
+  return controllerList.reduce((controllers, name) => {
+    log(`get ${name}`)
     controllers[name] = require(`./${name}_controller.js`)
     return controllers
   }, {})
+}
 
-  // Get middleware
-  const middleware = compose(Object.keys(controllers).map(name => {
-    log(`getting middleware for ${name} controller`)
+/**
+ * Initialize controllers and compose into middleware
+ * @param {Object} controllers
+ * @returns {GeneratorFunction} middleware
+ */
+export function getMiddleware (controllers: Object): GeneratorFunction {
+  return compose(Object.keys(controllers).map(name => {
+    log(`middleware ${name}`)
     return controllers[name]()
   }))
+}
+
+/**
+ * Load and initialize controllers, and compose them into a middleware
+ * @returns {GeneratorFunction} middleware
+ */
+export default function controllerLoader (): GeneratorFunction {
+  log('start')
+  const controllers = getControllers(CONTROLLER_LIST)
+  const middleware = getMiddleware(controllers)
 
   log('end')
   return middleware
