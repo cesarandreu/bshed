@@ -2,37 +2,63 @@ import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
 import browserImageSize from 'browser-image-size'
 const { FileList, File } = global
 
-export function navigateAction (context) {
-  context.dispatch(BikeshedBuilderConstants.RESET)
+export function navigateAction () {
+  return {
+    type: BikeshedBuilderConstants.RESET
+  }
 }
 
-export function inputChange (context, payload) {
-  context.dispatch(BikeshedBuilderConstants.INPUT_CHANGE, payload)
+export function inputChange (input: FormInput) {
+  const { value, name } = input
+  return {
+    type: BikeshedBuilderConstants.INPUT_CHANGE,
+    value,
+    name
+  }
 }
 
 export function submit () {
-  console.warn('@TODO submit')
+  return {
+    type: BikeshedBuilderConstants.SUBMIT
+  }
 }
 
-export async function addImages (context, images: FileList) {
-  images = await Promise.all(
-    Array.from(images).map(getImageSize)
-  )
+export function addImages (imageList: FileList) {
+  return async (dispatch) => {
+    imageList = await Promise.all(
+      Array.from(imageList).map(getImageSize)
+    )
 
-  context.dispatch(BikeshedBuilderConstants.ADD_IMAGES, images)
-}
-
-function getImageSize (file: File) {
-  return browserImageSize(file)
-    .then(({ width, height }) => {
-      return { file, width, height }
+    dispatch({
+      type: BikeshedBuilderConstants.ADD_IMAGES,
+      imageList
     })
+  }
+
+  function getImageSize (file: File) {
+    const { name } = file
+    return browserImageSize(file).then(size =>
+      ({ file, name, ...size })
+    )
+  }
 }
 
-export function removeImage (context, image: string) {
-  console.warn('@TODO addImages')
+export function removeImage (name: string) {
+  return {
+    type: BikeshedBuilderConstants.REMOVE_IMAGE,
+    name
+  }
 }
 
-export function preview (context, image: string) {
-  console.warn('@TODO addImages')
+export function preview (name: string) {
+  return {
+    type: BikeshedBuilderConstants.PREVIEW,
+    name
+  }
+}
+
+// Types
+type FormInput = {
+  value: string;
+  name: string;
 }
