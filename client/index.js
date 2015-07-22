@@ -2,54 +2,74 @@
 import 'whatwg-fetch'
 
 // Modules
-import app from './app'
-import debug from 'debug'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
+import { reduxRouteComponent } from 'redux-react-router'
+import History from 'react-router/lib/BrowserHistory'
+import * as reducers from './reducers'
+import { Router } from 'react-router'
+import ReactDOM from 'react-dom'
+import thunk from 'redux-thunk'
+import routes from './routes'
 import React from 'react'
-import hotkey from 'react-hotkey'
-import BrowserHistory from 'react-router/lib/BrowserHistory'
-import { createElementWithContext } from 'fluxible-addons-react'
 
-import ReactRAFBatchingStrategy from './vendor/react-raf-batching'
-ReactRAFBatchingStrategy.inject()
+const { DevTools, DebugPanel, LogMonitor } = require('redux-devtools/lib/react')
+const { devTools, persistState } = require('redux-devtools')
 
-const log = debug('bshed:client')
+const finalCreateStore = compose(
+  applyMiddleware(thunk),
+  devTools(),
+  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
+  createStore
+)
 
-// needed for onTouchTap
-// require('react-tap-event-plugin')()
+const reducer = combineReducers({ ...reducers })
+const store = finalCreateStore(reducer)
 
-// Get application node, create application context
-const mountNode = document.getElementById('bshed')
-
-// Debug messages
-if (process.env.NODE_ENV !== 'production') {
-  debug.enable('bshed:*,Fluxible:*')
+const wrappedRoutes = {
+  component: reduxRouteComponent(store),
+  childRoutes: [
+    routes
+  ]
 }
 
-// Rehydrate if global.BSHED is defined
-// Otherwise bootstrap with a new context
-app.rehydrate(global.BSHED || {}, bootstrap)
+const history = new History()
+ReactDOM.render(
+  <div>
+    <Router history={history} routes={wrappedRoutes}/>
+    <DebugPanel top right bottom key='debugPanel'>
+      <DevTools store={store} monitor={LogMonitor}/>
+    </DebugPanel>
+  </div>,
+  document.getElementById('bshed')
+)
 
-/**
- * bootstrap
- * Start router and get everything going
- */
-function bootstrap (err, context) {
-  if (err) throw err
+// // Polyfill
+// import 'whatwg-fetch'
 
-  // For chrome dev tool support and debugging
-  global.context = context
-  global.React = React
+// // Modules
+// import { createStore, applyMiddleware, combineReducers } from 'redux'
+// import { reduxRouteComponent } from 'redux-react-router'
+// import History from 'react-router/lib/BrowserHistory'
+// import * as reducers from './reducers'
+// import { Router } from 'react-router'
+// import ReactDOM from 'react-dom'
+// import thunk from 'redux-thunk'
+// import routes from './routes'
+// import React from 'react'
 
-  // Global hotkeys
-  log('activating hotkeys')
-  hotkey.activate()
+// const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
+// const reducer = combineReducers({ ...reducers })
+// const store = createStoreWithMiddleware(reducer)
 
-  // Router history
-  const history = new BrowserHistory()
+// const wrappedRoutes = {
+//   component: reduxRouteComponent(store),
+//   childRoutes: [
+//     routes
+//   ]
+// }
 
-  // Start router
-  log('starting router')
-  React.render(createElementWithContext(context, { history }), mountNode, () => {
-    log('React rendered')
-  })
-}
+// const history = new History()
+// ReactDOM.render(
+//   <Router history={history} routes={wrappedRoutes}/>,
+//   document.getElementById('bshed')
+// )
