@@ -1,31 +1,31 @@
-// Styles
-import './components/styles/base.less'
+// // Styles
+// import './components/styles/base.less'
 
-// Modules
-import Fluxible from 'fluxible'
+// // Modules
+// import Fluxible from 'fluxible'
 
-// Plugins
-import RequestPlugin from './lib/RequestPlugin'
+// // Plugins
+// import RequestPlugin from './lib/RequestPlugin'
 
-// Routes
-// import routes from './components/routes.jsx'
-import Application from './components/Application'
+// // Routes
+// // import routes from './components/routes.jsx'
+// import Application from './components/Application'
 
-// Stores
-// import ApplicationStore from './stores/ApplicationStore'
-import BikeshedBuilderStore from './stores/BikeshedBuilderStore'
-import SidebarStore from './stores/SidebarStore'
+// // Stores
+// // import ApplicationStore from './stores/ApplicationStore'
+// import BikeshedBuilderStore from './stores/BikeshedBuilderStore'
+// import SidebarStore from './stores/SidebarStore'
 
-// Initialize application
-const app = new Fluxible({
-  component: Application,
-  stores: [
-    // ApplicationStore,
-    BikeshedBuilderStore,
-    SidebarStore
-  ]
-})
+// // Initialize application
+// const app = new Fluxible({
+//   component: Application,
+//   stores: [
+//     // ApplicationStore,
+//     BikeshedBuilderStore,
+//     SidebarStore
+//   ]
+// })
 
-app.plug(RequestPlugin())
+// app.plug(RequestPlugin())
 
-export default app
+// export default app
