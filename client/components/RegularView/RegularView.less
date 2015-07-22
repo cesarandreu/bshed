@@ -1,0 +1,47 @@
+@import "../../styles/sizes.less";
+
+.regular-view {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  // margin: 0 24px;
+  margin: 24px;
+  @media @device-x-small {
+    // margin: 0 16px;
+    margin: 16px;
+  }
+
+  max-width: 1600px;
+
+// @device-large: ~"screen and (max-width: 1600px)";
+// @device-medium:  ~"screen and (max-width: 1280px)";
+// @device-small:   ~"screen and (max-width: 960px)";
+// @device-x-small: ~"screen and (max-width: 600px)";
+
+  @media @device-x-small {
+    width: auto;
+  }
+
+  // // width: 1200px;
+  // width: 1296px;
+  // margin: 0 auto;
+  // padding: 40px 0;
+  // // padding-top: 40px;
+
+  // @media @device-x-large {
+  //   // width: 66.66%;
+  //   width: 72%;
+  // }
+
+  // @media @device-large {
+  //   width: 860px;
+  //   // width: 900px;
+  // }
+
+  // @media @device-medium {
+  //   width: auto;
+  //   margin: 0 40px;
+  // }
+
+}

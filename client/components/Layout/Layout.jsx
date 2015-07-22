@@ -12,6 +12,7 @@ const Layout = React.createClass({
 
   render () {
     const { children, ...other } = this.props
+    console.log('other props', other)
     return (
       <div className='layout'>
         <AppBar/>
