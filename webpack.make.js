@@ -114,14 +114,12 @@ module.exports = function buildWebpackConfig (options) {
     config.externals.push(
       fs.readdirSync('node_modules')
         .filter(function (x) {
-          return ['.bin', 'react'].indexOf(x) === -1
+          return ['.bin'].indexOf(x) === -1
         })
         .reduce(function (nodeModules, mod) {
           nodeModules[mod] = 'commonjs ' + mod
           return nodeModules
         }, {
-          'react/addons': 'commonjs react/addons',
-          'react': 'commonjs react/addons',
           './stats.json': 'commonjs ./stats.json'
         })
     )
