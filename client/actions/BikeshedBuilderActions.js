@@ -1,14 +1,18 @@
+/**
+ * BikeshedBuilderActions
+ * @flow
+ */
 import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
 import browserImageSize from 'browser-image-size'
 const { FileList, File } = global
 
-export function navigateAction () {
-  return {
-    type: BikeshedBuilderConstants.RESET
-  }
-}
+// export function navigateAction () {
+//   return {
+//     type: BikeshedBuilderConstants.RESET
+//   }
+// }
 
-export function inputChange (input: FormInput) {
+export function inputChange (input: { value: string; name: string; }) {
   const { value, name } = input
   return {
     type: BikeshedBuilderConstants.INPUT_CHANGE,
@@ -24,7 +28,7 @@ export function submit () {
 }
 
 export function addImages (imageList: FileList) {
-  return async (dispatch) => {
+  return async dispatch => {
     imageList = await Promise.all(
       Array.from(imageList).map(getImageSize)
     )
@@ -55,10 +59,4 @@ export function preview (name: string) {
     type: BikeshedBuilderConstants.PREVIEW,
     name
   }
-}
-
-// Types
-type FormInput = {
-  value: string;
-  name: string;
 }

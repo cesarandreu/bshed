@@ -61,11 +61,11 @@ export default createReducer(new BikeshedBuilderState(), {
    * Skips repeated names
    * Creates url per image
    * @param {Object} payload
-   * @param {InputImageList} payload.imageList
+   * @param {Array<InputImage>} payload.imageList
    */
   [BikeshedBuilderConstants.ADD_IMAGES] (state: BikeshedBuilderState, { imageList }) {
     const images = state.get('images').withMutations(images => {
-      return imageList.reduce((images, image: InputImage) => {
+      return imageList.reduce((images, image) => {
         const hasValidCount = images.count() < ApplicationConstants.MAXIMUM_IMAGE_COUNT
         const hasValidName = !images.has(image.name)
         if (hasValidName && hasValidCount) {
@@ -101,13 +101,3 @@ export default createReducer(new BikeshedBuilderState(), {
     return state.set(name, value)
   }
 })
-
-// bikeshedBuilder types
-type InputImage = {
-  height: number;
-  width: number;
-  name: string;
-  file: File;
-}
-
-// type InputImageList = Array<InputImage>
