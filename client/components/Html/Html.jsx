@@ -1,12 +1,17 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 
-const Html = React.createClass({
-  propTypes: {
+export default class Html extends Component {
+  static propTypes = {
     scripts: PropTypes.arrayOf(PropTypes.string),
     styles: PropTypes.arrayOf(PropTypes.string),
-    markup: React.PropTypes.string.isRequired,
-    state: React.PropTypes.string.isRequired
-  },
+    markup: PropTypes.string,
+    state: PropTypes.string
+  }
+
+  static defaultProps = {
+    markup: '',
+    state: ''
+  }
 
   render () {
     const { scripts, styles, markup, state } = this.props
@@ -38,6 +43,4 @@ const Html = React.createClass({
       </html>
     )
   }
-})
-
-export default Html
+}
