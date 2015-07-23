@@ -1,5 +1,6 @@
 // import app from '../app'
 import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 // import debug from 'debug'
 // import fetch from 'node-fetch'
 import Html from '../components/Html'
@@ -9,13 +10,12 @@ import Html from '../components/Html'
 // import serialize from 'serialize-javascript'
 // import Location from 'react-router/lib/Location'
 // import navigateAction from '../actions/navigateAction'
-// import { createElementWithContext } from 'fluxible-addons-react'
 
 // const log = debug('bshed:client:renderer')
 export default function renderer ({ scripts=[], styles=[] }={}) {
   return function * rendererMiddleware () {
 
-    const html = React.renderToStaticMarkup(
+    const html = renderToStaticMarkup(
       <Html
         styles={styles}
         scripts={scripts}
