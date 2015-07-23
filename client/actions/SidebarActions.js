@@ -1,3 +1,7 @@
+/**
+ * SidebarActions
+ * @flow
+ */
 import SidebarConstants from '../constants/SidebarConstants'
 
 /**
@@ -15,5 +19,14 @@ export function toggle () {
 export function close () {
   return {
     type: SidebarConstants.CLOSE
+  }
+}
+
+/**
+ * Sidebar open
+ */
+export function open () {
+  return {
+    type: SidebarConstants.OPEN
   }
 }
