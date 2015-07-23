@@ -38,7 +38,7 @@
     "test:client:node": "npm run test:client:node:webpack && npm run test:client:node:mocha",
     "test:client:node:live": "npm run test:client:node:webpack -- -w & npm run test:client:node:mocha -- -w",
     "test:client:node:mocha": "NODE_ENV=test mocha --opts test/client.opts build/tests.js",
-    "test:client:node:webpack": "NODE_ENV=test webpack client/tests.js build/tests.js --config webpack.mocha.js",
+    "test:client:node:webpack": "NODE_ENV=test webpack test/client.tests.js build/tests.js --config webpack.mocha.js",
     "test:client:browser": "NODE_ENV=test karma start",
     "test:client:browser:live": "npm run test:client:browser -- --auto-watch --no-single-run"
   },
