@@ -1,0 +1,46 @@
+@import (less)"~normalize.css/normalize.css";
+
+@import "./typography";
+@import "./colors";
+
+// Reset the box-sizing
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html, #bshed {
+  height: 100%;
+}
+
+// Not sure if I should be using this or not...
+html {
+  -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
+  // font-size: @base-font-size;
+  font-size: 10px;
+}
+
+body {
+  height: 100%;
+  color: @primary-text-color;
+  background-color: @canvas-color;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+
+  // font-size: @body-1-font-size;
+
+  min-width: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  .body-1-font;
+}
+
+a {
+  text-decoration: none;
+}
