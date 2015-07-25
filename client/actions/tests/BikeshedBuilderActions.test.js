@@ -4,6 +4,13 @@ import { describe, it } from 'mocha'
 import expect from 'expect.js'
 
 describe('BikeshedBuilderActions', () => {
+  describe('#reset', () => {
+    it('returns RESET action type', () => {
+      const { type } = BikeshedBuilderActions.reset()
+      expect(type).to.equal(BikeshedBuilderConstants.RESET)
+    })
+  })
+
   describe('#inputChange', () => {
     it('returns INPUT_CHANGE action type with name and value', () => {
       const { type, value, name } = BikeshedBuilderActions.inputChange({

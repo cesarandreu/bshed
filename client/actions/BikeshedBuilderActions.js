@@ -6,11 +6,11 @@ import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
 import browserImageSize from 'browser-image-size'
 const { FileList, File } = global
 
-// export function navigateAction () {
-//   return {
-//     type: BikeshedBuilderConstants.RESET
-//   }
-// }
+export function reset () {
+  return {
+    type: BikeshedBuilderConstants.RESET
+  }
+}
 
 export function inputChange (input: { value: string; name: string; }) {
   const { value, name } = input
