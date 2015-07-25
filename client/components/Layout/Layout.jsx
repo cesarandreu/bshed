@@ -12,7 +12,6 @@ const Layout = React.createClass({
 
   render () {
     const { children, ...other } = this.props
-
     return (
       <div className='layout'>
         <AppBar/>
