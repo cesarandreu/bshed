@@ -1,16 +1,35 @@
+/**
+ * layout reducer
+ * @flow
+ */
 import SidebarConstants from '../constants/SidebarConstants'
+import createReducer from '../lib/createReducer'
+import Immutable from 'immutable'
 
-export default function layout (state = {}, action) {
-  switch (action.type) {
-    case SidebarConstants.OPEN:
-      state.sidebar = true
-      break
-    case SidebarConstants.TOGGLE:
-      state.sidebar = !state.sidebar
-      break
-    default:
-      state.sidebar = false
-      break
+// Record types
+export const LayoutState = Immutable.Record({
+  sidebar: false
+}, 'sidebarState')
+
+export default createReducer(new LayoutState(), {
+  /**
+   * Open sidebar
+   */
+  [SidebarConstants.OPEN] (state: LayoutState) {
+    return state.set('sidebar', true)
+  },
+
+  /**
+   * Close sidebar
+   */
+  [SidebarConstants.CLOSE] (state: LayoutState) {
+    return state.set('sidebar', false)
+  },
+
+  /**
+   * Toggle sidebar
+   */
+  [SidebarConstants.TOGGLE] (state: LayoutState) {
+    return state.update('sidebar', sidebar => !sidebar)
   }
-  return state
-}
+})
