@@ -6,12 +6,18 @@ import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
 import browserImageSize from 'browser-image-size'
 const { FormData, FileList, File } = global
 
+/**
+ * Reset bikeshed builder
+ */
 export function reset () {
   return {
     type: BikeshedBuilderConstants.RESET
   }
 }
 
+/**
+ * Update bikeshed builder input
+ */
 export function inputChange (input: { value: string; name: string; }) {
   const { value, name } = input
   return {
@@ -21,6 +27,9 @@ export function inputChange (input: { value: string; name: string; }) {
   }
 }
 
+/**
+ * Submit bikeshed builder form
+ */
 export function submit () {
   return async (dispatch, getState) => {
     const { bikeshedBuilder } = getState()
@@ -48,6 +57,9 @@ export function submit () {
   }
 }
 
+/**
+ * Add images to bikeshed builder
+ */
 export function addImages (imageList: FileList) {
   return async dispatch => {
     imageList = await Promise.all(
@@ -68,6 +80,9 @@ export function addImages (imageList: FileList) {
   }
 }
 
+/**
+ * Remove image from bikeshed builder
+ */
 export function removeImage (name: string) {
   return {
     type: BikeshedBuilderConstants.REMOVE_IMAGE,
@@ -75,6 +90,9 @@ export function removeImage (name: string) {
   }
 }
 
+/**
+ * Set bikeshed builder image preview
+ */
 export function preview (name: string) {
   return {
     type: BikeshedBuilderConstants.PREVIEW,
