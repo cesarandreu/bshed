@@ -38,12 +38,12 @@ export default createReducer(new BikeshedBuilderState(), {
     return new BikeshedBuilderState()
   },
 
-  [BikeshedBuilderConstants.ERROR] (state: BikeshedBuilderState) {
-    return state.set('submitting', false)
+  [BikeshedBuilderConstants.SUBMIT_START] (state: BikeshedBuilderState) {
+    return state.set('submitting', true)
   },
 
-  [BikeshedBuilderConstants.SUBMIT] (state: BikeshedBuilderState) {
-    return state.set('submitting', true)
+  [BikeshedBuilderConstants.SUBMIT_FINISH] (state: BikeshedBuilderState) {
+    return state.set('submitting', false)
   },
 
   /**
