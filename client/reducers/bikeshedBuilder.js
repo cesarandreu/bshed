@@ -21,6 +21,7 @@ export const BikeshedBuilderImage = Immutable.Record({
 
 export const BikeshedBuilderState = Immutable.Record({
   images: Immutable.OrderedMap(),
+  createdBikeshed: 0,
   submitting: false,
   description: '',
   preview: ''
@@ -44,6 +45,13 @@ export default createReducer(new BikeshedBuilderState(), {
    */
   [BikeshedBuilderConstants.SUBMIT_START] (state: BikeshedBuilderState) {
     return state.set('submitting', true)
+  },
+
+  /**
+   * Successfully submitting
+   */
+  [BikeshedBuilderConstants.SUBMIT_SUCCESS] (state: BikeshedBuilderState, { bikeshed }) {
+    return state.set('createdBikeshed', bikeshed.id)
   },
 
   /**

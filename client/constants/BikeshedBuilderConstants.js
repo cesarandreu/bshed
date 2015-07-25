@@ -7,7 +7,8 @@ const BikeshedBuilderConstants = constantCreator('BIKESHED_BUILDER', {
   REMOVE_IMAGE: null,
   INPUT_CHANGE: null,
   SUBMIT_START: null,
-  SUBMIT_FINISH: null
+  SUBMIT_FINISH: null,
+  SUBMIT_SUCCESS: null
 })
 
 export default BikeshedBuilderConstants
