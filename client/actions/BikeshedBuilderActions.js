@@ -46,12 +46,12 @@ export function submit () {
     const images = bikeshedBuilder.get('images').toList()
     const form = images.reduce((form, image, idx) => {
       const { file, name } = image
-      form.set(`file${idx}`, file, name)
+      form.append(`file${idx}`, file, name)
       return form
     }, new FormData())
 
     const description = bikeshedBuilder.get('description')
-    form.set('description', description)
+    form.append('description', description)
 
     return form
   }
