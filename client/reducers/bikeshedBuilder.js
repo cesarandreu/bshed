@@ -26,6 +26,7 @@ export const BikeshedBuilderState = Immutable.Record({
   preview: ''
 }, 'bikeshedBuilderState')
 
+// bikeshedBuilder reducer
 export default createReducer(new BikeshedBuilderState(), {
   /**
    * Revoke all image URLs and reset state
@@ -38,10 +39,16 @@ export default createReducer(new BikeshedBuilderState(), {
     return new BikeshedBuilderState()
   },
 
+  /**
+   * Begin submitting
+   */
   [BikeshedBuilderConstants.SUBMIT_START] (state: BikeshedBuilderState) {
     return state.set('submitting', true)
   },
 
+  /**
+   * Finish submitting
+   */
   [BikeshedBuilderConstants.SUBMIT_FINISH] (state: BikeshedBuilderState) {
     return state.set('submitting', false)
   },
