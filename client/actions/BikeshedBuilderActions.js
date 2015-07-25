@@ -4,7 +4,7 @@
  */
 import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
 import browserImageSize from 'browser-image-size'
-const { FileList, File } = global
+const { FormData, FileList, File } = global
 
 export function reset () {
   return {
@@ -22,8 +22,29 @@ export function inputChange (input: { value: string; name: string; }) {
 }
 
 export function submit () {
-  return {
-    type: BikeshedBuilderConstants.SUBMIT
+  return async (dispatch, getState) => {
+    const { bikeshedBuilder } = getState()
+    dispatch({ type: BikeshedBuilderConstants.SUBMIT_START })
+    try {
+      const form = getFormBody(bikeshedBuilder)
+      console.log('form', form)
+    } finally {
+      dispatch({ type: BikeshedBuilderConstants.SUBMIT_FINISH })
+    }
+  }
+
+  function getFormBody (bikeshedBuilder) {
+    const images = bikeshedBuilder.get('images').toList()
+    const form = images.reduce((form, image, idx) => {
+      const { file, name } = image
+      form.set(`file${idx}`, file, name)
+      return form
+    }, new FormData())
+
+    const description = bikeshedBuilder.get('description')
+    form.set('description', description)
+
+    return form
   }
 }
 

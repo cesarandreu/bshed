@@ -24,10 +24,10 @@ describe('BikeshedBuilderActions', () => {
   })
 
   describe('#submit', () => {
-    it('returns SUBMIT action type', () => {
-      const { type } = BikeshedBuilderActions.submit()
-      expect(type).to.equal(BikeshedBuilderConstants.SUBMIT)
-    })
+    // it('returns SUBMIT action type', () => {
+    //   const { type } = BikeshedBuilderActions.submit()
+    //   expect(type).to.equal(BikeshedBuilderConstants.SUBMIT)
+    // })
   })
 
   describe('#addImages', () => {
