@@ -3,6 +3,7 @@
  * @flow
  */
 import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
+import { createBikeshed } from '../utils/BikeshedApiUtils'
 import browserImageSize from 'browser-image-size'
 const { FormData, FileList, File } = global
 
@@ -31,18 +32,24 @@ export function inputChange (input: { value: string; name: string; }) {
  * Submit bikeshed builder form
  */
 export function submit () {
-  return async (dispatch, getState) => {
+  return async ({ dispatch, getState, executeRequest }) => {
     const { bikeshedBuilder } = getState()
     dispatch({ type: BikeshedBuilderConstants.SUBMIT_START })
     try {
-      const form = getFormBody(bikeshedBuilder)
-      console.log('form', form)
+      const body = getRequestBody(bikeshedBuilder)
+      const response = await executeRequest(createBikeshed, { body })
+      if (response.ok) {
+        const bikeshed = await response.json()
+        dispatch({ type: BikeshedBuilderConstants.SUBMIT_SUCCESS, bikeshed })
+      } else {
+        // @TODO: do something on failure
+      }
     } finally {
       dispatch({ type: BikeshedBuilderConstants.SUBMIT_FINISH })
     }
   }
 
-  function getFormBody (bikeshedBuilder) {
+  function getRequestBody (bikeshedBuilder) {
     const images = bikeshedBuilder.get('images').toList()
     const form = images.reduce((form, image, idx) => {
       const { file, name } = image
@@ -61,7 +68,7 @@ export function submit () {
  * Add images to bikeshed builder
  */
 export function addImages (imageList: FileList) {
-  return async dispatch => {
+  return async ({ dispatch }) => {
     imageList = await Promise.all(
       Array.from(imageList).map(getImageSize)
     )
