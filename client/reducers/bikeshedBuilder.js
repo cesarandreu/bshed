@@ -8,7 +8,7 @@ import createReducer from '../lib/createReducer'
 import Immutable from 'immutable'
 
 // @TODO: update this to work with a few older browsers
-const { FormData, File, URL } = global
+const { File, URL } = global
 
 // Record types
 export const BikeshedBuilderImage = Immutable.Record({
