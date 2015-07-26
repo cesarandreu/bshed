@@ -32,12 +32,12 @@ export function inputChange (input: { value: string; name: string; }) {
  * Submit bikeshed builder form
  */
 export function submit () {
-  return async ({ dispatch, getState, executeRequest }) => {
+  return async ({ dispatch, getState, fetcher }) => {
     const { bikeshedBuilder } = getState()
     dispatch({ type: BikeshedBuilderConstants.SUBMIT_START })
     try {
       const body = getRequestBody(bikeshedBuilder)
-      const response = await executeRequest(createBikeshed, { body })
+      const response = await fetcher.executeRequest(createBikeshed, { body })
       if (response.ok) {
         const bikeshed = await response.json()
         dispatch({ type: BikeshedBuilderConstants.SUBMIT_SUCCESS, bikeshed })
@@ -68,6 +68,7 @@ export function submit () {
  * Add images to bikeshed builder
  */
 export function addImages (imageList: FileList) {
+
   return async ({ dispatch }) => {
     imageList = await Promise.all(
       Array.from(imageList).map(getImageSize)
