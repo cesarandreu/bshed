@@ -1,67 +1,51 @@
-import Rx from 'rx'
 import React from 'react'
+import { Observable } from 'rx'
 import { bindActionCreators } from 'redux-rx'
 import BikeshedBuilder from './BikeshedBuilder'
 import { createConnector } from 'redux-rx/react'
 import { transitionTo } from 'redux-react-router'
 import * as BikeshedBuilderActions from '../../actions/BikeshedBuilderActions'
 
-var observer = Rx.Observer.create(
-  function (x) {
-    console.log('Next: ' + x)
-  },
-  function (err) {
-    console.log('Error: ' + err)
-  },
-  function () {
-    console.log('Completed')
-  }
-)
-
 export default createConnector((props$, state$, dispatch$) => {
+  const actionCreators$ = bindActionCreators({ ...BikeshedBuilderActions }, dispatch$)
   const bikeshedBuilder$ = state$.map(state => state.bikeshedBuilder)
-  const actionCreators$ = bindActionCreators(BikeshedBuilderActions, dispatch$)
-  const transitionTo$ = bindActionCreators({ transitionTo }, dispatch$).map(ac => ac.transitionTo)
-  const reset$ = actionCreators$.map(ac => ac.reset)
 
-  // Detect navigation to and from bikeshed builder and create reset action
-  const bikeshedBuilderNavigation$ = state$
-    .distinctUntilChanged(state => state.router.pathname === '/')
-    .withLatestFrom(reset$, (state, reset) => () => reset())
-    .do(go => go())
+  // Reset state on navigation
+  const navigateReset$ = state$
+    .map(state => state.router.pathname)
+    .filter(pathname => pathname !== '/')
+    .distinctUntilChanged(pathname => pathname)
+    .withLatestFrom(dispatch$, (state, dispatch) =>
+      () => dispatch(BikeshedBuilderActions.reset())
+    )
 
-  bikeshedBuilder$.subscribe(observer)
-
-  const createdBikeshed$ = bikeshedBuilder$
+  // Track bikeshed creation
+  const bikeshedCreated$ = bikeshedBuilder$
     .map(bikeshedBuilder => bikeshedBuilder.get('createdBikeshed'))
     .distinctUntilChanged(createdBikeshed => createdBikeshed)
     .filter(createdBikeshed => createdBikeshed)
-
-  createdBikeshed$.subscribe(observer)
-
-  const transitionToNewBikeshed$ = createdBikeshed$
-    .withLatestFrom(transitionTo$, (createdBikeshed, transitionTo) =>
+    .withLatestFrom(dispatch$, (createdBikeshed, dispatch) =>
       // () => transitionTo(`/bikesheds/${createdBikeshed}`)
-      () => transitionTo(`/about`)
+      () => dispatch(transitionTo('/about'))
     )
+
+  const doAction$ = Observable.merge(navigateReset$, bikeshedCreated$)
     .do(go => go())
+    .ignoreElements()
 
-  transitionToNewBikeshed$.subscribe(observer)
-
-  return Rx.Observable.combineLatest(
+  const observable$ = Observable.combineLatest(
     bikeshedBuilder$,
     actionCreators$,
-    bikeshedBuilderNavigation$,
-    // transitionToNewBikeshed$,
-    // bikeshedBuilderNavigation$,
-    // bikeshedBuilderSuccess$,
     (bikeshedBuilder, actionCreators) => {
       return {
-        ...actionCreators,
-        ...{ bikeshedBuilder }
+        ...{ bikeshedBuilder },
+        ...actionCreators
       }
     }
   )
-}, props => {
-  return <BikeshedBuilder { ...props }/>
-})
+
+  return Observable.merge(observable$, doAction$)
+
+}, props =>
+  <BikeshedBuilder { ...props }/>
+)
