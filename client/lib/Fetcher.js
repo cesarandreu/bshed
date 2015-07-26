@@ -4,9 +4,13 @@
  */
 import debug from 'debug'
 import cookies from 'cookies-js'
-
 const log = debug('bshed:client:Fetcher')
 
+/**
+ * Wraps GlobalFetch.fetch to make it work universally
+ * Allows you to set a rootUrl, which is used for server-side rendering
+ * Automatically adds your xsrf token to same-origin requests that perform mutations
+ */
 export default class Fetcher {
   /**
    * Check if method requires setting xsrf token
