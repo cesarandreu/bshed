@@ -34,7 +34,7 @@ export default class Html extends Component {
           )}
         </head>
         <body>
-          <div id='bshed' dangerouslySetInnerHTML={{__html: markup}}></div>
+          <div id='app' dangerouslySetInnerHTML={{__html: markup}}></div>
           <script dangerouslySetInnerHTML={{__html: state}}></script>
           {scripts.map((src, key) =>
             <script src={src} key={key}></script>
