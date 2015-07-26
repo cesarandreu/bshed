@@ -1,3 +1,7 @@
+/**
+ * Create reducer
+ * @flow
+ */
 // SOURCE: https://github.com/quangbuule/redux-example/blob/redux%40v1.0.0-rc/src/js/lib/createReducer.js
 import Immutable, { Map, List } from 'immutable'
 

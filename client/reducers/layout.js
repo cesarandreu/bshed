@@ -11,7 +11,6 @@ export const LayoutState = Immutable.Record({
   sidebar: false
 }, 'sidebarState')
 
-// layout reducer
 export default createReducer(new LayoutState(), {
   /**
    * Open sidebar
