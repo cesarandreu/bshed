@@ -1,5 +1,9 @@
 // // Styles
 // import './components/styles/base.less'
+/**
+ * Application entry-point
+ * @flow
+ */
 
 // // Modules
 // import Fluxible from 'fluxible'

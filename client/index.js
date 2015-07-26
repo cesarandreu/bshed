@@ -1,3 +1,8 @@
+/**
+ * Client entry-point
+ * @flow
+ */
+
 // Polyfill
 import 'whatwg-fetch'
 
