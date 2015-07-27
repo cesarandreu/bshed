@@ -1,7 +1,15 @@
 /**
- * Like keymirror, but adds name as a prefix
+ * Constant creator
+ * @flow
  */
-export default function constantCreator (name='', constants) {
+
+/**
+ * Like keymirror, but adds name as a value prefix
+ * @param {string} [name=''] Constant name prefix
+ * @param {Object} constants Object of constants
+ * @returns {Object} Constants object
+ */
+export default function constantCreator (name='', constants: Object) {
   name = name.toUpperCase()
 
   return Object.keys(constants).reduce((constants, constant) => {

@@ -1,31 +1,13 @@
+/**
+ * Application entry-point
+ * @flow
+ */
+
 // Styles
 import './components/styles/base.less'
 
-// Modules
-import Fluxible from 'fluxible'
-
-// Plugins
-import RequestPlugin from './lib/RequestPlugin'
+// Reducers
+export * as reducers from './reducers'
 
 // Routes
-// import routes from './components/routes.jsx'
-import Application from './components/Application'
-
-// Stores
-// import ApplicationStore from './stores/ApplicationStore'
-import BikeshedBuilderStore from './stores/BikeshedBuilderStore'
-import SidebarStore from './stores/SidebarStore'
-
-// Initialize application
-const app = new Fluxible({
-  component: Application,
-  stores: [
-    // ApplicationStore,
-    BikeshedBuilderStore,
-    SidebarStore
-  ]
-})
-
-app.plug(RequestPlugin())
-
-export default app
+export { routes } from './pages'

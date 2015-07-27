@@ -56,12 +56,28 @@ module.exports = function buildWebpackConfig (options) {
 
     module: {
       loaders: [{
-      //   test: /\.js$/,
-      //   loader: 'babel?optional=runtime&cacheDirectory',
-      //   exclude: /node_modules/
-      // }, {
         test: /\.(jsx|js)$/,
-        loader: BUILD || SERVER || TEST ? 'babel?optional=runtime&cacheDirectory' : 'react-hot!babel!flowcheck!babel?{ "optional": "runtime", "blacklist": ["flow"], "cacheDirectory": true }',
+
+        loader: (function () {
+          // Enable babel-plugin-typecheck in development
+          // Enable babel-plugin-rewire in test
+          if (TEST) {
+            return [
+              'babel?optional[]=runtime&plugins[]=rewire&cacheDirectory'
+            ].join('!')
+          } else if (BUILD || SERVER) {
+            return [
+              'babel?optional[]=runtime&cacheDirectory'
+            ].join('!')
+          } else {
+            return [
+              'react-hot',
+              'babel?optional[]=runtime&plugins[]=typecheck&cacheDirectory'
+            ].join('!')
+          }
+        })(),
+
+        // loader: BUILD || SERVER || TEST ? 'babel?optional=runtime&cacheDirectory' : 'react-hot!babel!flowcheck!babel?{ "optional": "runtime", "blacklist": ["flow"], "cacheDirectory": true }',
         exclude: /node_modules/
       }, {
         test: /\.less$/,
@@ -114,14 +130,12 @@ module.exports = function buildWebpackConfig (options) {
     config.externals.push(
       fs.readdirSync('node_modules')
         .filter(function (x) {
-          return ['.bin', 'react'].indexOf(x) === -1
+          return ['.bin'].indexOf(x) === -1
         })
         .reduce(function (nodeModules, mod) {
           nodeModules[mod] = 'commonjs ' + mod
           return nodeModules
         }, {
-          'react/addons': 'commonjs react/addons',
-          'react': 'commonjs react/addons',
           './stats.json': 'commonjs ./stats.json'
         })
     )

@@ -1,38 +1,109 @@
+/**
+ * BikeshedBuilderActions
+ * @flow
+ */
 import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
+import { createBikeshed } from '../utils/BikeshedApiUtils'
 import browserImageSize from 'browser-image-size'
-const { FileList, File } = global
+const { FormData, FileList, File } = global
 
-export function navigateAction (context) {
-  context.dispatch(BikeshedBuilderConstants.RESET)
+/**
+ * Reset bikeshed builder
+ */
+export function reset () {
+  return {
+    type: BikeshedBuilderConstants.RESET
+  }
 }
 
-export function inputChange (context, payload) {
-  context.dispatch(BikeshedBuilderConstants.INPUT_CHANGE, payload)
+/**
+ * Update bikeshed builder input
+ */
+export function inputChange (input: { value: string; name: string; }) {
+  const { value, name } = input
+  return {
+    type: BikeshedBuilderConstants.INPUT_CHANGE,
+    value,
+    name
+  }
 }
 
+/**
+ * Submit bikeshed builder form
+ */
 export function submit () {
-  console.warn('@TODO submit')
+  return async ({ dispatch, getState, fetcher }) => {
+    const { bikeshedBuilder } = getState()
+    dispatch({ type: BikeshedBuilderConstants.SUBMIT_START })
+    try {
+      const body = getRequestBody(bikeshedBuilder)
+      const response = await fetcher.executeRequest(createBikeshed, { body })
+      if (response.ok) {
+        const bikeshed = await response.json()
+        dispatch({ type: BikeshedBuilderConstants.SUBMIT_SUCCESS, bikeshed })
+      } else {
+        // @TODO: do something on failure
+      }
+    } finally {
+      dispatch({ type: BikeshedBuilderConstants.SUBMIT_FINISH })
+    }
+  }
+
+  function getRequestBody (bikeshedBuilder) {
+    const images = bikeshedBuilder.get('images').toList()
+    const form = images.reduce((form, image, idx) => {
+      const { file, name } = image
+      form.append(`file${idx}`, file, name)
+      return form
+    }, new FormData())
+
+    const description = bikeshedBuilder.get('description')
+    form.append('description', description)
+
+    return form
+  }
 }
 
-export async function addImages (context, images: FileList) {
-  images = await Promise.all(
-    Array.from(images).map(getImageSize)
-  )
+/**
+ * Add images to bikeshed builder
+ */
+export function addImages (imageList: FileList) {
 
-  context.dispatch(BikeshedBuilderConstants.ADD_IMAGES, images)
-}
+  return async ({ dispatch }) => {
+    imageList = await Promise.all(
+      Array.from(imageList).map(getImageSize)
+    )
 
-function getImageSize (file: File) {
-  return browserImageSize(file)
-    .then(({ width, height }) => {
-      return { file, width, height }
+    dispatch({
+      type: BikeshedBuilderConstants.ADD_IMAGES,
+      imageList
     })
+  }
+
+  function getImageSize (file: File) {
+    const { name } = file
+    return browserImageSize(file).then(size =>
+      ({ file, name, ...size })
+    )
+  }
 }
 
-export function removeImage (context, image: string) {
-  console.warn('@TODO addImages')
+/**
+ * Remove image from bikeshed builder
+ */
+export function removeImage (name: string) {
+  return {
+    type: BikeshedBuilderConstants.REMOVE_IMAGE,
+    name
+  }
 }
 
-export function preview (context, image: string) {
-  console.warn('@TODO addImages')
+/**
+ * Set bikeshed builder image preview
+ */
+export function preview (name: string) {
+  return {
+    type: BikeshedBuilderConstants.PREVIEW,
+    name
+  }
 }

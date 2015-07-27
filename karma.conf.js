@@ -1,5 +1,3 @@
-var webpackConfig = require('./webpack.karma')
-
 module.exports = function karmaConfig (config) {
   config.set({
     frameworks: ['mocha'],
@@ -27,6 +25,6 @@ module.exports = function karmaConfig (config) {
       require('karma-phantomjs-launcher')
     ],
 
-    webpack: webpackConfig
+    webpack: require('./webpack.karma')
   })
 }
