@@ -23,8 +23,7 @@ export function inputChange (input: { value: string; name: string; }) {
   const { value, name } = input
   return {
     type: BikeshedBuilderConstants.INPUT_CHANGE,
-    value,
-    name
+    payload: { value, name }
   }
 }
 
@@ -40,7 +39,7 @@ export function submit () {
       const response = await fetcher.executeRequest(createBikeshed, { body })
       if (response.ok) {
         const bikeshed = await response.json()
-        dispatch({ type: BikeshedBuilderConstants.SUBMIT_SUCCESS, bikeshed })
+        dispatch({ type: BikeshedBuilderConstants.SUBMIT_SUCCESS, payload: { bikeshed } })
       } else {
         // @TODO: do something on failure
       }
@@ -76,7 +75,7 @@ export function addImages (imageList: FileList) {
 
     dispatch({
       type: BikeshedBuilderConstants.ADD_IMAGES,
-      imageList
+      payload: { imageList }
     })
   }
 
@@ -94,7 +93,7 @@ export function addImages (imageList: FileList) {
 export function removeImage (name: string) {
   return {
     type: BikeshedBuilderConstants.REMOVE_IMAGE,
-    name
+    payload: { name }
   }
 }
 
@@ -104,6 +103,6 @@ export function removeImage (name: string) {
 export function preview (name: string) {
   return {
     type: BikeshedBuilderConstants.PREVIEW,
-    name
+    payload: { name }
   }
 }

@@ -31,10 +31,10 @@ export default function fetch (fetcher) {
       //         dispatch(addMessage(message, 'error'))
 
       //         const error = new Error(message)
-      //         next({ response, payload: error, error: true, type: REJECTED })
+      //         next({ payload: { error, response }, error: true, type: REJECTED })
       //       }
       //     })
-      //     .catch(error => next({ payload: error, error: true, type: REJECTED }))
+      //     .catch(error => next({ payload: { error }, error: true, type: REJECTED }))
 
       // Regular return value
       } else {
