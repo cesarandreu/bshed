@@ -6,18 +6,18 @@ import { createConnector } from 'redux-rx/react'
 import { transitionTo } from 'redux-react-router'
 import * as BikeshedBuilderActions from '../../actions/BikeshedBuilderActions'
 
-export default createConnector((props$, state$, dispatch$) => {
+const BikeshedBuilderContainer = createConnector((props$, state$, dispatch$) => {
   const actionCreators$ = bindActionCreators({ ...BikeshedBuilderActions }, dispatch$)
   const bikeshedBuilder$ = state$.map(state => state.bikeshedBuilder)
 
   // Reset state on navigation
-  const navigateReset$ = state$
-    .map(state => state.router.pathname)
-    .filter(pathname => pathname !== '/')
-    .distinctUntilChanged(pathname => pathname)
-    .withLatestFrom(dispatch$, (state, dispatch) =>
-      () => dispatch(BikeshedBuilderActions.reset())
-    )
+  // const navigateReset$ = state$
+  //   .map(state => state.router.pathname)
+  //   // .filter(pathname => pathname !== '/')
+  //   .distinctUntilChanged(pathname => pathname)
+  //   .withLatestFrom(dispatch$, (state, dispatch) =>
+  //     () => dispatch(BikeshedBuilderActions.reset())
+  //   )
 
   // Track bikeshed creation
   const bikeshedCreated$ = bikeshedBuilder$
@@ -29,7 +29,8 @@ export default createConnector((props$, state$, dispatch$) => {
       () => dispatch(transitionTo('/about'))
     )
 
-  const doAction$ = Observable.merge(navigateReset$, bikeshedCreated$)
+  // const doAction$ = Observable.merge(navigateReset$, bikeshedCreated$)
+  const doAction$ = Observable.merge(bikeshedCreated$)
     .do(go => go())
     .ignoreElements()
 
@@ -49,3 +50,8 @@ export default createConnector((props$, state$, dispatch$) => {
 }, props =>
   <BikeshedBuilder { ...props }/>
 )
+
+BikeshedBuilderContainer.navigateTo = BikeshedBuilderActions.reset
+BikeshedBuilderContainer.navigateFrom = BikeshedBuilderActions.reset
+
+export default BikeshedBuilderContainer
