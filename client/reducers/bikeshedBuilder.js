@@ -50,7 +50,10 @@ export default createReducer(new BikeshedBuilderState(), {
   /**
    * Successfully submitting
    */
-  [BikeshedBuilderConstants.SUBMIT_SUCCESS] (state: BikeshedBuilderState, { bikeshed }) {
+  [BikeshedBuilderConstants.SUBMIT_SUCCESS] (
+    state: BikeshedBuilderState,
+    { payload: { bikeshed } }
+  ) {
     return state.set('createdBikeshed', bikeshed.id)
   },
 
@@ -66,7 +69,10 @@ export default createReducer(new BikeshedBuilderState(), {
    * @param {Object} payload
    * @param {string} payload.name
    */
-  [BikeshedBuilderConstants.PREVIEW] (state: BikeshedBuilderState, { name }) {
+  [BikeshedBuilderConstants.PREVIEW] (
+    state: BikeshedBuilderState,
+    { payload: { name } }
+  ) {
     const preview = state.getIn(['images', name], '')
     return state.set('preview', preview)
   },
@@ -78,7 +84,10 @@ export default createReducer(new BikeshedBuilderState(), {
    * @param {Object} payload
    * @param {Array<InputImage>} payload.imageList
    */
-  [BikeshedBuilderConstants.ADD_IMAGES] (state: BikeshedBuilderState, { imageList }) {
+  [BikeshedBuilderConstants.ADD_IMAGES] (
+    state: BikeshedBuilderState,
+    { payload: { imageList } }
+  ) {
     const images = state.get('images').withMutations(images => {
       return imageList.reduce((images, image) => {
         const hasValidCount = images.count() < ApplicationConstants.MAXIMUM_IMAGE_COUNT
@@ -101,7 +110,10 @@ export default createReducer(new BikeshedBuilderState(), {
    * @param {Object} payload
    * @param {string} payload.name
    */
-  [BikeshedBuilderConstants.REMOVE_IMAGE] (state: BikeshedBuilderState, { name }) {
+  [BikeshedBuilderConstants.REMOVE_IMAGE] (
+    state: BikeshedBuilderState,
+    { payload: { name } }
+  ) {
     URL.revokeObjectURL(state.get(['images', name, 'url']))
     return state.removeIn(['images', name])
   },
@@ -112,7 +124,10 @@ export default createReducer(new BikeshedBuilderState(), {
    * @param {string} payload.name
    * @param {string} payload.value
    */
-  [BikeshedBuilderConstants.INPUT_CHANGE] (state: BikeshedBuilderState, { name, value }) {
+  [BikeshedBuilderConstants.INPUT_CHANGE] (
+    state: BikeshedBuilderState,
+    { payload: { name, value } }
+  ) {
     return state.set(name, value)
   }
 })
