@@ -114,6 +114,7 @@
     "redux-react-router": "^0.2.1",
     "redux-rx": "^0.4.0-alpha",
     "redux-thunk": "^0.1.0",
+    "reselect": "0.0.2",
     "rx": "^2.5.3",
     "sequelize": "^3.4.1",
     "sequelize-cli": "^1.7.3",
