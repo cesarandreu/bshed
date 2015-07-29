@@ -4,11 +4,12 @@ import { bindActionCreators } from 'redux-rx'
 import BikeshedBuilder from './BikeshedBuilder'
 import { createConnector } from 'redux-rx/react'
 import { transitionTo } from 'redux-react-router'
+import BikeshedBuilderSelector from '../../selectors/BikeshedBuilderSelector'
 import * as BikeshedBuilderActions from '../../actions/BikeshedBuilderActions'
 
 const BikeshedBuilderContainer = createConnector((props$, state$, dispatch$) => {
   const actionCreators$ = bindActionCreators({ ...BikeshedBuilderActions }, dispatch$)
-  const bikeshedBuilder$ = state$.map(state => state.bikeshedBuilder)
+  const bikeshedBuilder$ = state$.map(BikeshedBuilderSelector)
 
   // Reset state on navigation
   // const navigateReset$ = state$
