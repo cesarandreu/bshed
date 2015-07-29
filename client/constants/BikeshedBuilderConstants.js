@@ -1,6 +1,6 @@
-import constantCreator from '../lib/constantCreator'
+import createConstants from '../lib/createConstants'
 
-const BikeshedBuilderConstants = constantCreator('BIKESHED_BUILDER', {
+export default createConstants('BIKESHED_BUILDER', {
   RESET: null,
   PREVIEW: null,
   ADD_IMAGES: null,
@@ -10,5 +10,3 @@ const BikeshedBuilderConstants = constantCreator('BIKESHED_BUILDER', {
   SUBMIT_FINISH: null,
   SUBMIT_SUCCESS: null
 })
-
-export default BikeshedBuilderConstants

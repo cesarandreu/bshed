@@ -1,9 +1,7 @@
-import constantCreator from '../lib/constantCreator'
+import createConstants from '../lib/createConstants'
 
-const SidebarConstants = constantCreator('SIDEBAR', {
+export default createConstants('SIDEBAR', {
   OPEN: null,
   CLOSE: null,
   TOGGLE: null
 })
-
-export default SidebarConstants

@@ -1,8 +1,6 @@
-import constantCreator from '../lib/constantCreator'
+import createConstants from '../lib/createConstants'
 
-const MessageConstants = constantCreator('MESSAGE', {
+export default createConstants('MESSAGE', {
   REMOVE: null,
   ADD: null
 })
-
-export default MessageConstants
