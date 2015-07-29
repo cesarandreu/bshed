@@ -247,39 +247,6 @@ export class BikeshedBuilderButtons extends Component {
 }
 
 /**
- * BikeshedBuilderPaper
- */
-export class BikeshedBuilderPaper extends Component {
-  static propTypes = {
-    images: PropTypes.instanceOf(OrderedMap).isRequired,
-    description: PropTypes.string.isRequired,
-    inputChange: PropTypes.func.isRequired,
-    removeImage: PropTypes.func.isRequired,
-    addImages: PropTypes.func.isRequired,
-    preview: PropTypes.func.isRequired,
-    submit: PropTypes.func.isRequired
-  }
-
-  render () {
-    const { description, images, submit, ...props } = this.props
-
-    return (
-      <Paper className='bikeshed-builder-paper'>
-        <BikeshedBuilderContent
-          description={description}
-          images={images}
-          { ...props }
-        />
-        <BikeshedBuilderButtons
-          imageCount={images.count()}
-          submit={submit}
-        />
-      </Paper>
-    )
-  }
-}
-
-/**
  * BikeshedBuilder
  */
 export default class BikeshedBuilder extends Component {
@@ -293,14 +260,22 @@ export default class BikeshedBuilder extends Component {
   }
 
   render () {
-    const { bikeshedBuilder, ...props } = this.props
+    const { bikeshedBuilder, submit, ...props } = this.props
+    const { images, description } = bikeshedBuilder
+
     return (
       <RegularView className='bikeshed-builder'>
-        <BikeshedBuilderPaper
-          description={bikeshedBuilder.description}
-          images={bikeshedBuilder.images}
-          { ...props }
-        />
+        <Paper className='bikeshed-builder-paper'>
+          <BikeshedBuilderContent
+            description={description}
+            images={images}
+            { ...props }
+          />
+          <BikeshedBuilderButtons
+            imageCount={images.count()}
+            submit={submit}
+          />
+        </Paper>
       </RegularView>
     )
   }
