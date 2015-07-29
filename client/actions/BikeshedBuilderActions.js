@@ -49,15 +49,14 @@ export function submit () {
   }
 
   function getRequestBody (bikeshedBuilder) {
-    const images = bikeshedBuilder.get('images').toList()
+    const images = bikeshedBuilder.images.toList()
     const form = images.reduce((form, image, idx) => {
       const { file, name } = image
       form.append(`file${idx}`, file, name)
       return form
     }, new FormData())
 
-    const description = bikeshedBuilder.get('description')
-    form.append('description', description)
+    form.append('description', bikeshedBuilder.description)
 
     return form
   }
