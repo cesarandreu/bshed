@@ -3,8 +3,11 @@
  * @flow
  */
 import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
+import BikeshedBuilderSelector from '../selectors/BikeshedBuilderSelector'
 import { createBikeshed } from '../utils/BikeshedApiUtils'
 import browserImageSize from 'browser-image-size'
+import uuid from 'node-uuid'
+
 const { FormData, FileList, File } = global
 
 /**
@@ -32,19 +35,42 @@ export function inputChange (input: { value: string; name: string; }) {
  */
 export function submit () {
   return async ({ dispatch, getState, fetcher }) => {
-    const { bikeshedBuilder } = getState()
-    dispatch({ type: BikeshedBuilderConstants.SUBMIT_START })
-    try {
-      const body = getRequestBody(bikeshedBuilder)
-      const response = await fetcher.executeRequest(createBikeshed, { body })
-      if (response.ok) {
-        const bikeshed = await response.json()
-        dispatch({ type: BikeshedBuilderConstants.SUBMIT_SUCCESS, payload: { bikeshed } })
-      } else {
-        // @TODO: do something on failure
+    const bikeshedBuilder = BikeshedBuilderSelector(getState())
+    const sequenceId = uuid.v4()
+    dispatch({
+      type: BikeshedBuilderConstants.SUBMIT,
+      sequence: {
+        type: 'start',
+        id: sequenceId
       }
-    } finally {
-      dispatch({ type: BikeshedBuilderConstants.SUBMIT_FINISH })
+    })
+
+    const body = getRequestBody(bikeshedBuilder)
+    const response = await fetcher.executeRequest(createBikeshed, { body })
+    if (response.ok) {
+      const bikeshed = await response.json()
+      dispatch({
+        type: BikeshedBuilderConstants.SUBMIT,
+        payload: { bikeshed },
+        sequence: {
+          type: 'done',
+          id: sequenceId
+        }
+      })
+    } else {
+      const text = await response.text()
+      const error = new Error(text)
+      error.status = response.status
+
+      dispatch({
+        type: BikeshedBuilderActions.SUBMIT,
+        payload: error,
+        error: true,
+        sequence: {
+          type: 'done',
+          id: sequenceId
+        }
+      })
     }
   }
 

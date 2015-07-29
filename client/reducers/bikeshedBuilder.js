@@ -41,27 +41,23 @@ export default createReducer(new BikeshedBuilderState(), {
   },
 
   /**
-   * Begin submitting
+   * Form submission
    */
-  [BikeshedBuilderConstants.SUBMIT_START] (state: BikeshedBuilderState) {
-    return state.set('submitting', true)
-  },
-
-  /**
-   * Successfully submitting
-   */
-  [BikeshedBuilderConstants.SUBMIT_SUCCESS] (
+  [BikeshedBuilderConstants.SUBMIT] (
     state: BikeshedBuilderState,
-    { payload: { bikeshed } }
+    { payload, error, sequence }
   ) {
-    return state.set('createdBikeshed', bikeshed.id)
-  },
+    if (sequence.type === 'start') {
+      return state.set('submitting', true)
+    }
 
-  /**
-   * Finish submitting
-   */
-  [BikeshedBuilderConstants.SUBMIT_FINISH] (state: BikeshedBuilderState) {
-    return state.set('submitting', false)
+    if (sequence.type === 'done') {
+      state = state.set('submitting', false)
+    }
+    if (!error) {
+      state = state.set('createdBikeshed', payload.bikeshed.id)
+    }
+    return state
   },
 
   /**
