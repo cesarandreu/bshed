@@ -22,7 +22,7 @@ const BikeshedBuilderContainer = createConnector((props$, state$, dispatch$) => 
 
   // Track bikeshed creation
   const bikeshedCreated$ = bikeshedBuilder$
-    .map(bikeshedBuilder => bikeshedBuilder.get('createdBikeshed'))
+    .map(bikeshedBuilder => bikeshedBuilder.createdBikeshed)
     .distinctUntilChanged(createdBikeshed => createdBikeshed)
     .filter(createdBikeshed => createdBikeshed)
     .withLatestFrom(dispatch$, (createdBikeshed, dispatch) =>
