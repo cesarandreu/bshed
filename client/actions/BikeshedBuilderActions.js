@@ -63,7 +63,7 @@ export function submit () {
       error.status = response.status
 
       dispatch({
-        type: BikeshedBuilderActions.SUBMIT,
+        type: BikeshedBuilderConstants.SUBMIT,
         payload: error,
         error: true,
         sequence: {
