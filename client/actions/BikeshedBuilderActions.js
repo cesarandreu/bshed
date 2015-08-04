@@ -33,7 +33,7 @@ export function inputChange (input: { value: string; name: string; }) {
  * Submit bikeshed builder form
  */
 export function submit () {
-  return async ({ dispatch, getState, fetcher }) => {
+  return async ({ dispatch, getState, fetcher, executeRequest }) => {
     const bikeshedBuilder = BikeshedBuilderSelector(getState())
     const sequenceId = uuid.v4()
     dispatch({
@@ -45,7 +45,7 @@ export function submit () {
     })
 
     const body = getRequestBody(bikeshedBuilder)
-    const response = await fetcher.executeRequest(createBikeshed, { body })
+    const response = await executeRequest(createBikeshed, { body })
     if (response.ok) {
       const bikeshed = await response.json()
       dispatch({

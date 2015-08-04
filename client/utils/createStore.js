@@ -10,8 +10,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
  * @param {Fetcher} config.fetcher
  * @returns Redux store
  */
-export default function createAppStore ({ fetcher, reducers, initialState }) {
-  const middleware = [fetch(fetcher), logger()]
+export default function createAppStore ({ fetcher, executeRequest, reducers, initialState }) {
+  const middleware = [fetch({ fetcher, executeRequest }), logger()]
   const finalCreateStore = applyMiddleware(...middleware)(createStore)
   const reducer = combineReducers(reducers)
 

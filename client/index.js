@@ -10,18 +10,18 @@ import 'whatwg-fetch'
 import { reduxRouteComponent } from 'redux-react-router'
 import History from 'react-router/lib/BrowserHistory'
 import * as observables from './utils/observables'
+import createFetcher from './lib/createFetcher'
 import { observableFromStore } from 'redux-rx'
 import createStore from './utils/createStore'
 import { routes, reducers } from './app'
 import { Router } from 'react-router'
-import Fetcher from './lib/Fetcher'
 import ReactDOM from 'react-dom'
 import React from 'react'
 
 // Instantiation
-const fetcher = new Fetcher()
 const history = new History()
-const store = createStore({ fetcher, reducers })
+const { fetcher, executeRequest } = createFetcher()
+const store = createStore({ fetcher, executeRequest, reducers })
 const state$ = observableFromStore(store)
 
 // For chrome dev tool support and debugging
