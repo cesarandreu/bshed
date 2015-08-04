@@ -5,7 +5,7 @@
 
 /**
  * Fetch bikeshed list
- * @param {Fetcher.fetcher} fetcher
+ * @param {fetcher} fetcher
  * @param {Object} options
  */
 export function fetchBikeshedList (fetcher, options) {
@@ -16,7 +16,7 @@ export function fetchBikeshedList (fetcher, options) {
 
 /**
  * Fetch bikeshed information
- * @param {Fetcher.fetcher} fetcher
+ * @param {fetcher} fetcher
  * @param {Object} options
  * @param {string} options.bikeshedId Bikeshed to fetch
  * @returns {Promise} Promise of requested bikeshed
@@ -29,7 +29,7 @@ export function fetchBikeshedInfo (fetcher, { bikeshedId }) {
 
 /**
  * Create bikeshed
- * @param {Fetcher.fetcher} fetcher
+ * @param {fetcher} fetcher
  * @param {Object} options
  * @param {FormData} options.body
  * @returns {Promise} Promise of created bikeshed
