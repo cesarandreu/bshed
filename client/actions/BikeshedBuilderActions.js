@@ -5,10 +5,9 @@
 import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
 import BikeshedBuilderSelector from '../selectors/BikeshedBuilderSelector'
 import { createBikeshed } from '../utils/BikeshedApiUtils'
+import { FormData, FileList, File } from '../lib/browser'
 import browserImageSize from 'browser-image-size'
 import uuid from 'node-uuid'
-
-const { FormData, FileList, File } = global
 
 /**
  * Reset bikeshed builder
