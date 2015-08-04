@@ -24,3 +24,9 @@ export const FileList = global.FileList
  * File
  */
 export const File = global.File
+
+/**
+ * URL
+ * @TODO: update this to work with a few older browsers
+ */
+export const URL = global.URL

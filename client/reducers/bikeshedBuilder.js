@@ -5,10 +5,8 @@
 import BikeshedBuilderConstants from '../constants/BikeshedBuilderConstants'
 import ApplicationConstants from '../constants/ApplicationConstants'
 import createReducer from '../lib/createReducer'
+import { URL } from '../lib/browser'
 import Immutable from 'immutable'
-
-// @TODO: update this to work with a few older browsers
-const { URL } = global
 
 // Record types
 export const BikeshedBuilderImage = Immutable.Record({
