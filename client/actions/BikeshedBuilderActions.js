@@ -105,9 +105,9 @@ export function addImages (imageList: FileList) {
 
   function getImageSize (file: File) {
     const { name } = file
-    return browserImageSize(file).then(size =>
-      ({ file, name, ...size })
-    )
+    return browserImageSize(file).then(size => {
+      return { file, name, ...size }
+    })
   }
 }
 
