@@ -1,6 +1,6 @@
-const { request, buildUserHeaders, factories, fixtures } = require('./helper')
-const { describe, it } = require('mocha')
-const expect = require('expect.js')
+import { request, buildUserHeaders, factories, fixtures } from './helper'
+import { describe, it } from 'mocha'
+import expect from 'expect.js'
 
 describe('Request:Bikesheds', () => {
   describe('GET /api/bikesheds', () => {
