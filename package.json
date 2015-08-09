@@ -108,7 +108,7 @@
     "react-hotkey": "^0.3.0",
     "react-immutable-render-mixin": "^0.8.1",
     "react-pure-render": "^1.0.2",
-    "react-redux": "^0.6.0",
+    "react-redux": "^0.8.0",
     "react-router": "^1.0.0-beta3",
     "redux": "^1.0.0-rc",
     "redux-react-router": "^0.2.1",
