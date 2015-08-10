@@ -6,7 +6,7 @@ import expect from 'expect.js'
 describe('navigate reducer', () => {
   describe('NavigateConstants.NEXT action', () => {
     it('sets url', () => {
-      const state = navigate(undefined, {
+      const state = navigate({ url: null }, {
         type: NavigateConstants.NEXT,
         payload: '/path'
       })
