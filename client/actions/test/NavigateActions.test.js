@@ -7,7 +7,7 @@ describe('NavigateActions', () => {
   describe('navigateTo', () => {
     it('returns NEXT action', () => {
       const { type, payload } = NavigateActions.navigateTo('/path')
-      expect(type).to.equal(NavigateActions.NEXT)
+      expect(type).to.equal(NavigateConstants.NEXT)
       expect(payload).to.equal('/path')
     })
   })
