@@ -45,6 +45,9 @@
   "standard": {
     "parser": "babel-eslint"
   },
+  "babel": {
+    "stage": 0
+  },
   "dependencies": {
     "autoprefixer-core": "^5.2.1",
     "aws-sdk": "^2.1.44",
