@@ -2,7 +2,7 @@
  * Reducers
  * @flow
  */
-export layout from './layout'
-export router from './router'
+export { reducers as pages } from '../pages'
+export navigate from './navigate'
 export messages from './messages'
-export bikeshedBuilder from './bikeshedBuilder'
+export router from './router'

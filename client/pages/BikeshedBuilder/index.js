@@ -2,12 +2,9 @@
  * BikeshedBuilder page
  * @flow
  */
-import BikeshedBuilderContainer from './BikeshedBuilderContainer.jsx'
-
-export BikeshedBuilderContainer from './BikeshedBuilderContainer.jsx'
-export BikeshedBuilder from './BikeshedBuilder.jsx'
-
-export const routes = {
-  component: BikeshedBuilderContainer,
-  path: '/'
-}
+export BikeshedBuilder from './BikeshedBuilder'
+export BikeshedBuilderPage from './BikeshedBuilderPage'
+export BikeshedBuilderReducer from './BikeshedBuilderReducer'
+export BikeshedBuilderContainer from './BikeshedBuilderContainer'
+export * as BikeshedBuilderActions from './BikeshedBuilderActions'
+export * as BikeshedBuilderConstants from './BikeshedBuilderConstants'

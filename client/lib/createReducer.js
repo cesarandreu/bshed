@@ -2,26 +2,27 @@
  * Create reducer
  * @flow
  */
-// SOURCE: https://github.com/quangbuule/redux-example/blob/redux%40v1.0.0-rc/src/js/lib/createReducer.js
-import Immutable, { Map, List } from 'immutable'
+import { Collection } from 'immutable'
 
-export default function createReducer (initialState, handlers) {
+export default function createReducer (initialState: Collection, handlers: Object) {
+  if (process.env.NODE_ENV !== 'production' && ('undefined' in handlers)) {
+    console.warn('Found key "undefined" in reducer handlers')
+  }
+
   const StateConstructor = initialState.constructor
-  return (state = initialState, action) => {
-    if (!Map.isMap(state) && !List.isList(state) && !(state instanceof StateConstructor)) {
-      state = Immutable.fromJS(state)
+  return function reducer (state = initialState, action: Object): StateConstructor {
+    if (process.env.NODE_ENV !== 'production' && !(state instanceof StateConstructor)) {
+      console.warn('State is not an instance of StateConstructor')
     }
 
     const handler = handlers[action.type]
-
     if (!handler) {
       return state
     }
 
     state = handler(state, action)
-
-    if (!Map.isMap(state) && !List.isList(state) && !(state instanceof StateConstructor)) {
-      throw new TypeError('Reducers must return Immutable objects.')
+    if (!(state instanceof StateConstructor)) {
+      throw new TypeError('Reducers must return an instance of StateConstructor')
     }
 
     return state

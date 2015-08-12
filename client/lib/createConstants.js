@@ -9,7 +9,7 @@
  * @param {Object} constants Object of constants
  * @returns {Object} Constants object
  */
-export default function createConstants (name: string, constants: Object) {
+export default function createConstants (name: string, constants: Object): Object {
   name = name.toUpperCase()
 
   return Object.keys(constants).reduce((constants, constant) => {

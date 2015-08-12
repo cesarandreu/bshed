@@ -2,45 +2,25 @@
  * Create fetcher
  * @flow
  */
-import debug from 'debug'
 import cookies from 'cookies-js'
-const log = debug('bshed:client:Fetcher')
 
 /**
  * @param {Object} options
  * @param {GlobalFetch.fetch} [options.fetch=global.fetch]
  * @param {Headers} [options.Headers=global.Headers]
+ * @param {string} [options.rootUrl='']
+ * @param {string} [options.cookie='']
  */
 export default function createFetcher (
   { fetch=global.fetch, Headers=global.Headers, rootUrl='', cookie='' }={}
 ) {
-
-  return {
-    executeRequest,
-    fetcher
-  }
-
-  /**
-   * Execute fn with fetcher and payload
-   * @param {Function} fn
-   * @param {*} [payload={}]
-   * @returns {Promise<Response>}
-   */
-  function executeRequest (fn: Function, payload={}) {
-    log(`Executing request ${fn.displayName || fn.name} with payload`, payload)
-    try {
-      return Promise.resolve(fn(fetcher, payload))
-    } catch (err) {
-      return Promise.reject(err)
-    }
-  }
 
   /**
    * Like fetch but with extra functionality
    * @param {string} [url='']
    * @param {Object} [options={}]
    */
-  function fetcher (url='', options={}) {
+  return function fetcher (url='', options={}) {
     const localRequest = url[0] === '/'
     const { headers, ...fetchOptions } = Object.assign({}, {
       credentials: 'same-origin',
@@ -79,8 +59,7 @@ export default function createFetcher (
 /**
  * Check if method mutates
  * @param {string} [method='GET']
- * @returns {boolean} If the HTTP method mutates
  */
-function isMutatingMethod (method='GET') {
+function isMutatingMethod (method='GET'): boolean {
   return ['GET', 'HEAD', 'OPTIONS'].indexOf(method.toUpperCase()) === -1
 }

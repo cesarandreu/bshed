@@ -1,29 +1,17 @@
-import './Layout.less'
-import AppBar from '../AppBar'
-import React, { PropTypes } from 'react'
-// import Drawer from '../Drawer'
-// import Immutable from 'immutable'
+import React, { Component, PropTypes } from 'react'
 
-const Layout = React.createClass({
-  propTypes: {
-    // currentRoute: PropTypes.instanceOf(Immutable.Map).isRequired,
-    children: PropTypes.node
-  },
+export default class Layout extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired
+  }
 
   render () {
-    const { children, ...other } = this.props
+    const { children } = this.props
+
     return (
-      <div className='layout'>
-        <AppBar/>
-        {/*
-        <Drawer/>
-        */}
-        <main className='layout-main'>
-          {children}
-        </main>
+      <div>
+        {children}
       </div>
     )
   }
-})
-
-export default Layout
+}

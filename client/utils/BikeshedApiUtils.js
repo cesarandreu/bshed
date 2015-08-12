@@ -5,10 +5,8 @@
 
 /**
  * Fetch bikeshed list
- * @param {fetcher} fetcher
- * @param {Object} options
  */
-export function fetchBikeshedList (fetcher, options) {
+export function fetchBikeshedList (fetcher: Function) {
   return fetcher('/api/bikesheds', {
     method: 'GET'
   })
@@ -16,12 +14,9 @@ export function fetchBikeshedList (fetcher, options) {
 
 /**
  * Fetch bikeshed information
- * @param {fetcher} fetcher
- * @param {Object} options
- * @param {string} options.bikeshedId Bikeshed to fetch
- * @returns {Promise} Promise of requested bikeshed
  */
-export function fetchBikeshedInfo (fetcher, { bikeshedId }) {
+export function fetchBikeshedInfo (fetcher: Function, options: Object) {
+  const { bikeshedId }: { bikeshedId: number } = options
   return fetcher(`/api/bikesheds/${bikeshedId}`, {
     method: 'GET'
   })
@@ -29,12 +24,9 @@ export function fetchBikeshedInfo (fetcher, { bikeshedId }) {
 
 /**
  * Create bikeshed
- * @param {fetcher} fetcher
- * @param {Object} options
- * @param {FormData} options.body
- * @returns {Promise} Promise of created bikeshed
  */
-export function createBikeshed (fetcher, { body }) {
+export function createBikeshed (fetcher: Function, options: Object) {
+  const { body }: { body: Object } = options
   return fetcher('/api/bikesheds', {
     method: 'POST',
     body: body

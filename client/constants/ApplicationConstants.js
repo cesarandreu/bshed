@@ -1,5 +1,8 @@
-export default {
-  BIKESHED_BUILDER_IMAGE_SIZE: 128,
-  MAXIMUM_IMAGE_COUNT: 5,
-  MINIMUM_IMAGE_COUNT: 2
-}
+/**
+ * Application constants
+ * @flow
+ */
+import createConstants from '../lib/createConstants'
+
+export default createConstants('APPLICATION', {
+})

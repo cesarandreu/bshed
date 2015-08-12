@@ -2,21 +2,14 @@
  * Pages
  * @flow
  */
-
-// Application
-import { ApplicationContainer } from './Application'
+import { combineReducers } from 'redux'
 
 // Pages
-import { routes as BikeshedBuilderRoutes } from './BikeshedBuilder'
-import { routes as AboutRoutes } from './About'
-import { routes as HomeRoutes } from './Home'
+import {
+  BikeshedBuilderReducer
+} from './BikeshedBuilder'
 
-// Routes
-export const routes = {
-  component: ApplicationContainer,
-  childRoutes: [
-    BikeshedBuilderRoutes,
-    AboutRoutes,
-    HomeRoutes
-  ]
-}
+// Reducers
+export const reducers = combineReducers({
+  BikeshedBuilder: BikeshedBuilderReducer
+})
