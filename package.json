@@ -46,7 +46,10 @@
     "parser": "babel-eslint"
   },
   "babel": {
-    "stage": 0
+    "stage": 0,
+    "plugins": [
+      "babel-relay-plugin"
+    ]
   },
   "dependencies": {
     "autoprefixer-core": "^5.2.1",
@@ -54,6 +57,7 @@
     "babel": "^5.8.21",
     "babel-core": "^5.8.22",
     "babel-loader": "^5.3.2",
+    "babel-relay-plugin": "^0.1.1",
     "babel-runtime": "^5.8.20",
     "bcrypt": "^0.8.5",
     "browser-image-size": "^1.1.0",
@@ -66,6 +70,8 @@
     "error": "^7.0.2",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
+    "graphql": "^0.2.6",
+    "graphql-relay": "^0.1.0",
     "html-webpack-plugin": "^1.6.1",
     "http-errors": "^1.3.1",
     "image-size": "^0.3.5",
@@ -112,6 +118,7 @@
     "react-immutable-render-mixin": "^0.8.1",
     "react-pure-render": "^1.0.2",
     "react-redux": "^0.8.2",
+    "react-relay": "^0.1.0",
     "react-router": "^1.0.0-beta3",
     "redux": "^1.0.0-rc",
     "redux-react-router": "^0.2.1",
@@ -133,7 +140,7 @@
     "whatwg-fetch": "^0.9.0"
   },
   "devDependencies": {
-    "babel-eslint": "^4.0.5",
+    "babel-eslint": "^4.0.8",
     "babel-plugin-rewire": "^0.1.21",
     "babel-plugin-typecheck": "^1.2.0",
     "chance": "^0.7.6",
@@ -144,7 +151,7 @@
     "flowcheck-loader": "^1.0.0",
     "isparta": "^3.0.0",
     "jsdom": "^6.1.0",
-    "karma": "^0.13.8",
+    "karma": "^0.13.9",
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-sourcemap-loader": "^0.3.5",
