@@ -121,7 +121,7 @@
     "react-relay": "^0.1.0",
     "react-router": "^1.0.0-beta3",
     "redux": "^1.0.0-rc",
-    "redux-react-router": "^0.2.1",
+    "redux-react-router": "^0.4.0",
     "redux-rx": "^0.4.0-alpha",
     "redux-thunk": "^0.1.0",
     "reselect": "0.0.2",
