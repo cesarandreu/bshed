@@ -120,12 +120,12 @@
     "react-redux": "^0.8.2",
     "react-relay": "^0.1.0",
     "react-router": "^1.0.0-beta3",
-    "redux": "^1.0.0-rc",
+    "redux": "^1.0.1",
     "redux-react-router": "^0.4.0",
     "redux-rx": "^0.4.0-alpha",
     "redux-thunk": "^0.1.0",
     "reselect": "0.0.2",
-    "rx": "^3.0.1",
+    "rx": "^3.1.0",
     "sequelize": "^3.5.1",
     "sequelize-cli": "^1.7.4",
     "sequelize-migration-pg-extras": "^1.0.0",
@@ -140,7 +140,7 @@
     "whatwg-fetch": "^0.9.0"
   },
   "devDependencies": {
-    "babel-eslint": "^4.0.8",
+    "babel-eslint": "^4.0.10",
     "babel-plugin-rewire": "^0.1.21",
     "babel-plugin-typecheck": "^1.2.0",
     "chance": "^0.7.6",
