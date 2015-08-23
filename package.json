@@ -113,7 +113,7 @@
     "qs": "^4.0.0",
     "react": "^0.14.0-beta1",
     "react-dom": "^0.14.0-beta1",
-    "react-hot-loader": "^1.2.8",
+    "react-hot-loader": "^1.2.9",
     "react-hotkey": "^0.3.0",
     "react-immutable-render-mixin": "^0.8.1",
     "react-pure-render": "^1.0.2",
