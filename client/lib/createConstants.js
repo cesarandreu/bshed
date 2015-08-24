@@ -1,13 +1,7 @@
 /**
  * Create constants
- * @flow
- */
-
-/**
  * Like keymirror, but adds name as a value prefix
- * @param {string} name Constant name prefix
- * @param {Object} constants Object of constants
- * @returns {Object} Constants object
+ * @flow
  */
 export default function createConstants (name: string, constants: Object): Object {
   name = name.toUpperCase()

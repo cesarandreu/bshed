@@ -1,5 +1,10 @@
 /**
  * Create reducer
+ * Helper for creating reducers with an immutable.js state
+ * Shows warnings when you're likely to have made a mistake
+ * Handlers is an object where the key is the action type and the value
+ * is the reducer. Sets the initial state automatically and calls the
+ * correct handler whenever an action is received.
  * @flow
  */
 import { Collection } from 'immutable'
