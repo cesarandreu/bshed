@@ -1,13 +1,10 @@
 const fs = require('fs')
 const _ = require('lodash')
 const path = require('path')
-const mmm = require('mmmagic')
 const assert = require('assert')
+const mime = require('mime-types')
 const chance = require('chance').Chance()
 const fixtures = path.resolve(__dirname, '../fixtures')
-
-const Magic = mmm.Magic
-const magic = new Magic(mmm.MAGIC_MIME_TYPE)
 
 /**
  * Build factories
@@ -202,9 +199,8 @@ module.exports = function buildFactories (models, s3) {
  */
 function getFileType (file) {
   return new Promise((resolve, reject) => {
-    magic.detectFile(file, (err, result) => {
-      err ? reject(err) : resolve(result)
-    })
+    const extname = path.extname(file)
+    resolve(mime.lookup(extname))
   })
 }
 
