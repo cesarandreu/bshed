@@ -1,6 +1,6 @@
 const fs = require('fs')
 const webpack = require('webpack')
-const autoprefixer = require('autoprefixer-core')
+const autoprefixer = require('autoprefixer')
 const StatsPlugin = require('stats-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -91,13 +91,9 @@ module.exports = function buildWebpackConfig (options) {
       }]
     },
 
-    postcss: function postcss () {
-      return [
-        autoprefixer({
-          browsers: ['last 2 version']
-        })
-      ]
-    },
+    postcss: [
+      autoprefixer({ browsers: ['last 2 version'] })
+    ],
 
     resolve: {
       extensions: ['', '.js', '.jsx', '.less']
