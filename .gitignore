@@ -5,12 +5,8 @@ logs
 # Dependency directory
 node_modules
 
-# Stuff
-coverage
-
 # OS X
 .DS_Store
 
 # Builds
-public/assets
 build
