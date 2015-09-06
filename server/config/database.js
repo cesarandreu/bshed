@@ -1,8 +1,10 @@
 /**
  * Database configuration
+ * This is using CommonJS exports instead of ES6 modules because it needs to
+ * work with sequelize-cli.
  * @flow
  */
-export const development = {
+exports.development = {
   username: null,
   password: null,
   database: 'app_development',
@@ -10,7 +12,7 @@ export const development = {
   dialect: 'postgres'
 }
 
-export const test = {
+exports.test = {
   username: null,
   password: null,
   database: 'app_test',
@@ -19,7 +21,7 @@ export const test = {
   logging: false
 }
 
-export const production = {
+exports.production = {
   username: null,
   password: null,
   database: 'app',
