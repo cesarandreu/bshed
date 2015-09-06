@@ -16,7 +16,17 @@
     "url": "https://github.com/cesarandreu"
   },
   "scripts": {
-    "clean": "rm -rf build"
+    "clean": "rm -rf build",
+    "db:create": "create_database",
+    "db:drop": "drop_database",
+    "db:migrate": "sequelize db:migrate",
+    "db:refresh": "npm run db:drop && npm run db:create && npm run db:migrate",
+    "dev": "npm run dev:server & npm run dev:client",
+    "dev:server:nodemon": "nodemon -e js,json -w ./build/ ./build/server.js",
+    "dev:server:webpack": "webpack --config config/webpack.server.js --watch",
+    "dev:server": "npm run dev:server:webpack & npm run dev:server:nodemon",
+    "dev:client": "webpack-dev-server --config config/webpack.dev.js --hot --inline --progress",
+    "fakes3": "fakes3 -r $(node -p \"require('os').tmpdir()\")/fakes3 -p 10001"
   },
   "standard": {
     "parser": "babel-eslint"
