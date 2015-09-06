@@ -77,7 +77,7 @@ module.exports = function (sequelize, DataTypes) {
        * @param {Object} [options.transaction]
        * @returns {Promise} Bike creation and upload promise
        */
-      async createAndUpload ({BikeshedId, file}={}, {s3, transaction}={}) {
+      async createAndUpload ({ BikeshedId, file } = {}, { s3, transaction } = {}) {
         assert(BikeshedId && file, 'createAndUpload requires BikeshedId and file')
         assert(s3, 'createAndUpload requires s3')
 
@@ -113,7 +113,7 @@ module.exports = function (sequelize, DataTypes) {
        * @param {string} config.path Image location
        * @returns {Promise} Upload image promise
        */
-      async uploadImage (s3, {BikeshedId, BikeId, path}={}) {
+      async uploadImage (s3, { BikeshedId, BikeId, path } = {}) {
         assert(s3, 'uploadBike requires s3')
         assert(BikeshedId && BikeId && path, 'uploadImage requires BikeshedId, BikeId, and path')
 
