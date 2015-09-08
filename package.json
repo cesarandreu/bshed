@@ -44,6 +44,7 @@
     "express-graphql": "^0.3.0",
     "graphql": "^0.4.3",
     "graphql-relay": "^0.3.2",
+    "graphql-sequelize": "^0.8.1",
     "immutable": "^3.7.5",
     "koa": "^1.0.0",
     "koa-qs": "^2.0.0",
