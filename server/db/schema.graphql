@@ -1,0 +1,40 @@
+type Bikeshed implements Node {
+  id: ID!
+  description: String!
+  user: User
+}
+
+type BikeshedConnection {
+  pageInfo: PageInfo!
+  edges: [BikeshedEdge]
+}
+
+type BikeshedEdge {
+  node: Bikeshed
+  cursor: String!
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  viewer: Viewer
+  node(id: ID!): Node
+}
+
+type User implements Node {
+  id: ID!
+  name: String
+}
+
+type Viewer {
+  bikesheds(before: String, after: String, first: Int, last: Int): BikeshedConnection
+}
