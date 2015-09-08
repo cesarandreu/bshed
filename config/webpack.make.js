@@ -72,11 +72,14 @@ module.exports = function buildWebpackConfig (options) {
       exclude: /node_modules/,
       loaders: TEST || BUILD || SERVER
         ? [
-          'babel?optional[]=runtime&cacheDirectory'
+          // TODO: try without ""
+          'babel?optional[]=runtime&cacheDirectory&plugins[]="./config/babel-relay-plugin.js"'
         ]
         : [
           'react-hot',
-          'babel?optional[]=runtime&cacheDirectory'
+
+          // TODO: try without ""
+          'babel?optional[]=runtime&cacheDirectory&plugins[]="./config/babel-relay-plugin.js"'
         ]
     }, {
       test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
