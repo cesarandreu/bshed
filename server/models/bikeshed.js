@@ -17,9 +17,12 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     classMethods: {
       associate (models) {
-        Bikeshed.belongsTo(models.User)
-        Bikeshed.hasMany(models.Bike)
-        Bikeshed.hasMany(models.Vote)
+        Bikeshed.User = Bikeshed.belongsTo(models.User)
+        Bikeshed.Bikes = Bikeshed.hasMany(models.Bike)
+        Bikeshed.Votes = Bikeshed.hasMany(models.Vote)
+        // Bikeshed.belongsTo(models.User)
+        // Bikeshed.hasMany(models.Bike)
+        // Bikeshed.hasMany(models.Vote)
       }
     }
   })

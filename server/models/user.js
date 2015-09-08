@@ -57,8 +57,10 @@ export default function createUser (sequelize, DataTypes) {
 
     classMethods: {
       associate (models: Object) {
-        User.hasMany(models.Bikeshed)
-        User.hasMany(models.Vote)
+        User.Bikesheds = User.hasMany(models.Bikeshed)
+        User.Votes = User.hasMany(models.Vote)
+        // User.hasMany(models.Bikeshed)
+        // User.hasMany(models.Vote)
       },
 
       /**

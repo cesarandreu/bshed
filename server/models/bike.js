@@ -49,8 +49,10 @@ export default function createBike (sequelize, DataTypes) {
   }, {
     classMethods: {
       associate (models: Object) {
-        Bike.belongsTo(models.Bikeshed)
-        Bike.hasMany(models.Rating)
+        Bike.Bikeshed = Bike.belongsTo(models.Bikeshed)
+        Bike.Ratings = Bike.hasMany(models.Rating)
+        // Bike.belongsTo(models.Bikeshed)
+        // Bike.hasMany(models.Rating)
       }
     }
   })
