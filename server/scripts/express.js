@@ -1,4 +1,4 @@
-#!/usr/bin/env iojs -r babel/register
+#!/usr/bin/env node -r babel/register
 
 import loadModels from '../models'
 import * as config from '../config'

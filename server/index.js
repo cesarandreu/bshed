@@ -1,3 +1,5 @@
+#!/usr/bin/env node -r babel/register
+
 /**
  * Server loader
  * @flow
