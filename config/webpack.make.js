@@ -132,7 +132,7 @@ module.exports = function buildWebpackConfig (options) {
     } else {
       config.plugins.push(
         // Emit stats.json
-        new StatsPlugin(PROJECT_ROOT + '/build/stats.json')
+        new StatsPlugin('./stats.json')
       )
     }
 
