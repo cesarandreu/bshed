@@ -7,7 +7,6 @@ import middleware from '../../utils/middleware'
  * Authentications controller
  */
 export default function AuthenticationsController () {
-
   // Middleware
   const parseJsonForm = bodyParser()
   const auth = middleware.authenticate()
