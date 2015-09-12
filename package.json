@@ -25,7 +25,9 @@
     "dev:server:nodemon": "nodemon -e js,json -w ./build/ ./build/server.js",
     "dev:server:webpack": "webpack --config config/webpack.server.js --watch",
     "dev:server": "npm run dev:server:webpack & npm run dev:server:nodemon",
-    "dev:client": "webpack-dev-server --config config/webpack.dev.js --hot --inline --progress",
+    "dev:client": "npm run dev:client-server & npm run dev:client-html",
+    "dev:client-server": "webpack-dev-server --config config/webpack.dev.js --hot --inline",
+    "dev:client-html": "webpack --config config/webpack.dev.js --watch",
     "fakes3": "fakes3 -r $(node -p \"require('os').tmpdir()\")/fakes3 -p 10001"
   },
   "standard": {
