@@ -15,20 +15,22 @@ export async function updateSchema () {
   const result = await graphql(Schema, introspectionQuery)
   if (result.errors) {
     console.error(
-      'ERROR introspecting schema: ',
+      'ERROR introspecting schema:',
       JSON.stringify(result.errors, null, 2)
     )
-  } else {
-    fs.writeFileSync(
-      path.join(__dirname, '../db/schema.json'),
-      JSON.stringify(result, null, 2)
-    )
+    throw result.errors
   }
 
-  fs.writeFileSync(
-    path.join(__dirname, '../db/schema.graphql'),
-    printSchema(Schema)
-  )
+  await Promise.all([
+    writeFilePromise(
+      path.join(__dirname, '../db/schema.json'),
+      JSON.stringify(result, null, 2)
+    ),
+    writeFilePromise(
+      path.join(__dirname, '../db/schema.graphql'),
+      printSchema(Schema)
+    )
+  ])
 }
 
 if (require.main === module) {
@@ -36,4 +38,12 @@ if (require.main === module) {
     () => console.log('finished'),
     (err) => console.error('error', err)
   )
+}
+
+function writeFilePromise (filePath, file) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filePath, file, err => {
+      err ? reject(err) : resolve()
+    })
+  })
 }
