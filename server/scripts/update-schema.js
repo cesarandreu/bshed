@@ -1,4 +1,4 @@
-#!/usr/bin/env iojs -r babel/register
+#!/usr/bin/env node -r babel/register
 
 import fs from 'fs'
 import path from 'path'
