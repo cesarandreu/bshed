@@ -66,7 +66,7 @@ module.exports = function buildWebpackConfig (options) {
     )
   }
 
-  config.modules = {
+  config.module = {
     loaders: [{
       test: /\.(jsx|js)$/,
       exclude: /node_modules/,
