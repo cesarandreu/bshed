@@ -66,20 +66,19 @@ module.exports = function buildWebpackConfig (options) {
     )
   }
 
+  const babelRelayPluginPath = PROJECT_ROOT + '/config/babel-relay-plugin.js'
+
   config.module = {
     loaders: [{
-      test: /\.(jsx|js)$/,
+      test: /\.js$/,
       exclude: /node_modules/,
       loaders: TEST || BUILD || SERVER
         ? [
-          // TODO: try without ""
-          'babel?optional[]=runtime&cacheDirectory&plugins[]="./config/babel-relay-plugin.js"'
+          'babel?{ cacheDirectory: true, plugins: ["' + babelRelayPluginPath + '"] }'
         ]
         : [
           'react-hot',
-
-          // TODO: try without ""
-          'babel?optional[]=runtime&cacheDirectory&plugins[]="./config/babel-relay-plugin.js"'
+          'babel?{ cacheDirectory: true, plugins: ["' + babelRelayPluginPath + '"] }'
         ]
     }, {
       test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
