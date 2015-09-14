@@ -141,14 +141,6 @@ module.exports = function buildWebpackConfig (options) {
       // Set NODE_ENV
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
-      }),
-
-      // Generate index.html
-      new HtmlWebpackPlugin({
-        template: './config/index.html',
-        title: 'bshed',
-        minify: BUILD,
-        inject: true
       })
     )
 
@@ -160,7 +152,15 @@ module.exports = function buildWebpackConfig (options) {
     } else {
       config.plugins.push(
         // Emit stats.json
-        new StatsPlugin('./stats.json')
+        new StatsPlugin('./stats.json'),
+
+        // Generate index.html
+        new HtmlWebpackPlugin({
+          template: './config/index.html',
+          title: 'bshed',
+          minify: BUILD,
+          inject: true
+        })
       )
     }
 
