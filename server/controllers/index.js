@@ -11,7 +11,7 @@ const log = debug('app:server:controllers')
  * List of controllers to load
  */
 export const CONTROLLER_LIST = [
-  'users'
+  'graphql'
 ]
 
 /**
