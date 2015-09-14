@@ -1,8 +1,8 @@
 /**
- * User model
+ * User
  * @flow
  */
-import bcrypt from 'bcrypt'
+import { comparePassword } from '../lib/password'
 
 export default function createUser (sequelize, DataTypes) {
   const User = sequelize.define('User', {
@@ -39,19 +39,20 @@ export default function createUser (sequelize, DataTypes) {
     }
   }, {
     getterMethods: {
-      registered () {
+      /**
+       * User's registration status
+       */
+      isRegistered (): boolean {
         return !!this.getDataValue('registeredAt')
       }
     },
 
     instanceMethods: {
       /**
-       * Check if password is valid or not
-       * @param password Password to check
-       * @returns Promise of password validity
+       * Get password validity
        */
       checkPassword (password: string): Promise {
-        return User.comparePassword(password, this.getDataValue('hashedPassword'))
+        return comparePassword(password, this.getDataValue('hashedPassword'))
       }
     },
 
@@ -59,35 +60,6 @@ export default function createUser (sequelize, DataTypes) {
       associate (models: Object) {
         User.Bikesheds = User.hasMany(models.Bikeshed)
         User.Votes = User.hasMany(models.Vote)
-        // User.hasMany(models.Bikeshed)
-        // User.hasMany(models.Vote)
-      },
-
-      /**
-       * Get hashed password
-       * @param password Password to hash
-       * @returns Promise of hashed password
-       */
-      hashPassword (password: string): Promise {
-        return new Promise((resolve, reject) => {
-          bcrypt.hash(password, 8, (err, hash) => {
-            err ? reject(err) : resolve(hash)
-          })
-        })
-      },
-
-      /**
-       * Compare a password and hash
-       * @param password Password to check
-       * @param hash Hash to compare with
-       * @returns Promise of password validity
-       */
-      comparePassword (password: string, hash: string): Promise {
-        return new Promise((resolve, reject) => {
-          bcrypt.compare(password, hash, (err, res) => {
-            err ? reject(err) : resolve(res)
-          })
-        })
       }
     }
   })
