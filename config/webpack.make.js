@@ -3,9 +3,10 @@
  */
 const path = require('path')
 const webpack = require('webpack')
-const autoprefixer = require('autoprefixer')
+const cssnext = require('cssnext')
 const StatsPlugin = require('stats-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const PROJECT_ROOT = path.resolve(__dirname, '..')
 
@@ -68,7 +69,6 @@ module.exports = function buildWebpackConfig (options) {
   }
 
   const babelRelayPluginPath = PROJECT_ROOT + '/config/babel-relay-plugin.js'
-
   config.module = {
     loaders: [{
       test: /\.js$/,
@@ -84,11 +84,26 @@ module.exports = function buildWebpackConfig (options) {
     }, {
       test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
       loader: 'file'
+    }, {
+      test: /\.css$/,
+      loader: SERVER
+        ? 'null'
+        // ? ExtractTextPlugin.extract(
+        //   'css-loader/locals?modules&localIdentName=[local]---[hash:base64:5]!postcss'
+        //   // 'css-loader/locals?sourceMap&modules&localIdentName=[local]---[hash:base64:5]!postcss'
+        // )
+        : ExtractTextPlugin.extract(
+          'style',
+          'css?sourceMap&modules&localIdentName=[path][name]---[local]---[hash:base64:5]!postcss'
+        )
     }]
   }
 
   config.postcss = [
-    autoprefixer({ browsers: ['last 2 version'] })
+    cssnext({
+      browsers: ['last 2 versions'],
+      features: { import: false }
+    })
   ]
 
   config.resolve = {
@@ -108,8 +123,12 @@ module.exports = function buildWebpackConfig (options) {
     ? { __filename: true, __dirname: true }
     : {}
 
-  config.plugins = []
-  if (SERVER) {
+  config.plugins = [
+    new ExtractTextPlugin('[name].[hash].css', {
+      disable: !BUILD || TEST
+    })
+  ]
+  if (SERVER && !TEST) {
     config.plugins.push(
       // Enable source maps
       new webpack.BannerPlugin('require("source-map-support").install();', {
