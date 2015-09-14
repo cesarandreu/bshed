@@ -94,7 +94,7 @@ module.exports = function buildWebpackConfig (options) {
         // )
         : ExtractTextPlugin.extract(
           'style',
-          'css?sourceMap&modules&localIdentName=[path][name]---[local]---[hash:base64:5]!postcss'
+          'css?sourceMap&modules&localIdentName=[path][name]---[local]---[hash:base64:5]&importLoaders=1!postcss!postcss'
         )
     }]
   }
@@ -102,7 +102,7 @@ module.exports = function buildWebpackConfig (options) {
   config.postcss = [
     cssnext({
       browsers: ['last 2 versions'],
-      features: { import: false }
+      import: false
     })
   ]
 
