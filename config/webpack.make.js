@@ -54,7 +54,7 @@ module.exports = function buildWebpackConfig (options) {
         : 'var'
     }
 
-  config.target = SERVER ? 'node' : 'web'
+  // config.target = SERVER ? 'node' : 'web'
 
   config.devtool = BUILD || SERVER
     ? 'source-map'
