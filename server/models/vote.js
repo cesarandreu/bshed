@@ -1,6 +1,8 @@
-// const createError = require('http-errors')
-
-module.exports = function (sequelize, DataTypes) {
+/**
+ * Vote
+ * @flow
+ */
+export default function createVote (sequelize, DataTypes) {
   const Vote = sequelize.define('Vote', {
     id: {
       primaryKey: true,
@@ -32,9 +34,6 @@ module.exports = function (sequelize, DataTypes) {
         Vote.User = Vote.belongsTo(models.User)
         Vote.Bikeshed = Vote.belongsTo(models.Bikeshed)
         Vote.Ratings = Vote.hasMany(models.Rating)
-        // Vote.belongsTo(models.Bikeshed)
-        // Vote.belongsTo(models.User)
-        // Vote.hasMany(models.Rating)
       }
     }
   })

@@ -1,7 +1,8 @@
-// const _ = require('lodash')
-// const createError = require('http-errors')
-
-module.exports = function (sequelize, DataTypes) {
+/**
+ * Rating
+ * @flow
+ */
+export default function createRating (sequelize, DataTypes) {
   const Rating = sequelize.define('Rating', {
     id: {
       primaryKey: true,
@@ -43,8 +44,6 @@ module.exports = function (sequelize, DataTypes) {
       associate (models) {
         Rating.Bike = Rating.belongsTo(models.Bike)
         Rating.Vote = Rating.belongsTo(models.Vote)
-        // Rating.belongsTo(models.Bike)
-        // Rating.belongsTo(models.Vote)
       }
     }
   })

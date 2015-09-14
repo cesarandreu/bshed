@@ -1,4 +1,8 @@
-module.exports = function (sequelize, DataTypes) {
+/**
+ * Bikeshed
+ * @flow
+ */
+export default function createBikeshed (sequelize, DataTypes) {
   const Bikeshed = sequelize.define('Bikeshed', {
     id: {
       primaryKey: true,
@@ -20,9 +24,6 @@ module.exports = function (sequelize, DataTypes) {
         Bikeshed.User = Bikeshed.belongsTo(models.User)
         Bikeshed.Bikes = Bikeshed.hasMany(models.Bike)
         Bikeshed.Votes = Bikeshed.hasMany(models.Vote)
-        // Bikeshed.belongsTo(models.User)
-        // Bikeshed.hasMany(models.Bike)
-        // Bikeshed.hasMany(models.Vote)
       }
     }
   })
