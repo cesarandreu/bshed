@@ -1,0 +1,232 @@
+/**
+ * RESETS
+ */
+
+/*
+ * Reset the box-sizing
+ */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+/*
+ * Make html take up the entire screen
+ * Then set touch-action to avoid touch delay on mobile IE
+ */
+html {
+  width: 100%;
+  height: 100%;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+/*
+* Make body take up the entire screen
+* Remove body margin so layout containers don't cause extra overflow.
+*/
+body, :global(.app) {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+/*
+ * Main display reset for IE support.
+ * Source: http://weblog.west-wind.com/posts/2015/Jan/12/main-HTML5-Tag-not-working-in-Internet-Explorer-91011
+ */
+main {
+  display: block;
+}
+
+/*
+* Apply no display to elements with the hidden attribute.
+* IE 9 and 10 support.
+*/
+*[hidden] {
+  display: none !important;
+}
+
+/* _mobile */
+
+/* Remove the unwanted box around FAB buttons */
+/* More info: http://goo.gl/IPwKi */
+/*
+a, .Accordion, .Button, .Card, .Checkbox, .Dropdown-menu,
+.Icon-toggle, .Item, .Radio, .Slider, .Switch, .Tabs__tab {
+*/
+a {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+/* _h5bp */
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+  /*color: @text-color-primary;*/
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+
+audio,
+canvas,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+/**
+ * CUSTOM STYLES
+ */
+html, body {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+h1 {
+  @include typo-display-3;
+
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+h2 {
+  @include typo-display-2;
+
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+h3 {
+  @include typo-display-1;
+
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+h4 {
+  @include typo-headline;
+
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+h5 {
+  @include typo-title;
+
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+h6 {
+  @include typo-subhead;
+
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+p {
+  @include typo-body-1;
+
+  margin-bottom: 16px;
+}
+
+a {
+  color: $text-link-color;
+  font-weight: 500;
+}
+
+blockquote {
+  @include typo-blockquote;
+}
+
+mark {
+  background-color: #f4ff81;
+}
+
+dt {
+  font-weight: 700;
+}
+
+address {
+  @include typo-caption;
+
+  font-style: normal;
+}
+
+ul, ol {
+  @include typo-body-1;
+}
+*/

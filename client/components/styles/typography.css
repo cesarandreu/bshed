@@ -1,0 +1,112 @@
+/**
+ * Typograhpy
+ */
+.typoDisplay4 {
+  font-size: 112px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.typoDisplay3 {
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.typoDisplay2 {
+  font-size: 45px;
+  font-weight: 400;
+  line-height: 48px;
+}
+
+.typoDisplay1 {
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 40px;
+}
+
+.typoHeadline {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.typoTitle {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.typoSubhead {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+}
+
+.typoSubhead2 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.04em;
+}
+
+.typoBody2 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+.typoBody1 {
+  font-size: 14px;
+  font-weight: 40;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+.typoCaption {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.typoBlockquote {
+  position: relative;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+}
+
+.typoBlockquote:before {
+  position: absolute;
+  left: -0.5em;
+  content: '“';
+}
+
+.typoBlockquote:after {
+  content: '”';
+  margin-left: -0.05em;
+}
+
+.typoMenu {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.typoButton {
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0;
+}
