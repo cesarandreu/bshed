@@ -47,8 +47,8 @@ server.use(controllerLoader())
  */
 const log = debug('app:server')
 export function init (port = config.port) {
-  log('initializing server using port ${port}')
-  server.instance = server.listen(port, () => log('listening on port ${port}'))
+  log(`initializing server using port ${port}`)
+  server.instance = server.listen(port, () => log(`listening on port ${port}`))
   return server.instance
 }
 
