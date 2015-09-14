@@ -1,0 +1,57 @@
+/**
+ * Text component styles
+ */
+.bigTextBase {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+/**
+ * Text
+ */
+.text {
+  composes: typoBody1 from '../styles/typography.css';
+  margin-bottom: 16px;
+}
+
+/**
+ * Display
+ */
+.display1 {
+  composes: typoDisplay1 from '../styles/typography.css';
+  composes: bigTextBase;
+}
+
+.display2 {
+  composes: typoDisplay2 from '../styles/typography.css';
+  composes: bigTextBase;
+}
+
+.display3 {
+  composes: typoDisplay3 from '../styles/typography.css';
+  composes: bigTextBase;
+}
+
+/**
+ * Headline
+ */
+.headline {
+  composes: typoHeadline from '../styles/typography.css';
+  composes: bigTextBase;
+}
+
+/**
+ * Title
+ */
+.title {
+  composes: typoTitle from '../styles/typography.css';
+  composes: bigTextBase;
+}
+
+/**
+ * Subhead
+ */
+.subhead {
+  composes: typoSubhead from '../styles/typography.css';
+  composes: bigTextBase;
+}
