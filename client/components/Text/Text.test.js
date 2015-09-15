@@ -1,7 +1,28 @@
-import { Text, Title, Display, Subhead, Headline } from './Text'
+import { Blockquote, Text, Title, Display, Subhead, Headline } from './Text'
 import TestUtils from 'react-addons-test-utils'
 import React from 'react'
 import test from 'tape'
+
+test('Component: Blockquote', t => {
+  t.plan(2)
+
+  const renderer = TestUtils.createRenderer()
+  renderer.render(
+    <Blockquote>
+      blockquote
+    </Blockquote>
+  )
+
+  const blockquote = renderer.getRenderOutput()
+  t.equal(
+    blockquote.type, 'blockquote',
+    'Blockquote is a blockquote element'
+  )
+  t.equal(
+    blockquote.props.children, 'blockquote',
+    'Blockquote renders its child'
+  )
+})
 
 test('Component: Text', t => {
   t.plan(2)

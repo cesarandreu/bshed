@@ -7,6 +7,13 @@
 }
 
 /**
+ * Blockquote
+ */
+.blockquote {
+  composes: typoBlockquote from '../styles/typography.css';
+}
+
+/**
  * Text
  */
 .text {

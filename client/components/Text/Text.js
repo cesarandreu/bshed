@@ -7,6 +7,21 @@ import textClassNames from './Text.css'
 import cn from 'classnames'
 
 /**
+ * Blockquote
+ */
+export function Blockquote ({ className, ...props }) {
+  return (
+    <blockquote
+      className={cn(className, textClassNames.blockquote)}
+      {...props}
+    />
+  )
+}
+Blockquote.propTypes = {
+  className: PropTypes.string
+}
+
+/**
  * Text
  */
 export default Text
