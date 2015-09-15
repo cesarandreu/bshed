@@ -2,6 +2,11 @@
  * RESETS
  */
 
+:root {
+  /* Red A200 */
+  --color-accent: #FF5252;
+}
+
 /*
  * Reset the box-sizing
  */
@@ -72,11 +77,10 @@ a {
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
 html {
-  /*color: @text-color-primary;*/
   font-size: 1em;
   line-height: 1.4;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 /*
@@ -154,62 +158,9 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 0;
 }
 
-/*
-h1 {
-  @include typo-display-3;
-
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
-
-h2 {
-  @include typo-display-2;
-
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
-
-h3 {
-  @include typo-display-1;
-
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
-
-h4 {
-  @include typo-headline;
-
-  margin-top: 24px;
-  margin-bottom: 16px;
-}
-
-h5 {
-  @include typo-title;
-
-  margin-top: 24px;
-  margin-bottom: 16px;
-}
-
-h6 {
-  @include typo-subhead;
-
-  margin-top: 24px;
-  margin-bottom: 16px;
-}
-
-p {
-  @include typo-body-1;
-
-  margin-bottom: 16px;
-}
-
 a {
-  color: $text-link-color;
+  color: var(--color-accent);
   font-weight: 500;
-}
-
-blockquote {
-  @include typo-blockquote;
 }
 
 mark {
@@ -220,6 +171,7 @@ dt {
   font-weight: 700;
 }
 
+/*
 address {
   @include typo-caption;
 
