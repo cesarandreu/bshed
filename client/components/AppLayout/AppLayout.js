@@ -2,8 +2,8 @@
  * AppLayout
  * @flow
  */
+import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from '../Layout'
 import React, { Component, PropTypes } from 'react'
-import { Layout, LayoutContent, LayoutHeader } from '../Layout'
 
 export default class AppLayout extends Component {
   static propTypes = {
@@ -16,7 +16,7 @@ export default class AppLayout extends Component {
     return (
       <Layout>
         <LayoutHeader>
-          HEADER~
+          <LayoutTitle title='Bikeshed it!'/>
         </LayoutHeader>
         <LayoutContent>
           {children}
