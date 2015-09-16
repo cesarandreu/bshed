@@ -2,59 +2,10 @@
  * Layout
  * @flow
  */
+import shouldPureComponentUpdate from 'react-pure-render/function'
 import layoutClassNames from './Layout.css'
 import React, { PropTypes } from 'react'
-// import Relay from 'react-relay'
-// import cn from 'classnames'
-
-// export class LayoutHeader extends Component {
-//   static propTypes = {
-//     children: PropTypes.node.isRequired
-//   }
-
-//   render () {
-//     const { children, ... props } = this.props
-//     return (
-//       <header className={layoutClassNames.layoutHeader} {...props}>
-//         <div className={layoutClassNames.layoutHeaderRow}>
-//           {children}
-//         </div>
-//       </header>
-//     )
-//   }
-// }
-
-// export class LayoutContent extends Component {
-//   static propTypes = {
-//     children: PropTypes.node.isRequired
-//   }
-
-//   render () {
-//     const { children } = this.props
-//     return (
-//       <main className={layoutClassNames.layoutContent}>
-//         {children}
-//       </main>
-//     )
-//   }
-// }
-
-// export class Layout extends Component {
-//   static propTypes = {
-//     children: PropTypes.node.isRequired,
-//     viewer: PropTypes.object.isRequired
-//   }
-//   render () {
-//     const { children } = this.props
-//     return (
-//       <div className={layoutClassNames.layoutContainer}>
-//         <div className={layoutClassNames.layout}>
-//           {children}
-//         </div>
-//       </div>
-//     )
-//   }
-// }
+import { Link } from 'react-router'
 
 export function LayoutHeader ({ children, ...props }) {
   return (
@@ -65,9 +16,12 @@ export function LayoutHeader ({ children, ...props }) {
     </header>
   )
 }
-LayoutHeader.propTypes = {
-  children: PropTypes.node.isRequired
-}
+Object.assign(LayoutHeader, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    children: PropTypes.node.isRequired
+  }
+})
 
 export function LayoutContent ({ children, ...props }) {
   return (
@@ -76,9 +30,12 @@ export function LayoutContent ({ children, ...props }) {
     </main>
   )
 }
-LayoutContent.propTypes = {
-  children: PropTypes.node.isRequired
-}
+Object.assign(LayoutContent, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    children: PropTypes.node.isRequired
+  }
+})
 
 export function Layout ({ children, ...props }) {
   return (
@@ -89,33 +46,27 @@ export function Layout ({ children, ...props }) {
     </div>
   )
 }
-Layout.propTypes = {
-  children: PropTypes.node.isRequired
+Object.assign(Layout, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    children: PropTypes.node.isRequired
+  }
+})
+
+export function LayoutTitle ({ title }) {
+  return (
+    <Link
+      to='/'
+      title='home'
+      className={layoutClassNames.layoutTitle}
+    >
+      {title}
+    </Link>
+  )
 }
-
-// export class ApplicationLayout extends Component {
-//   static propTypes = {
-//     children: PropTypes.node.isRequired
-//   }
-
-//   render () {
-//     return (
-//       <Layout>
-//         <LayoutHeader>
-//         </LayoutHeader>
-//         <LayoutContent>
-//         </LayoutContent>
-//       </Layout>
-//     )
-//   }
-// }
-
-// export default Relay.createContainer(Layout, {
-//   fragments: {
-//     viewer: () => Relay.QL`
-//       fragment on Viewer {
-//         isRegistered,
-//       }
-//     `
-//   }
-// })
+Object.assign({
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    title: PropTypes.string.isRequired
+  }
+})

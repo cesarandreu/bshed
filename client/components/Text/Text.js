@@ -2,6 +2,7 @@
  * Text components
  * @flow
  */
+import shouldPureComponentUpdate from 'react-pure-render/function'
 import React, { PropTypes } from 'react'
 import textClassNames from './Text.css'
 import cn from 'classnames'
@@ -17,9 +18,12 @@ export function Blockquote ({ className, ...props }) {
     />
   )
 }
-Blockquote.propTypes = {
-  className: PropTypes.string
-}
+Object.assign(Blockquote, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    className: PropTypes.string
+  }
+})
 
 /**
  * Text
@@ -33,9 +37,12 @@ export function Text ({ className, ...props }) {
     />
   )
 }
-Text.propTypes = {
-  className: PropTypes.string
-}
+Object.assign(Text, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    className: PropTypes.string
+  }
+})
 
 /**
  * Subhead
@@ -48,9 +55,12 @@ export function Subhead ({ className, ...props }) {
     />
   )
 }
-Subhead.propTypes = {
-  className: PropTypes.string
-}
+Object.assign(Subhead, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    className: PropTypes.string
+  }
+})
 
 /**
  * Title
@@ -63,9 +73,12 @@ export function Title ({ className, ...props }) {
     />
   )
 }
-Title.propTypes = {
-  className: PropTypes.string
-}
+Object.assign(Title, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    className: PropTypes.string
+  }
+})
 
 /**
  * Headline
@@ -78,9 +91,12 @@ export function Headline ({ className, ...props }) {
     />
   )
 }
-Headline.propTypes = {
-  className: PropTypes.string
-}
+Object.assign(Headline, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    className: PropTypes.string
+  }
+})
 
 /**
  * Display
@@ -88,17 +104,20 @@ Headline.propTypes = {
 export function Display ({ variation, className, ...props }) {
   switch (variation) {
     case 1:
-      return <h3 className={cn(textClassNames.display1, className)} {...props}/>
+      return <h3 className={cn(className, textClassNames.display1)} {...props}/>
     case 2:
-      return <h2 className={cn(textClassNames.display2, className)} {...props}/>
+      return <h2 className={cn(className, textClassNames.display2)} {...props}/>
     default:
-      return <h1 className={cn(textClassNames.display3, className)} {...props}/>
+      return <h1 className={cn(className, textClassNames.display3)} {...props}/>
   }
 }
-Display.propTypes = {
-  variation: PropTypes.oneOf([1, 2, 3]).isRequired,
-  className: PropTypes.string
-}
-Display.defaultProps = {
-  variation: 1
-}
+Object.assign(Headline, {
+  shouldComponentUpdate: shouldPureComponentUpdate,
+  propTypes: {
+    variation: PropTypes.oneOf([1, 2, 3]).isRequired,
+    className: PropTypes.string
+  },
+  defaultProps: {
+    variation: 1
+  }
+})
