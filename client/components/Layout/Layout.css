@@ -1,7 +1,6 @@
 /**
  * Layout
  */
-
 :root {
   --layout-header-desktop-row-height: 64px;
   --layout-header-mobile-row-height: 56px;
@@ -19,6 +18,7 @@
 
 @custom-media --layout-screen-threshold (max-width: 1024px);
 
+/* Layout */
 .layoutContainer {
   position: absolute;
   width: 100%;
@@ -36,6 +36,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* LayoutHeader */
 .layoutHeader {
   display: flex;
   flex-flow: column nowrap;
@@ -48,18 +49,15 @@
   padding: 0;
   border: 0;
   min-height: var(--layout-header-desktop-row-height);
-  max-height: 1000px;
+  /*max-height: 1000px;*/
   z-index: 3;
 
-  /* background-color: */
-  /* color: */
+  composes: textColorPrimary colorPrimary from '../styles/colors.css';
 
-  composes: animationFastOutSlowIn from '../styles/animations.css';
+  /*composes: animationFastOutSlowIn from '../styles/animations.css';*/
   composes: shadow2dp from '../styles/shadows.css';
-  transition-property: max-height, box-shadow;
+  /*transition-property: max-height, box-shadow;*/
 }
-
-/* @media screen and (max-width: var(--layout-screen-size-threshold)) { */
 @media screen and (--layout-screen-threshold) {
   .layoutHeader {
     min-height: var(--layout-header-mobile-row-height);
@@ -77,8 +75,6 @@
   margin: 0;
   padding: 0 var(--layout-header-desktop-indent);
 }
-
-/* @media screen and (max-width: var(--layout-screen-size-threshold)) { */
 @media screen and (--layout-screen-threshold) {
   .layoutHeaderRow {
     height: var(--layout-header-mobile-row-height);
@@ -90,6 +86,7 @@
   flex-shrink: 0;
 }
 
+/* LayoutContent */
 .layoutContent {
   /* Fix IE10 bug */
   -ms-flex: 0 1 auto;
@@ -100,4 +97,21 @@
   flex-grow: 1;
   z-index: 1;
   -webkit-overflow-scrolling: touch;
+}
+
+/* LayoutTitle */
+.layoutTitle {
+  composes: typoTitle from '../styles/typography.css';
+  composes: colorTextPrimaryContrast from '../styles/colors.css';
+  text-decoration: none;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: var(--layout-header-desktop-row-height);
+}
+@media screen and (--layout-screen-threshold) {
+  .layoutTitle {
+    height: var(--layout-header-mobile-row-height);
+  }
 }
