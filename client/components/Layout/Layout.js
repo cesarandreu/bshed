@@ -1,4 +1,7 @@
-// import React, { Component, PropTypes } from 'react'
+/**
+ * Layout
+ * @flow
+ */
 import layoutClassNames from './Layout.css'
 import React, { PropTypes } from 'react'
 // import Relay from 'react-relay'

@@ -1,3 +1,7 @@
+/**
+ * AppLayout
+ * @flow
+ */
 import React, { Component, PropTypes } from 'react'
 import { Layout, LayoutContent, LayoutHeader } from '../Layout'
 

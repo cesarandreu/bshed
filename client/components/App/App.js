@@ -1,3 +1,7 @@
+/**
+ * App
+ * @flow
+ */
 import '../styles/resets.css'
 import Relay from 'react-relay'
 import { Display } from '../Text'
