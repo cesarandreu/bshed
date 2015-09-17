@@ -9,8 +9,8 @@ import { Link } from 'react-router'
 
 export function LayoutHeader ({ children, ...props }) {
   return (
-    <header className={layoutClassNames.layoutHeader} {...props}>
-      <div className={layoutClassNames.layoutHeaderRow}>
+    <header className={layoutClassNames.header} {...props}>
+      <div className={layoutClassNames.headerRow}>
         {children}
       </div>
     </header>
@@ -25,7 +25,7 @@ Object.assign(LayoutHeader, {
 
 export function LayoutContent ({ children, ...props }) {
   return (
-    <main className={layoutClassNames.layoutContent} {...props}>
+    <main className={layoutClassNames.content} {...props}>
       {children}
     </main>
   )
@@ -39,7 +39,7 @@ Object.assign(LayoutContent, {
 
 export function Layout ({ children, ...props }) {
   return (
-    <div className={layoutClassNames.layoutContainer} {...props}>
+    <div className={layoutClassNames.container} {...props}>
       <div className={layoutClassNames.layout}>
         {children}
       </div>
@@ -58,7 +58,7 @@ export function LayoutTitle ({ title }) {
     <Link
       to='/'
       title='home'
-      className={layoutClassNames.layoutTitle}
+      className={layoutClassNames.title}
     >
       {title}
     </Link>

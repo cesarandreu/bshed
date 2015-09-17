@@ -19,7 +19,7 @@
 @custom-media --layout-screen-threshold (max-width: 1024px);
 
 /* Layout */
-.layoutContainer {
+.container {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -37,7 +37,7 @@
 }
 
 /* LayoutHeader */
-.layoutHeader {
+.header {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -59,12 +59,12 @@
   /*transition-property: max-height, box-shadow;*/
 }
 @media screen and (--layout-screen-threshold) {
-  .layoutHeader {
+  .header {
     min-height: var(--layout-header-mobile-row-height);
   }
 }
 
-.layoutHeaderRow {
+.headerRow {
   display: flex;
   flex-flow: row nowrap;
   flex-shrink: 0;
@@ -76,22 +76,23 @@
   padding: 0 var(--layout-header-desktop-indent);
 }
 @media screen and (--layout-screen-threshold) {
-  .layoutHeaderRow {
+  .headerRow {
     height: var(--layout-header-mobile-row-height);
     padding: 0 var(--layout-header-mobile-indent);
   }
 }
 
-.layoutHeaderRow > * {
+.headerRow > * {
   flex-shrink: 0;
 }
 
 /* LayoutContent */
-.layoutContent {
+.content {
   /* Fix IE10 bug */
   -ms-flex: 0 1 auto;
 
-  display: inline-block;
+  /*display: inline-block;*/
+  display: inline-flex;
   overflow-y: auto;
   overflow-x: hidden;
   flex-grow: 1;
@@ -100,7 +101,7 @@
 }
 
 /* LayoutTitle */
-.layoutTitle {
+.title {
   composes: typoTitle from '../styles/typography.css';
   composes: colorTextPrimaryContrast from '../styles/colors.css';
   text-decoration: none;
@@ -111,7 +112,7 @@
   height: var(--layout-header-desktop-row-height);
 }
 @media screen and (--layout-screen-threshold) {
-  .layoutTitle {
+  .title {
     height: var(--layout-header-mobile-row-height);
   }
 }
