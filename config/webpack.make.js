@@ -78,7 +78,6 @@ module.exports = function buildWebpackConfig (options) {
           'babel?{ cacheDirectory: true, plugins: ["' + babelRelayPluginPath + '"] }'
         ]
         : [
-          'react-hot',
           'babel?{ cacheDirectory: true, plugins: ["' + babelRelayPluginPath + '"] }'
         ]
     }, {
