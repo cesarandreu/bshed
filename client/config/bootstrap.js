@@ -21,7 +21,7 @@ import routes from './routes'
 const history = createHistory()
 
 // Mount the app
-ReactDOM.render(
+const instance = ReactDOM.render(
   <Router
     createElement={ReactRouterRelay.createElement}
     history={history}
@@ -29,3 +29,11 @@ ReactDOM.render(
   />,
   document.getElementById('app')
 )
+
+// Fix hotloading for pure components
+// @TODO: handle updating the routes
+if (module.hot) {
+  module.hot.accept('./routes', () => {
+    instance.forceUpdate()
+  })
+}
