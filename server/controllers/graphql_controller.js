@@ -86,6 +86,8 @@ GraphqlController.getParams = function * getParams (next) {
     } catch (err) {
       this.throw(400, 'Variables are invalid JSON.')
     }
+  } else {
+    this.graphql.variables = variables
   }
 
   // Name of GraphQL operation to execute
