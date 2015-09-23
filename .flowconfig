@@ -1,0 +1,15 @@
+[ignore]
+.*/old/.*
+.*/server/.*
+
+[include]
+.*/client/.*
+.*/interfaces/.*
+
+[libs]
+interfaces
+
+[options]
+module.name_mapper='^.*\(css\)$' -> 'CSSModule'
+module.system=node
+strip_root=true
