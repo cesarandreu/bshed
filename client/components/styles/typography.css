@@ -110,3 +110,8 @@
   line-height: 1;
   letter-spacing: 0;
 }
+
+.typoCard {
+  font-size: 16px;
+  font-weight: 400;
+}

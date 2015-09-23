@@ -11,11 +11,34 @@
 
   /* Red A200 */
   --color-accent: #FF5252;
+
+  /* Red 500 */
+  --color-error: #F44336;
 }
 
 /* Text color primary */
 .textColorPrimary {
   color: rgba(0, 0, 0, 0.87);
+}
+
+/* Text color secondary */
+/* Icon color */
+.textColorSecondary,
+.iconColor {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+/* Text color disabled */
+/* Text color hint */
+.textColorDisabled,
+.textColorHint {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+/* Divider color */
+.dividerColor {
+  /*color: rgba(0, 0, 0, 0.12);*/
+  background-color: rgba(0, 0, 0, 0.12);
 }
 
 /* Primary */
@@ -60,4 +83,9 @@
 .colorTextPrimaryContrast,
 .colorTextAccentContrast {
   color: #FFFFFF;
+}
+
+/* Text color error */
+.colorTextError {
+  color: var(--color-error);
 }
