@@ -2,15 +2,15 @@
  * Text components
  * @flow
  */
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import React, { PropTypes } from 'react'
 import textClassNames from './Text.css'
+import type ReactElement from 'react'
 import cn from 'classnames'
 
 /**
  * Blockquote
  */
-export function Blockquote ({ className, ...props }) {
+export function Blockquote ({ className, ...props }: Object): ReactElement {
   return (
     <blockquote
       className={cn(className, textClassNames.blockquote)}
@@ -19,7 +19,6 @@ export function Blockquote ({ className, ...props }) {
   )
 }
 Object.assign(Blockquote, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     className: PropTypes.string
   }
@@ -28,8 +27,7 @@ Object.assign(Blockquote, {
 /**
  * Text
  */
-export default Text
-export function Text ({ className, ...props }) {
+export function Text ({ className, ...props }: Object): ReactElement {
   return (
     <p
       className={cn(className, textClassNames.text)}
@@ -38,7 +36,6 @@ export function Text ({ className, ...props }) {
   )
 }
 Object.assign(Text, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     className: PropTypes.string
   }
@@ -47,7 +44,7 @@ Object.assign(Text, {
 /**
  * Subhead
  */
-export function Subhead ({ className, ...props }) {
+export function Subhead ({ className, ...props }: Object): ReactElement {
   return (
     <h6
       className={cn(className, textClassNames.subhead)}
@@ -56,7 +53,6 @@ export function Subhead ({ className, ...props }) {
   )
 }
 Object.assign(Subhead, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     className: PropTypes.string
   }
@@ -65,7 +61,7 @@ Object.assign(Subhead, {
 /**
  * Title
  */
-export function Title ({ className, ...props }) {
+export function Title ({ className, ...props }: Object): ReactElement {
   return (
     <h5
       className={cn(className, textClassNames.title)}
@@ -74,7 +70,6 @@ export function Title ({ className, ...props }) {
   )
 }
 Object.assign(Title, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     className: PropTypes.string
   }
@@ -83,7 +78,7 @@ Object.assign(Title, {
 /**
  * Headline
  */
-export function Headline ({ className, ...props }) {
+export function Headline ({ className, ...props }: Object): ReactElement {
   return (
     <h4
       className={cn(className, textClassNames.headline)}
@@ -92,7 +87,6 @@ export function Headline ({ className, ...props }) {
   )
 }
 Object.assign(Headline, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     className: PropTypes.string
   }
@@ -101,7 +95,7 @@ Object.assign(Headline, {
 /**
  * Display
  */
-export function Display ({ variation, className, ...props }) {
+export function Display ({ variation, className, ...props }: Object): ReactElement {
   switch (variation) {
     case 1:
       return <h3 className={cn(className, textClassNames.display1)} {...props}/>
@@ -112,7 +106,6 @@ export function Display ({ variation, className, ...props }) {
   }
 }
 Object.assign(Headline, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     variation: PropTypes.oneOf([1, 2, 3]).isRequired,
     className: PropTypes.string

@@ -1,2 +1,2 @@
-export * from './Text'
-export default from './Text'
+/* @flow */
+module.exports = require('./Text')

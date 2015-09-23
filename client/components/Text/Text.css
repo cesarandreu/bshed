@@ -1,10 +1,6 @@
 /**
  * Text component styles
  */
-.bigTextBase {
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
 
 /**
  * Blockquote
@@ -18,7 +14,6 @@
  */
 .text {
   composes: typoBody1 from '../styles/typography.css';
-  margin-bottom: 16px;
 }
 
 /**
@@ -26,17 +21,14 @@
  */
 .display1 {
   composes: typoDisplay1 from '../styles/typography.css';
-  composes: bigTextBase;
 }
 
 .display2 {
   composes: typoDisplay2 from '../styles/typography.css';
-  composes: bigTextBase;
 }
 
 .display3 {
   composes: typoDisplay3 from '../styles/typography.css';
-  composes: bigTextBase;
 }
 
 /**
@@ -44,7 +36,6 @@
  */
 .headline {
   composes: typoHeadline from '../styles/typography.css';
-  composes: bigTextBase;
 }
 
 /**
@@ -52,7 +43,6 @@
  */
 .title {
   composes: typoTitle from '../styles/typography.css';
-  composes: bigTextBase;
 }
 
 /**
@@ -60,5 +50,4 @@
  */
 .subhead {
   composes: typoSubhead from '../styles/typography.css';
-  composes: bigTextBase;
 }
