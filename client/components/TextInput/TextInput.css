@@ -1,0 +1,100 @@
+/**
+ * TextInput
+ */
+:root {
+  /* Red 500 */
+  --color-error: #F44336;
+
+  /* Red A200 */
+  /*--color-accent: #FF5252;*/
+
+  /* Blue A200 */
+  --color-primary: #448AFF;
+
+  --color-divider: rgba(0, 0, 0, 0.12);
+  --text-input-height: 48px;
+  --text-input-font-size: 16px;
+  --caption-font-size: 12px;
+}
+
+.wrapper {
+  display: inline-flex;
+  flex-flow: column nowrap;
+  position: relative;
+  /*width: 256px;*/
+  min-width: 256px;
+  height: 80px;
+}
+
+.label {
+  font-size: var(--text-input-font-size);
+  transform: translate3d(0, 16px, 0);
+  transform-origin: left top;
+  position: absolute;
+  line-height: var(--text-input-height);
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  composes: textColorHint from '../styles/colors.css';
+}
+
+.label.hasFocus,
+.label.hasValue {
+  transform: translate3d(0, -8px, 0);
+  font-size: var(--caption-font-size);
+}
+
+.label.hasFocus {
+  /*color: var(--color-accent);*/
+  color: var(--color-primary);
+}
+
+.label.hasFocus.hasError {
+  color: var(--color-error);
+}
+
+.input {
+  font-size: var(--text-input-font-size);
+  position: relative;
+  width: 100%;
+  height: var(--text-input-height);
+  margin: 16px 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: none;
+  composes: textColorPrimary from '../styles/colors.css';
+}
+
+.underline,
+.focusUnderline {
+  border-bottom: 1px solid var(--color-divider);
+  position: absolute;
+  width: 100%;
+  bottom: 24px;
+  margin: 0;
+}
+
+.focusUnderline {
+  /*border-color: var(--color-accent);*/
+  border-color: var(--color-primary);
+  border-bottom-width: 2px;
+  transform: scaleX(0);
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+.focusUnderline.hasError,
+.focusUnderline.hasFocus {
+  transform: scaleX(1);
+}
+
+.focusUnderline.hasError {
+  border-color: var(--color-error);
+}
+
+.error {
+  position: absolute;
+  bottom: 4px;
+  font-size: var(--caption-font-size);
+  line-height: 16px;
+  color: var(--color-error);
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
