@@ -2,9 +2,9 @@
  * Text components
  * @flow
  */
+import type { ReactElement } from 'react'
 import React, { PropTypes } from 'react'
 import textClassNames from './Text.css'
-import type ReactElement from 'react'
 import cn from 'classnames'
 
 /**

@@ -2,9 +2,9 @@
  * Card
  * @flow
  */
+import type { ReactElement } from 'react'
 import React, { PropTypes } from 'react'
 import cardClassNames from './Card.css'
-import type ReactElement from 'react'
 import cn from 'classnames'
 
 export function Card ({ children, shadow }: Object): ReactElement {
@@ -38,9 +38,10 @@ Object.assign(CardBody, {
 })
 
 export function CardActions ({ children, border }: Object): ReactElement {
-  const cardActionsClassName = cn(cardClassNames.actions, {
-    [cardClassNames.borderTop]: border
-  })
+  const cardActionsClassName = cn(
+    cardClassNames.actions,
+    border ? cardClassNames.borderTop : ''
+  )
 
   return (
     <div className={cardActionsClassName}>

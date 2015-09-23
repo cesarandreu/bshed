@@ -3,10 +3,17 @@
  * @flow
  */
 import shouldPureComponentUpdate from 'react-pure-render/function'
+import type { SyntheticEvent, ReactElement } from 'react'
 import React, { Component, PropTypes } from 'react'
 import textInputClassNames from './TextInput.css'
-import type SyntheticEvent from 'react'
 import cn from 'classnames'
+
+function keepValidClassNames (result: Array<string>, [className, hasClassName]) {
+  if (hasClassName) {
+    result.push(className)
+  }
+  return result
+}
 
 export class TextInput extends Component {
   constructor (props: Object) {
@@ -32,20 +39,20 @@ export class TextInput extends Component {
     }
   }
 
-  render () {
+  render (): ReactElement {
     const { name, error, label, value, onChange } = this.props
     const { focus } = this.state
 
-    const labelClassNames = cn(textInputClassNames.label, {
-      [textInputClassNames.hasFocus]: !!focus,
-      [textInputClassNames.hasError]: !!error,
-      [textInputClassNames.hasValue]: !!value
-    })
+    const labelClassNames = cn([
+      [textInputClassNames.hasFocus, !!focus],
+      [textInputClassNames.hasError, !!error],
+      [textInputClassNames.hasValue, !!value]
+    ].reduce(keepValidClassNames, [textInputClassNames.label]))
 
-    const focusUnderlineClassNames = cn(textInputClassNames.focusUnderline, {
-      [textInputClassNames.hasFocus]: !!focus,
-      [textInputClassNames.hasError]: !!error
-    })
+    const focusUnderlineClassNames = cn([
+      [textInputClassNames.hasFocus, !!focus],
+      [textInputClassNames.hasError, !!error]
+    ].reduce(keepValidClassNames, [textInputClassNames.focusUnderline]))
 
     return (
       <div className={textInputClassNames.wrapper}>

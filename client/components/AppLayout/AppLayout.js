@@ -7,7 +7,7 @@ import shouldPureComponentUpdate from 'react-pure-render/function'
 import React, { Component, PropTypes } from 'react'
 
 export class AppLayout extends Component {
-  constructor (props) {
+  constructor (props: Object) {
     super(props)
     this.shouldComponentUpdate = shouldPureComponentUpdate
   }

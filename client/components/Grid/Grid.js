@@ -2,17 +2,23 @@
  * Grid
  * @flow
  */
+import type { ReactElement } from 'react'
 import React, { PropTypes } from 'react'
 import gridClassNames from './Grid.css'
-import type ReactElement from 'react'
 import cn from 'classnames'
 
 const SIZES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 export function Grid ({ noSpacing, className, ...props }: Object): ReactElement {
+  const classNames = cn(
+    gridClassNames.grid,
+    noSpacing ? gridClassNames.noSpacing : '',
+    className
+  )
+
   return (
     <div
-      className={cn(gridClassNames.grid, { [gridClassNames.noSpacing]: noSpacing }, className)}
+      className={classNames}
       {...props}
     />
   )
