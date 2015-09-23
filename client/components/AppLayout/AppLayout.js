@@ -3,11 +3,13 @@
  * @flow
  */
 import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from '../Layout'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 import React, { Component, PropTypes } from 'react'
 
-export default class AppLayout extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired
+export class AppLayout extends Component {
+  constructor (props) {
+    super(props)
+    this.shouldComponentUpdate = shouldPureComponentUpdate
   }
 
   render () {
@@ -24,6 +26,9 @@ export default class AppLayout extends Component {
       </Layout>
     )
   }
+}
+AppLayout.propTypes = {
+  children: PropTypes.node.isRequired
 }
 
 // export default Relay.createContainer(Layout, {

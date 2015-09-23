@@ -2,7 +2,6 @@
  * Card
  * @flow
  */
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import React, { PropTypes } from 'react'
 import cardClassNames from './Card.css'
 import type ReactElement from 'react'
@@ -16,7 +15,6 @@ export function Card ({ children, shadow }: Object): ReactElement {
   )
 }
 Object.assign(Card, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     children: PropTypes.node.isRequired,
     shadow: PropTypes.oneOf([2, 3, 4, 6, 8, 16]).isRequired
@@ -34,7 +32,6 @@ export function CardBody ({ children }: Object): ReactElement {
   )
 }
 Object.assign(CardBody, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     children: PropTypes.node.isRequired
   }
@@ -52,7 +49,6 @@ export function CardActions ({ children, border }: Object): ReactElement {
   )
 }
 Object.assign(CardActions, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     border: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired

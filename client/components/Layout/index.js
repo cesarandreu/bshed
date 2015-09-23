@@ -1,1 +1,2 @@
-export * from './Layout'
+/* @flow */
+module.exports = require('./Layout')

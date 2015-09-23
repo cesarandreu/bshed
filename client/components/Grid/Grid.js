@@ -2,7 +2,6 @@
  * Grid
  * @flow
  */
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import React, { PropTypes } from 'react'
 import gridClassNames from './Grid.css'
 import type ReactElement from 'react'
@@ -19,7 +18,6 @@ export function Grid ({ noSpacing, className, ...props }: Object): ReactElement 
   )
 }
 Object.assign(Grid, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     noSpacing: PropTypes.bool.isRequired,
     className: PropTypes.string
@@ -38,7 +36,6 @@ export function Cell ({ size, className, ...props }: Object): ReactElement {
   )
 }
 Object.assign(Cell, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     size: PropTypes.oneOf(SIZES).isRequired,
     className: PropTypes.string

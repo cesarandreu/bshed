@@ -2,12 +2,12 @@
  * Layout
  * @flow
  */
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import layoutClassNames from './Layout.css'
 import React, { PropTypes } from 'react'
+import type ReactElement from 'react'
 import { Link } from 'react-router'
 
-export function LayoutHeader ({ children, ...props }) {
+export function LayoutHeader ({ children, ...props }: Object): ReactElement {
   return (
     <header className={layoutClassNames.header} {...props}>
       <div className={layoutClassNames.headerRow}>
@@ -17,13 +17,12 @@ export function LayoutHeader ({ children, ...props }) {
   )
 }
 Object.assign(LayoutHeader, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     children: PropTypes.node.isRequired
   }
 })
 
-export function LayoutContent ({ children, ...props }) {
+export function LayoutContent ({ children, ...props }: Object): ReactElement {
   return (
     <main className={layoutClassNames.content} {...props}>
       {children}
@@ -31,13 +30,12 @@ export function LayoutContent ({ children, ...props }) {
   )
 }
 Object.assign(LayoutContent, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     children: PropTypes.node.isRequired
   }
 })
 
-export function Layout ({ children, ...props }) {
+export function Layout ({ children, ...props }: Object): ReactElement {
   return (
     <div className={layoutClassNames.container} {...props}>
       <div className={layoutClassNames.layout}>
@@ -47,13 +45,12 @@ export function Layout ({ children, ...props }) {
   )
 }
 Object.assign(Layout, {
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     children: PropTypes.node.isRequired
   }
 })
 
-export function LayoutTitle ({ title }) {
+export function LayoutTitle ({ title }: Object): ReactElement {
   return (
     <Link
       to='/'
@@ -65,7 +62,6 @@ export function LayoutTitle ({ title }) {
   )
 }
 Object.assign({
-  shouldComponentUpdate: shouldPureComponentUpdate,
   propTypes: {
     title: PropTypes.string.isRequired
   }
