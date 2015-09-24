@@ -4,12 +4,14 @@
 
 [include]
 .*/client/.*
-.*/interfaces/.*
 
 [libs]
-interfaces
+./interfaces/interfaces.js
 
 [options]
-module.name_mapper='^.*\(css\)$' -> 'CSSModule'
+module.name_mapper='.*\.css$' -> 'CSSModule'
+module.name_mapper='^.*\.css$' -> 'CSSModule'
+module.name_mapper='^[a-zA-Z0-9$_-]+\.css$' -> 'CSSModule'
+module.name_mapper= '^[./a-zA-Z0-9$_-]+\.css$' -> 'CSSModule'
 module.system=node
 strip_root=true
