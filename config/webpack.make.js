@@ -68,18 +68,30 @@ module.exports = function buildWebpackConfig (options) {
     )
   }
 
-  const babelRelayPluginPath = PROJECT_ROOT + '/config/babel-relay-plugin.js'
+  // babel-loader query
+  const babelQuery = {
+    extra: {},
+    cacheDirectory: true,
+    plugins: [PROJECT_ROOT + '/config/babel-relay-plugin.js']
+  }
+  if (!TEST && !BUILD && !SERVER) {
+    babelQuery.plugins.push('react-transform')
+    babelQuery.extra['react-transform'] = [{
+      target: 'react-transform-hmr',
+      imports: ['react'],
+      locals: ['module']
+    }, {
+      target: 'react-transform-catch-errors',
+      imports: ['react', 'redbox-react']
+    }]
+  }
+
   config.module = {
     loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loaders: TEST || BUILD || SERVER
-        ? [
-          'babel?{ cacheDirectory: true, plugins: ["' + babelRelayPluginPath + '"] }'
-        ]
-        : [
-          'babel?{ cacheDirectory: true, plugins: ["' + babelRelayPluginPath + '"] }'
-        ]
+      loader: 'babel',
+      query: babelQuery
     }, {
       test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
       loader: 'file'
@@ -106,7 +118,7 @@ module.exports = function buildWebpackConfig (options) {
   ]
 
   config.resolve = {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js']
   }
 
   config.devServer = {
