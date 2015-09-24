@@ -1,0 +1,72 @@
+/**
+ * Button
+ */
+:root {
+  /* Grey 500 */
+  --grey-500: #9E9E9E;
+
+  --button-primary-color: color(var(--grey-500) alpha(20%));
+  --button-active-color: color(var(--grey-500) alpha(40%));
+  --button-focus-color: color(#000 alpha(12%));
+}
+
+.baseButton {
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  position: relative;
+  height: 36px;
+  min-width: 64px;
+  padding: 0 8px;
+  display: inline-block;
+  composes: typoButton from '../styles/typography.css';
+  overflow: hidden;
+  will-change: box-shadow, transform;
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1),
+              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  line-height: 36px;
+}
+
+.baseButton:hover {
+  /*background-color: color(var(--button-primary-color) alpha(20%));*/
+  background-color: var(--button-primary-color);
+}
+
+.baseButton:focus:not(:active) {
+  background-color: var(--button-focus-color);
+}
+
+.baseButton:active {
+  background-color: var(--button-active-color);
+}
+
+.color {
+  composes: baseButton;
+  composes: colorTextPrimary from '../styles/colors.css';
+}
+
+.button {
+  composes: baseButton;
+  color: #000;
+  /*composes: colorTextPrimaryContrast from '../styles/colors.css';*/
+}
+
+.raised {
+  background: var(--button-primary-color);
+  /*composes: shadow2dp from '../styles/shadows.css';*/
+}
+
+.raised:active {
+  background-color: var(--button-active-color);
+  /*composes: shadow4dp from '../styles/shadows.css';*/
+}
+
+.raised:focus:not(:active) {
+  background-color: var(--button-active-color);
+  /*composes: focusShadow from '../styles/shadows.css';*/
+}
