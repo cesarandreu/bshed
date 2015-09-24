@@ -31,6 +31,7 @@
     "link": "npm run link:client && npm run link:components",
     "link:components": "link-package ./client/components @components",
     "link:client": "link-package ./client @client",
+    "postinstall": "npm run link",
     "fakes3": "fakes3 -r $(node -p \"require('os').tmpdir()\")/fakes3 -p 10001"
   },
   "standard": {
