@@ -28,6 +28,9 @@
     "dev:client": "npm run dev:client-server & npm run dev:client-html",
     "dev:client-server": "webpack-dev-server --config config/webpack.dev.js --hot --inline",
     "dev:client-html": "webpack --config config/webpack.dev.js --watch",
+    "link": "npm run link:client && npm run link:components",
+    "link:components": "link-package ./client/components @components",
+    "link:client": "link-package ./client @client",
     "fakes3": "fakes3 -r $(node -p \"require('os').tmpdir()\")/fakes3 -p 10001"
   },
   "standard": {
@@ -89,6 +92,7 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "html-webpack-plugin": "^1.6.1",
+    "link-package": "^0.1.0",
     "node-libs-browser": "^0.5.3",
     "nodemon": "^1.7.0",
     "null-loader": "^0.1.1",
