@@ -7,6 +7,7 @@
 
   --button-primary-color: color(var(--grey-500) alpha(20%));
   --button-active-color: color(var(--grey-500) alpha(40%));
+  --button-disabled-color: color(#000 alpha(26%));
   --button-focus-color: color(#000 alpha(12%));
 }
 
@@ -43,6 +44,12 @@
 
 .baseButton:active {
   background-color: var(--button-active-color);
+}
+
+.baseButton[disabled] {
+  cursor: auto;
+  background-color: transparent;
+  color: var(--button-disabled-color);
 }
 
 .color {
