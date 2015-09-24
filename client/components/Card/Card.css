@@ -49,6 +49,7 @@
 
 .actions {
   display: flex;
+  flex-flow: row nowrap;
   composes: typoCard from '../styles/typography.css';
   line-height: normal;
   background-color: rgba(0, 0, 0, 0);
