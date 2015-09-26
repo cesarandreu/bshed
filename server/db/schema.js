@@ -20,7 +20,7 @@ import {
   connectionDefinitions,
   connectionFromPromisedArray,
   // connectionFromArray,
-  cursorForObjectInConnection,
+  // cursorForObjectInConnection,
   fromGlobalId,
   globalIdField,
   mutationWithClientMutationId,
@@ -188,6 +188,19 @@ export default function loadSchema (models: Object) {
           name: {
             type: GraphQLString,
             description: 'User name'
+          },
+          bikesheds: {
+            args: connectionArgs,
+            type: BikeshedConnection,
+            async resolve (currentUser, args, info) {
+              return connectionFromPromisedArray(Bikeshed.findAll(), args)
+            }
+          },
+          isRegistered: {
+            type: new GraphQLNonNull(GraphQLBoolean),
+            resolve (currentUser) {
+              return currentUser.isRegistered
+            }
           }
         }
       },
@@ -225,39 +238,12 @@ export default function loadSchema (models: Object) {
     nodeType: types.Bikeshed
   })
 
-  const viewerType = new GraphQLObjectType({
-    name: 'Viewer',
-    fields () {
-      return {
-        isRegistered: {
-          type: new GraphQLNonNull(GraphQLBoolean),
-          resolve (currentUser) {
-            // const { userId } = info.rootValue
-            // const user = await User.findById(userId)
-            // return user.isRegistered
-            console.log('currentUser', currentUser)
-            return currentUser.isRegistered
-          }
-        },
-        bikesheds: {
-          args: connectionArgs,
-          type: BikeshedConnection,
-          resolve (currentUser, args, info) {
-            // console.log('_', _, 'args', args, 'info', info)
-            return connectionFromPromisedArray(Bikeshed.findAll(), args)
-          }
-        }
-      }
-    }
-  })
-
   const queryType = new GraphQLObjectType({
     name: 'Query',
     fields () {
       return {
         viewer: {
-          type: viewerType,
-          description: 'Things the viewer can access',
+          type: types.User,
           async resolve (_, args, info) {
             const { userId } = info.rootValue
             return await User.findById(userId)
@@ -276,18 +262,34 @@ export default function loadSchema (models: Object) {
       }
     },
     outputFields: {
+      bikeshed: {
+        type: types.Bikeshed,
+        async resolve ({ bikeshed }) {
+          return bikeshed
+        }
+      },
       bikeshedEdge: {
         type: GraphQLBikeshedEdge,
-        async resolve (bikeshed) {
+        async resolve ({ bikeshed }) {
           if (bikeshed) {
-            const bikeshedList = await Bikeshed.findAll()
             return {
-              cursor: cursorForObjectInConnection(bikeshedList, bikeshed),
+              cursor: bikeshed.id,
               node: bikeshed
             }
           } else {
-            return null
+            return {
+              cursor: null,
+              node: bikeshed
+            }
           }
+        }
+      },
+      viewer: {
+        type: types.User,
+        async resolve (_, args, info) {
+          console.log('resolve viewer!')
+          const { userId } = info.rootValue
+          return await User.findById(userId)
         }
       }
     },
