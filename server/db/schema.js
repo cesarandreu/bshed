@@ -225,21 +225,6 @@ export default function loadSchema (models: Object) {
     nodeType: types.Bikeshed
   })
 
-  // const { connectionType: RatingConnection } = connectionDefinitions({
-  //   name: 'Rating',
-  //   nodeType: types.Rating
-  // })
-
-  // const { connectionType: UserConnection } = connectionDefinitions({
-  //   name: 'User',
-  //   nodeType: types.User
-  // })
-
-  // const { connectionType: VoteConnection } = connectionDefinitions({
-  //   name: 'Vote',
-  //   nodeType: types.Vote
-  // })
-
   const viewerType = new GraphQLObjectType({
     name: 'Viewer',
     fields () {
