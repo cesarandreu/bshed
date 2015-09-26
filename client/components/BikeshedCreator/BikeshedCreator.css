@@ -1,0 +1,136 @@
+/**
+ * BikeshedCreator
+ */
+:root {
+  --mobile-margin: 16px;
+  --desktop-margin: 24px;
+}
+
+/* Mobile */
+/* max-width: 840px - 1px */
+@custom-media --mobile (width <= 839px);
+
+/* Desktop */
+/* min-width: 840px */
+@custom-media --desktop (width >= 840px);
+
+.fileInput {
+  display: none;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex: 1 1 auto;
+}
+
+.page {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 1 auto;
+  max-width: 840px;
+  padding: 0 var(--desktop-margin);
+}
+@media (--mobile) {
+  .page {
+    padding: 0 var(--mobile-margin);
+  }
+}
+
+.subhead {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 var(--mobile-margin);
+  composes: textColorSecondary from '../styles/colors.css';
+}
+
+.grid {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.item {
+  position: relative;
+  height: 128px;
+  width: 128px;
+  margin: 0 4px 4px 0;
+}
+
+.iconButton {
+  composes: typoButton from '../styles/typography.css';
+  /*margin: 0;*/
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  background-color: transparent;
+  border: none;
+}
+
+.iconButton:focus {
+  outline: none;
+}
+
+.addButton {
+  composes: item iconButton;
+  border: 2px dashed currentColor;
+  display: inline-flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  justify-content: center;
+  color: color(#9E9E9E alpha(20%));
+}
+
+.addButton:focus,
+.addButton:hover {
+  color: color(black alpha(12%));
+}
+
+.addButton:active {
+  color: color(#9E9E9E alpha(40%));
+}
+
+.addButtonIcon {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addButtonText {
+  padding: 8px 16px;
+  composes: textColorHint from '../styles/colors.css';
+}
+
+.clearButton {
+  composes: iconButton;
+  filter: contrast(50%);
+  color: #FFF;
+  opacity: 0.8;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 0;
+}
+
+.clearButton:hover,
+.clearButton:focus {
+  opacity: 1;
+}
+
+.imageItem {
+  composes: item;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+.image {
+  /*transition: filter 120ms ease-in-out;*/
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.imageItem:hover .image {
+  filter: brightness(50%);
+}
