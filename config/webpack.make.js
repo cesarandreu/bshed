@@ -76,14 +76,16 @@ module.exports = function buildWebpackConfig (options) {
   }
   if (!TEST && !BUILD && !SERVER) {
     babelQuery.plugins.push('react-transform')
-    babelQuery.extra['react-transform'] = [{
-      target: 'react-transform-hmr',
-      imports: ['react'],
-      locals: ['module']
-    }, {
-      target: 'react-transform-catch-errors',
-      imports: ['react', 'redbox-react']
-    }]
+    babelQuery.extra['react-transform'] = {
+      transforms: [{
+        transform: 'react-transform-hmr',
+        imports: ['react'],
+        locals: ['module']
+      }, {
+        transform: 'react-transform-catch-errors',
+        imports: ['react', 'redbox-react']
+      }]
+    }
   }
 
   config.module = {
