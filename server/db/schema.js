@@ -69,14 +69,6 @@ export default function loadSchema (models: Object) {
             type: new GraphQLNonNull(GraphQLString),
             description: 'Image name'
           },
-          width: {
-            type: new GraphQLNonNull(GraphQLInt),
-            description: 'Image width in pixels'
-          },
-          height: {
-            type: new GraphQLNonNull(GraphQLInt),
-            description: 'Image height in pixels'
-          },
           size: {
             type: new GraphQLNonNull(GraphQLInt),
             description: 'Image size in bytes'
