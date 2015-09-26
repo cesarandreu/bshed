@@ -9,17 +9,18 @@ import { IndexRoute, Route } from 'react-router'
 import ViewerQueries from '../queries/ViewerQueries'
 
 // Components
-import App from '../components/App'
-import BikeshedCreator from '../components/BikeshedCreator'
+import { AppContainer } from '../components/App'
+import { BikeshedCreatorContainer } from '../components/BikeshedCreator'
 
 export default (
   <Route
     path='/'
-    component={App}
+    component={AppContainer}
     queries={ViewerQueries}
   >
     <IndexRoute
-      component={BikeshedCreator}
+      component={BikeshedCreatorContainer}
+      queries={ViewerQueries}
     />
   </Route>
 )
