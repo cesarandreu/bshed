@@ -65,6 +65,19 @@ GraphqlController.parseBody = function * parseBody (next) {
       case 'application/x-www-form-urlencoded':
         this.request.body = yield parse.form(this, parseOpts)
         break
+      case 'multipart/form-data':
+        yield this.uploader(this.req, this.res)
+        // Set body
+        this.request.body = this.req.body
+
+        // Terrible hack
+        // Set files
+        this.request.files = Object.entries(this.req.files)
+        .reduce((files, [name, [file]]) => {
+          files[name] = file
+          return files
+        }, {})
+        break
       default:
         this.request.body = {}
         break
@@ -88,6 +101,11 @@ GraphqlController.getParams = function * getParams (next) {
     }
   } else {
     this.graphql.variables = variables
+  }
+
+  // Add files to variables
+  if (this.request.files) {
+    Object.assign(this.graphql.variables, this.request.files)
   }
 
   // Name of GraphQL operation to execute
