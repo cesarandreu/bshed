@@ -77,7 +77,7 @@
     "react-relay": "^0.3.2",
     "react-router": "^1.0.0-rc1",
     "react-router-relay": "^0.6.0",
-    "redux": "^3.0.0",
+    "redux": "^3.0.2",
     "sequelize": "^3.8.0",
     "serialize-javascript": "^1.1.2",
     "source-map-support": "^0.3.2",
