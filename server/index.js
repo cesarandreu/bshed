@@ -16,14 +16,16 @@ import session from 'koa-session'
 import * as middleware from './lib/middleware'
 
 // Application imports
-import s3Loader from './lib/s3'
 import * as config from './config'
 import modelLoader from './models'
 import loadSchema from './db/schema'
+import createUploader from './lib/uploader'
 import controllerLoader from './controllers'
 
-// Initialize s3, models, and server
-export const s3 = s3Loader(config.aws)
+// Initialize uploader, models, and server
+export const uploader = createUploader({
+  s3: config.aws
+})
 export const models = modelLoader(config.database)
 export const server = Object.assign(qs(koa()), {
   // keys: config.keys,
@@ -35,8 +37,8 @@ export const server = Object.assign(qs(koa()), {
 // Initialize GraphQL schema
 export const schema = loadSchema(models)
 
-// Add s3, models, and graphql options to context
-server.context.s3 = s3
+// Add uploader, models, and graphql options to context
+server.context.uploader = uploader
 server.context.models = models
 server.context.graphql = {
   schema: schema,
