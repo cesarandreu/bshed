@@ -24,7 +24,7 @@ import {
   fromGlobalId,
   globalIdField,
   mutationWithClientMutationId,
-  nodeDefinitions,
+  nodeDefinitions
 } from 'graphql-relay'
 
 export default function loadSchema (models: Object) {
