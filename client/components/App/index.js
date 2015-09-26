@@ -1,1 +1,2 @@
-export default from './App'
+/* @flow */
+module.exports = require('./App')
