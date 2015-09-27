@@ -37,17 +37,23 @@ export function setCsrfToken () {
 
 /**
  * Middleware to expose errors when not in production mode
+ * @TODO: log errors somewhere when in production
  */
 export function exposeError (env) {
-  const isProduction = env === 'production'
-  return function * exposeErrorMiddleware (next) {
+  return env === 'production'
+    ? noopMiddleware
+    : exposeErrorMiddleware
+
+  function * exposeErrorMiddleware (next) {
     try {
       yield next
     } catch (err) {
-      if (!isProduction) {
-        err.expose = true
-      }
+      err.expose = true
       throw err
     }
+  }
+
+  function * noopMiddleware (next) {
+    return yield next
   }
 }
