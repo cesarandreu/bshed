@@ -9,15 +9,10 @@
  */
 export function setUser () {
   return function * setUserMiddleware (next) {
-    const { User } = this.models
+    const { User, r } = this.models
     if (!this.session.userId) {
-      try {
-        const user = yield User.create()
-        this.session.userId = user.id
-      } catch (err) {
-        console.error('setUserMiddleware', err)
-        throw err
-      }
+      const userId = yield User.create(r)
+      this.session.userId = userId
     }
     yield next
   }
