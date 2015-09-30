@@ -50,6 +50,9 @@ server.use(responseTime())
 // Expose errors outside of production
 server.use(middleware.exposeError(config.env))
 
+// Set requestId
+server.use(middleware.setRequestId())
+
 // Cookie sessions
 server.use(session({ key: 'bshed' }, server))
 
