@@ -1,41 +1,34 @@
 #!/usr/bin/env node -r babel/register
-
 /**
  * Server loader
- * @flow
  */
 import koa from 'koa'
 import qs from 'koa-qs'
 import path from 'path'
 import debug from 'debug'
+import session from 'koa-session'
 import fileServer from 'koa-static'
 import responseTime from 'koa-response-time'
 
-// import csrf from 'koa-csrf'
-import session from 'koa-session'
+// Application imports
+import * as config from '../config'
+import loadSchema from '../data/schema'
+import modelLoader from '../data/models'
+import createUploader from './lib/uploader'
+import GraphQLController from './lib/graphql'
 import * as middleware from './lib/middleware'
 
-// Application imports
-import * as config from './config'
-import modelLoader from './models'
-import loadSchema from './db/schema'
-import createUploader from './lib/uploader'
-import controllerLoader from './controllers'
-
 // Initialize uploader, models, and server
-export const uploader = createUploader({
-  s3: config.aws
-})
-export const models = modelLoader(config.database)
-export const server = Object.assign(qs(koa()), {
-  // keys: config.keys,
-  keys: ['keys'],
+const uploader = createUploader(config.aws)
+const models = modelLoader(config.database)
+const server = Object.assign(qs(koa()), {
+  keys: config.keys,
   name: config.name,
   env: config.env
 })
 
 // Initialize GraphQL schema
-export const schema = loadSchema(models)
+const schema = loadSchema(models)
 
 // Add uploader, models, and graphql options to context
 server.context.uploader = uploader
@@ -60,20 +53,13 @@ server.use(middleware.exposeError(config.env))
 // Cookie sessions
 server.use(session({ key: 'bshed' }, server))
 
-// CSRF token
-// server.use(csrf())
-
 // Set user
 server.use(middleware.setUser())
 
-// XSRF-TOKEN
-// server.use(middleware.setCsrfToken())
-
 // Controllers
-server.use(controllerLoader())
+server.use(GraphQLController())
 
 // File server
-// server.use(fileServer(path.resolve(__dirname, '../../graphiql/example/dist')))
 server.use(fileServer(path.resolve(__dirname, '../build/assets')))
 
 // Server initializer
