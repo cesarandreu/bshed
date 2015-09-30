@@ -10,7 +10,7 @@ export default function createUpload (config: Object): Function {
     storage: s3({
       dirname: 'uploads/images',
       bucket: 'bshed',
-      ...config.s3
+      ...config
     })
   })
   .fields([{
