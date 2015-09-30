@@ -6,8 +6,8 @@
  */
 import fs from 'fs'
 import { graphql } from 'graphql'
+import loadModels from '@server/models'
 import { database } from '@server/config'
-import loadModels from '@server/data/models'
 import loadSchema from '@server/data/schema'
 import { introspectionQuery, printSchema } from 'graphql/utilities'
 

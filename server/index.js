@@ -4,6 +4,7 @@
  */
 import koa from 'koa'
 import qs from 'koa-qs'
+import path from 'path'
 import debug from 'debug'
 import session from 'koa-session'
 import fileServer from 'koa-static'
@@ -59,7 +60,7 @@ server.use(middleware.setUser())
 server.use(GraphQLController())
 
 // File server
-server.use(fileServer(require.resolve('../build/assets')))
+server.use(fileServer(path.join(__dirname, '../build/assets')))
 
 // Server initializer
 const log = debug('app:server')

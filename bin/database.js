@@ -12,8 +12,8 @@
  *  NODE_ENV=test ./database.js refresh
  */
 import RethinkDB from 'rethinkdbdash'
+import { getModelList } from '@server/models'
 import { database, env } from '@server/config'
-import { getModelList } from '@server/data/models'
 console.log(`Loaded database config for "${env}" environment`)
 const MODEL_LIST = getModelList()
 
