@@ -4,16 +4,15 @@
  */
 import koa from 'koa'
 import qs from 'koa-qs'
-import path from 'path'
 import debug from 'debug'
 import session from 'koa-session'
 import fileServer from 'koa-static'
 import responseTime from 'koa-response-time'
 
 // Application imports
-import * as config from '../config'
-import loadSchema from '../data/schema'
-import modelLoader from '../data/models'
+import * as config from './config'
+import modelLoader from './models'
+import loadSchema from './data/schema'
 import createUploader from './lib/uploader'
 import GraphQLController from './lib/graphql'
 import * as middleware from './lib/middleware'
@@ -60,7 +59,7 @@ server.use(middleware.setUser())
 server.use(GraphQLController())
 
 // File server
-server.use(fileServer(path.resolve(__dirname, '../build/assets')))
+server.use(fileServer(require.resolve('../build/assets')))
 
 // Server initializer
 const log = debug('app:server')
