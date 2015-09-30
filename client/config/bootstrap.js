@@ -9,6 +9,7 @@ import 'babel/polyfill'
 
 // Modules
 import React from 'react'
+import Relay from 'react-relay'
 import ReactDOM from 'react-dom'
 import { Router } from 'react-router'
 import { createHistory } from 'history'
@@ -16,6 +17,13 @@ import ReactRouterRelay from 'react-router-relay'
 
 // Routes
 import routes from './routes'
+
+// Configure Relay's network layer to include cookies
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer('/graphql', {
+    credentials: 'same-origin'
+  })
+)
 
 // Initialize dependencies
 const history = createHistory()
