@@ -14,19 +14,19 @@ export default function createUpload (config: Object): Function {
     })
   })
   .fields([{
-    name: 'images0',
+    name: 'image0',
     maxCount: 1
   }, {
-    name: 'images1',
+    name: 'image1',
     maxCount: 1
   }, {
-    name: 'images2',
+    name: 'image2',
     maxCount: 1
   }, {
-    name: 'images3',
+    name: 'image3',
     maxCount: 1
   }, {
-    name: 'images4',
+    name: 'image4',
     maxCount: 1
   }])
 

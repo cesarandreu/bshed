@@ -20,7 +20,7 @@ export class CreateBikeshedMutation extends Relay.Mutation {
   getFiles (): { [key: string]: File } {
     const { files } = this.props
     return files.reduce((fileMap, file, idx) => {
-      fileMap[`images${idx}`] = file
+      fileMap[`image${idx}`] = file
       return fileMap
     }, {})
   }
