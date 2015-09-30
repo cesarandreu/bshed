@@ -5,11 +5,10 @@
  *  ./update-schema.js
  */
 import fs from 'fs'
-import path from 'path'
 import { graphql } from 'graphql'
-import { database } from '../config'
-import loadModels from '../data/models'
-import loadSchema from '../data/schema'
+import { database } from '@server/config'
+import loadModels from '@server/data/models'
+import loadSchema from '@server/data/schema'
 import { introspectionQuery, printSchema } from 'graphql/utilities'
 
 export async function updateSchema () {
@@ -28,11 +27,11 @@ export async function updateSchema () {
 
     await Promise.all([
       writeFilePromise(
-        path.join(__dirname, '../data/schema.json'),
+        require.resolve('@server/data/schema.json'),
         JSON.stringify(result, null, 2)
       ),
       writeFilePromise(
-        path.join(__dirname, '../data/schema.graphql'),
+        require.resolve('@server/data/schema.graphql'),
         printSchema(Schema)
       )
     ])
