@@ -2,6 +2,7 @@
  * Middleware
  * @flow
  */
+import uuid from 'node-uuid'
 
 /**
  * Ensure session.userId is set on every request
@@ -14,6 +15,16 @@ export function setUser () {
       const userId = yield User.create(r)
       this.session.userId = userId
     }
+    yield next
+  }
+}
+
+/**
+ * Adds a uuid to each request
+ */
+export function setRequestId () {
+  return function * setRequestIdMiddleware (next) {
+    this.request.requestId = this.req.requestId = uuid.v4()
     yield next
   }
 }
