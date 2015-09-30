@@ -1,31 +1,18 @@
 /**
  * Database configuration
- * This is using CommonJS exports instead of ES6 modules because it needs to
- * work with sequelize-cli.
- * @flow
  */
-exports.development = {
-  username: null,
-  password: null,
-  database: 'app_development',
-  host: '127.0.0.1',
-  dialect: 'postgres'
+export const production = {
+  db: 'bshed_production'
 }
 
-exports.test = {
-  username: null,
-  password: null,
-  database: 'app_test',
-  host: '127.0.0.1',
-  dialect: 'postgres',
-  logging: false
+export const development = {
+  db: 'bshed_development',
+  host: 'localhost',
+  port: 28015
 }
 
-exports.production = {
-  username: null,
-  password: null,
-  database: 'app',
-  host: '127.0.0.1',
-  dialect: 'postgres',
-  logging: false
+export const test = {
+  db: 'bshed_test',
+  host: 'localhost',
+  port: 28015
 }

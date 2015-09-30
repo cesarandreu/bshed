@@ -1,6 +1,5 @@
 /**
  * AWS configuration
- * @flow
  */
 import { Endpoint } from 'aws-sdk'
 

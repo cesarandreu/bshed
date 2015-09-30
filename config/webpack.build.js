@@ -1,8 +1,7 @@
 /**
- * User for generating client production builds
+ * Used for generating client production builds
  */
-module.exports = require('./webpack.make')({
-  SERVER: false,
+module.exports = require('./webpack-config-maker')({
   BUILD: true,
   TEST: false
 })

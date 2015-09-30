@@ -1,32 +1,21 @@
 /**
- * Bikeshed
- * @flow
+ * Bikeshed model
+ * Schema:
+ *  id
+ *  description
+ *  createdAt
+ *  userId
  */
-export default function createBikeshed (sequelize, DataTypes) {
-  const Bikeshed = sequelize.define('Bikeshed', {
-    id: {
-      primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
-    },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      defaultValue: ''
-    },
-    UserId: {
-      type: DataTypes.UUID,
-      allowNull: false
-    }
-  }, {
-    classMethods: {
-      associate (models) {
-        Bikeshed.User = Bikeshed.belongsTo(models.User)
-        Bikeshed.Bikes = Bikeshed.hasMany(models.Bike)
-        Bikeshed.Votes = Bikeshed.hasMany(models.Vote)
-      }
-    }
-  })
+export const INDEXES = ['userId', 'createdAt']
+export const TABLE = 'bikesheds'
+export const NAME = 'Bikeshed'
 
-  return Bikeshed
+export async function create (r, values = {}) {
+  const { userId, description = '' } = values
+  const { generated_keys: [id] } = await r.table(TABLE).insert({
+    createdAt: r.now(),
+    description,
+    userId
+  })
+  return id
 }

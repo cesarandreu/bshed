@@ -1,58 +1,40 @@
 /**
  * Model loader
- * @flow
+ * Each model is expected to export the following:
+ *  NAME string
+ *  TABLE string
+ *  INDEXES array of strings
  */
-import ssaclAttributeRoles from 'ssacl-attribute-roles'
-import Sequelize from 'sequelize'
 import debug from 'debug'
+import RethinkDB from 'rethinkdbdash'
+const log = debug('app:models')
 
-const log = debug('app:server:models')
+// Model imports
+import * as Bikeshed from './bikeshed'
+import * as User from './user'
 
-/**
- * List of models to load
- */
-export const MODEL_LIST = [
-  'bike',
-  'bikeshed',
-  'rating',
-  'user',
-  'vote'
-]
+const models = {
+  Bikeshed,
+  User
+}
 
-/**
- * Initialize, import, and associate models
- * Takes Sequelize configuration as a param
- * Returns all models as well as the Sequelize class and instance
- */
-export default function modelLoader ({ database, username, password, ...config }: Object): Object {
-  log('start')
-
-  // Extract configs and initialize Sequelize
-  // const { database, username, password } = config
-  const sequelize = new Sequelize(database, username, password, config)
-
-  // Attribute whitelisting/blacklisting with roles
-  ssaclAttributeRoles(sequelize)
-
-  // Load all the models
-  const models = MODEL_LIST.reduce((models, name) => {
-    log(`loading ${name} model`)
-    const model = require(`./${name}.js`)(sequelize, Sequelize)
-    models[model.name] = model
-    return models
-  }, {
-    sequelize,
-    Sequelize
-  })
-
-  // Associate models
-  Object.keys(models).forEach(name => {
-    if (models[name].associate) {
-      log(`associate ${name}`)
-      models[name].associate(models)
+// Get a list with each model's name, table, and secondary indexes
+export function getModelList () {
+  return Object.keys(models).map(modelName => {
+    const { NAME, TABLE, INDEXES } = models[modelName]
+    return {
+      NAME,
+      TABLE,
+      INDEXES
     }
   })
+}
+
+// Load database and models
+export default function modelLoader (config: Object): Object {
+  log('start')
+  const r = RethinkDB(config)
 
   log('end')
-  return models
+  return { r, ...models }
 }

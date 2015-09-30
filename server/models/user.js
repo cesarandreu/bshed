@@ -1,68 +1,18 @@
 /**
- * User
- * @flow
+ * User model
+ * Schema:
+ *  id
+ *  name
+ *  email
+ *  createdAt
  */
-import { comparePassword } from '../lib/password'
+export const INDEXES = []
+export const TABLE = 'users'
+export const NAME = 'User'
 
-export default function createUser (sequelize, DataTypes) {
-  const User = sequelize.define('User', {
-    id: {
-      primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
-    },
-    name: {
-      type: DataTypes.STRING,
-      validate: {
-        max: 255,
-        notEmpty: true
-      }
-    },
-    email: {
-      unique: true,
-      type: DataTypes.STRING,
-      validate: {
-        isEmail: true
-      },
-      roles: false
-    },
-    hashedPassword: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: true
-      },
-      roles: false
-    },
-    registeredAt: {
-      type: DataTypes.DATE,
-      roles: false
-    }
-  }, {
-    getterMethods: {
-      /**
-       * User's registration status
-       */
-      isRegistered (): boolean {
-        return !!this.getDataValue('registeredAt')
-      }
-    },
-
-    instanceMethods: {
-      /**
-       * Get password validity
-       */
-      checkPassword (password: string): Promise {
-        return comparePassword(password, this.getDataValue('hashedPassword'))
-      }
-    },
-
-    classMethods: {
-      associate (models: Object) {
-        User.Bikesheds = User.hasMany(models.Bikeshed)
-        User.Votes = User.hasMany(models.Vote)
-      }
-    }
+export async function create (r, values = {}) {
+  const { generated_keys: [id] } = await r.table(TABLE).insert({
+    createdAt: r.now()
   })
-
-  return User
+  return id
 }
