@@ -1,5 +1,0 @@
-module.exports = {
-  'models-path': __dirname + '/models',
-  'config': __dirname + '/config/database.js',
-  'migrations-path': __dirname + '/db/migrate'
-}
