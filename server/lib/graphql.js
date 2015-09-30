@@ -8,18 +8,20 @@ import parse from 'co-body'
  */
 export default function GraphqlController () {
   const routes = new Router()
-    .use(
+    .get(
+      '/graphql',
       GraphqlController.handleErrors,
       GraphqlController.checkOptions,
       GraphqlController.parseBody,
-      GraphqlController.getParams
-    )
-    .get(
-      '/graphql',
+      GraphqlController.getParams,
       GraphqlController.graphqlHTTP
     )
     .post(
       '/graphql',
+      GraphqlController.handleErrors,
+      GraphqlController.checkOptions,
+      GraphqlController.parseBody,
+      GraphqlController.getParams,
       GraphqlController.graphqlHTTP
     )
 
