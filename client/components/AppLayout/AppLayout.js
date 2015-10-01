@@ -7,11 +7,6 @@ import shouldPureComponentUpdate from 'react-pure-render/function'
 import React, { Component, PropTypes } from 'react'
 
 export class AppLayout extends Component {
-  constructor (props: Object) {
-    super(props)
-    this.shouldComponentUpdate = shouldPureComponentUpdate
-  }
-
   render () {
     const { children } = this.props
 
@@ -30,7 +25,7 @@ export class AppLayout extends Component {
 AppLayout.propTypes = {
   children: PropTypes.node.isRequired
 }
-
+AppLayout.prototype.shouldComponentUpdate = shouldPureComponentUpdate
 // export default Relay.createContainer(Layout, {
 //   fragments: {
 //     viewer: () => Relay.QL`
