@@ -39,7 +39,7 @@ export class TextInput extends Component {
   }
 
   render (): ReactElement {
-    const { name, error, label, value, onChange } = this.props
+    const { disabled, name, error, label, value, onChange } = this.props
     const { focus } = this.state
 
     const labelClassNames = cn([
@@ -67,6 +67,7 @@ export class TextInput extends Component {
           name={name}
           value={value}
           autoComplete='off'
+          disabled={disabled}
           onChange={onChange}
           onBlur={this._onBlur}
           onFocus={this._onFocus}
@@ -83,6 +84,7 @@ export class TextInput extends Component {
 TextInput.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
+  disabled: PropTypes.bool,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
