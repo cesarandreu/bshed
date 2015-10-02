@@ -20,6 +20,7 @@ export function Button ({ children, color, ...props }: Object): ReactElement {
 
   return (
     <button
+      type='button'
       className={classNames}
       {...props}
     >
