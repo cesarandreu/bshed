@@ -22,7 +22,6 @@ export class TextInput extends Component {
     this._onBlur = this._onBlur.bind(this)
     this._onFocus = this._onFocus.bind(this)
     this._onKeyDown = this._onKeyDown.bind(this)
-    this.shouldComponentUpdate = shouldPureComponentUpdate
   }
 
   _onFocus () {
@@ -88,3 +87,4 @@ TextInput.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 }
+TextInput.prototype.shouldComponentUpdate = shouldPureComponentUpdate
