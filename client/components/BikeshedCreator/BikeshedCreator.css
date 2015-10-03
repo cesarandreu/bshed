@@ -126,7 +126,6 @@
 }
 
 .image {
-  /*transition: filter 120ms ease-in-out;*/
   max-height: 100%;
   max-width: 100%;
 }
