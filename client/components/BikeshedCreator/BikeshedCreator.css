@@ -82,7 +82,7 @@
 
 .addButton:focus,
 .addButton:hover {
-  color: color(black alpha(12%));
+  color: color(#000 alpha(12%));
 }
 
 .addButton:active {
