@@ -1,17 +1,14 @@
 [ignore]
 .*/old/.*
 .*/server/.*
+.*/server_old/.*
 
 [include]
 .*/client/.*
 
 [libs]
-./interfaces/interfaces.js
 
 [options]
-module.name_mapper='.*\.css$' -> 'CSSModule'
-module.name_mapper='^.*\.css$' -> 'CSSModule'
-module.name_mapper='^[a-zA-Z0-9$_-]+\.css$' -> 'CSSModule'
-module.name_mapper= '^[./a-zA-Z0-9$_-]+\.css$' -> 'CSSModule'
+module.name_mapper='.*\(.css\)' -> 'empty/object'
 module.system=node
 strip_root=true
