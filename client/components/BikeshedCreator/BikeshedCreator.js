@@ -4,18 +4,18 @@
  */
 import { CreateBikeshedMutation } from '@client/mutations/CreateBikeshedMutation'
 import { createObjectURL, revokeObjectURL } from '@client/lib/URL'
-import shouldPureComponentUpdate from 'react-pure-render/function'
-import bikeshedCreatorClassNames from './BikeshedCreator.css'
+import { Card, CardActions, CardBody } from '@components/Card'
+import { getBikeshedViewerPath } from '@client/lib/RouteUtils'
 import type { SyntheticEvent, ReactElement } from 'react'
-import { Card, CardActions, CardBody } from '../Card'
 import React, { Component, PropTypes } from 'react'
-import { TextInput } from '../TextInput'
-import { Icon, ICONS } from '../Icon'
-import { Button } from '../Button'
-import { Subhead } from '../Text'
+import { TextInput } from '@components/TextInput'
+import { Icon, ICONS } from '@components/Icon'
+import { Button } from '@components/Button'
+import { Subhead } from '@components/Text'
+import cn from './BikeshedCreator.css'
 import Relay from 'react-relay'
 
-const MAXIMUM_IMAGE_COUNT = 5
+const MAXIMUM_IMAGE_COUNT = 8
 
 /**
  * BikeshedCreator page
@@ -24,20 +24,48 @@ export class BikeshedCreator extends Component {
   constructor (props: Object) {
     super(props)
     this.state = {
+      // Form
       description: '',
-      files: []
+      files: [],
+
+      // UI state
+      saving: false
     }
     this._handleInput = this._handleInput.bind(this)
     this._handleFiles = this._handleFiles.bind(this)
     this._handleSubmit = this._handleSubmit.bind(this)
     this._addFileClick = this._addFileClick.bind(this)
-    this.shouldComponentUpdate = shouldPureComponentUpdate
+    this._setSaving = this._setSaving.bind(this)
   }
 
+  /**
+   * Upload the files and create your bikeshed
+   * If we're succesful we want to navigate to the new bikeshed
+   * @TODO: Add toast message on failure
+   */
   _handleSubmit () {
-    const { viewer } = this.props
+    const { _setSaving } = this
+    const { viewer, history } = this.props
     const { description, files } = this.state
-    Relay.Store.update(new CreateBikeshedMutation({ viewer, description, files }))
+
+    _setSaving(true)
+    Relay.Store.update(new CreateBikeshedMutation({ viewer, description, files }), {
+      onFailure (transaction) {
+        _setSaving(false)
+        // console.log('transaction', transaction)
+      },
+      onSuccess ({ createBikeshed }) {
+        _setSaving(false)
+
+        // Navigate to the newly created bikeshed's page
+        const bikeshedId = createBikeshed.bikeshedEdge.node.id
+        history.pushState(null, getBikeshedViewerPath(bikeshedId))
+      }
+    })
+  }
+
+  _setSaving (saving: boolean) {
+    this.setState({ saving })
   }
 
   _handleInput (e: SyntheticEvent) {
@@ -45,11 +73,13 @@ export class BikeshedCreator extends Component {
     this.setState({ description })
   }
 
+  // @TODO: Consider adding a toast message for duplicate images
   _handleFiles (e: SyntheticEvent) {
     const { files } = this.state
     const remainingSpaces = MAXIMUM_IMAGE_COUNT - files.length
     const inputFiles = Array.from(e.target.files)
       .slice(0, remainingSpaces)
+      .filter(file => !files.some(fileItem => fileItem.name === file.name))
       .map(file => {
         file.src = createObjectURL(file)
         return file
@@ -83,52 +113,52 @@ export class BikeshedCreator extends Component {
   }
 
   render (): ReactElement {
-    const { description, files } = this.state
+    const { description, files, saving } = this.state
 
     return (
-      <div className={bikeshedCreatorClassNames.wrapper}>
-        <div className={bikeshedCreatorClassNames.page}>
-          <Subhead className={bikeshedCreatorClassNames.subhead}>
-            Bikeshed Creator
-          </Subhead>
-          <Card>
-            <CardBody>
-              <TextInput
-                error=''
-                name='title'
-                label='Title'
-                value={description}
-                onChange={this._handleInput}
-              />
+      <div className={cn.page}>
+        <Subhead className={cn.subhead}>
+          Bikeshed Creator
+        </Subhead>
+        <Card>
+          <CardBody>
+            <TextInput
+              error=''
+              name='title'
+              label='Title'
+              disabled={saving}
+              value={description}
+              onChange={this._handleInput}
+            />
 
-              <div className={bikeshedCreatorClassNames.grid}>
-                {files.map((file, idx) =>
-                  <ImageItem
-                    onClear={() => this._removeFile(idx)}
-                    name={file.name}
-                    key={file.name}
-                    src={file.src}
-                  />
-                )}
-                {files.length < MAXIMUM_IMAGE_COUNT && (
-                  <AddImageButton
-                    count={files.length}
-                    onClick={this._addFileClick}
-                  />
-                )}
-              </div>
-            </CardBody>
-            <CardActions border>
-              <Button
-                color
-                disabled={files.length < 2}
-                onClick={this._handleSubmit}
-              >
-                save
-              </Button>
-            </CardActions>
-          </Card>
-        </div>
+            <div className={cn.grid}>
+              {files.map((file, idx) =>
+                <ImageItem
+                  onClear={() => this._removeFile(idx)}
+                  disabled={saving}
+                  name={file.name}
+                  key={file.name}
+                  src={file.src}
+                />
+              )}
+              {files.length < MAXIMUM_IMAGE_COUNT && (
+                <AddImageButton
+                  count={files.length}
+                  onClick={this._addFileClick}
+                />
+              )}
+            </div>
+          </CardBody>
+          <CardActions border>
+            <Button
+              color
+              disabled={files.length < 2 || saving}
+              onClick={this._handleSubmit}
+            >
+              save
+            </Button>
+          </CardActions>
+        </Card>
 
         {/* File input */}
         <input
@@ -137,14 +167,15 @@ export class BikeshedCreator extends Component {
           ref='fileInput'
           onChange={this._handleFiles}
           accept='image/jpeg,image/png'
-          className={bikeshedCreatorClassNames.fileInput}
+          className={cn.fileInput}
         />
       </div>
     )
   }
 }
 BikeshedCreator.propTypes = {
-  viewer: PropTypes.object.isRequired
+  viewer: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 /**
@@ -154,7 +185,7 @@ export const BikeshedCreatorContainer = Relay.createContainer(BikeshedCreator, {
   fragments: {
     viewer () {
       return Relay.QL`
-        fragment on User {
+        fragment on Viewer {
           ${CreateBikeshedMutation.getFragment('viewer')}
         }
       `
@@ -164,19 +195,21 @@ export const BikeshedCreatorContainer = Relay.createContainer(BikeshedCreator, {
 
 /**
  * Image preview inside the grid
- * Includes a clear icon to allow the user to remove it
+ * Includes a clear button to allow the user to remove it
  */
-export function ImageItem ({ onClear, name, src }: Object): ReactElement {
+export function ImageItem ({ onClear, name, src, disabled }: Object): ReactElement {
   return (
-    <div className={bikeshedCreatorClassNames.imageItem}>
+    <div className={cn.imageItem}>
       <button
+        type='button'
         onClick={onClear}
-        className={bikeshedCreatorClassNames.clearButton}
+        disabled={disabled}
+        className={cn.clearButton}
       >
         <Icon size={24} type={ICONS.CLEAR}/>
       </button>
       <img
-        className={bikeshedCreatorClassNames.image}
+        className={cn.image}
         alt={name}
         src={src}
       />
@@ -185,6 +218,7 @@ export function ImageItem ({ onClear, name, src }: Object): ReactElement {
 }
 Object.assign(ImageItem, {
   propTypes: {
+    disabled: PropTypes.bool.isRequired,
     onClear: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired
@@ -193,19 +227,20 @@ Object.assign(ImageItem, {
 
 /**
  * Button for users to click on to add images
- * Shows a message inside when there's fewer than two images
+ * Shows a message when there's fewer than two images
  */
 export function AddImageButton ({ count, onClick }: Object): ReactElement {
   return (
     <button
+      type='button'
       onClick={onClick}
-      className={bikeshedCreatorClassNames.addButton}
+      className={cn.addButton}
     >
-      <div className={bikeshedCreatorClassNames.addButtonIcon}>
+      <div className={cn.addButtonIcon}>
         <Icon size={48} type={ICONS.ADD}/>
       </div>
       {count < 2 && (
-        <div className={bikeshedCreatorClassNames.addButtonText}>
+        <div className={cn.addButtonText}>
           {`Please add ${count ? '1 image' : '2 images'}`}
         </div>
       )}
