@@ -53,6 +53,15 @@ export default function createUploader (config: Object): Function {
   }, {
     name: 'image4',
     maxCount: 1
+  }, {
+    name: 'image5',
+    maxCount: 1
+  }, {
+    name: 'image6',
+    maxCount: 1
+  }, {
+    name: 'image7',
+    maxCount: 1
   }])
 
   return function performUpload (req, res) {
