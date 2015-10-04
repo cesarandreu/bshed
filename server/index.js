@@ -6,6 +6,7 @@ import koa from 'koa'
 import qs from 'koa-qs'
 import path from 'path'
 import debug from 'debug'
+import send from 'koa-send'
 import session from 'koa-session'
 import fileServer from 'koa-static'
 import responseTime from 'koa-response-time'
@@ -64,6 +65,11 @@ server.use(GraphQLController())
 
 // File server
 server.use(fileServer(path.join(__dirname, '../build/assets')))
+
+const indexFile = path.join(__dirname, '../build/assets/index.html')
+server.use(function * () {
+  yield send(this, indexFile)
+})
 
 // Server initializer
 const log = debug('app:server')
