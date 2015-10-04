@@ -2,15 +2,15 @@
  * Layout
  * @flow
  */
-import layoutClassNames from './Layout.css'
 import type { ReactElement } from 'react'
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+import cn from './Layout.css'
 
-export function LayoutHeader ({ children, ...props }: Object): ReactElement {
+export function LayoutHeader ({ children }: Object): ReactElement {
   return (
-    <header className={layoutClassNames.header} {...props}>
-      <div className={layoutClassNames.headerRow}>
+    <header className={cn.header}>
+      <div className={cn.headerRow}>
         {children}
       </div>
     </header>
@@ -22,9 +22,9 @@ Object.assign(LayoutHeader, {
   }
 })
 
-export function LayoutContent ({ children, ...props }: Object): ReactElement {
+export function LayoutContent ({ children }: Object): ReactElement {
   return (
-    <main className={layoutClassNames.content} {...props}>
+    <main className={cn.content}>
       {children}
     </main>
   )
@@ -35,10 +35,10 @@ Object.assign(LayoutContent, {
   }
 })
 
-export function Layout ({ children, ...props }: Object): ReactElement {
+export function Layout ({ children }: Object): ReactElement {
   return (
-    <div className={layoutClassNames.container} {...props}>
-      <div className={layoutClassNames.layout}>
+    <div className={cn.container}>
+      <div className={cn.layout}>
         {children}
       </div>
     </div>
@@ -55,7 +55,7 @@ export function LayoutTitle ({ title }: Object): ReactElement {
     <Link
       to='/'
       title='home'
-      className={layoutClassNames.title}
+      className={cn.title}
     >
       {title}
     </Link>

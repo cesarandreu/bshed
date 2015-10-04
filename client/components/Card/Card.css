@@ -7,12 +7,10 @@
   composes: typoCard from '../styles/typography.css';
   min-height: 200px;
   overflow: hidden;
-  min-width: 330px;
-  /*width: 330px;*/
+  /*min-width: 330px;*/
   z-index: 1;
   position: relative;
   background-color: #FFF;
-  /*color: #000;*/
   border-radius: 2px;
 }
 
@@ -57,6 +55,6 @@
   padding: 8px;
 }
 
-.borderTop {
+.actionsBorder {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }

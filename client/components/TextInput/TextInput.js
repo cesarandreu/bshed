@@ -5,15 +5,7 @@
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import type { SyntheticEvent, ReactElement } from 'react'
 import React, { Component, PropTypes } from 'react'
-import textInputClassNames from './TextInput.css'
-import cn from 'classnames'
-
-function keepValidClassNames (result: Array<string>, [className, hasClassName]) {
-  if (hasClassName) {
-    result.push(className)
-  }
-  return result
-}
+import cn from './TextInput.css'
 
 export class TextInput extends Component {
   constructor (props: Object) {
@@ -42,21 +34,13 @@ export class TextInput extends Component {
     const { disabled, name, error, label, value, onChange } = this.props
     const { focus } = this.state
 
-    const labelClassNames = cn([
-      [textInputClassNames.hasFocus, !!focus],
-      [textInputClassNames.hasError, !!error],
-      [textInputClassNames.hasValue, !!value]
-    ].reduce(keepValidClassNames, [textInputClassNames.label]))
-
-    const focusUnderlineClassNames = cn([
-      [textInputClassNames.hasFocus, !!focus],
-      [textInputClassNames.hasError, !!error]
-    ].reduce(keepValidClassNames, [textInputClassNames.focusUnderline]))
-
+    const hasFocus = focus ? cn.hasFocus : ''
+    const hasError = error ? cn.hasError : ''
+    const hasValue = value ? cn.hasValue : ''
     return (
-      <div className={textInputClassNames.wrapper}>
+      <div className={cn.wrapper}>
         <label
-          className={labelClassNames}
+          className={`${hasFocus} ${hasError} ${hasValue} ${cn.label}`}
           htmlFor={name}
         >
           {label || name}
@@ -72,11 +56,11 @@ export class TextInput extends Component {
           onBlur={this._onBlur}
           onFocus={this._onFocus}
           onKeyDown={this._onKeyDown}
-          className={textInputClassNames.input}
+          className={cn.input}
         />
-        <hr className={textInputClassNames.underline}/>
-        <hr className={focusUnderlineClassNames}/>
-        {error ? <div className={textInputClassNames.error}>{error}</div> : null}
+        <hr className={cn.underline}/>
+        <hr className={`${hasFocus} ${hasError} ${cn.focusUnderline}`}/>
+        {error ? <div className={cn.error}>{error}</div> : null}
       </div>
     )
   }

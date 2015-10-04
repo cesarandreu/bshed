@@ -4,12 +4,12 @@
  */
 import type { ReactElement } from 'react'
 import React, { PropTypes } from 'react'
-import cardClassNames from './Card.css'
-import cn from 'classnames'
+import cn from './Card.css'
 
 export function Card ({ children, shadow }: Object): ReactElement {
+  const shadowName = `shadow${shadow}`
   return (
-    <div className={cn(cardClassNames.card, cardClassNames[`shadow${shadow}`])}>
+    <div className={`${cn.card} ${cn[shadowName]}`}>
       {children}
     </div>
   )
@@ -26,7 +26,7 @@ Object.assign(Card, {
 
 export function CardBody ({ children }: Object): ReactElement {
   return (
-    <div className={cardClassNames.body}>
+    <div className={cn.body}>
       {children}
     </div>
   )
@@ -38,13 +38,8 @@ Object.assign(CardBody, {
 })
 
 export function CardActions ({ children, border }: Object): ReactElement {
-  const cardActionsClassName = cn(
-    cardClassNames.actions,
-    border ? cardClassNames.borderTop : ''
-  )
-
   return (
-    <div className={cardActionsClassName}>
+    <div className={`${cn.actions} ${border ? cn.actionsBorder : ''}`}>
       {children}
     </div>
   )
