@@ -2,19 +2,20 @@
  * App
  * @flow
  */
-import '../styles/resets.css'
-import Relay from 'react-relay'
-import { AppLayout } from '../AppLayout'
+import '@components/styles/resets.css'
+import { AppLayoutContainer } from '@components/AppLayout'
 import React, { Component, PropTypes } from 'react'
+import Relay from 'react-relay'
 
 export class App extends Component {
   render () {
-    const { children } = this.props
-
+    const { children, viewer } = this.props
     return (
-      <AppLayout>
+      <AppLayoutContainer
+        user={viewer.user}
+      >
         {children}
-      </AppLayout>
+      </AppLayoutContainer>
     )
   }
 }
@@ -26,21 +27,11 @@ App.propTypes = {
 export const AppContainer = Relay.createContainer(App, {
   fragments: {
     viewer: () => Relay.QL`
-      fragment App on User {
-        bikesheds(first: 10) {
-          edges {
-            node {
-              id,
-              description,
-              creator {
-                id,
-                name,
-              }
-            }
-          }
+      fragment App on Viewer {
+        user {
+          ${AppLayoutContainer.getFragment('user')}
         }
       }
     `
   }
 })
-// ${Layout.getFragment('viewer')},

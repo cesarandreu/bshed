@@ -3,17 +3,19 @@
  * @flow
  */
 import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from '../Layout'
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import React, { Component, PropTypes } from 'react'
+import Relay from 'react-relay'
 
 export class AppLayout extends Component {
   render () {
-    const { children } = this.props
-
+    const { children, user } = this.props
     return (
       <Layout>
         <LayoutHeader>
           <LayoutTitle title='Bikeshed it!'/>
+          <div>
+            {user.isRegistered ? `${user.name}` : 'Y U NO REGISTER?'}
+          </div>
         </LayoutHeader>
         <LayoutContent>
           {children}
@@ -23,15 +25,16 @@ export class AppLayout extends Component {
   }
 }
 AppLayout.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  user: PropTypes.object.isRequired
 }
-AppLayout.prototype.shouldComponentUpdate = shouldPureComponentUpdate
-// export default Relay.createContainer(Layout, {
-//   fragments: {
-//     viewer: () => Relay.QL`
-//       fragment on Viewer {
-//         isRegistered,
-//       }
-//     `
-//   }
-// })
+export const AppLayoutContainer = Relay.createContainer(AppLayout, {
+  fragments: {
+    user: () => Relay.QL`
+      fragment on User {
+        isRegistered,
+        name
+      }
+    `
+  }
+})
