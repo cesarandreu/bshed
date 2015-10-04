@@ -53,7 +53,7 @@ module.exports = function buildWebpackConfig (options) {
   // babel-loader query
   const babelQuery = {
     extra: {},
-    cacheDirectory: true,
+    // cacheDirectory: true,
     plugins: [PROJECT_ROOT + '/config/babel-relay-plugin.js']
   }
   if (!TEST && !BUILD) {
