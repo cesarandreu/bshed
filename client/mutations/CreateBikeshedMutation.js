@@ -36,8 +36,15 @@ export class CreateBikeshedMutation extends Relay.Mutation {
     `
   }
 
-  getConfigs () {
+  getConfigs (): Array<Object> {
     return [{
+      type: 'REQUIRED_CHILDREN',
+      children: [Relay.QL`
+        fragment on CreateBikeshedPayload {
+          bikeshedEdge
+        }
+      `]
+    }, {
       type: 'RANGE_ADD',
       parentName: 'viewer',
       parentID: this.props.viewer.id,
@@ -48,16 +55,12 @@ export class CreateBikeshedMutation extends Relay.Mutation {
       }
     }]
   }
-
-  getOptimisticResponse () {
-
-  }
 }
 
 CreateBikeshedMutation.fragments = {
   viewer () {
     return Relay.QL`
-      fragment on User {
+      fragment on Viewer {
         id
       }
     `
