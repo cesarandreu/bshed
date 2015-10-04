@@ -1,7 +1,13 @@
+/**
+ * GraphQL Controller
+ */
 import { formatError } from 'graphql/error'
 import { graphql } from 'graphql'
 import Router from 'koa-router'
 import parse from 'co-body'
+
+// Static parser options
+const PARSE_OPTIONS = { limit: '100kb' }
 
 /**
  * GraphQL controller
@@ -11,69 +17,61 @@ export default function GraphqlController () {
     .get(
       '/graphql',
       GraphqlController.handleErrors,
-      GraphqlController.checkOptions,
-      GraphqlController.parseBody,
-      GraphqlController.getParams,
-      GraphqlController.graphqlHTTP
+      GraphqlController.prepare,
+      GraphqlController.perform
     )
     .post(
       '/graphql',
       GraphqlController.handleErrors,
-      GraphqlController.checkOptions,
-      GraphqlController.parseBody,
-      GraphqlController.getParams,
-      GraphqlController.graphqlHTTP
+      GraphqlController.prepare,
+      GraphqlController.perform
     )
 
   return routes.middleware()
 }
 
+// Wrapper for error-handling
 GraphqlController.handleErrors = function * handleErrors (next) {
   try {
-    return yield next
+    yield next
   } catch (error) {
     this.status = error.status || 500
     this.body = { errors: [ formatError(error) ] }
   }
 }
 
-GraphqlController.checkOptions = function * checkOptions (next) {
+// Prepare everything for GraphQL
+GraphqlController.prepare = function * prepare (next) {
+  // Make sure configuration is correct
   const { schema, rootValue } = this.graphql
-  this.assert(schema, 500, 'GraphQL requires a schema')
-  this.assert(rootValue, 500, 'GraphQL requires a rootValue')
-  return yield next
-}
+  this.assert(schema, 500, 'GraphQL requires a schema.')
+  this.assert(rootValue, 500, 'GraphQL requires a rootValue.')
 
-GraphqlController.parseBody = function * parseBody (next) {
+  // Skip requests without content type
+  const hasContentType = this.request.type !== undefined
+
   // If koa already has a body, use it
   const hasEmptyBody = this.request.body === undefined
 
-  // Skip requests without content type
-  const hasContentType = this.get('Content-Type') !== undefined
-
   if (hasEmptyBody && hasContentType) {
-    // Set a sane default parser limit
-    const parseOpts = { limit: '100kb' }
-
     // Use the correct body parser based on Content-Type header
     switch (this.request.type) {
       case 'application/graphql':
-        const body = yield parse.text(this, parseOpts)
+        const body = yield parse.text(this, PARSE_OPTIONS)
         this.request.body = { query: body }
         break
       case 'application/json':
-        this.request.body = yield parse.json(this, parseOpts)
+        this.request.body = yield parse.json(this, PARSE_OPTIONS)
         break
       case 'application/x-www-form-urlencoded':
-        this.request.body = yield parse.form(this, parseOpts)
+        this.request.body = yield parse.form(this, PARSE_OPTIONS)
         break
       case 'multipart/form-data':
         yield this.uploader(this.req, this.res)
-        // Set body
         this.request.body = this.req.body
 
         // Terrible hack
-        // Set files
+        // Sample output: { image0: fileInfo, image1: fileInfo }
         this.request.files = Object.entries(this.req.files)
         .reduce((files, [name, [file]]) => {
           files[name] = file
@@ -85,41 +83,45 @@ GraphqlController.parseBody = function * parseBody (next) {
         break
     }
   }
-  return yield next
-}
 
-GraphqlController.getParams = function * getParams (next) {
   // GraphQL query string
   this.graphql.query = this.query.query || this.request.body.query
   this.assert(this.graphql.query, 400, 'Must provide query string.')
 
   // Parse the variables if needed
   const variables = this.query.variables || this.request.body.variables
-  if (variables && typeof variables === 'string') {
-    try {
-      this.graphql.variables = JSON.parse(variables)
-    } catch (err) {
-      this.throw(400, 'Variables are invalid JSON.')
+  if (variables) {
+    if (typeof variables === 'string') {
+      try {
+        this.graphql.variables = JSON.parse(variables)
+      } catch (err) {
+        this.throw(400, 'Variables are invalid JSON.')
+      }
+    } else {
+      this.graphql.variables = variables
     }
-  } else {
-    this.graphql.variables = variables
-  }
-
-  // Add files to variables
-  if (this.request.files) {
-    Object.assign(this.graphql.variables, this.request.files)
   }
 
   // Name of GraphQL operation to execute
   this.graphql.operationName = this.query.operationName || this.request.body.operationName
 
-  return yield next
+  // Populate rootValue
+  Object.assign(this.graphql.rootValue, {
+    // uploaded files
+    files: this.request.files || {},
+
+    // userId from session
+    userId: this.session.userId,
+
+    // requestId
+    requestId: this.request.requestId
+  })
+
+  yield next
 }
 
-GraphqlController.graphqlHTTP = function * graphqlHTTP () {
-  // Add userId from session to graphql rootValue
-  this.graphql.rootValue.userId = this.session.userId
-
+// Execute the GraphQL query
+GraphqlController.perform = function * perform () {
   const { query, variables, operationName, schema, rootValue } = this.graphql
   const result = yield graphql(schema, query, rootValue, variables, operationName)
 
