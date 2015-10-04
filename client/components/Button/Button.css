@@ -11,7 +11,43 @@
   --button-focus-color: color(#000 alpha(12%));
 }
 
+.reset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+}
+
+.reset::-mox-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
 .baseButton {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+
   background: transparent;
   border: none;
   border-radius: 2px;
@@ -27,7 +63,7 @@
               background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
-  cursor: pointer;
+  composes: clickable;
   text-decoration: none;
   text-align: center;
   line-height: 36px;
