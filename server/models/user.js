@@ -8,7 +8,7 @@
  */
 export const INDEXES = []
 export const TABLE = 'users'
-export const NAME = 'User'
+export const TYPE = 'User'
 
 export async function create (r, values = {}) {
   const { generated_keys: [id] } = await r.table(TABLE).insert({

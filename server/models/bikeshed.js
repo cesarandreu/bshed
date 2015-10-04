@@ -8,7 +8,7 @@
  */
 export const INDEXES = ['userId', 'createdAt']
 export const TABLE = 'bikesheds'
-export const NAME = 'Bikeshed'
+export const TYPE = 'Bikeshed'
 
 export async function create (r, values = {}) {
   const { userId, description = '' } = values

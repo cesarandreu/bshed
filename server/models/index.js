@@ -1,7 +1,7 @@
 /**
  * Model loader
  * Each model is expected to export the following:
- *  NAME string
+ *  TYPE string
  *  TABLE string
  *  INDEXES array of strings
  */
@@ -21,9 +21,9 @@ const models = {
 // Get a list with each model's name, table, and secondary indexes
 export function getModelList () {
   return Object.keys(models).map(modelName => {
-    const { NAME, TABLE, INDEXES } = models[modelName]
+    const { TYPE, TABLE, INDEXES } = models[modelName]
     return {
-      NAME,
+      TYPE,
       TABLE,
       INDEXES
     }

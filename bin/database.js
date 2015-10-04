@@ -85,11 +85,11 @@ async function createTables (r) {
   console.log(`Creating tables for "${database.db}" database`)
   const tableList = await r.tableList()
   await Promise.all(MODEL_LIST.map(async (model) => {
-    const { TABLE, INDEXES, NAME } = model
+    const { TABLE, INDEXES, TYPE } = model
 
     // Create table if missing
     if (tableList.indexOf(TABLE) === -1) {
-      console.log(`Creating table "${TABLE}" for ${NAME} model`)
+      console.log(`Creating table "${TABLE}" for ${TYPE} model`)
       await r.tableCreate(TABLE)
     }
 
