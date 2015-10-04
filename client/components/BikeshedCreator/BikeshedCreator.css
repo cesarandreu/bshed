@@ -29,11 +29,11 @@
   flex-flow: column nowrap;
   flex: 1 1 auto;
   max-width: 840px;
-  padding: 0 var(--desktop-margin);
+  padding: 0 var(--desktop-margin) var(--mobile-margin);
 }
 @media (--mobile) {
   .page {
-    padding: 0 var(--mobile-margin);
+    padding: 0 var(--mobile-margin) var(--mobile-margin);
   }
 }
 
