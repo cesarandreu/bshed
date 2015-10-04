@@ -9,11 +9,15 @@
 
 /*
  * Reset the box-sizing
+ * http://www.paulirish.com/2012/box-sizing-border-box-ftw/
  */
+html {
+  box-sizing: border-box;
+}
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
 
 /*
@@ -77,11 +81,6 @@ a {
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-html {
-  font-size: 1em;
-  line-height: 1.4;
-  color: rgba(0, 0, 0, 0.87);
-}
 
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
@@ -146,6 +145,7 @@ html, body {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -165,15 +165,3 @@ mark {
 dt {
   font-weight: 700;
 }
-
-/*
-address {
-  @include typo-caption;
-
-  font-style: normal;
-}
-
-ul, ol {
-  @include typo-body-1;
-}
-*/
