@@ -10,8 +10,9 @@ const ALLOWED_MIMETYPES = ['image/jpeg', 'image/png']
 function fileFilter (req, file, cb) {
   const hasAllowedMimetype = ALLOWED_MIMETYPES.includes(file.mimetype)
   const hasRequestId = !!req.requestId
+  const hasUserId = !!req.userId
 
-  const isAllowed = hasAllowedMimetype && hasRequestId
+  const isAllowed = hasAllowedMimetype && hasRequestId && hasUserId
   cb(null, isAllowed)
 }
 
@@ -19,7 +20,7 @@ function filename (req, file, cb) {
   if (!req.requestId) {
     cb(new Error('Must have requestId'))
   } else {
-    cb(null, `${req.requestId}/${file.fieldname}`)
+    cb(null, `${req.userId}/${req.requestId}/${file.fieldname}`)
   }
 }
 
@@ -32,9 +33,8 @@ export default function createUploader (config: Object): Function {
       files: 5
     },
     storage: s3({
-      filename,
-      bucket: 'bshed',
       dirname: 'uploads/images',
+      filename,
       ...config
     })
   })

@@ -7,6 +7,7 @@ import uuid from 'node-uuid'
 /**
  * Ensure session.userId is set on every request
  * Create the user if they're don't have an id yet
+ * Adds userId to request and req as well
  */
 export function setUser () {
   return function * setUserMiddleware (next) {
@@ -15,6 +16,7 @@ export function setUser () {
       const userId = yield User.create(r)
       this.session.userId = userId
     }
+    this.request.userId = this.req.userId = this.session.userId
     yield next
   }
 }
