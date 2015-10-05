@@ -27,7 +27,7 @@
     "link:client": "link-package ./client @client",
     "link:server": "link-package ./server @server",
     "postinstall": "npm run link",
-    "pres3": "mkdir -p ./build/s3/bshed",
+    "pres3": "mkdir -p ./build/s3/bshed_development && mkdir -p ./build/s3/bshed_test",
     "s3": "s3rver -d ./build/s3/ -p 10001",
     "server:live": "nodemon -w server -w data -r babel/register ./server/index.js"
   },
