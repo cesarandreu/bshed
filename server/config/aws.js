@@ -4,6 +4,7 @@
 import { Endpoint } from 'aws-sdk'
 
 export const development = {
+  bucket: 'bshed_development',
   accessKeyId: 'ACCESS_KEY_ID',
   secretAccessKey: 'SECRET_ACCESS_KEY',
   s3ForcePathStyle: true,
@@ -12,6 +13,7 @@ export const development = {
 }
 
 export const test = {
+  bucket: 'bshed_test',
   accessKeyId: 'ACCESS_KEY_ID',
   secretAccessKey: 'SECRET_ACCESS_KEY',
   s3ForcePathStyle: true,
@@ -20,6 +22,7 @@ export const test = {
 }
 
 export const production = {
+  bucket: 'bshed_production',
   accessKeyId: '',
   secretAccessKey: '',
   s3ForcePathStyle: true,
