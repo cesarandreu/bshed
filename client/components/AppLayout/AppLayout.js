@@ -2,7 +2,7 @@
  * AppLayout
  * @flow
  */
-import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from '../Layout'
+import { Layout, LayoutContent, LayoutHeader, LayoutTitle } from '@components/Layout'
 import React, { Component, PropTypes } from 'react'
 import Relay from 'react-relay'
 
