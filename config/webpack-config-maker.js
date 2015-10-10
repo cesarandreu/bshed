@@ -128,7 +128,6 @@ module.exports = function buildWebpackConfig (options) {
       new HtmlWebpackPlugin({
         template: './config/index.html',
         title: 'bshed',
-        minify: BUILD,
         inject: true
       }),
 

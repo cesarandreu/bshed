@@ -89,7 +89,7 @@
     "empty": "^0.10.1",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
-    "html-webpack-plugin": "^1.6.1",
+    "html-webpack-plugin": "^1.6.2",
     "link-package": "^0.1.0",
     "node-libs-browser": "^0.5.3",
     "nodemon": "^1.7.1",
