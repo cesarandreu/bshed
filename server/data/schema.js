@@ -27,28 +27,40 @@ import SchemaUtils from '@server/lib/schema-utils'
 export default function loadSchema (models: Object) {
   const {
     Bikeshed,
-    // User,
+    User,
+    Vote,
     r
   } = models
 
+  // ID fetcher
+  async function idFetcher (globalId, info) {
+    const { type, id } = fromGlobalId(globalId)
+    const model = models[type]
+    invariant(model, `Unknown type "${type}"`)
+
+    const instance = await model.get(id)
+    invariant(instance, `Unable to find type "${type}" with id "${id}"`)
+
+    return {
+      TYPE: model.TYPE,
+      ...instance
+    }
+  }
+
   const { nodeInterface, nodeField } = nodeDefinitions(
     // ID fetcher
-    (globalId, info) => {
-      const { type, id } = fromGlobalId(globalId)
-      console.log('type', type)
-      console.log('id', id)
-
-      return r.table(type).get(id).pluck(getFields(info))
-    },
+    idFetcher,
 
     // Type resolver
     instance => {
-      console.log('instance?', instance)
-      return null
-      // const modelName = instance && instance.Model && instance.Model.name
-      // return modelName in types
-      //   ? types[modelName]
-      //   : null
+      switch (instance.TYPE) {
+        case 'Bikeshed':
+          return BikeshedType
+        case 'User':
+          return UserType
+        // case 'Vote':
+        //   return VoteType
+      }
     }
   )
 
