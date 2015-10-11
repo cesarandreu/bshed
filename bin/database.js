@@ -38,8 +38,7 @@ async function executeAction (action) {
         await createTables(r)
         break
       default:
-        console.warn(`Unknown action "${action}"`)
-        break
+        throw new Error(`Unknown action "${action}"`)
     }
     await r.getPoolMaster().drain()
   } catch (err) {
@@ -51,7 +50,7 @@ async function executeAction (action) {
 // ACTIONS
 async function dropDatabase (r) {
   const list = await r.dbList()
-  if (~list.indexOf(database.db)) {
+  if (list.includes(database.db)) {
     try {
       console.log(`Dropping "${database.db}" database`)
       await r.dbDrop(database.db)
@@ -67,7 +66,7 @@ async function dropDatabase (r) {
 
 async function createDatabase (r) {
   const list = await r.dbList()
-  if (!~list.indexOf(database.db)) {
+  if (!list.includes(database.db)) {
     try {
       console.log(`Creating "${database.db}" database`)
       await r.dbCreate(database.db)
@@ -77,7 +76,7 @@ async function createDatabase (r) {
       throw err
     }
   } else {
-    console.log(`Unable to create "${database.db}" already exists`)
+    console.log(`Unable to create "${database.db}", already exists`)
   }
 }
 
