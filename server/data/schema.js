@@ -29,17 +29,17 @@ function getFields (info: Object): Array<string> {
   return Object.keys(fieldGraph[info.fieldName])
 }
 
-// Get the fields for an edge node
-function getEdgeNodeFields (info: Object): Array<string> {
-  const fieldGraph = getFieldGraph(info.fieldASTs)
-  return Object.keys(fieldGraph[info.fieldName].node)
-}
+// // Get the fields for an edge node
+// function getEdgeNodeFields (info: Object): Array<string> {
+//   const fieldGraph = getFieldGraph(info.fieldASTs)
+//   return Object.keys(fieldGraph[info.fieldName].node)
+// }
 
-// Get the fields for a connection
-function getConnectionFields (info: Object): Array<string> {
-  const fieldGraph = getFieldGraph(info.fieldASTs)
-  return Object.keys(fieldGraph[info.fieldName].edges.node)
-}
+// // Get the fields for a connection
+// function getConnectionFields (info: Object): Array<string> {
+//   const fieldGraph = getFieldGraph(info.fieldASTs)
+//   return Object.keys(fieldGraph[info.fieldName].edges.node)
+// }
 
 // Generate a field graph
 // Leaf nodes are empty objects
