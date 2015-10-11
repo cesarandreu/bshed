@@ -12,10 +12,9 @@
  *  NODE_ENV=test ./database.js refresh
  */
 import RethinkDB from 'rethinkdbdash'
-import { getModelList } from '@server/models'
 import { database, env } from '@server/config'
+import { instantiateModels } from '@server/models'
 console.log(`Loaded database config for "${env}" environment`)
-const MODEL_LIST = getModelList()
 
 // Perform the action
 executeAction(process.argv[2])
@@ -82,24 +81,9 @@ async function createDatabase (r) {
 
 async function createTables (r) {
   console.log(`Creating tables for "${database.db}" database`)
-  const tableList = await r.tableList()
-  await Promise.all(MODEL_LIST.map(async (model) => {
-    const { TABLE, INDEXES, TYPE } = model
-
-    // Create table if missing
-    if (tableList.indexOf(TABLE) === -1) {
-      console.log(`Creating table "${TABLE}" for ${TYPE} model`)
-      await r.tableCreate(TABLE)
-    }
-
-    // Create indexes if missing
-    const indexList = await r.table(TABLE).indexList()
-    await Promise.all(INDEXES.map(async (INDEX) => {
-      if (indexList.indexOf(INDEX) === -1) {
-        console.log(`Creating index "${INDEX}" for ${TABLE} table`)
-        await r.table(TABLE).indexCreate(INDEX)
-      }
-    }))
-  }))
+  const instances = instantiateModels(r)
+  const instanceList = Object.values(instances)
+  await Promise.all(instanceList.map(model => model.createTable()))
+  await Promise.all(instanceList.map(model => model.createIndexes()))
   console.log(`Created tables and indexes`)
 }
