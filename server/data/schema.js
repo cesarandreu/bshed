@@ -245,8 +245,7 @@ export default function loadSchema (models: Object) {
           }
         }
       }
-    },
-    interfaces: [nodeInterface]
+    }
   })
 
   // Connections
@@ -323,9 +322,9 @@ export default function loadSchema (models: Object) {
     fields () {
       return {
         viewer: {
-          type: UserType,
-          async resolve ({ userId }, args, info) {
-            return await r.table('users').get(userId).pluck(getFields(info))
+          type: ViewerType,
+          resolve (rootValue) {
+            return rootValue
           }
         },
         node: nodeField
