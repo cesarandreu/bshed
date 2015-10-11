@@ -2,22 +2,26 @@
  * GraphQL schema
  * @flow
  */
+import invariant from 'invariant'
 import {
-  GraphQLSchema,
-  GraphQLString,
+  GraphQLBoolean,
+  GraphQLID,
+  GraphQLInt,
+  GraphQLList,
   GraphQLNonNull,
-  GraphQLObjectType
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString
 } from 'graphql'
-
 import {
+  connectionArgs,
+  connectionDefinitions,
   fromGlobalId,
   globalIdField,
-  connectionArgs,
-  nodeDefinitions,
-  // connectionFromArray,
-  connectionDefinitions,
-  mutationWithClientMutationId
+  mutationWithClientMutationId,
+  nodeDefinitions
 } from 'graphql-relay'
+import mime from 'mime'
 
 // Get the fields for a type
 function getFields (info: Object): Array<string> {
