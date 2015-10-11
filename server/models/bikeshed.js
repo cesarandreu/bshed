@@ -2,13 +2,10 @@
  * Bikeshed model
  */
 import Joi from 'joi'
-import * as utils from './utils'
+import BaseModel from './model'
 
-export const INDEXES = ['userId', 'createdAt']
-export const TABLE = 'bikesheds'
-export const TYPE = 'Bikeshed'
-
-export const FileListItemSchema = Joi.object().keys({
+const FileListItemSchema = Joi.object()
+.keys({
   fieldname: Joi.string(),
   originalname: Joi.string(),
   encoding: Joi.string(),
@@ -17,25 +14,24 @@ export const FileListItemSchema = Joi.object().keys({
   key: Joi.string()
 })
 
-export const BikeshedSchema = Joi.object().keys({
+const BikeshedSchema = Joi.object()
+.keys({
   createdAt: Joi.date(),
   id: Joi.string().guid(),
-  userId: Joi.string().guid(),
-  requestId: Joi.string().guid(),
-  fileList: Joi.array().min(2).max(8).items(FileListItemSchema),
-  description: Joi.string().max(4096).allow('').default('').optional()
+  userId: Joi.string().guid().required(),
+  requestId: Joi.string().guid().required(),
+  description: Joi.string().max(4096).allow('').default('').optional(),
+  fileList: Joi.array().min(2).max(8).items(FileListItemSchema).required()
 })
+.requiredKeys(['userId', 'requestId', 'fileList'])
 
-export const validate = utils.createValidate(BikeshedSchema)
-
-export const get = utils.createGet(TABLE)
-
-export async function create (r, values) {
-  const bikeshedValues = validate(values)
-
-  const { generated_keys: [bikeshedId] } = await r.table(TABLE).insert({
-    createdAt: r.now(),
-    ...bikeshedValues
-  })
-  return bikeshedId
+const PROPS = {
+  SCHEMA: BikeshedSchema,
+  INDEXES: ['userId', 'createdAt'],
+  TABLE: 'bikesheds',
+  TYPE: 'Bikeshed'
 }
+
+export default class Bikeshed extends BaseModel {
+}
+Object.assign(Bikeshed.prototype, PROPS)
