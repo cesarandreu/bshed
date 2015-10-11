@@ -58,7 +58,7 @@ export class BikeshedCreator extends Component {
         _setSaving(false)
 
         // Navigate to the newly created bikeshed's page
-        const bikeshedId = createBikeshed.bikeshedEdge.cursor
+        const bikeshedId = createBikeshed.bikeshedEdge.node.id
         history.pushState({}, getBikeshedViewerPath(bikeshedId))
       }
     })
