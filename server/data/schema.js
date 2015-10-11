@@ -225,41 +225,42 @@ export default function loadSchema (models: Object) {
       }
     },
     outputFields: {
-      bikeshed: {
-        type: BikeshedType,
-        resolve ({ bikeshed }) {
-          console.log('bikeshed')
-          return bikeshed
-        }
-      },
-      viewer: {
-        type: UserType,
-        async resolve ({ bikeshed }) {
-          return await r.table('users').get(bikeshed.userId)
-        }
-      },
       bikeshedEdge: {
         type: BikeshedEdgeType,
-        resolve ({ bikeshed, bikeshedId }, args, info) {
-          // console.log('graph', getFieldGraph(info.fieldASTs))
+        async resolve ({ bikeshedId }, args, info) {
+          const bikeshed = await Bikeshed.get(bikeshedId)
           return {
             cursor: bikeshedId,
             node: bikeshed
           }
         }
+      },
+      viewer: {
+        type: ViewerType,
+        resolve (_, args, { rootValue }) {
+          return rootValue
+        }
       }
     },
-    async mutateAndGetPayload (inputFields, info) {
-      const { description } = inputFields
-      const { userId } = info.rootValue
+    async mutateAndGetPayload ({ clientMutationId, ...inputFields }, { rootValue }) {
+      const { userId, requestId, files, createImageJob } = rootValue
+      const fileList = Object.values(files)
 
-      const bikeshedId = await Bikeshed.create(r, {
-        description,
+      const bikeshedId = await Bikeshed.create({
+        ...inputFields,
+        requestId,
+        fileList,
         userId
       })
-      const bikeshed = await r.table('bikesheds').get(bikeshedId)
+
+      createImageJob({
+        bikeshedId,
+        fileList,
+        requestId,
+        userId
+      })
+
       return {
-        bikeshed,
         bikeshedId
       }
     }
