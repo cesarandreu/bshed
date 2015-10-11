@@ -79,8 +79,45 @@ export default function loadSchema (models: Object) {
           type: UserType,
           description: 'User that created the bikeshed',
           async resolve (bikeshed, args, info) {
-            console.log('creator')
-            return await r.table('users').get(bikeshed.userId).pluck(getFields(info))
+            return await User.get(bikeshed.userId)
+          }
+        },
+        voteCount: {
+          type: new GraphQLNonNull(GraphQLInt),
+          description: 'Number of votes on the bikeshed',
+          resolve ({ id }) {
+            return Vote.bikeshedCount(id)
+          }
+        },
+        hasVoted: {
+          type: new GraphQLNonNull(GraphQLBoolean),
+          description: 'If the user can vote on this bikeshed',
+          resolve (bikeshed, args, { rootValue }) {
+            return Vote.hasVoted(rootValue.userId, bikeshed.id)
+          }
+        },
+        bikes: {
+          type: new GraphQLList(BikeType),
+          description: 'Images that users are rating',
+          async resolve (bikeshed, args, info) {
+            const { userId } = info.rootValue
+            const fields = SchemaUtils.getFields(info)
+            const [scores, ratings] = await Promise.all([
+              fields.includes('score')
+                ? Vote.bikeshedScores(bikeshed.id)
+                : [],
+              fields.includes('rating')
+                ? Vote.bikeshedUserRatings(userId, bikeshed.id)
+                : []
+            ])
+
+            return bikeshed.fileList.map((file, idx) => ({
+              bikeshedId: bikeshed.id,
+              userId: bikeshed.userId,
+              rating: ratings[idx],
+              score: scores[idx],
+              ...file
+            }))
           }
         }
       }
