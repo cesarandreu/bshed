@@ -155,27 +155,26 @@ export default function loadSchema (models: Object) {
           args: connectionArgs,
           type: BikeshedConnectionType,
           async resolve (user, args, info) {
-            const connectionFields = getConnectionFields(info)
             const { after, before, first, last } = args
 
             // Get the sorted bikeshed list
-            const sortedBikeshedsList = r.table('bikesheds')
+            const sortedBikeshedsList = r.table(Bikeshed.TABLE)
               .orderBy({ index: r.desc('createdAt') })
 
             // Get the begin index
             const afterValue = after != null ? after : ''
             const begin = sortedBikeshedsList
-              .offsetsOf(r.table('bikesheds').get(afterValue))
+              .offsetsOf(r.table(Bikeshed.TABLE).get(afterValue))
               .nth(0)
               .default(-1)
               .do(begin => r.expr([begin, -1]).max())
               .add(1)
 
             // Get the end index
-            const countPlusOne = r.table('bikesheds').count().add(1)
+            const countPlusOne = r.table(Bikeshed.TABLE).count().add(1)
             const beforeValue = before != null ? before : ''
             const end = sortedBikeshedsList
-              .offsetsOf(r.table('bikesheds').get(beforeValue))
+              .offsetsOf(r.table(Bikeshed.TABLE).get(beforeValue))
               .nth(0)
               .default(countPlusOne)
               .do(end => r.expr([end, countPlusOne]).min())
