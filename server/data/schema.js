@@ -2,7 +2,6 @@
  * GraphQL schema
  * @flow
  */
-import invariant from 'invariant'
 import {
   GraphQLBoolean,
   GraphQLID,
@@ -22,6 +21,7 @@ import {
   nodeDefinitions
 } from 'graphql-relay'
 import mime from 'mime'
+import invariant from 'invariant'
 import * as SchemaUtils from '@server/lib/schema-utils'
 
 export default function loadSchema (models: Object) {
