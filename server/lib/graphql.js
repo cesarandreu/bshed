@@ -114,10 +114,7 @@ GraphqlController.prepare = function * prepare (next) {
     userId: this.session.userId,
 
     // requestId
-    requestId: this.request.requestId,
-
-    // createImageJob
-    createImageJob: this.createImageJob
+    requestId: this.request.requestId
   })
 
   yield next
