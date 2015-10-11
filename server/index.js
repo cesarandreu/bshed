@@ -18,8 +18,10 @@ import loadSchema from './data/schema'
 import createUploader from './lib/uploader'
 import GraphQLController from './lib/graphql'
 import * as middleware from './lib/middleware'
+import { getJobCreator } from './lib/image-queue'
 
-// Initialize uploader, models, and server
+// Initialize image queue, uploader, models, and server
+const createImageJob = getJobCreator(config.queue)
 const uploader = createUploader(config.aws)
 const models = modelLoader(config.database)
 const server = Object.assign(qs(koa()), {
@@ -36,7 +38,10 @@ server.context.uploader = uploader
 server.context.models = models
 server.context.graphql = {
   schema: schema,
-  rootValue: {}
+  rootValue: {
+    IMAGE_ROOT: 'localhost:10001',
+    createImageJob: createImageJob
+  }
 }
 
 // Middleware
