@@ -22,7 +22,7 @@ import {
   nodeDefinitions
 } from 'graphql-relay'
 import mime from 'mime'
-import SchemaUtils from '@server/lib/schema-utils'
+import * as SchemaUtils from '@server/lib/schema-utils'
 
 export default function loadSchema (models: Object) {
   const {
