@@ -140,6 +140,17 @@ export default function loadSchema (models: Object) {
           type: GraphQLString,
           description: 'Datetime user registered at'
         },
+        isRegistered: {
+          type: GraphQLBoolean,
+          resolve (user) {
+            return Boolean(user.registeredAt)
+          }
+        }
+      }
+    },
+    interfaces: [nodeInterface]
+  })
+
         bikesheds: {
           args: connectionArgs,
           type: BikeshedConnectionType,
