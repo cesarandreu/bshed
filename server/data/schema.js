@@ -22,38 +22,7 @@ import {
   nodeDefinitions
 } from 'graphql-relay'
 import mime from 'mime'
-
-// Get the fields for a type
-function getFields (info: Object): Array<string> {
-  const fieldGraph = getFieldGraph(info.fieldASTs)
-  return Object.keys(fieldGraph[info.fieldName])
-}
-
-// // Get the fields for an edge node
-// function getEdgeNodeFields (info: Object): Array<string> {
-//   const fieldGraph = getFieldGraph(info.fieldASTs)
-//   return Object.keys(fieldGraph[info.fieldName].node)
-// }
-
-// // Get the fields for a connection
-// function getConnectionFields (info: Object): Array<string> {
-//   const fieldGraph = getFieldGraph(info.fieldASTs)
-//   return Object.keys(fieldGraph[info.fieldName].edges.node)
-// }
-
-// Generate a field graph
-// Leaf nodes are empty objects
-// Use info.fieldASTs as a starting point
-function getFieldGraph (fields = []): Object {
-  return fields
-    .filter(field => field.kind === 'Field')
-    .reduce((result, field) => {
-      result[field.name.value] = field.selectionSet
-        ? getFieldGraph(field.selectionSet.selections)
-        : {}
-      return result
-    }, {})
-}
+import SchemaUtils from '@server/lib/schema-utils'
 
 export default function loadSchema (models: Object) {
   const {
@@ -166,15 +135,7 @@ export default function loadSchema (models: Object) {
             // Stop if we don't have any bikesheds
             const bikeshedCount = await bikesheds.count()
             if (bikeshedCount === 0) {
-              return {
-                edges: [],
-                pageInfo: {
-                  startCursor: null,
-                  endCursor: null,
-                  hasPreviousPage: false,
-                  hasNextPage: false
-                }
-              }
+              return SchemaUtils.getEmptyConnection()
             }
 
             // Get the edges and cursors
@@ -187,7 +148,7 @@ export default function loadSchema (models: Object) {
               slicedBikeshedsList.nth(0).getField('id'),
               slicedBikeshedsList.nth(-1).getField('id'),
               bikesheds.map(bikeshed => ({
-                node: bikeshed.pluck(connectionFields),
+                node: bikeshed,
                 cursor: bikeshed('id')
               }))
             ])
