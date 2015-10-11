@@ -88,6 +88,44 @@ export default function loadSchema (models: Object) {
     interfaces: [nodeInterface]
   })
 
+  const BikeType = new GraphQLObjectType({
+    name: 'Bike',
+    description: 'An image belonging to a Bikeshed for users to rate',
+    fields () {
+      return {
+        rating: {
+          type: GraphQLInt,
+          description: 'User rating on this bike'
+        },
+        score: {
+          type: new GraphQLNonNull(GraphQLInt),
+          description: 'Total sum of ratings for this bike',
+          resolve ({ score }) {
+            return score || 0
+          }
+        },
+        fullUrl: {
+          type: new GraphQLNonNull(GraphQLString),
+          description: 'Full size URL',
+          resolve ({ userId, bikeshedId, fieldname, mimetype }, args, info) {
+            const { IMAGE_ROOT } = info.rootValue
+            const extension = mime.extension(mimetype)
+            return `${IMAGE_ROOT}/${userId}/${bikeshedId}/${fieldname}.full.${extension}`
+          }
+        },
+        thumbnailUrl: {
+          type: new GraphQLNonNull(GraphQLString),
+          description: 'Thumbnail size URL',
+          resolve ({ userId, bikeshedId, fieldname, mimetype }, args, info) {
+            const { IMAGE_ROOT } = info.rootValue
+            const extension = mime.extension(mimetype)
+            return `${IMAGE_ROOT}/${userId}/${bikeshedId}/${fieldname}.thumbnail.${extension}`
+          }
+        }
+      }
+    }
+  })
+
   const UserType = new GraphQLObjectType({
     name: 'User',
     description: 'A user in the application',
