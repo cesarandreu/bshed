@@ -16,10 +16,12 @@ const log = debug('app:models')
 // Model imports
 import Bikeshed from './bikeshed'
 import User from './user'
+import Vote from './vote'
 
 const models = {
   Bikeshed,
-  User
+  User,
+  Vote
 }
 
 export function instantiateModels (r) {
