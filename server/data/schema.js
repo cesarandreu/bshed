@@ -151,6 +151,23 @@ export default function loadSchema (models: Object) {
     interfaces: [nodeInterface]
   })
 
+  const ViewerType = new GraphQLObjectType({
+    name: 'Viewer',
+    description: 'Person that is querying',
+    fields () {
+      return {
+        id: {
+          type: new GraphQLNonNull(GraphQLID),
+          resolve ({ userId }) {
+            return userId
+          }
+        },
+        user: {
+          type: UserType,
+          resolve ({ userId }, args, info) {
+            return User.get(userId)
+          }
+        },
         bikesheds: {
           args: connectionArgs,
           type: BikeshedConnectionType,
