@@ -26,10 +26,10 @@ function getFields (info: Object): Array<string> {
 }
 
 // Get the fields for an edge node
-// function getEdgeNodeFields (info: Object): Array<string> {
-//   const fieldGraph = getFieldGraph(info.fieldASTs)
-//   return Object.keys(fieldGraph[info.fieldName].node)
-// }
+function getEdgeNodeFields (info: Object): Array<string> {
+  const fieldGraph = getFieldGraph(info.fieldASTs)
+  return Object.keys(fieldGraph[info.fieldName].node)
+}
 
 // Get the fields for a connection
 function getConnectionFields (info: Object): Array<string> {
