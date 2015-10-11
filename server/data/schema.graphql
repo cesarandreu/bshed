@@ -1,0 +1,69 @@
+type Bike {
+  rating: Int
+  score: Int!
+  fullUrl: String!
+  thumbnailUrl: String!
+}
+
+type Bikeshed implements Node {
+  id: ID!
+  description: String
+  creator: User
+  voteCount: Int!
+  hasVoted: Boolean!
+  bikes: [Bike]
+}
+
+type BikeshedConnection {
+  pageInfo: PageInfo!
+  edges: [BikeshedEdge]
+}
+
+type BikeshedEdge {
+  node: Bikeshed
+  cursor: String!
+}
+
+input CreateBikeshedInput {
+  description: String!
+  clientMutationId: String!
+}
+
+type CreateBikeshedPayload {
+  bikeshedEdge: BikeshedEdge
+  viewer: Viewer
+  clientMutationId: String!
+}
+
+type Mutation {
+  createBikeshed(input: CreateBikeshedInput!): CreateBikeshedPayload
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  viewer: Viewer
+  node(id: ID!): Node
+}
+
+type User implements Node {
+  id: ID!
+  name: String
+  registeredAt: String
+  isRegistered: Boolean
+}
+
+type Viewer {
+  id: ID!
+  user: User
+  bikesheds(before: String, after: String, first: Int, last: Int): BikeshedConnection
+}
