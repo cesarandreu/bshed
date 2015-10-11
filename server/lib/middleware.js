@@ -11,9 +11,9 @@ import uuid from 'node-uuid'
  */
 export function setUser () {
   return function * setUserMiddleware (next) {
-    const { User, r } = this.models
+    const { User } = this.models
     if (!this.session.userId) {
-      const userId = yield User.create(r)
+      const userId = yield User.create()
       this.session.userId = userId
     }
     this.request.userId = this.req.userId = this.session.userId
