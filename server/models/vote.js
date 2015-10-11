@@ -4,6 +4,7 @@
 import Joi from 'joi'
 import BaseModel from './model'
 import invariant from 'invariant'
+import { sumOf } from '@server/lib/utils'
 
 const VoteSchema = Joi.object()
 .keys({
@@ -42,11 +43,10 @@ export default class Vote extends BaseModel {
     // The schema makes sure that each entry is unique and within expected ranges
     // This extra check makes sure that each bike is rated with correct values
     // For example, if we have 2 results, it should have a 0 and a 1 rating
-    // Using the ((n * (n + 1)) / 2) formula to avoid extra work :D
     const total = values.ratings.reduce((total, rating) => total + rating, 0)
     const length = values.ratings.length - 1
     invariant(
-      total === (length * (length + 1)) / 2,
+      total === sumOf(length),
       'Must vote on each image'
     )
     return values
