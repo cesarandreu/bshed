@@ -20,6 +20,8 @@ import GraphQLController from './lib/graphql'
 import * as middleware from './lib/middleware'
 import { getJobCreator } from './lib/image-queue'
 
+const ASSETS_PATH = path.resolve(__dirname, '../build/assets/')
+
 // Initialize image queue, uploader, models, and server
 const createImageJob = getJobCreator(config.queue)
 const uploader = createUploader(config.aws)
@@ -69,11 +71,9 @@ server.use(middleware.setUser())
 server.use(GraphQLController())
 
 // File server
-server.use(fileServer(path.join(__dirname, '../build/assets')))
-
-const indexFile = path.join(__dirname, '../build/assets/index.html')
+server.use(fileServer(ASSETS_PATH))
 server.use(function * () {
-  yield send(this, indexFile)
+  yield send(this, 'index.html', { root: ASSETS_PATH })
 })
 
 // Server initializer
