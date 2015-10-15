@@ -4,7 +4,6 @@
  */
 import {
   GraphQLBoolean,
-  GraphQLID,
   GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
@@ -182,28 +181,6 @@ export default function loadSchema (models: Object) {
           resolve (user) {
             return Boolean(user.registeredAt)
           }
-        }
-      }
-    },
-    interfaces: [nodeInterface]
-  })
-
-  const ViewerType = new GraphQLObjectType({
-    name: 'Viewer',
-    description: 'Person that is querying',
-    fields () {
-      return {
-        id: {
-          type: new GraphQLNonNull(GraphQLID),
-          resolve ({ userId }) {
-            return userId
-          }
-        },
-        user: {
-          type: UserType,
-          resolve ({ userId }, args, info) {
-            return User.get(userId)
-          }
         },
         bikesheds: {
           args: connectionArgs,
@@ -282,7 +259,8 @@ export default function loadSchema (models: Object) {
           }
         }
       }
-    }
+    },
+    interfaces: [nodeInterface]
   })
 
   // Connections
@@ -314,9 +292,9 @@ export default function loadSchema (models: Object) {
         }
       },
       viewer: {
-        type: ViewerType,
+        type: UserType,
         resolve (_, args, { rootValue }) {
-          return rootValue
+          return User.get(rootValue.userId)
         }
       }
     },
@@ -359,9 +337,9 @@ export default function loadSchema (models: Object) {
     fields () {
       return {
         viewer: {
-          type: ViewerType,
+          type: UserType,
           resolve (rootValue) {
-            return rootValue
+            return User.get(rootValue.userId)
           }
         },
         node: nodeField
