@@ -78,8 +78,8 @@ export default function loadSchema (models: Object) {
         creator: {
           type: UserType,
           description: 'User that created the bikeshed',
-          async resolve (bikeshed, args, info) {
-            return await User.get(bikeshed.userId)
+          resolve (bikeshed, args, info) {
+            return User.get(bikeshed.userId)
           }
         },
         voteCount: {
