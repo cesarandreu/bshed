@@ -7,7 +7,7 @@ const { File } = global
 
 export class CreateBikeshedMutation extends Relay.Mutation {
   getMutation () {
-    return Relay.QL`mutation{createBikeshed}`
+    return Relay.QL`mutation{ createBikeshed }`
   }
 
   getVariables (): { description: string } {
@@ -60,7 +60,7 @@ export class CreateBikeshedMutation extends Relay.Mutation {
 CreateBikeshedMutation.fragments = {
   viewer () {
     return Relay.QL`
-      fragment on Viewer {
+      fragment on User {
         id
       }
     `

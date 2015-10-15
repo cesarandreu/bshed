@@ -12,7 +12,7 @@ export class App extends Component {
     const { children, viewer } = this.props
     return (
       <AppLayoutContainer
-        user={viewer.user}
+        user={viewer}
       >
         {children}
       </AppLayoutContainer>
@@ -27,10 +27,8 @@ App.propTypes = {
 export const AppContainer = Relay.createContainer(App, {
   fragments: {
     viewer: () => Relay.QL`
-      fragment App on Viewer {
-        user {
-          ${AppLayoutContainer.getFragment('user')}
-        }
+      fragment App on User {
+        ${AppLayoutContainer.getFragment('user')}
       }
     `
   }

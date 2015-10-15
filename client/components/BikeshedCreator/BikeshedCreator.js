@@ -185,7 +185,7 @@ export const BikeshedCreatorContainer = Relay.createContainer(BikeshedCreator, {
   fragments: {
     viewer () {
       return Relay.QL`
-        fragment on Viewer {
+        fragment on User {
           ${CreateBikeshedMutation.getFragment('viewer')}
         }
       `
