@@ -31,7 +31,7 @@ input CreateBikeshedInput {
 
 type CreateBikeshedPayload {
   bikeshedEdge: BikeshedEdge
-  viewer: Viewer
+  viewer: User
   clientMutationId: String!
 }
 
@@ -51,7 +51,7 @@ type PageInfo {
 }
 
 type Query {
-  viewer: Viewer
+  viewer: User
   node(id: ID!): Node
 }
 
@@ -60,10 +60,5 @@ type User implements Node {
   name: String
   registeredAt: String
   isRegistered: Boolean
-}
-
-type Viewer {
-  id: ID!
-  user: User
   bikesheds(before: String, after: String, first: Int, last: Int): BikeshedConnection
 }
