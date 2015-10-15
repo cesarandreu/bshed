@@ -109,6 +109,21 @@
   background-color: #000;
 }
 
+/**
+ * Adds a semi-transparent border to images
+ * Source: http://blog.vjeux.com/2012/image/css-semi-transparent-border-on-images.html
+ */
+.imageItem:after {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  content: '';
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .image {
   max-height: 100%;
   max-width: 100%;
