@@ -4,9 +4,9 @@
  */
 import kue from 'kue'
 import S3FS from 's3fs'
-import sharp from 'sharp'
 import pump from 'pump'
 import mime from 'mime'
+import sharp from 'sharp'
 
 export const JOB_TYPE = 'process-image-upload'
 export const JOB_CONCURRENCY = 10
