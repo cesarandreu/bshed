@@ -15,27 +15,25 @@ async function processJob (s3fs, job) {
   const { bikeshedId, fileList, userId } = job.data
 
   const streamList = fileList
-  .reduce((result, file) => [
-    ...result, [
-      // Full size image
-      s3fs.createReadStream(file.key),
-      sharp().toFormat(mime.extension(file.mimetype)),
-      s3fs.createWriteStream(
-        `${userId}/${bikeshedId}/${file.fieldname}.full.${mime.extension(file.mimetype)}`
-      )
-    ], [
-      // Thumbnail size image
-      s3fs.createReadStream(file.key),
-      sharp().resize(160, 160).max().embed().toFormat(mime.extension(file.mimetype)),
-      s3fs.createWriteStream(
-        `${userId}/${bikeshedId}/${file.fieldname}.thumbnail.${mime.extension(file.mimetype)}`
-      )
-    ]
-  ], [])
+  .reduce((result, file) => [...result, [
+    // Full size image
+    s3fs.createReadStream(file.key),
+    sharp().toFormat(mime.extension(file.mimetype)),
+    s3fs.createWriteStream(
+      `${userId}/${bikeshedId}/${file.fieldname}.full.${mime.extension(file.mimetype)}`
+    )
+  ], [
+    // Thumbnail size image
+    s3fs.createReadStream(file.key),
+    sharp().resize(320, 320).max().withoutEnlargement().toFormat(mime.extension(file.mimetype)),
+    s3fs.createWriteStream(
+      `${userId}/${bikeshedId}/${file.fieldname}.thumbnail.${mime.extension(file.mimetype)}`
+    )
+  ]], [])
 
-  await Promise.all(streamList.map(stream =>
+  await Promise.all(streamList.map(streamList =>
     new Promise((resolve, reject) =>
-      pump(stream, err => err ? reject(err) : resolve())
+      pump(streamList, err => err ? reject(err) : resolve())
     )
   ))
 }
