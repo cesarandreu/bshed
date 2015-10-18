@@ -41,7 +41,7 @@ server.context.models = models
 server.context.graphql = {
   schema: schema,
   rootValue: {
-    IMAGE_ROOT: 'localhost:10001',
+    IMAGE_ROOT: `//localhost:10001/${config.aws.bucket}`,
     createImageJob: createImageJob
   }
 }
