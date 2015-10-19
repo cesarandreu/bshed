@@ -1,40 +1,8 @@
 /**
  * BikeshedCreator
  */
-:root {
-  --mobile-margin: 16px;
-  --desktop-margin: 24px;
-}
-
-/* Mobile */
-/* max-width: 840px - 1px */
-@custom-media --mobile (width <= 839px);
-
-/* Desktop */
-/* min-width: 840px */
-@custom-media --desktop (width >= 840px);
-
 .fileInput {
   display: none;
-}
-
-.page {
-  margin: 0 auto;
-  padding: 0 var(--desktop-margin) var(--desktop-margin);
-  /*max-width: calc((160px * 4) + (var(--desktop-margin) * 2) + (16px * 2));*/
-  max-width: 720px;
-}
-@media (--mobile) {
-  .page {
-    padding: 0 var(--mobile-margin) var(--mobile-margin);
-  }
-}
-
-.subhead {
-  height: 48px;
-  line-height: 48px;
-  padding: 0 var(--mobile-margin);
-  composes: textColorSecondary from '../styles/colors.css';
 }
 
 .grid {

@@ -7,11 +7,11 @@ import { createObjectURL, revokeObjectURL } from '@client/lib/URL'
 import { Card, CardActions, CardBody } from '@components/Card'
 import { getBikeshedViewerPath } from '@client/lib/RouteUtils'
 import type { SyntheticEvent, ReactElement } from 'react'
+import { Page, PageSubhead } from '@components/Page'
 import React, { Component, PropTypes } from 'react'
 import { TextInput } from '@components/TextInput'
 import { Icon, ICONS } from '@components/Icon'
 import { Button } from '@components/Button'
-import { Subhead } from '@components/Text'
 import cn from './BikeshedCreator.css'
 import Relay from 'react-relay'
 
@@ -116,10 +116,10 @@ export class BikeshedCreator extends Component {
     const { description, files, saving } = this.state
 
     return (
-      <div className={cn.page}>
-        <Subhead className={cn.subhead}>
+      <Page>
+        <PageSubhead>
           Bikeshed Creator
-        </Subhead>
+        </PageSubhead>
         <Card>
           <CardBody>
             <TextInput
@@ -169,7 +169,7 @@ export class BikeshedCreator extends Component {
           accept='image/jpeg,image/png'
           className={cn.fileInput}
         />
-      </div>
+      </Page>
     )
   }
 }
