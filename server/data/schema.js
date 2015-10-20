@@ -4,6 +4,8 @@
  */
 import {
   GraphQLBoolean,
+  GraphQLEnumType,
+  GraphQLFloat,
   GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
@@ -74,6 +76,30 @@ export default function loadSchema (models: Object) {
           type: GraphQLString,
           description: 'Bikeshed description'
         },
+        status: {
+          name: 'status',
+          type: new GraphQLEnumType({
+            name: 'status',
+            values: {
+              PROCESSING: {
+                value: 'processing',
+                description: 'Was accepted and is being processed'
+              },
+              QUEUED: {
+                value: 'queued',
+                description: 'Waiting in line to be processed'
+              },
+              ERROR: {
+                value: 'error',
+                description: 'Failed while processing'
+              },
+              READY: {
+                value: 'ready',
+                description: 'Ready for use'
+              }
+            }
+          })
+        },
         creator: {
           type: UserType,
           description: 'User that created the bikeshed',
@@ -109,7 +135,7 @@ export default function loadSchema (models: Object) {
                 ? Vote.bikeshedUserRatings(userId, bikeshed.id)
                 : []
             ])
-
+            console.log('bikeshed.fileList', bikeshed.fileList)
             return bikeshed.fileList.map((file, idx) => ({
               bikeshedId: bikeshed.id,
               userId: bikeshed.userId,
@@ -129,6 +155,18 @@ export default function loadSchema (models: Object) {
     description: 'An image belonging to a Bikeshed for users to rate',
     fields () {
       return {
+        ratio: {
+          type: GraphQLFloat,
+          description: 'Image aspect-ratio ( width / height )'
+        },
+        width: {
+          type: GraphQLInt,
+          description: 'Full-sized image width'
+        },
+        height: {
+          type: GraphQLInt,
+          description: 'Full-sized image height'
+        },
         rating: {
           type: GraphQLInt,
           description: 'User rating on this bike'
@@ -283,8 +321,7 @@ export default function loadSchema (models: Object) {
     outputFields: {
       bikeshedEdge: {
         type: BikeshedEdgeType,
-        async resolve ({ bikeshedId }, args, info) {
-          const bikeshed = await Bikeshed.get(bikeshedId)
+        resolve ({ bikeshedId, bikeshed }, args, info) {
           return {
             cursor: bikeshedId,
             node: bikeshed
@@ -299,7 +336,7 @@ export default function loadSchema (models: Object) {
       }
     },
     async mutateAndGetPayload ({ clientMutationId, ...inputFields }, { rootValue }) {
-      const { userId, requestId, files, createImageJob } = rootValue
+      const { userId, requestId, files, applicationImageQueue } = rootValue
       const fileList = Object.values(files)
 
       const bikeshedId = await Bikeshed.create({
@@ -309,15 +346,12 @@ export default function loadSchema (models: Object) {
         userId
       })
 
-      createImageJob({
-        bikeshedId,
-        fileList,
-        requestId,
-        userId
-      })
+      const bikeshed = await Bikeshed.get(bikeshedId)
+      await applicationImageQueue.addBikeshed(bikeshed)
 
       return {
-        bikeshedId
+        bikeshedId,
+        bikeshed
       }
     }
   })
