@@ -18,19 +18,22 @@ import loadSchema from './data/schema'
 import createUploader from './lib/uploader'
 import GraphQLController from './lib/graphql'
 import * as middleware from './lib/middleware'
-import { getJobCreator } from './lib/image-queue'
+import { getApplicationImageQueue } from './lib/image-queue'
 
 const ASSETS_PATH = path.resolve(__dirname, '../build/assets/')
 
-// Initialize image queue, uploader, models, and server
-const createImageJob = getJobCreator(config.queue)
+// Initialize models, uploader, and server
+const models = modelLoader(config)
 const uploader = createUploader(config.aws)
-const models = modelLoader(config.database)
 const server = Object.assign(qs(koa()), {
   keys: config.keys,
   name: config.name,
   env: config.env
 })
+
+// Initialize image queue
+const applicationImageQueue = getApplicationImageQueue(config.redis, models)
+applicationImageQueue.start()
 
 // Initialize GraphQL schema
 const schema = loadSchema(models)
@@ -42,7 +45,7 @@ server.context.graphql = {
   schema: schema,
   rootValue: {
     IMAGE_ROOT: `//localhost:10001/${config.aws.bucket}`,
-    createImageJob: createImageJob
+    applicationImageQueue: applicationImageQueue
   }
 }
 
