@@ -9,6 +9,8 @@
 import RethinkDB from 'rethinkdbdash'
 import invariant from 'invariant'
 import BaseModel from './model'
+import Redlock from 'redlock'
+import redis from 'redis'
 import debug from 'debug'
 
 const log = debug('app:models')
@@ -24,23 +26,27 @@ const models = {
   Vote
 }
 
-export function instantiateModels (r) {
+export function instantiateModels (r, redlock) {
   return Object.entries(models).reduce((instances, [name, Model]) => {
     invariant(
       BaseModel.isPrototypeOf(Model),
       `Models: Expected ${Model} to extend BaseModel.`
     )
 
-    instances[name] = new Model({ r })
+    instances[name] = new Model({ r, redlock })
     return instances
   }, {})
 }
 
 // Load database and models
-export default function modelLoader (config: Object): Object {
+export default function modelLoader (config): Object {
   log('start')
-  const r = RethinkDB(config)
-  const instances = instantiateModels(r)
+  const redisClients = [
+    redis.createClient(config.redis)
+  ]
+  const redlock = new Redlock(redisClients)
+  const r = new RethinkDB(config.database)
+  const instances = instantiateModels(r, redlock)
   log('end')
-  return { r, models, ...instances }
+  return { r, redlock, redisClients, models, instances, ...instances }
 }

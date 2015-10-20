@@ -1,13 +1,31 @@
 /**
  * BaseModel
+ * References:
+ *  https://github.com/neumino/rethinkdbdash
+ *  https://github.com/mike-marcacci/node-redlock
  * @flow
  */
 import Joi from 'joi'
 import invariant from 'invariant'
 
 export default class BaseModel {
-  constructor ({ r }) {
-    this.r = r
+  constructor ({ r, redlock }) {
+    Object.assign(this, {
+      r, // RethinkDB driver instance
+      redlock // Redlock instance
+    })
+
+    // Constructor param validation
+    invariant(
+      this.r,
+      `${this.constructor.name}: Expected r to be provided.`
+    )
+    invariant(
+      this.redlock,
+      `${this.constructor.name}: Expected redlock to be provided.`
+    )
+
+    // Interface properties validation
     invariant(
       this.TYPE,
       `${this.constructor.name}: Expected TYPE to be defined.`
