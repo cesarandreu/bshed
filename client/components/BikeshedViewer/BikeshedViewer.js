@@ -57,7 +57,8 @@ function calculatePositions (list, maxWidth) {
         ? lastItem.right + IMAGE_PADDING
         : 0
       const right = left + width
-      return [...row, { top, right, bottom, left, width, height }]
+      const rowItem = { top, right, bottom, left, width, height }
+      return [...row, rowItem]
     }, [])
 
     return [...result, ...row]
