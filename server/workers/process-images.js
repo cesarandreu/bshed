@@ -4,5 +4,6 @@
  * Image processing worker
  */
 import * as config from '@server/config'
-import { createJobConsumer } from '@server/lib/image-queue'
-createJobConsumer(config.queue, config.aws)
+import { getWorkerImageQueue } from '@server/lib/image-queue'
+const workerImageQueue = getWorkerImageQueue(config.redis, config.aws)
+workerImageQueue.start()
