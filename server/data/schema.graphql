@@ -1,4 +1,7 @@
 type Bike {
+  ratio: Float
+  width: Int
+  height: Int
   rating: Int
   score: Int!
   fullUrl: String!
@@ -8,6 +11,7 @@ type Bike {
 type Bikeshed implements Node {
   id: ID!
   description: String
+  status: status
   creator: User
   voteCount: Int!
   hasVoted: Boolean!
@@ -53,6 +57,13 @@ type PageInfo {
 type Query {
   viewer: User
   node(id: ID!): Node
+}
+
+enum status {
+  PROCESSING
+  QUEUED
+  ERROR
+  READY
 }
 
 type User implements Node {
