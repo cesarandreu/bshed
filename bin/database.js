@@ -11,35 +11,34 @@
  * Example:
  *  NODE_ENV=test ./database.js refresh
  */
-import RethinkDB from 'rethinkdbdash'
-import { database, env } from '@server/config'
-import { instantiateModels } from '@server/models'
-console.log(`Loaded database config for "${env}" environment`)
+import loadModels from '@server/models'
+import * as config from '@server/config'
+console.log(`Loaded database config for "${config.env}" environment`)
 
 // Perform the action
 executeAction(process.argv[2])
 async function executeAction (action) {
   try {
-    const r = RethinkDB(database)
+    const models = loadModels(config)
     switch (action) {
       case 'drop':
-        await dropDatabase(r)
+        await dropDatabase(models)
         break
       case 'create':
-        await createDatabase(r)
+        await createDatabase(models)
         break
       case 'prepare':
-        await createTables(r)
+        await createTables(models)
         break
       case 'reset':
-        await dropDatabase(r)
-        await createDatabase(r)
-        await createTables(r)
+        await dropDatabase(models)
+        await createDatabase(models)
+        await createTables(models)
         break
       default:
         throw new Error(`Unknown action "${action}"`)
     }
-    await r.getPoolMaster().drain()
+    await models.r.getPoolMaster().drain()
   } catch (err) {
     console.error(`Error executing action: ${err}`)
     process.exit(1)
@@ -47,41 +46,43 @@ async function executeAction (action) {
 }
 
 // ACTIONS
-async function dropDatabase (r) {
+async function dropDatabase (models) {
+  const { r } = models
   const list = await r.dbList()
-  if (list.includes(database.db)) {
+  if (list.includes(config.database.db)) {
     try {
-      console.log(`Dropping "${database.db}" database`)
-      await r.dbDrop(database.db)
+      console.log(`Dropping "${config.database.db}" database`)
+      await r.dbDrop(config.database.db)
       console.log('Database dropped')
     } catch (err) {
-      console.error(`Error dropping "${database.db}" database`)
+      console.error(`Error dropping "${config.database.db}" database`)
       throw err
     }
   } else {
-    console.log(`Unable to drop "${database.db}", it doesn't exist`)
+    console.log(`Unable to drop "${config.database.db}", it doesn't exist`)
   }
 }
 
-async function createDatabase (r) {
+async function createDatabase (models) {
+  const { r } = models
   const list = await r.dbList()
-  if (!list.includes(database.db)) {
+  if (!list.includes(config.database.db)) {
     try {
-      console.log(`Creating "${database.db}" database`)
-      await r.dbCreate(database.db)
+      console.log(`Creating "${config.database.db}" database`)
+      await r.dbCreate(config.database.db)
       console.log('Database created')
     } catch (err) {
-      console.error(`Error creating "${database.db}" database`)
+      console.error(`Error creating "${config.database.db}" database`)
       throw err
     }
   } else {
-    console.log(`Unable to create "${database.db}", already exists`)
+    console.log(`Unable to create "${config.database.db}", already exists`)
   }
 }
 
-async function createTables (r) {
-  console.log(`Creating tables for "${database.db}" database`)
-  const instances = instantiateModels(r)
+async function createTables (models) {
+  console.log(`Creating tables for "${config.database.db}" database`)
+  const { instances } = models
   const instanceList = Object.values(instances)
   await Promise.all(instanceList.map(model => model.createTable()))
   await Promise.all(instanceList.map(model => model.createIndexes()))

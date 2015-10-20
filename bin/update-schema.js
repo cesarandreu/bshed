@@ -8,12 +8,12 @@ import fs from 'fs'
 import path from 'path'
 import { graphql } from 'graphql'
 import loadModels from '@server/models'
-import { database } from '@server/config'
+import * as config from '@server/config'
 import loadSchema from '@server/data/schema'
 import { introspectionQuery, printSchema } from 'graphql/utilities'
 
 export async function updateSchema () {
-  const models = loadModels(database)
+  const models = loadModels(config)
   const Schema = loadSchema(models)
 
   try {
@@ -37,6 +37,7 @@ export async function updateSchema () {
       )
     ])
   } finally {
+    models.redisClients.forEach(client => client.quit())
     await models.r.getPoolMaster().drain()
   }
 }
