@@ -40,6 +40,7 @@
   "dependencies": {
     "aws-sdk": "^2.2.10",
     "bcrypt": "^0.8.5",
+    "bull": "^0.6.0",
     "classnames": "^2.2.0",
     "co-body": "^4.0.0",
     "debug": "^2.2.0",
@@ -74,6 +75,8 @@
     "react-relay": "^0.4.0",
     "react-router": "^1.0.0-rc3",
     "react-router-relay": "^0.7.0",
+    "redis": "^2.2.5",
+    "redlock": "^1.0.0",
     "redux": "^3.0.2",
     "rethinkdbdash": "^2.1.10",
     "s3fs": "^2.3.0",
