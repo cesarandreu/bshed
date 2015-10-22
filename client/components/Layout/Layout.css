@@ -50,7 +50,7 @@
   border: 0;
   min-height: var(--layout-header-desktop-row-height);
   /*max-height: 1000px;*/
-  z-index: 3;
+  z-index: 2;
 
   composes: textColorPrimary colorPrimary from '../styles/colors.css';
 
