@@ -39,7 +39,7 @@ function calculatePositions (list, maxWidth) {
   const ratioList = list.map(item => item.ratio)
   return partition(ratioList, rowCount)
   .reduce((result, items) => {
-    const slice = list.slice(result.length, items.length)
+    const slice = list.slice(result.length, result.length + items.length)
     const height = calculateRowHeight(slice, maxWidth)
 
     // This will get us the last result from the previous row
