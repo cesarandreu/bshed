@@ -145,7 +145,7 @@ function createMetadataCollector (s3fs) {
           } else {
             const { width, height } = metadata
             const ratio = width / height
-            metadataList.push({ width, height, ratio })
+            metadataList[idx] = { width, height, ratio }
             resolve()
           }
         }
