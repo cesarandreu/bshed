@@ -9,16 +9,16 @@
  *  prepare - create missing tables for NODE_ENV database
  *  reset - drop, create, and prepare the NODE_ENV database
  * Example:
- *  NODE_ENV=test ./database.js refresh
+ *  NODE_ENV=test ./database.js reset
  */
 import loadModels from '@server/models'
 import * as config from '@server/config'
-console.log(`Loaded database config for "${config.env}" environment`)
 
 // Perform the action
 executeAction(process.argv[2])
 async function executeAction (action) {
   try {
+    console.log(`Loaded database config for "${config.env}" environment`)
     const models = loadModels(config)
     switch (action) {
       case 'drop':
@@ -38,6 +38,7 @@ async function executeAction (action) {
       default:
         throw new Error(`Unknown action "${action}"`)
     }
+    models.redisClients.forEach(client => client.quit())
     await models.r.getPoolMaster().drain()
   } catch (err) {
     console.error(`Error executing action: ${err}`)
