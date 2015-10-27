@@ -1,0 +1,35 @@
+/**
+ * ImageViewer
+ */
+:root {
+  --image-viewer-overlay-zIndex: 3;
+  --image-viewer-content-zIndex: 4;
+}
+
+.wrapper {
+  /*position: relative;*/
+  min-height: 100%;
+  width: 100%;
+}
+
+.backdrop {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+}
+
+.content {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  height: 100%;
+  width: 100%;
+}
+
+.image {
+  user-select: none;
+}
