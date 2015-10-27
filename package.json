@@ -46,6 +46,7 @@
     "debug": "^2.2.0",
     "graphql": "^0.4.9",
     "graphql-relay": "^0.3.4",
+    "hammerjs": "^2.0.4",
     "history": "^1.12.5",
     "image-size": "^0.3.5",
     "immutable": "^3.7.5",
