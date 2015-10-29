@@ -13,6 +13,8 @@ import type { ReactElement } from 'react'
 import debounce from 'lodash.debounce'
 import cn from './BikeshedViewer.css'
 import Relay from 'react-relay'
+// import { ImageViewer } from '@components/ImageViewer'
+import ImageViewer from '@components/ImageViewer'
 
 const LINE_HEIGHT = 220
 const IMAGE_PADDING = 2
@@ -33,7 +35,8 @@ function calculatePositions (list, maxWidth) {
       ((ratioSum * LINE_HEIGHT) / maxWidth) | 0,
       list.length
     ),
-    list.length > 4 ? 2 : 1
+    1
+    // list.length > 4 ? 2 : 1
   )
 
   const ratioList = list.map(item => item.ratio)
@@ -130,6 +133,9 @@ export class BikeshedViewer extends Component {
       <Page>
         <PageSubhead>
           BikeshedViewer
+          <ImageViewer
+            imageList={bikeshed.bikes}
+          />
         </PageSubhead>
         <div className={cn.bikes}>
           <div>
