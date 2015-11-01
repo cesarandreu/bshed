@@ -5,6 +5,8 @@
 // import { Card, CardActions, CardBody } from '../Card'
 // import { Icon, ICONS } from '@components/Icon'
 // import { Button } from '@components/Button'
+// import { ImageViewer } from '@components/ImageViewer'
+import ImageViewer from '@components/ImageViewer'
 import { Page, PageSubhead } from '@components/Page'
 import React, { Component, PropTypes } from 'react'
 import { Motion, spring } from 'react-motion'
@@ -13,8 +15,6 @@ import type { ReactElement } from 'react'
 import debounce from 'lodash.debounce'
 import cn from './BikeshedViewer.css'
 import Relay from 'react-relay'
-// import { ImageViewer } from '@components/ImageViewer'
-import ImageViewer from '@components/ImageViewer'
 
 const LINE_HEIGHT = 220
 const IMAGE_PADDING = 2
@@ -134,6 +134,9 @@ export class BikeshedViewer extends Component {
         <PageSubhead>
           BikeshedViewer
           <ImageViewer
+            idx={1}
+            show
+            onHide={() => {}}
             imageList={bikeshed.bikes}
           />
         </PageSubhead>

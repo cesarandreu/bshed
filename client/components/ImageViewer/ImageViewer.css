@@ -1,35 +1,66 @@
 /**
  * ImageViewer
  */
-:root {
-  --image-viewer-overlay-zIndex: 3;
-  --image-viewer-content-zIndex: 4;
-}
-
-.wrapper {
-  /*position: relative;*/
-  min-height: 100%;
-  width: 100%;
-}
-
 .backdrop {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 3;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  position: fixed;
+  /*top: 50%;*/
+  /*left: 50%;*/
+  /*transform: translate(-50%, -50%);*/
+  z-index: 4;
+  outline: 0;
+  /*min-width: 80%;*/
+  /*min-height: 80%;*/
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  /*background-color: rgba(0, 0, 0, 1);*/
 }
 
 .content {
+  position: relative;
+}
+
+.content:after {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  content: '';
+
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 4;
-  height: 100%;
-  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.navigationButton {
+  composes: reset from '@components/Button/Button.css';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  outline: 0;
+}
+
+.backButton {
+  composes: navigationButton;
+  left: 0;
+}
+
+.nextButton {
+  composes: navigationButton;
+  right: 0;
 }
 
 .image {
-  user-select: none;
+  max-height: 100%;
+  max-width: 100%;
 }
