@@ -1,0 +1,6 @@
+{
+  "name": "components",
+  "standard": {
+    "parser": "babel-eslint"
+  }
+}
