@@ -5,7 +5,6 @@
 // import { Card, CardActions, CardBody } from '../Card'
 // import { Icon, ICONS } from '@components/Icon'
 // import { Button } from '@components/Button'
-// import { ImageViewer } from '@components/ImageViewer'
 import ImageViewer from '@components/ImageViewer'
 import { Page, PageSubhead } from '@components/Page'
 import React, { Component, PropTypes } from 'react'
