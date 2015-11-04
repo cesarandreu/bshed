@@ -82,11 +82,18 @@ export class BikeshedViewer extends Component {
   constructor (props: Object) {
     super(props)
     this.state = {
-      bikePositions: []
+      bikePositions: [],
+      imagePreviewItem: 0,
+      imagePreviewOpen: false
     }
     this.refreshData = this.refreshData.bind(this)
     this.getBikeStyles = this.getBikeStyles.bind(this)
     this.debouncedRefresh = debounce(this.refreshData, 100)
+
+    this.closeImagePreview = this.closeImagePreview.bind(this)
+    this.openImagePreview = this.openImagePreview.bind(this)
+    this.nextImagePreview = this.nextImagePreview.bind(this)
+    this.backImagePreview = this.backImagePreview.bind(this)
   }
 
   componentDidMount () {
@@ -123,9 +130,39 @@ export class BikeshedViewer extends Component {
     })
   }
 
+  closeImagePreview () {
+    this.setState({
+      imagePreviewOpen: false,
+      imagePreviewItem: 0
+    })
+  }
+
+  openImagePreview (idx) {
+    this.setState({
+      imagePreviewOpen: true,
+      imagePreviewItem: idx
+    })
+  }
+
+  nextImagePreview () {
+    const { bikeshed } = this.props
+    const { imagePreviewItem } = this.state
+    this.setState({
+      imagePreviewItem: (imagePreviewItem + 1) % bikeshed.bikes.length
+    })
+  }
+
+  backImagePreview () {
+    const { bikeshed } = this.props
+    const { imagePreviewItem } = this.state
+    this.setState({
+      imagePreviewItem: ((imagePreviewItem || bikeshed.bikes.length) - 1) % bikeshed.bikes.length
+    })
+  }
+
   render (): ReactElement {
     const { bikeshed } = this.props
-    const { bikePositions } = this.state
+    const { bikePositions, imagePreviewOpen, imagePreviewItem } = this.state
     const styleList = springifyStyles(bikePositions)
 
     return (
@@ -133,10 +170,12 @@ export class BikeshedViewer extends Component {
         <PageSubhead>
           BikeshedViewer
           <ImageViewer
-            idx={1}
-            show
-            onHide={() => {}}
+            idx={imagePreviewItem}
+            show={imagePreviewOpen}
             imageList={bikeshed.bikes}
+            onNext={this.nextImagePreview}
+            onBack={this.backImagePreview}
+            onHide={this.closeImagePreview}
           />
         </PageSubhead>
         <div className={cn.bikes}>
@@ -158,6 +197,7 @@ export class BikeshedViewer extends Component {
                       key={bike.fullUrl}
                       className={cn.bikeItem}
                       style={interpolatedStyle}
+                      onClick={() => this.openImagePreview(idx)}
                     >
                       <img
                         src={bike.fullUrl}
