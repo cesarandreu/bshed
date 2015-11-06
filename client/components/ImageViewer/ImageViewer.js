@@ -66,8 +66,8 @@ export class ImageViewer extends Component {
   }
 }
 ImageViewer.propTypes = {
-  // onBack: PropTypes.func.isRequired,
-  // onNext: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired,
+  onNext: PropTypes.func.isRequired,
   windowHeight: PropTypes.number.isRequired,
   windowWidth: PropTypes.number.isRequired,
   show: PropTypes.bool.isRequired,
