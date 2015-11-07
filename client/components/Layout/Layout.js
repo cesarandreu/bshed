@@ -16,11 +16,9 @@ export function LayoutHeader ({ children }: Object): ReactElement {
     </header>
   )
 }
-Object.assign(LayoutHeader, {
-  propTypes: {
-    children: PropTypes.node.isRequired
-  }
-})
+LayoutHeader.propTypes = {
+  children: PropTypes.node.isRequired
+}
 
 export function LayoutContent ({ children }: Object): ReactElement {
   return (
@@ -29,11 +27,9 @@ export function LayoutContent ({ children }: Object): ReactElement {
     </main>
   )
 }
-Object.assign(LayoutContent, {
-  propTypes: {
-    children: PropTypes.node.isRequired
-  }
-})
+LayoutContent.propTypes = {
+  children: PropTypes.node.isRequired
+}
 
 export function Layout ({ children }: Object): ReactElement {
   return (
@@ -44,11 +40,9 @@ export function Layout ({ children }: Object): ReactElement {
     </div>
   )
 }
-Object.assign(Layout, {
-  propTypes: {
-    children: PropTypes.node.isRequired
-  }
-})
+Layout.propTypes = {
+  children: PropTypes.node.isRequired
+}
 
 export function LayoutTitle ({ title }: Object): ReactElement {
   return (
@@ -61,8 +55,6 @@ export function LayoutTitle ({ title }: Object): ReactElement {
     </Link>
   )
 }
-Object.assign({
-  propTypes: {
-    title: PropTypes.string.isRequired
-  }
-})
+LayoutTitle.propTypes = {
+  title: PropTypes.string.isRequired
+}

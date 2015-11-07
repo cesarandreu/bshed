@@ -216,14 +216,12 @@ export function ImageItem ({ onClear, name, src, disabled }: Object): ReactEleme
     </div>
   )
 }
-Object.assign(ImageItem, {
-  propTypes: {
-    disabled: PropTypes.bool.isRequired,
-    onClear: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired
-  }
-})
+ImageItem.propTypes = {
+  disabled: PropTypes.bool.isRequired,
+  onClear: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired
+}
 
 /**
  * Button for users to click on to add images
@@ -249,9 +247,7 @@ export function AddImageButton ({ count, onClick }: Object): ReactElement {
     </button>
   )
 }
-Object.assign(AddImageButton, {
-  propTypes: {
-    count: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired
-  }
-})
+AddImageButton.propTypes = {
+  count: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired
+}

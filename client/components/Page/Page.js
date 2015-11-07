@@ -14,11 +14,9 @@ export function Page ({ children }: Object): ReactElement {
     </div>
   )
 }
-Object.assign(Page, {
-  propTypes: {
-    children: PropTypes.node.isRequired
-  }
-})
+Page.propTypes = {
+  children: PropTypes.node.isRequired
+}
 
 export function PageSubhead ({ children }: Object): ReactElement {
   return (
@@ -27,8 +25,6 @@ export function PageSubhead ({ children }: Object): ReactElement {
     </Subhead>
   )
 }
-Object.assign(PageSubhead, {
-  propTypes: {
-    children: PropTypes.node.isRequired
-  }
-})
+PageSubhead.propTypes = {
+  children: PropTypes.node.isRequired
+}
