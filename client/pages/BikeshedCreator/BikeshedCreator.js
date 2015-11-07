@@ -4,13 +4,13 @@
  */
 import { CreateBikeshedMutation } from '@client/mutations/CreateBikeshedMutation'
 import { createObjectURL, revokeObjectURL } from '@client/lib/URL'
+import { Icon, ICON_TYPES, ICON_SIZES } from '@components/Icon'
 import { Card, CardActions, CardBody } from '@components/Card'
 import { getBikeshedViewerPath } from '@client/lib/RouteUtils'
 import type { SyntheticEvent, ReactElement } from 'react'
 import { Page, PageSubhead } from '@components/Page'
 import React, { Component, PropTypes } from 'react'
 import { TextInput } from '@components/TextInput'
-import { Icon, ICONS } from '@components/Icon'
 import { Button } from '@components/Button'
 import cn from './BikeshedCreator.css'
 import Relay from 'react-relay'
@@ -206,7 +206,7 @@ export function ImageItem ({ onClear, name, src, disabled }: Object): ReactEleme
         disabled={disabled}
         className={cn.clearButton}
       >
-        <Icon size={24} type={ICONS.CLEAR}/>
+        <Icon type={ICON_TYPES.CLEAR}/>
       </button>
       <img
         className={cn.image}
@@ -237,7 +237,9 @@ export function AddImageButton ({ count, onClick }: Object): ReactElement {
       className={cn.addButton}
     >
       <div className={cn.addButtonIcon}>
-        <Icon size={48} type={ICONS.ADD}/>
+        <Icon
+          size={ICON_SIZES.LARGE}
+          type={ICON_TYPES.ADD}/>
       </div>
       {count < 2 && (
         <div className={cn.addButtonText}>

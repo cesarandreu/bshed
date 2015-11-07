@@ -6,7 +6,7 @@
 import type { ReactElement } from 'react'
 // import { Card, CardActions, CardBody } from '../Card'
 import React, { Component, PropTypes } from 'react'
-// import { Icon, ICONS } from '@components/Icon'
+// import { Icon, ICON_TYPES } from '@components/Icon'
 // import { Button } from '@components/Button'
 import { Subhead } from '@components/Text'
 // import Relay from 'react-relay'

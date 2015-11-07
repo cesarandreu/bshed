@@ -3,7 +3,7 @@
  * @flow
  */
 // import { Card, CardActions, CardBody } from '../Card'
-// import { Icon, ICONS } from '@components/Icon'
+// import { Icon, ICON_TYPES } from '@components/Icon'
 // import { Button } from '@components/Button'
 import ImageViewer from '@components/ImageViewer'
 import { Page, PageSubhead } from '@components/Page'
