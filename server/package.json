@@ -1,3 +1,6 @@
 {
-  "name": "server"
+  "name": "server",
+  "standard": {
+    "parser": "babel-eslint"
+  }
 }
