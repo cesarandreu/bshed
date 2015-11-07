@@ -9,7 +9,7 @@ import cn from './Text.css'
 /**
  * Blockquote
  */
-export function Blockquote ({ className, ...props }: Object): ReactElement {
+export function Blockquote ({ className = '', ...props }: Object): ReactElement {
   return (
     <blockquote
       className={`${cn.blockquote} ${className}`}
@@ -17,19 +17,14 @@ export function Blockquote ({ className, ...props }: Object): ReactElement {
     />
   )
 }
-Object.assign(Blockquote, {
-  propTypes: {
-    className: PropTypes.string
-  },
-  defaultProps: {
-    className: ''
-  }
-})
+Blockquote.propTypes = {
+  className: PropTypes.string
+}
 
 /**
  * Text
  */
-export function Text ({ className, ...props }: Object): ReactElement {
+export function Text ({ className = '', ...props }: Object): ReactElement {
   return (
     <p
       className={`${cn.text} ${className}`}
@@ -37,19 +32,14 @@ export function Text ({ className, ...props }: Object): ReactElement {
     />
   )
 }
-Object.assign(Text, {
-  propTypes: {
-    className: PropTypes.string
-  },
-  defaultProps: {
-    className: ''
-  }
-})
+Text.propTypes = {
+  className: PropTypes.string
+}
 
 /**
  * Subhead
  */
-export function Subhead ({ className, ...props }: Object): ReactElement {
+export function Subhead ({ className = '', ...props }: Object): ReactElement {
   return (
     <h6
       className={`${cn.subhead} ${className}`}
@@ -57,19 +47,14 @@ export function Subhead ({ className, ...props }: Object): ReactElement {
     />
   )
 }
-Object.assign(Subhead, {
-  propTypes: {
-    className: PropTypes.string
-  },
-  defaultProps: {
-    className: ''
-  }
-})
+Subhead.propTypes = {
+  className: PropTypes.string
+}
 
 /**
  * Title
  */
-export function Title ({ className, ...props }: Object): ReactElement {
+export function Title ({ className = '', ...props }: Object): ReactElement {
   return (
     <h5
       className={`${cn.title} ${className}`}
@@ -77,19 +62,14 @@ export function Title ({ className, ...props }: Object): ReactElement {
     />
   )
 }
-Object.assign(Title, {
-  propTypes: {
-    className: PropTypes.string
-  },
-  defaultProps: {
-    className: ''
-  }
-})
+Title.propTypes = {
+  className: PropTypes.string
+}
 
 /**
  * Headline
  */
-export function Headline ({ className, ...props }: Object): ReactElement {
+export function Headline ({ className = '', ...props }: Object): ReactElement {
   return (
     <h4
       className={`${cn.headline} ${className}`}
@@ -97,37 +77,25 @@ export function Headline ({ className, ...props }: Object): ReactElement {
     />
   )
 }
-Object.assign(Headline, {
-  propTypes: {
-    className: PropTypes.string
-  },
-  defaultProps: {
-    className: ''
-  }
-})
+Headline.propTypes = {
+  className: PropTypes.string
+}
 
 /**
  * Display
  */
-export function Display ({ variation, className, ...props }: Object): ReactElement {
-  const variationName = `display${variation}`
-  const classNames = `${cn[variationName]} ${className}`
+export function Display ({ variation = 1, className = '', ...props }: Object): ReactElement {
+  const classNames = `${cn[`display${variation}`]} ${className}`
   switch (variation) {
     case 1:
       return <h3 className={classNames} {...props}/>
     case 2:
       return <h2 className={classNames} {...props}/>
-    default:
+    case 3:
       return <h1 className={classNames} {...props}/>
   }
 }
-Object.assign(Headline, {
-  propTypes: {
-    variation: PropTypes.oneOf([1, 2, 3]).isRequired,
-    className: PropTypes.string
-  },
-  defaultProps: {
-    variation: 1,
-    className: ''
-  }
-})
+Display.propTypes = {
+  className: PropTypes.string,
+  variation: PropTypes.oneOf([1, 2, 3])
+}
