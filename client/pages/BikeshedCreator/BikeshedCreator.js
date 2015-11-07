@@ -199,14 +199,13 @@ export const BikeshedCreatorContainer = Relay.createContainer(BikeshedCreator, {
 export function ImageItem ({ onClear, name, src, disabled }: Object): ReactElement {
   return (
     <div className={cn.imageItem}>
-      <button
-        type='button'
+      <Button
         onClick={onClear}
         disabled={disabled}
         className={cn.clearButton}
       >
         <Icon type={ICON_TYPES.CLEAR}/>
-      </button>
+      </Button>
       <img
         className={cn.image}
         alt={name}
