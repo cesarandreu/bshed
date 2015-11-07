@@ -6,23 +6,28 @@ import cn from './Button.css'
 import type { ReactElement } from 'react'
 import React, { PropTypes } from 'react'
 
-export function Button ({ children, color, ...props }: Object): ReactElement {
+export function Button (props: Object): ReactElement {
   return (
     <button
+      className={cn.button}
       type='button'
-      className={color ? cn.color : cn.button}
       {...props}
-    >
-      {children}
-    </button>
+    />
   )
 }
-Object.assign(Button, {
-  propTypes: {
-    children: PropTypes.node.isRequired,
-    color: PropTypes.bool.isRequired
-  },
-  defaultProps: {
-    color: false
-  }
-})
+Button.propTypes = {
+  children: PropTypes.node.isRequired
+}
+
+export function ColorButton (props: Object): ReactElement {
+  return (
+    <button
+      className={cn.color}
+      type='button'
+      {...props}
+    />
+  )
+}
+ColorButton.propTypes = {
+  children: PropTypes.node.isRequired
+}

@@ -8,10 +8,10 @@ import { Icon, ICON_TYPES, ICON_SIZES } from '@components/Icon'
 import { Card, CardActions, CardBody } from '@components/Card'
 import { getBikeshedViewerPath } from '@client/lib/RouteUtils'
 import type { SyntheticEvent, ReactElement } from 'react'
+import { ColorButton, Button } from '@components/Button'
 import { Page, PageSubhead } from '@components/Page'
 import React, { Component, PropTypes } from 'react'
 import { TextInput } from '@components/TextInput'
-import { Button } from '@components/Button'
 import cn from './BikeshedCreator.css'
 import Relay from 'react-relay'
 
@@ -150,13 +150,12 @@ export class BikeshedCreator extends Component {
             </div>
           </CardBody>
           <CardActions border>
-            <Button
-              color
+            <ColorButton
               disabled={files.length < 2 || saving}
               onClick={this._handleSubmit}
             >
               save
-            </Button>
+            </ColorButton>
           </CardActions>
         </Card>
 
