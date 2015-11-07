@@ -9,11 +9,6 @@
   --layout-header-mobile-indent: 16px;
 
   --layout-screen-size-threshold: 1024px;
-
-  /*
-  --layout-header-desktop-baseline: 80px;
-  --layout-header-mobile-baseline: 72px;
-  */
 }
 
 @custom-media --layout-screen-threshold (max-width: 1024px);
