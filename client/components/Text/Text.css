@@ -6,48 +6,48 @@
  * Blockquote
  */
 .blockquote {
-  composes: typoBlockquote from '../styles/typography.css';
+  composes: typoBlockquote from '@components/styles/typography.css';
 }
 
 /**
  * Text
  */
 .text {
-  composes: typoBody1 from '../styles/typography.css';
+  composes: typoBody1 from '@components/styles/typography.css';
 }
 
 /**
  * Display
  */
 .display1 {
-  composes: typoDisplay1 from '../styles/typography.css';
+  composes: typoDisplay1 from '@components/styles/typography.css';
 }
 
 .display2 {
-  composes: typoDisplay2 from '../styles/typography.css';
+  composes: typoDisplay2 from '@components/styles/typography.css';
 }
 
 .display3 {
-  composes: typoDisplay3 from '../styles/typography.css';
+  composes: typoDisplay3 from '@components/styles/typography.css';
 }
 
 /**
  * Headline
  */
 .headline {
-  composes: typoHeadline from '../styles/typography.css';
+  composes: typoHeadline from '@components/styles/typography.css';
 }
 
 /**
  * Title
  */
 .title {
-  composes: typoTitle from '../styles/typography.css';
+  composes: typoTitle from '@components/styles/typography.css';
 }
 
 /**
  * Subhead
  */
 .subhead {
-  composes: typoSubhead from '../styles/typography.css';
+  composes: typoSubhead from '@components/styles/typography.css';
 }

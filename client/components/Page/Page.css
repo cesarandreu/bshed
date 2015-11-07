@@ -29,5 +29,5 @@
   height: 48px;
   line-height: 48px;
   padding: 0 var(--mobile-margin);
-  composes: textColorSecondary from '../styles/colors.css';
+  composes: textColorSecondary from '@components/styles/colors.css';
 }

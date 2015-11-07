@@ -52,10 +52,10 @@
   /*max-height: 1000px;*/
   z-index: 2;
 
-  composes: textColorPrimary colorPrimary from '../styles/colors.css';
+  composes: textColorPrimary colorPrimary from '@components/styles/colors.css';
 
-  /*composes: animationFastOutSlowIn from '../styles/animations.css';*/
-  composes: shadow2dp from '../styles/shadows.css';
+  /*composes: animationFastOutSlowIn from '@components/styles/animations.css';*/
+  composes: shadow2dp from '@components/styles/shadows.css';
   /*transition-property: max-height, box-shadow;*/
 }
 @media screen and (--layout-screen-threshold) {
@@ -106,8 +106,8 @@
 
 /* LayoutTitle */
 .title {
-  composes: typoTitle from '../styles/typography.css';
-  composes: colorTextPrimaryContrast from '../styles/colors.css';
+  composes: typoTitle from '@components/styles/typography.css';
+  composes: colorTextPrimaryContrast from '@components/styles/colors.css';
   text-decoration: none;
 
   display: flex;

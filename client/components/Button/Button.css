@@ -56,7 +56,7 @@
   min-width: 64px;
   padding: 0 8px;
   display: inline-block;
-  composes: typoButton from '../styles/typography.css';
+  composes: typoButton from '@components/styles/typography.css';
   overflow: hidden;
   will-change: box-shadow, transform;
   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1),
@@ -90,26 +90,26 @@
 
 .color {
   composes: baseButton;
-  composes: colorTextPrimary from '../styles/colors.css';
+  composes: colorTextPrimary from '@components/styles/colors.css';
 }
 
 .button {
   composes: baseButton;
   color: #000;
-  /*composes: colorTextPrimaryContrast from '../styles/colors.css';*/
+  /*composes: colorTextPrimaryContrast from '@components/styles/colors.css';*/
 }
 
 .raised {
   background: var(--button-primary-color);
-  /*composes: shadow2dp from '../styles/shadows.css';*/
+  /*composes: shadow2dp from '@components/styles/shadows.css';*/
 }
 
 .raised:active {
   background-color: var(--button-active-color);
-  /*composes: shadow4dp from '../styles/shadows.css';*/
+  /*composes: shadow4dp from '@components/styles/shadows.css';*/
 }
 
 .raised:focus:not(:active) {
   background-color: var(--button-active-color);
-  /*composes: focusShadow from '../styles/shadows.css';*/
+  /*composes: focusShadow from '@components/styles/shadows.css';*/
 }
