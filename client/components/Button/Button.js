@@ -3,8 +3,8 @@
  * @flow
  */
 import cn from './Button.css'
-import type { ReactElement } from 'react'
 import React, { PropTypes } from 'react'
+import type { ReactElement } from 'react'
 
 export function Button (props: Object): ReactElement {
   return (
