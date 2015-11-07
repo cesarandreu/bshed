@@ -19,8 +19,8 @@
 
 .addButton {
   composes: item;
-  composes: typoButton from '../styles/typography.css';
-  composes: reset clickable from '../Button/Button.css';
+  composes: typoButton from '@components/styles/typography.css';
+  composes: reset clickable from '@components/Button/Button.css';
 
   border: 2px dashed currentColor;
   display: inline-flex;
@@ -49,11 +49,11 @@
 
 .addButtonText {
   padding: 8px 16px;
-  composes: textColorHint from '../styles/colors.css';
+  composes: textColorHint from '@components/styles/colors.css';
 }
 
 .clearButton {
-  composes: reset clickable from '../Button/Button.css';
+  composes: reset clickable from '@components/Button/Button.css';
   position: absolute;
   z-index: 1;
   right: 0;
