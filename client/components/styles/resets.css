@@ -61,26 +61,10 @@ main {
 
 /* Remove the unwanted box around FAB buttons */
 /* More info: http://goo.gl/IPwKi */
-/*
-a, .Accordion, .Button, .Card, .Checkbox, .Dropdown-menu,
-.Icon-toggle, .Item, .Radio, .Slider, .Switch, .Tabs__tab {
-*/
 a {
   -webkit-tap-highlight-color: transparent;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
-
-/* _h5bp */
-
-/*
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
- */
-
-/* ==========================================================================
-   Base styles: opinionated defaults
-   ========================================================================== */
 
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
@@ -101,7 +85,6 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  /*border-top: 1px solid #ccc;*/
   margin: 1em 0;
   padding: 0;
 }
