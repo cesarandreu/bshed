@@ -4,7 +4,7 @@
 .card {
   display: flex;
   flex-flow: column nowrap;
-  composes: typoCard from '../styles/typography.css';
+  composes: typoCard from '@components/styles/typography.css';
   min-height: 200px;
   overflow: hidden;
   /*min-width: 330px;*/
@@ -15,27 +15,27 @@
 }
 
 .shadow2 {
-  composes: shadow2dp from '../styles/shadows.css';
+  composes: shadow2dp from '@components/styles/shadows.css';
 }
 
 .shadow3 {
-  composes: shadow3dp from '../styles/shadows.css';
+  composes: shadow3dp from '@components/styles/shadows.css';
 }
 
 .shadow4 {
-  composes: shadow4dp from '../styles/shadows.css';
+  composes: shadow4dp from '@components/styles/shadows.css';
 }
 
 .shadow6 {
-  composes: shadow6dp from '../styles/shadows.css';
+  composes: shadow6dp from '@components/styles/shadows.css';
 }
 
 .shadow8 {
-  composes: shadow8dp from '../styles/shadows.css';
+  composes: shadow8dp from '@components/styles/shadows.css';
 }
 
 .shadow16 {
-  composes: shadow16dp from '../styles/shadows.css';
+  composes: shadow16dp from '@components/styles/shadows.css';
 }
 
 .body {
@@ -48,7 +48,7 @@
 .actions {
   display: flex;
   flex-flow: row nowrap;
-  composes: typoCard from '../styles/typography.css';
+  composes: typoCard from '@components/styles/typography.css';
   line-height: normal;
   background-color: rgba(0, 0, 0, 0);
   width: 100%;
