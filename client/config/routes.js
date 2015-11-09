@@ -10,10 +10,10 @@ import ViewerQueries from '@client/queries/ViewerQueries'
 import BikeshedQueries from '@client/queries/BikeshedQueries'
 
 // Components
-import { AppContainer } from '@client/pages/App'
-import { BikeshedCreatorContainer } from '@client/pages/BikeshedCreator'
-import { BikeshedExplorerContainer } from '@client/pages/BikeshedExplorer'
-import { BikeshedViewerContainer } from '@client/pages/BikeshedViewer'
+import { AppContainer } from '@client/containers/App'
+import { BikeshedCreatorContainer } from '@client/containers/BikeshedCreator'
+import { BikeshedExplorerContainer } from '@client/containers/BikeshedExplorer'
+import { BikeshedViewerContainer } from '@client/containers/BikeshedViewer'
 
 export default (
   <Route
