@@ -43,6 +43,7 @@
     "bull": "^0.6.0",
     "classnames": "^2.2.0",
     "co-body": "^4.0.0",
+    "css-polyfills": "github:fremycompany/css-grid-polyfill#browserify-support",
     "debug": "^2.2.0",
     "graphql": "^0.4.12",
     "graphql-relay": "^0.3.5",
