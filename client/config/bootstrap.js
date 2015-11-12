@@ -7,6 +7,9 @@
 // Polyfills
 import 'babel/polyfill'
 
+// CSS Grid polyfill
+import 'css-polyfills'
+
 // Modules
 import React from 'react'
 import Relay from 'react-relay'
