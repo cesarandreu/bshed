@@ -86,8 +86,8 @@
   /* Fix IE10 bug */
   -ms-flex: 0 1 auto;
 
-  display: inline-block;
-  /*display: inline-flex;*/
+  /*display: inline-block;*/
+  display: inline-flex;
 
   overflow-y: auto;
   overflow-x: hidden;
