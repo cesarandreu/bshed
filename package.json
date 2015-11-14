@@ -38,7 +38,7 @@
     "stage": 0
   },
   "dependencies": {
-    "aws-sdk": "^2.2.15",
+    "aws-sdk": "^2.2.17",
     "bcrypt": "^0.8.5",
     "bull": "^0.6.0",
     "classnames": "^2.2.0",
@@ -48,7 +48,7 @@
     "graphql": "^0.4.12",
     "graphql-relay": "^0.3.5",
     "hammerjs": "^2.0.4",
-    "history": "^1.13.0",
+    "history": "^1.13.1",
     "image-size": "^0.3.5",
     "immutable": "^3.7.5",
     "invariant": "^2.1.2",
@@ -69,7 +69,7 @@
     "multer": "^1.1.0",
     "multer-s3": "^1.3.0",
     "node-fetch": "^1.3.3",
-    "node-uuid": "^1.4.3",
+    "node-uuid": "^1.4.7",
     "normalizr": "^1.4.0",
     "pump": "^1.0.1",
     "react": "^0.14.2",
@@ -79,7 +79,7 @@
     "react-pure-render": "^1.0.2",
     "react-redux": "^4.0.0",
     "react-relay": "^0.4.0",
-    "react-router": "^1.0.0-rc4",
+    "react-router": "^1.0.0",
     "react-router-relay": "^0.7.0",
     "redis": "^2.2.5",
     "redlock": "^1.0.0",
@@ -92,10 +92,10 @@
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-core": "^5.8.25",
-    "babel-eslint": "^4.1.4",
-    "babel-loader": "^5.3.2",
+    "babel": "^5.8.34",
+    "babel-core": "^5.8.34",
+    "babel-eslint": "^4.1.5",
+    "babel-loader": "^5.3.3",
     "babel-plugin-react-transform": "^1.1.1",
     "babel-relay-plugin": "^0.3.0",
     "css-loader": "^0.22.0",
@@ -108,7 +108,7 @@
     "node-libs-browser": "^0.5.3",
     "nodemon": "^1.8.0",
     "null-loader": "^0.1.1",
-    "postcss-loader": "^0.7.0",
+    "postcss-loader": "^0.8.0",
     "react-addons-test-utils": "^0.14.2",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
@@ -118,7 +118,7 @@
     "style-loader": "^0.13.0",
     "tape": "^4.2.2",
     "url-loader": "^0.5.6",
-    "webpack": "^1.12.3",
+    "webpack": "^1.12.5",
     "webpack-dev-server": "^1.12.1",
     "webpack-require": "0.0.15"
   }
