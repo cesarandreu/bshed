@@ -14,9 +14,8 @@ import 'css-polyfills'
 import React from 'react'
 import Relay from 'react-relay'
 import ReactDOM from 'react-dom'
-import { Router } from 'react-router'
 import { createHistory } from 'history'
-import ReactRouterRelay from 'react-router-relay'
+import { RelayRouter } from 'react-router-relay'
 
 // Routes
 import routes from './routes'
@@ -33,8 +32,7 @@ const history = createHistory()
 
 // Mount the app
 const instance = ReactDOM.render(
-  <Router
-    createElement={ReactRouterRelay.createElement}
+  <RelayRouter
     history={history}
     routes={routes}
   />,
