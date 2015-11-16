@@ -48,7 +48,7 @@ module.exports = function buildWebpackConfig (options) {
 
   config.devtool = BUILD
     ? 'source-map'
-    : 'inline-source-map'
+    : 'cheap-module-source-map'
 
   // babel-loader query
   const babelQuery = {
