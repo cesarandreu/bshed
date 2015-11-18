@@ -15,14 +15,21 @@
 @custom-media --desktop (width >= 840px);
 
 .page {
-  margin: 0 auto;
-  padding: 0 var(--desktop-margin) var(--desktop-margin);
-  max-width: 720px;
+  /*margin: 0 auto;*/
+  /*padding: 0 var(--desktop-margin) var(--desktop-margin);*/
+  /*max-width: 720px;*/
 }
 @media (--mobile) {
   .page {
     padding: 0 var(--mobile-margin) var(--mobile-margin);
   }
+}
+
+.page {
+  display: grid;
+
+  /*grid-template-columns: 200px 40px auto 40px 200px;*/
+  /*grid-template-rows: auto 1fr;*/
 }
 
 .subhead {
