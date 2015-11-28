@@ -1,6 +1,6 @@
 {
   "name": "bshed",
-  "description": "bikeshedding app",
+  "description": "A bikeshedding app",
   "license": "Apache-2.0",
   "main": "server.js",
   "private": true,
