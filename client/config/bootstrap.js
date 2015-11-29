@@ -1,14 +1,9 @@
 /**
- * Bootstrap
  * Client entry point
- * @flow
  */
 
 // Polyfills
-import 'babel/polyfill'
-
-// CSS Grid polyfill
-import 'css-polyfills'
+import 'babel-polyfill'
 
 // Modules
 import React from 'react'
@@ -30,19 +25,14 @@ Relay.injectNetworkLayer(
 // Initialize dependencies
 const history = createHistory()
 
+// Create the app node appended to the body
+const app = document.body.appendChild(document.createElement('div'))
+
 // Mount the app
-const instance = ReactDOM.render(
+ReactDOM.render(
   <RelayRouter
     history={history}
     routes={routes}
   />,
-  document.getElementById('app')
+  app
 )
-
-// Fix hotloading for pure components
-// @TODO: handle updating the routes
-if (module.hot) {
-  module.hot.accept('./routes', () => {
-    instance.forceUpdate()
-  })
-}
