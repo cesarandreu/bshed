@@ -16,19 +16,20 @@
     "url": "https://github.com/cesarandreu"
   },
   "scripts": {
-    "clean": "rm -rf build",
-    "client-server": "webpack-dev-server --config config/webpack.dev.js --hot --inline",
-    "client-html": "webpack --config config/webpack.dev.js --watch",
+    "client:server": "webpack-dev-server --config ./config/webpack.babel.js --hot --inline",
+    "client:html": "webpack --config ./config/webpack.babel.js --watch",
     "db": "./bin/database.js reset",
-    "dev-client": "npm run client-server & npm run client-html",
-    "dev-server": "nodemon -w server -w data -r babel/register server/index.js",
-    "link": "npm run link:client && npm run link:components && npm run link:server",
-    "link:components": "link-package ./client/components @components",
-    "link:client": "link-package ./client @client",
-    "link:server": "link-package ./server @server",
-    "postinstall": "npm run link",
-    "pres3": "mkdir -p ./build/s3/bshed_development && mkdir -p ./build/s3/bshed_test",
-    "s3": "s3rver -d ./build/s3/ -p 10001"
+    "dev:client": "npm-run-all -p client:*",
+    "dev:server": "npm-run-all -p server:*",
+    "link": "npm-run-all -p link:*",
+    "link:bshed": "link-package",
+    "link:components": "link-package ./client/components components",
+    "link:client": "link-package ./client client",
+    "prepare": "npm-run-all -s prepare:clean prepare:folders",
+    "prepare:clean": "rm -rf build",
+    "prepare:folders": "mkdir -p ./build/s3/bshed_development && mkdir -p ./build/s3/bshed_test",
+    "server:api": "nodemon -w server -r bshed/config/requires server/index.js",
+    "server:s3": "s3rver -d ./build/s3/ -p 10001"
   },
   "standard": {
     "parser": "babel-eslint"
