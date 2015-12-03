@@ -2,7 +2,7 @@
   "name": "bshed",
   "description": "A bikeshedding app",
   "license": "Apache-2.0",
-  "main": "server.js",
+  "main": "",
   "private": true,
   "keywords": [],
   "version": "0.0.0",
@@ -18,7 +18,10 @@
   "scripts": {
     "client:server": "webpack-dev-server --config ./config/webpack.babel.js --hot --inline",
     "client:html": "webpack --config ./config/webpack.babel.js --watch",
-    "db": "./bin/database.js reset",
+    "db:create": "./scripts/create-database.js",
+    "db:destroy": "./scripts/destroy-database.js",
+    "db:tables": "./scripts/create-tables.js",
+    "dev": "npm-run-all -p dev:*",
     "dev:client": "npm-run-all -p client:*",
     "dev:server": "npm-run-all -p server:*",
     "link": "npm-run-all -p link:*",
@@ -27,8 +30,10 @@
     "link:client": "link-package ./client client",
     "prepare": "npm-run-all -s prepare:clean prepare:folders",
     "prepare:clean": "rm -rf build",
-    "prepare:folders": "mkdir -p ./build/s3/bshed_development && mkdir -p ./build/s3/bshed_test",
-    "server:api": "nodemon -w server -r bshed/config/requires server/index.js",
+    "prepare:folders": "mkdir -p ./build/s3/bshed_development ./build/s3/bshed_test",
+    "schema": "./scripts/update-schema.js",
+    "server:schema": "onchange 'server/**/*.js' -- npm run schema",
+    "server:api": "nodemon -w server -w config -r ./config/requires ./server",
     "server:s3": "s3rver -d ./build/s3/ -p 10001"
   },
   "standard": {
