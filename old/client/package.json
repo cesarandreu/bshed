@@ -1,0 +1,6 @@
+{
+  "name": "client",
+  "standard": {
+    "parser": "babel-eslint"
+  }
+}
