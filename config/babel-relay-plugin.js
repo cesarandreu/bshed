@@ -1,8 +1,8 @@
 /**
- * Load and export graphql schema.json
+ * Load graphql schema and export the babel relay plugin
  * Used to compile frontend code
  */
-const getBabelRelayPlugin = require('babel-relay-plugin')
-const schema = require('@server/data/schema.json')
+import schema from 'bshed/data/schema.json'
+import getBabelRelayPlugin from 'babel-relay-plugin'
 
-module.exports = getBabelRelayPlugin(schema.data)
+export default getBabelRelayPlugin(schema.data)
