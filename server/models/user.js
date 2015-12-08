@@ -1,24 +1,31 @@
 /**
  * User model
  */
+import createModel from './model'
 import Joi from 'joi'
-import BaseModel from './model'
 
-const UserSchema = Joi.object()
-.keys({
-  createdAt: Joi.date(),
-  id: Joi.string().guid(),
-  name: Joi.string().max(256).default('').allow(''),
-  email: Joi.string().email().default('').allow('')
-})
+const UserBase = {
+  INDEXES: {},
 
-const PROPS = {
-  SCHEMA: UserSchema,
-  INDEXES: [],
+  SCHEMA: Joi.object({
+    createdAt: Joi.date(),
+    email: Joi.string().email().default('').allow(''),
+    id: Joi.string().guid(),
+    name: Joi.string().max(256).default('').allow(''),
+    registeredAt: Joi.date(),
+    updatedAt: Joi.date()
+  }),
+
   TABLE: 'users',
+
   TYPE: 'User'
 }
 
-export default class User extends BaseModel {
+export default function createUser ({ r }) {
+  const BaseModel = createModel({ r }, UserBase)
+  const User = Object.create(BaseModel, {
+  })
+  return User
 }
-Object.assign(User.prototype, PROPS)
+
+Object.assign(createUser, UserBase)

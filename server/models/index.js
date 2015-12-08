@@ -1,52 +1,49 @@
 /**
  * Model loader
- * Each model is expected to have the following:
- *  TYPE string
- *  TABLE string
- *  INDEXES array of strings
- *  SCHEMA joi schema definition
  */
-import RethinkDB from 'rethinkdbdash'
-import invariant from 'invariant'
-import BaseModel from './model'
-import Redlock from 'redlock'
-import redis from 'redis'
 import debug from 'debug'
+import redis from 'redis'
+import Redlock from 'redlock'
+import RethinkDB from 'rethinkdbdash'
+import * as config from 'bshed/config'
+const log = debug('server:models')
 
-const log = debug('app:models')
-
-// Model imports
 import Bikeshed from './bikeshed'
 import User from './user'
 import Vote from './vote'
 
-const models = {
+export const MODELS = {
   Bikeshed,
   User,
   Vote
 }
 
-export function instantiateModels (r, redlock) {
-  return Object.entries(models).reduce((instances, [name, Model]) => {
-    invariant(
-      BaseModel.isPrototypeOf(Model),
-      `Models: Expected ${Model} to extend BaseModel.`
-    )
+export const TABLES = Object.values(MODELS).map(model => model.TABLE)
 
-    instances[name] = new Model({ r, redlock })
+export const INDEXES = Object.entries(MODELS).reduce((indexes, [modelName, model]) => {
+  indexes[model.TABLE] = model.INDEXES
+  return indexes
+}, {})
+
+// Given a rethinkdbdash and redlock instance, instantiate each model
+export function createModels ({ r, redlock }) {
+  log('creating models')
+  return Object.entries(MODELS).reduce((instances, [name, createModel]) => {
+    log(`creating "${name}"`)
+    instances[name] = createModel({ r, redlock })
     return instances
-  }, {})
+  }, { r, redlock })
 }
 
-// Load database and models
-export default function modelLoader (config): Object {
-  log('start')
-  const redisClients = [
+// Get self-initialized model instances
+export function getModels () {
+  log('initializing rethinkdb')
+  const r = new RethinkDB(config.rethinkdb)
+
+  log('initializing redlock')
+  const redlock = new Redlock([
     redis.createClient(config.redis)
-  ]
-  const redlock = new Redlock(redisClients)
-  const r = new RethinkDB(config.database)
-  const instances = instantiateModels(r, redlock)
-  log('end')
-  return { r, redlock, redisClients, models, instances, ...instances }
+  ])
+
+  return createModels({ r, redlock })
 }

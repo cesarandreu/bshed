@@ -1,84 +1,49 @@
 /**
- * BaseModel
- * References:
- *  https://github.com/neumino/rethinkdbdash
- *  https://github.com/mike-marcacci/node-redlock
- * @flow
+ * Base model
  */
-import Joi from 'joi'
-import invariant from 'invariant'
+export default function createModel ({ r }, { ...modelBase }) {
+  const _r = r.table(modelBase.TABLE)
+  const Model = {
+    _r,
 
-export default class BaseModel {
-  constructor ({ r, redlock }) {
-    Object.assign(this, {
-      r, // RethinkDB driver instance
-      redlock // Redlock instance
-    })
+    addRecordType (record) {
+      return Promise.resolve(record).then(record => ({ ...record, TYPE: Model.TYPE }))
+    },
 
-    // Constructor param validation
-    invariant(
-      this.r,
-      `${this.constructor.name}: Expected r to be provided.`
-    )
-    invariant(
-      this.redlock,
-      `${this.constructor.name}: Expected redlock to be provided.`
-    )
+    async batchLoad (keys: Array<string>) {
+      const result = await _r.getAll(r.args(keys), { index: 'id' })
+      return Promise.all(result.map(Model.addRecordType))
+    },
 
-    // Interface properties validation
-    invariant(
-      this.TYPE,
-      `${this.constructor.name}: Expected TYPE to be defined.`
-    )
-    invariant(
-      this.TABLE,
-      `${this.constructor.name}: Expected TABLE to be defined.`
-    )
-    invariant(
-      this.SCHEMA,
-      `${this.constructor.name}: Expected SCHEMA to be defined.`
-    )
-    invariant(
-      Array.isArray(this.INDEXES),
-      `${this.constructor.name}: Expected INDEXES array to be defined.`
-    )
+    create (values) {
+      return Model.insert(Model.validate(values))
+    },
+
+    get (id: string) {
+      return Model.addRecordType(_r.get(id))
+    },
+
+    async insert (values) {
+      const { changes: [{ new_val: record }] } = await _r.insert({
+        createdAt: r.now(),
+        updatedAt: r.now(),
+        ...values
+      }, {
+        returnChanges: true
+      })
+      return Model.addRecordType(record)
+    },
+
+    validate (values = {}) {
+      const { error, value } = Model.SCHEMA.validate(values)
+      if (error) {
+        throw error
+      }
+      return value
+    },
+
+    ...modelBase
   }
 
-  // Create table if it doesn't already exist
-  async createTable () {
-    const tableList = await this.r.tableList()
-    if (!tableList.includes(this.TABLE)) {
-      await this.r.tableCreate(this.TABLE)
-    }
-  }
-
-  // Create indexes if they doesn't already exist
-  async createIndexes () {
-    const indexList = await this.r.table(this.TABLE).indexList()
-    await Promise.all(this.INDEXES
-      .filter(INDEX => !indexList.includes(INDEX))
-      .map(INDEX => this.r.table(this.TABLE).indexCreate(INDEX))
-    )
-  }
-
-  // Check model validity given a schema and some values
-  validate (values = {}) {
-    return Joi.attempt(values, this.SCHEMA)
-  }
-
-  // Get an instance from the server
-  get (id: string) {
-    return this.r.table(this.TABLE).get(id)
-  }
-
-  // Save a model in the database
-  // Returns the generated id
-  async create (values) {
-    const inputValues = this.validate(values)
-    const { generated_keys: [ id ] } = await this.r.table(this.TABLE).insert({
-      createdAt: this.r.now(),
-      ...inputValues
-    })
-    return id
-  }
+  return Model
 }
