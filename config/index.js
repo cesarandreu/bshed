@@ -2,7 +2,7 @@
  * Load configuration objects
  */
 import path from 'path'
-import * as rethinkdbConfig from './rethinkdb'
+import * as databaseConfig from './database'
 import * as redisConfig from './redis'
 import * as awsConfig from './aws'
 
@@ -12,8 +12,8 @@ export const env = process.env.NODE_ENV || 'development'
 // Server
 export const keys = ['keys']
 
-// RethinkDB, Redis, AWS
-export const rethinkdb = rethinkdbConfig[env]
+// Database, Redis, AWS
+export const database = databaseConfig[env]
 export const redis = redisConfig[env]
 export const aws = awsConfig[env]
 
