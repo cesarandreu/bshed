@@ -16,11 +16,11 @@
     "url": "https://github.com/cesarandreu"
   },
   "scripts": {
-    "client:server": "webpack-dev-server --config ./config/webpack.babel.js --hot --inline",
-    "client:html": "webpack --config ./config/webpack.babel.js --watch",
+    "client:server": "webpack-dev-server --config ./webpack.babel.js --hot --inline",
+    "client:html": "webpack --config ./webpack.babel.js --watch",
     "db:create": "./scripts/create-database.js",
     "db:destroy": "./scripts/destroy-database.js",
-    "db:tables": "./scripts/create-tables.js",
+    "db:migrate": "knex migrate:latest",
     "dev": "npm-run-all -p dev:*",
     "dev:client": "npm-run-all -p client:*",
     "dev:server": "npm-run-all -p server:*",
