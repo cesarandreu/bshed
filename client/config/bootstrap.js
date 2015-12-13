@@ -5,6 +5,9 @@
 // Polyfills
 import 'babel-polyfill'
 
+// Styles
+import 'components/styles/resets.css'
+
 // Modules
 import React from 'react'
 import Relay from 'react-relay'
