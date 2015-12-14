@@ -1,0 +1,137 @@
+/**
+ * Typography classes
+ * Basically ripped from PolymerElements/paper-styles
+ * SOURCES:
+ *  - PolymerElements/paper-styles/classes/typography.html
+ *  - PolymerElements/paper-styles/typography.html
+ */
+.commonBase {
+  font-family: 'Roboto', 'Noto', sans-serif;
+  -webkit-font-smoothing: antialiased; /* OS X subpixel AA bleed bug */
+}
+
+.commonCode {
+  font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+  -webkit-font-smoothing: antialiased; /* OS X subpixel AA bleed bug */
+}
+
+/*
+"Line wrapping only applies to Body, Subhead, Headline, and the smaller Display
+styles. All other styles should exist as single lines."
+*/
+.noWrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Opt for better kerning for headers & other short labels. */
+.legibility {
+  text-rendering: optimizeLegibility;
+}
+
+.display4 {
+  composes: commonBase noWrap legibility;
+  font-size: 112px;
+  font-weight: 300;
+  letter-spacing: -.044em;
+  line-height: 120px;
+}
+
+.display3 {
+  composes: commonBase noWrap legibility;
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -.026em;
+  line-height: 60px;
+}
+
+.display2 {
+  composes: commonBase legibility;
+  font-size: 45px;
+  font-weight: 400;
+  letter-spacing: -.018em;
+  line-height: 48px;
+}
+
+.display1 {
+  composes: commonBase legibility;
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 40px;
+}
+
+.headline {
+  composes: commonBase legibility;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -.012em;
+  line-height: 32px;
+}
+
+.title {
+  composes: commonBase noWrap legibility;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.subhead {
+  composes: commonBase legibility;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.body2 {
+  composes: commonBase;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.body1 {
+  composes: commonBase;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.caption {
+  composes: commonBase noWrap;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.011em;
+  line-height: 20px;
+}
+
+.menu {
+  composes: commonBase noWrap legibility;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.button {
+  composes: commonBase noWrap legibility;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.018em;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+.code2 {
+  composes: commonCode;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.code1 {
+  composes: commonCode;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+}

@@ -1,0 +1,124 @@
+/**
+ * Colors
+ */
+
+:root {
+  /* @TODO: Remove if these remain unused */
+  /* opacity for light text on a dark background */
+  /*--color-light-divider: 0.12;*/
+  /*--color-light-disabled: 0.3;*/ /* or hint text or icon */
+  /*--color-light-secondary: 0.7;*/
+  /*--color-light-primary: 1.0;*/
+
+  /* opacity for dark text on a light background */
+  --color-dark-divider: rgba(0, 0, 0, 0.12);
+  --color-dark-disabled: rgba(0, 0, 0, 0.38); /* or hint text or icon */
+  --color-dark-secondary: rgba(0, 0, 0, 0.54);
+  --color-dark-primary: rgba(0, 0, 0, 0.87);
+
+  /* App bar */
+  /*--color-app-bar: #F5F5F5;*/
+
+  /* Grey 50 */
+  --color-background: #FAFAFA;
+
+  /* Blue 500 */
+  --color-primary: #2196F3;
+
+  /* Blue 700 */
+  --color-primary-dark: #1976D2;
+
+  /* Red A200 */
+  --color-accent: #FF5252;
+
+  /* Red 500 */
+  --color-error: #F44336;
+}
+
+.textColorAppPrimary {
+  color: var(--color-primary);
+}
+
+/* Text color primary */
+.textColorPrimary {
+  color: var(--color-dark-primary);
+}
+
+.colorTextPrimary {
+  background-color: var(--color-dark-primary);
+}
+
+/* Text color secondary */
+.textColorSecondary {
+  color: var(--color-dark-secondary);
+}
+
+/* Text color disabled, hint, or icon */
+.textColorDisabled,
+.textColorHint,
+.textColorIcon {
+  color: var(--color-dark-disabled);
+}
+
+/* Divider color */
+.dividerColor {
+  background-color: var(--color-dark-divider);
+}
+
+/* Primary */
+.colorPrimary {
+  background-color: var(--color-primary);
+}
+
+/* Primary dark */
+.colorPrimaryDark {
+  background-color: var(--color-primary-dark);
+}
+
+/* Accent */
+.colorAccent {
+  background-color: var(--color-accent);
+}
+
+/* Background */
+.colorBackground {
+  background-color: var(--color-background);
+}
+
+/* Constrast */
+/* Color dark contrast: white */
+.colorPrimaryContrast,
+.colorAccentContrast {
+  background-color: #FFFFFF;
+}
+
+/* Text primary */
+/*.textColorPrimary {
+  color: var(--color-primary);
+}*/
+
+/* Text primary dark */
+/*.textColorPrimaryDark {
+  color: var(--color-primary-dark);
+}*/
+
+/* Text accent */
+.textColorAccent {
+  color: var(--color-accent);
+}
+
+/* Text contrast */
+/* Color dark contrast: white */
+.textColorPrimaryContrast,
+.textColorAccentContrast {
+  color: #FFFFFF;
+}
+
+/* Text color error */
+.textColorError {
+  color: var(--color-error);
+}
+
+.colorError {
+  background-color: var(--color-error);
+}
