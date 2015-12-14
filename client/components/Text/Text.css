@@ -1,0 +1,25 @@
+/**
+ * Text components
+ */
+.headline {
+  composes: headline from 'components/styles/typography.css';
+}
+
+.hint {
+  composes: textColorHint from 'components/styles/colors.css';
+  composes: caption from 'components/styles/typography.css';
+}
+
+.primary {
+  composes: textColorPrimary from 'components/styles/colors.css';
+  composes: body2 from 'components/styles/typography.css';
+}
+
+.secondary {
+  composes: textColorSecondary from 'components/styles/colors.css';
+  composes: body1 from 'components/styles/typography.css';
+}
+
+.title {
+  composes: title from 'components/styles/typography.css';
+}
