@@ -1,0 +1,38 @@
+:root {
+  --color-dark-divider: rgba(0, 0, 0, 0.12);
+}
+
+.card {
+  display: inline-block;
+  position: relative;
+  background-color: #FFF;
+  border-radius: 2px;
+}
+
+.elevation2 {
+  composes: shadow2dp from 'components/styles/shadows.css';
+}
+
+.header {
+  padding: 16px;
+  position: relative;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  overflow: hidden;
+}
+
+.content {
+  padding: 16px;
+  position: relative;
+}
+
+.content + .content,
+.header + .content {
+  border-top: 1px solid var(--color-dark-divider);
+}
+
+.actions {
+  border-top: 1px solid var(--color-dark-divider);
+  padding: 5px 16px;
+  position: relative;
+}
