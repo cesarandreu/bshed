@@ -75,6 +75,7 @@
     "bcrypt": "^0.8.5",
     "bookshelf": "^0.9.1",
     "bull": "^0.7.0",
+    "classnames": "^2.2.1",
     "co-body": "^4.0.0",
     "dataloader": "^1.0.0",
     "debug": "^2.2.0",
