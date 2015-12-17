@@ -1,0 +1,66 @@
+:root {
+  --color-dark-divider: rgba(0, 0, 0, 0.12);
+
+  /* Magic values from material design's button spec */
+  --color-disabled-text: rgba(0, 0, 0, 0.26);
+  --color-active-button: rgba(153, 153, 153, 0.40);
+}
+
+.button {
+  composes: button from 'components/styles/typography.css';
+  display: inline-block;
+  position: relative;
+  /*min-width: 64px;*/
+  height: 36px;
+  padding: 6px 8px; /* height 36px - line-height 24px => 12px total => 6px each */
+  margin: 0 4px;
+  background: transparent;
+  text-align: center;
+  /*font: inherit;*/
+  color: inherit;
+  text-transform: uppercase; /* @TODO: Remove, it's not needed */
+  outline-width: 0;
+  border-radius: 3px;
+  user-select: none;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.button:focus {
+  background-color: var(--color-dark-divider);
+}
+
+.button:not([raised]):active,
+.button:not([raised]).pressed {
+  background-color: var(--color-active-button);
+}
+
+.button[disabled] {
+  cursor: auto;
+  pointer-events: none;
+  color: var(--color-disabled-text);
+}
+
+.button.raised[disabled] {
+  background-color: var(--color-dark-divider);
+}
+
+/*.button > * {
+  text-transform: inherit;
+}*/
+
+.raised {
+  composes: shadowTransition from 'components/styles/shadows.css';
+}
+
+.elevation1 {
+  composes: shadow2dp from 'components/styles/shadows.css';
+}
+
+.elevation3 {
+  composes: shadow6dp from 'components/styles/shadows.css';
+}
+
+.elevation4 {
+  composes: shadow8dp from 'components/styles/shadows.css';
+}
