@@ -9,7 +9,7 @@
   border-radius: 2px;
 }
 
-.elevation2 {
+.elevation1 {
   composes: shadow2dp from 'components/styles/shadows.css';
 }
 
