@@ -1,0 +1,3 @@
+.link {
+  composes: textColorAccent from 'components/styles/colors.css';
+}
