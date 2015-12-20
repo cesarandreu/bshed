@@ -71,7 +71,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.2.25",
-    "babel-relay-plugin": "^0.6.1",
+    "babel-relay-plugin": "0.6.0",
     "bcrypt": "^0.8.5",
     "bookshelf": "^0.9.1",
     "bull": "^0.7.0",
