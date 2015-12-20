@@ -28,13 +28,14 @@
     "link:bshed": "link-package",
     "link:components": "link-package ./client/components components",
     "link:client": "link-package ./client client",
+    "link:requires": "link-package ./lib/bshed-requires bshed-requires",
     "prepare": "npm-run-all -s prepare:clean prepare:folders",
     "prepare:clean": "rm -rf build",
     "prepare:folders": "mkdir -p ./build/s3/bshed_development ./build/s3/bshed_test",
     "schema": "./scripts/update-schema.js",
     "server:schema": "onchange 'server/**/*.js' -- npm run schema",
-    "server:api": "nodemon -w server -w config -r ./config/requires ./server",
-    "server:s3": "s3rver -d ./build/s3/ -p 10001"
+    "server:api": "nodemon -w server -w config -w worker -r bshed-requires ./server",
+    "server:s3": "s3rver -d ./build/s3/ -p 10001",
   },
   "standard": {
     "parser": "babel-eslint"

@@ -1,0 +1,6 @@
+{
+  "name": "bshed-requires",
+  "standard": {
+    "parser": "babel-eslint"
+  }
+}
