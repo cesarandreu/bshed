@@ -9,10 +9,10 @@ import 'babel-polyfill'
 import 'components/styles/resets.css'
 
 // Modules
-import React from 'react'
-import Relay from 'react-relay'
-import ReactDOM from 'react-dom'
 import { createHistory } from 'history'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Relay from 'react-relay'
 import { RelayRouter } from 'react-router-relay'
 
 // Routes
