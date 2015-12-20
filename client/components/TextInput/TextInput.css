@@ -1,0 +1,142 @@
+:root {
+  /* Grey 600 */
+  --color-gray-600: #757575;
+}
+
+.container {
+  display: block;
+  padding: 8px 0;
+}
+
+.container[disabled] {
+  pointer-events: none;
+  opacity: 0.33;
+}
+
+.content {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  position: relative;
+}
+
+.innerContent {
+  flex: 1 1 0.000000001px;
+}
+
+/* Firefox sets a min-width on the input, which can cause layout issues */
+input.input {
+  min-width: 0;
+}
+
+textarea.input {
+  resize: none;
+}
+
+.input {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  text-align: inherit;
+  box-shadow: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  background: transparent;
+  composes: subhead from 'components/styles/typography.css';
+  composes: textColorPrimary from 'components/styles/colors.css';
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  composes: subhead from 'components/styles/typography.css';
+}
+
+.labelFloating {
+  width: 133%;
+  transform-origin: left top;
+  transform: translateY(-75%) scale(0.75);
+  transition: transform 0.25s;
+}
+
+.labelFocused {
+  composes: textColorAppPrimary from 'components/styles/colors.css';
+}
+
+.labelColored {
+  composes: textColorSecondary from 'components/styles/colors.css';
+}
+
+.labelError {
+  composes: textColorError from 'components/styles/colors.css';
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.errorContainer,
+.underlines {
+  position: relative;
+}
+
+.unfocusedLine {
+  composes: line;
+  height: 1px;
+}
+
+.unfocusedLineColored {
+  background-color: var(--color-gray-600);
+}
+
+.unfocusedLineDisabled {
+  border-bottom: 1px dashed var(--color-gray-600);
+}
+
+.focusedLine {
+  composes: line;
+  height: 2px;
+  transform: scale3d(0, 1, 1);
+  transform-origin: center center;
+}
+
+.focusedLineFocused {
+  transform: none;
+  transition: transform 0.25s;
+}
+
+.focusedLineColored {
+  composes: colorPrimary from 'components/styles/colors.css';
+}
+
+.focusedLineError {
+  composes: colorError from 'components/styles/colors.css';
+}
+
+.labelPlaceholder {
+  composes: caption from 'components/styles/typography.css';
+}
+
+.error {
+  /* @TODO: Remove if it looks bad */
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+
+  visibility: hidden;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  composes: caption from 'components/styles/typography.css';
+  composes: textColorError from 'components/styles/colors.css';
+}
+
+.error[invalid] {
+  visibility: visible;
+}
