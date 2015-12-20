@@ -1,0 +1,24 @@
+:root {
+  --mobile-margin: 16px;
+  --desktop-margin: 24px;
+}
+
+/* Mobile */
+@custom-media --mobile (max-width: 600px);
+
+.page {
+  overflow: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 1 auto;
+
+  /* @TODO: Experiment with other values */
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--desktop-margin);
+}
+@media (--mobile) {
+  .page {
+    padding: var(--mobile-margin);
+  }
+}
