@@ -1,28 +1,17 @@
-#!/usr/bin/env node -r bshed/config/requires
-// Destroy RethinkDB if it exists
-import * as config from 'bshed/config'
-import { getModels } from 'bshed/server/models'
-const { rethinkdb } = config
+#!/usr/bin/env node -r bshed-requires
 
-async function destroyDatabase () {
-  const { r } = getModels()
-  console.log(`[destroy-database]: Attempting to destroy "${rethinkdb.db}" database`)
+// Destroy Postgres database if it exist
+import childProcess from 'child_process'
+import { database } from '../config'
 
-  const list = await r.dbList()
-  if (list.includes(rethinkdb.db)) {
-    await r.dbDrop(rethinkdb.db)
-    return `Destroyed "${rethinkdb.db}" database`
-  } else {
-    return `Database "${rethinkdb.r}" doesn't exist`
+const databaseName = database.connection.database
+console.log(`[destroy-database]: "${databaseName}" database`)
+childProcess.exec(`dropdb --if-exists ${databaseName}`, (err, stdout, stderr) => {
+  if (stdout) {
+    console.log(stdout.trim())
   }
-}
-
-destroyDatabase()
-.then(msg => {
-  console.log(`[destroy-database]: ${msg}`)
-  process.exit(0)
-})
-.catch(err => {
-  console.error(`[destroy-database]: ${err.name}: ${err.message}`)
-  process.exit(1)
+  if (stderr) {
+    console.log(stderr.trim())
+  }
+  process.exit(err ? 1 : 0)
 })

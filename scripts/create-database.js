@@ -1,28 +1,17 @@
-#!/usr/bin/env node -r bshed/config/requires
-// Create RethinkDB database if it doesn't exist
-import * as config from 'bshed/config'
-import { getModels } from 'bshed/server/models'
-const { rethinkdb } = config
+#!/usr/bin/env node -r bshed-requires
 
-async function createDatabase () {
-  const { r } = getModels()
-  console.log(`[create-database]: Attempting to create "${rethinkdb.db}" database`)
+// Create Postgres database unless it exists
+import childProcess from 'child_process'
+import { database } from '../config'
 
-  const list = await r.dbList()
-  if (list.includes(rethinkdb.db)) {
-    return `Database "${rethinkdb.db}" already exists`
-  } else {
-    await r.dbCreate(rethinkdb.db)
-    return `Database "${rethinkdb.db}" created`
+const databaseName = database.connection.database
+console.log(`[create-database]: "${databaseName}" database`)
+childProcess.exec(`createdb ${databaseName}`, (err, stdout, stderr) => {
+  if (stdout) {
+    console.log(stdout.trim())
   }
-}
-
-createDatabase()
-.then(msg => {
-  console.log(`[create-database]: ${msg}`)
-  process.exit(0)
-})
-.catch(err => {
-  console.error(`[create-database]: ${err.name}: ${err.message}`)
-  process.exit(1)
+  if (stderr) {
+    console.log(stderr.trim())
+  }
+  process.exit(err ? 1 : 0)
 })
