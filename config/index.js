@@ -18,10 +18,7 @@ export const redis = redisConfig[env]
 export const aws = awsConfig[env]
 
 // Assets path
-export const assetsPath = path.resolve(__dirname, '../build/assets')
-
-// Image root url
-// export const imageRoot = `//localhost:10001/${aws.bucket}`
+export const ASSETS_PATH = path.resolve(__dirname, '../build/assets')
 
 // Queue names
 export const PROCESS_IMAGE_WORKER_QUEUE = 'PROCESS_IMAGE_WORKER_QUEUE'
