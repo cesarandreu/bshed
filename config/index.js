@@ -25,4 +25,4 @@ export const assetsPath = path.resolve(__dirname, '../build/assets')
 
 // Queue names
 export const PROCESS_IMAGE_WORKER_QUEUE = 'PROCESS_IMAGE_WORKER_QUEUE'
-export const IMAGE_UPDATE_WORKER_QUEUE = 'IMAGE_UPDATE_WORKER_QUEUE'
+export const IMAGE_UPDATES_WORKER_QUEUE = 'IMAGE_UPDATES_WORKER_QUEUE'
