@@ -24,6 +24,7 @@
     "dev": "npm-run-all -p dev:*",
     "dev:client": "npm-run-all -p client:*",
     "dev:server": "npm-run-all -p server:*",
+    "dev:worker": "npm-run-all -p worker:*",
     "link": "npm-run-all -p link:*",
     "link:bshed": "link-package",
     "link:components": "link-package ./client/components components",
@@ -36,6 +37,9 @@
     "server:schema": "onchange 'server/**/*.js' -- npm run schema",
     "server:api": "nodemon -w server -w config -w worker -r bshed-requires ./server",
     "server:s3": "s3rver -d ./build/s3/ -p 10001",
+    "worker:process-images": "./scripts/process-images-worker.js",
+    "worker:image-updates": "./scripts/image-updates-worker.js",
+    "worker:vote-updates": "./scripts/vote-updates-worker.js"
   },
   "standard": {
     "parser": "babel-eslint"
