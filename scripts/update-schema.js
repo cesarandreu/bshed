@@ -1,13 +1,13 @@
-#!/usr/bin/env node -r bshed/config/requires
+#!/usr/bin/env node -r bshed-requires
 // Update schema.json and schema.graphql in bshed/data/
 import fs from 'fs'
 import path from 'path'
 import { graphql } from 'graphql'
-import { getSchema } from 'bshed/server/schema'
+import createSchema from '../server/schema'
 import { introspectionQuery, printSchema } from 'graphql/utilities'
 
 async function updateSchema () {
-  const schema = getSchema()
+  const schema = createSchema()
   console.log(`[update-schema]: Attempting to update schema.json and schema.graphql`)
 
   const result = await graphql(schema, introspectionQuery)
