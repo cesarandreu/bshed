@@ -2,6 +2,7 @@
  * GraphQL middleware
  * Validates the request and executes the query
  */
+import debug from 'debug'
 import bodyParser from 'co-body'
 import invariant from 'invariant'
 import createError from 'http-errors'
@@ -10,6 +11,8 @@ import { formatError } from 'graphql/error'
 import { validate } from 'graphql/validation'
 import { parse, Source } from 'graphql/language'
 import { getOperationAST } from 'graphql/utilities/getOperationAST'
+
+const log = debug('server:graphql')
 
 // Static parser options
 const PARSE_OPTIONS = { limit: '100kb' }
@@ -26,6 +29,7 @@ export default function graphqlHTTP (options) {
     } catch (error) {
       ctx.status = error.status || 500
       ctx.body = { errors: [ formatError(error) ] }
+      log(ctx.body)
     }
   }
 }
@@ -61,6 +65,7 @@ async function perform (ctx, options) {
   // Format any encountered errors
   if (result.errors) {
     result.errors = result.errors.map(formatError)
+    log(result)
   }
 
   // Report 200:Success if a data key exists,
