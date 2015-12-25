@@ -1,3 +1,7 @@
+/**
+ * GraphQL middleware
+ * Validates the request and executes the query
+ */
 import bodyParser from 'co-body'
 import invariant from 'invariant'
 import createError from 'http-errors'
@@ -156,7 +160,9 @@ async function runQuery (ctx, { schema, rootValue, variables, operationName, que
   const documentAST = parse(source)
   const validationErrors = validate(schema, documentAST)
   if (validationErrors.length) {
-    return { errors: validationErrors }
+    return {
+      errors: validationErrors
+    }
   } else {
     // Only query operations are allowed on GET requests
     if (ctx.method === 'GET') {
