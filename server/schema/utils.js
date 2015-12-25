@@ -1,6 +1,7 @@
 /**
  * Schema Utilities
  */
+import { globalIdField } from 'graphql-relay'
 
 // Generate a field graph
 // Leaf nodes are empty objects
@@ -44,5 +45,22 @@ export function getEmptyConnection () {
       hasPreviousPage: false,
       hasNextPage: false
     }
+  }
+}
+
+export function modelField (field) {
+  field.resolve = function resolve (model, args, { fieldName }) {
+    return model.get(fieldName)
+  }
+  return field
+}
+
+export function modelGlobalIdField (name) {
+  return globalIdField(name, model => model.get('id'))
+}
+
+export function modelIsTypeOf (modelName) {
+  return function isTypeOf (model, { rootValue }) {
+    return model instanceof rootValue.models[modelName]
   }
 }
