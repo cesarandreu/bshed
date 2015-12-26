@@ -28,6 +28,12 @@
   /* Blue 700 */
   --color-primary-dark: #1976D2;
 
+  /* Red 500 */
+  --color-secondary: #F44336;
+
+  /* Red 700 */
+  --color-secondary-dark: #D32F2F;
+
   /* Red A200 */
   --color-accent: #FF5252;
 
@@ -37,6 +43,10 @@
 
 .textColorAppPrimary {
   color: var(--color-primary);
+}
+
+.textColorAppSecondary {
+  color: var(--color-secondary);
 }
 
 /* Text color primary */
@@ -109,8 +119,9 @@
 
 /* Text contrast */
 /* Color dark contrast: white */
+.textColorAccentContrast,
 .textColorPrimaryContrast,
-.textColorAccentContrast {
+.textColorSecondaryContrast {
   color: #FFFFFF;
 }
 
