@@ -4,20 +4,44 @@
   /* Magic values from material design's button spec */
   --color-disabled-text: rgba(0, 0, 0, 0.26);
   --color-active-button: rgba(153, 153, 153, 0.40);
+
+  /* Blue 500 */
+  --color-primary: #2196F3;
+
+  /* Blue 700 */
+  --color-primary-dark: #1976D2;
+
+  /* Red 500 */
+  --color-secondary: #F44336;
+
+  /* Red 700 */
+  --color-secondary-dark: #D32F2F;
 }
 
-.button {
+/**
+ * Shared base values
+ */
+.base {
+  /* Resets */
+  border: none;
+  margin: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+
   composes: button from 'components/styles/typography.css';
   display: inline-block;
   position: relative;
-  /*min-width: 64px;*/
   height: 36px;
   padding: 6px 8px; /* height 36px - line-height 24px => 12px total => 6px each */
-  margin: 0 4px;
-  background: transparent;
   text-align: center;
-  /*font: inherit;*/
-  color: inherit;
   text-transform: uppercase; /* @TODO: Remove, it's not needed */
   outline-width: 0;
   border-radius: 3px;
@@ -26,41 +50,136 @@
   z-index: 0;
 }
 
-.button:focus {
-  background-color: var(--color-dark-divider);
+.base:-moz-focus-inner {
+  border: 0;
+  padding: 0;
 }
 
-.button:not([raised]):active,
-.button:not([raised]).pressed {
-  background-color: var(--color-active-button);
-}
-
-.button[disabled] {
+.base:disabled {
   cursor: auto;
   pointer-events: none;
+}
+
+/**
+ * Shared flat values
+ */
+.flat {
+  composes: shadowNone from 'components/styles/shadows.css';
+  background: transparent;
+}
+
+.flat:disabled {
   color: var(--color-disabled-text);
 }
 
-.button.raised[disabled] {
+.flat:focus {
   background-color: var(--color-dark-divider);
 }
 
-/*.button > * {
-  text-transform: inherit;
-}*/
+.flat:active {
+  background-color: var(--color-active-button);
+}
 
+/**
+ * Plain flat
+ */
+.plainFlat {
+  composes: flat;
+  composes: textColorPrimary from 'components/styles/colors.css';
+}
+
+/**
+ * Primary flat
+ */
+.primaryFlat {
+  composes: flat;
+  composes: textColorAppPrimary from 'components/styles/colors.css';
+}
+
+/**
+ * Secondary flat
+ */
+.secondaryFlat {
+  composes: flat;
+  composes: textColorAppSecondary from 'components/styles/colors.css';
+}
+
+/**
+ * Shared raised values
+ * raised => zDepth=1
+ * raised:active => zDepth=4
+ * raised:not(:active):focus => zDepth=3
+ */
 .raised {
   composes: shadowTransition from 'components/styles/shadows.css';
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12),
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
-.elevation1 {
-  composes: shadow2dp from 'components/styles/shadows.css';
+.raised:disabled {
+  color: var(--color-disabled-text);
+  background-color: var(--color-dark-divider);
 }
 
-.elevation3 {
-  composes: shadow6dp from 'components/styles/shadows.css';
+.raised:active {
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12),
+              0 5px 5px -3px rgba(0, 0, 0, 0.4);
 }
 
-.elevation4 {
-  composes: shadow8dp from 'components/styles/shadows.css';
+.raised:not(:active):focus {
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+              0 1px 18px 0 rgba(0, 0, 0, 0.12),
+              0 3px 5px -1px rgba(0, 0, 0, 0.4);
+}
+
+/**
+ * Plain raised
+ */
+.plainRaised {
+  composes: raised;
+  background: transparent;
+  composes: textColorPrimary from 'components/styles/colors.css';
+}
+
+.plainRaised:focus {
+  background-color: var(--color-dark-divider);
+}
+
+.plainRaised:active {
+}
+
+/**
+ * Primary raised
+ */
+.primaryRaised {
+  composes: raised;
+  background-color: var(--color-primary);
+  composes: textColorPrimaryContrast from 'components/styles/colors.css';
+}
+
+.primaryRaised:focus {
+  background-color: color(var(--color-primary) shade(12%));
+}
+
+.primaryRaised:active {
+  background-color: var(--color-primary-dark);
+}
+
+/**
+ * Secondary raised
+ */
+.secondaryRaised {
+  composes: raised;
+  background-color: var(--color-secondary);
+  composes: textColorSecondaryContrast from 'components/styles/colors.css';
+}
+
+.secondaryRaised:focus {
+  background-color: color(var(--color-secondary) shade(12%));
+}
+
+.secondaryRaised:active {
+  background-color: var(--color-secondary-dark);
 }
