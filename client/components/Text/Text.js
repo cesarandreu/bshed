@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import React from 'react'
 import styles from './Text.css'
 
@@ -17,25 +18,25 @@ export function Headline ({ children }) {
   )
 }
 
-export function Hint ({ children }) {
+export function Hint ({ children, className }) {
   return (
-    <div className={styles.hint}>
+    <div className={cn(styles.hint, className)}>
       {children}
     </div>
   )
 }
 
-export function PrimaryText ({ children }) {
+export function PrimaryText ({ children, className }) {
   return (
-    <div className={styles.primary}>
+    <div className={cn(styles.primary, className)}>
       {children}
     </div>
   )
 }
 
-export function SecondaryText ({ children }) {
+export function SecondaryText ({ children, className }) {
   return (
-    <div className={styles.secondary}>
+    <div className={cn(styles.secondary, className)}>
       {children}
     </div>
   )
