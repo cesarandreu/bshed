@@ -1,0 +1,54 @@
+:root {
+  --color-dark-disabled: rgba(0, 0, 0, 0.38);
+}
+
+.remove {
+  composes: resetButton from 'components/styles/mixins.css';
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 12px;
+  color: var(--color-dark-disabled);
+  z-index: 2;
+}
+
+.panel {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.imageWrapper {
+  display: inline-flex;
+  flex: 0 1 30%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/**
+ * Adds a semi-transparent border to images
+ * Source: http://blog.vjeux.com/2012/image/css-semi-transparent-border-on-images.html
+ */
+.imageWrapper:after {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  content: '';
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.image {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.information {
+  padding-left: 16px;
+  flex: 1 1 auto;
+  display: inline-flex;
+  flex-flow: column nowrap;
+}

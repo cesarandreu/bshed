@@ -1,0 +1,9 @@
+.submit {
+  text-align: right;
+  composes: textColorAppPrimary from 'components/styles/colors.css';
+}
+
+.terms {
+  padding: 16px 0;
+  text-align: center;
+}
