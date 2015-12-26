@@ -70,6 +70,10 @@
   color: var(--color-dark-disabled);
 }
 
+.colorDisabled {
+  background-color: var(--color-dark-disabled);
+}
+
 /* Divider color */
 .dividerColor {
   background-color: var(--color-dark-divider);
