@@ -1,4 +1,5 @@
 export {
+  Caption,
   Headline,
   Hint,
   PrimaryText,

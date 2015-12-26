@@ -1,6 +1,14 @@
 import React from 'react'
 import styles from './Text.css'
 
+export function Caption ({ children }) {
+  return (
+    <div className={styles.caption}>
+      {children}
+    </div>
+  )
+}
+
 export function Headline ({ children }) {
   return (
     <h3 className={styles.headline}>

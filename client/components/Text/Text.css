@@ -23,3 +23,7 @@
 .title {
   composes: title from 'components/styles/typography.css';
 }
+
+.caption {
+  composes: caption from 'components/styles/typography.css';
+}
