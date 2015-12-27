@@ -29,6 +29,7 @@
     "link:bshed": "link-package",
     "link:client": "link-package ./client client",
     "link:components": "link-package ./client/components components",
+    "link:constants": "link-package ./lib/bshed-constants bshed-constants",
     "link:requires": "link-package ./lib/bshed-requires bshed-requires",
     "prepare": "npm-run-all -s prepare:clean prepare:folders",
     "prepare:clean": "rm -rf build",
