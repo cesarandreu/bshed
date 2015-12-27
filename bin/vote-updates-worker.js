@@ -3,7 +3,7 @@
  * Vote updates worker
  */
 import Queue from 'bull'
-import * as VoteUpdatesWorker from '../worker/vote-updates'
+import { VoteUpdatesWorker } from 'bshed-workers'
 import {
   database,
   redis,

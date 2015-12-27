@@ -4,7 +4,7 @@
  */
 import S3FS from 's3fs'
 import Queue from 'bull'
-import * as ProcessImagesWorker from '../worker/process-images'
+import { ProcessImagesWorker } from 'bshed-workers'
 import {
   aws,
   IMAGE_UPDATES_WORKER_QUEUE,

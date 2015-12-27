@@ -3,7 +3,7 @@
  * Image updates worker
  */
 import Queue from 'bull'
-import * as ImageUpdatesWorker from '../worker/image-updates'
+import { ImageUpdatesWorker } from 'bshed-workers'
 import {
   database,
   IMAGE_UPDATES_WORKER_QUEUE,
