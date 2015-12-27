@@ -1,5 +1,5 @@
 :root {
-  --mobile-margin: 16px;
+  /*--mobile-margin: 16px;*/
   --desktop-margin: 24px;
 }
 
@@ -19,6 +19,7 @@
 }
 @media (--mobile) {
   .page {
-    padding: var(--mobile-margin);
+    /*padding: var(--mobile-margin);*/
+    padding: 0;
   }
 }
