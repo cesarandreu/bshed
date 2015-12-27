@@ -9,7 +9,7 @@ import { Hint, SecondaryText } from 'components/Text'
 import React, { PropTypes } from 'react'
 import styles from './UploadImagePanel.css'
 
-// @TODO: Use bshed/shared/constants for file type and size
+// @TODO: Use bshed-constants for file type and size
 export function UploadImagePanel ({ imageCount, onClick }) {
   return (
     <CardContent>

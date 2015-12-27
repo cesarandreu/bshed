@@ -11,10 +11,11 @@ import {
   ALLOWED_MIMETYPES,
   MAXIMUM_IMAGE_COUNT,
   MAXIMUM_IMAGE_SIZE
-} from 'bshed/shared/constants'
+} from 'bshed-constants'
 import { CreateBikeshedMutation } from 'client/mutations/CreateBikeshedMutation'
-import { Button } from 'components/Button'
-import { Card, CardActions } from 'components/Card'
+// import { Button } from 'components/Button'
+// import { Card, CardActions } from 'components/Card'
+import { Card } from 'components/Card'
 import { Layout, LayoutContent, LayoutToolbar } from 'components/Layout'
 import { Link } from 'components/Link'
 import { Page } from 'components/Page'
@@ -23,11 +24,14 @@ import React, { Component, PropTypes } from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Relay from 'react-relay'
+import { AddImagesStep } from './AddImagesStep'
 import { ConnectedFileReceiver } from './FileReceiver'
 import styles from './Home.css'
-import { ImagePanel } from './ImagePanel'
-import { InfoPanel } from './InfoPanel'
-import { UploadImagePanel } from './UploadImagePanel'
+// import { ImagePanel } from './ImagePanel'
+// import { ImagesPanel } from './ImagesPanel'
+// import { InfoPanel } from './InfoPanel'
+import { Step, Steps } from './Step'
+// import { UploadImagePanel } from './UploadImagePanel'
 
 const FILE_INPUT_ACCEPT = ALLOWED_MIMETYPES.join(',')
 
@@ -168,7 +172,7 @@ export class HomeContainer extends Component {
         receiveFiles={this.receiveFiles}
       >
         <Layout>
-          <LayoutToolbar title='Bikeshed it!'/>
+          <LayoutToolbar title='Bikeshed builder'/>
           <LayoutContent>
             <Home
               clickFileInput={this.clickFileInput}
@@ -235,12 +239,39 @@ export class Home extends Component {
     return (
       <Page>
         <Card>
+          <Steps>
+
+            <AddImagesStep
+              images={images}
+              onAddImage={clickFileInput}
+            />
+
+            <Step
+              active={false}
+              name='???'
+              number={2}
+            >
+              BODY~
+            </Step>
+
+            <Step
+              active={false}
+              name='Profit'
+              number={3}
+            >
+              BODY~
+            </Step>
+          </Steps>
+
+          {/*
           <InfoPanel
             title={title}
             updateTitle={updateTitle}
           />
+          */}
 
           {/* User images or "bikes" */}
+          {/*
           {images.map(({ fileName, name, src }) =>
             <ImagePanel
               fileName={fileName}
@@ -251,8 +282,10 @@ export class Home extends Component {
               updateImage={updateImage}
             />
           )}
+          */}
 
           {/* Only show this panel when we can add more images */}
+          {/*
           {imageCount < MAXIMUM_IMAGE_COUNT && (
             <UploadImagePanel
               imageCount={imageCount}
@@ -271,6 +304,7 @@ export class Home extends Component {
               </div>
             </CardActions>
           )}
+          */}
         </Card>
         <TermsHintText/>
       </Page>
@@ -297,4 +331,3 @@ function TermsHintText () {
     </div>
   )
 }
-
