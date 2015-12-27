@@ -26,7 +26,6 @@
     "dev:server": "npm-run-all -p server:*",
     "dev:worker": "npm-run-all -p worker:*",
     "link": "npm-run-all -p link:*",
-    "link:bshed": "link-package",
     "link:client": "link-package ./client client",
     "link:components": "link-package ./client/components components",
     "link:constants": "link-package ./lib/bshed-constants bshed-constants",
