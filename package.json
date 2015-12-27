@@ -37,9 +37,9 @@
     "server:schema": "onchange 'server/**/*.js' -- npm run schema",
     "server:api": "nodemon -w server -w config -w worker -r bshed-requires ./server",
     "server:s3": "s3rver -d ./build/s3/ -p 10001",
-    "worker:process-images": "./scripts/process-images-worker.js",
-    "worker:image-updates": "./scripts/image-updates-worker.js",
-    "worker:vote-updates": "./scripts/vote-updates-worker.js"
+    "worker:image-updates": "./bin/image-updates-worker.js",
+    "worker:process-images": "./bin/process-images-worker.js",
+    "worker:vote-updates": "./bin/vote-updates-worker.js"
   },
   "standard": {
     "parser": "babel-eslint"
