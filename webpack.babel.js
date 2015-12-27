@@ -49,8 +49,8 @@ export function buildWebpackConfig () {
     module: {
       loaders: [{
         test: /\.js$/,
-        // include: /(client|shared)/,
-        ignore: /node_modules/,
+        include: /(client|bshed-constants)/,
+        // ignore: /node_modules/,
         loader: 'babel'
       // }, {
       //   test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
