@@ -3,7 +3,6 @@ exports.up = function up (knex, Promise) {
   .createTable('bikes', t => {
     t.uuid('bikeshed_id').references('bikesheds.id').index()
     t.text('field')
-    t.text('filename')
     t.integer('height')
     t.uuid('id').primary().defaultTo(knex.raw(`uuid_generate_v1mc()`))
     t.integer('key')
