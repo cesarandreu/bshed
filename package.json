@@ -16,8 +16,8 @@
     "url": "https://github.com/cesarandreu"
   },
   "scripts": {
-    "client:server": "BABEL_ENV=CLIENT_DEVELOPMENT webpack-dev-server --config ./webpack.babel.js --hot --inline",
     "client:html": "BABEL_ENV=CLIENT_DEVELOPMENT webpack --config ./webpack.babel.js --watch",
+    "client:server": "BABEL_ENV=CLIENT_DEVELOPMENT webpack-dev-server --config ./webpack.babel.js --hot --inline",
     "db:create": "./scripts/create-database.js",
     "db:destroy": "./scripts/destroy-database.js",
     "db:migrate": "knex migrate:latest",
@@ -27,16 +27,16 @@
     "dev:worker": "npm-run-all -p worker:*",
     "link": "npm-run-all -p link:*",
     "link:bshed": "link-package",
-    "link:components": "link-package ./client/components components",
     "link:client": "link-package ./client client",
+    "link:components": "link-package ./client/components components",
     "link:requires": "link-package ./lib/bshed-requires bshed-requires",
     "prepare": "npm-run-all -s prepare:clean prepare:folders",
     "prepare:clean": "rm -rf build",
     "prepare:folders": "mkdir -p ./build/s3/bshed_development ./build/s3/bshed_test",
     "schema": "./scripts/update-schema.js",
-    "server:schema": "onchange 'server/**/*.js' -- npm run schema",
     "server:api": "nodemon -w server -w config -w worker -r bshed-requires ./server",
     "server:s3": "s3rver -d ./build/s3/ -p 10001",
+    "server:schema": "onchange 'server/**/*.js' -- npm run schema",
     "worker:image-updates": "./bin/image-updates-worker.js",
     "worker:process-images": "./bin/process-images-worker.js",
     "worker:vote-updates": "./bin/vote-updates-worker.js"
