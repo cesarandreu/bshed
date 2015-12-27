@@ -5,7 +5,6 @@ bikes {
   bikeshed_id: !uuid
   created_at: !timestamptz
   field: text
-  filename: string
   height: int
   *id: !uuid
   key: int
