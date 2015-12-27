@@ -1,0 +1,64 @@
+/**
+ * @TODO: step bottom-padding should be 20px when inactive
+ */
+.stepper {
+  padding: 0 24px;
+}
+
+.step {
+  padding: 24px 0;
+  position: relative;
+}
+
+.title {
+  display: inline-flex;
+  align-items: center;
+}
+
+.activeCircle {
+  composes: colorPrimary from 'components/styles/colors.css';
+}
+
+.inactiveCircle {
+  composes: colorDisabled from 'components/styles/colors.css';
+}
+
+.circle {
+  composes: textColorPrimaryContrast from 'components/styles/colors.css';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+}
+
+.name {
+  padding: 0 12px;
+}
+
+.activeName {
+  composes: textColorPrimary from 'components/styles/colors.css';
+}
+
+.inactiveName {
+  composes: textColorDisabled from 'components/styles/colors.css';
+}
+
+.line {
+  position: absolute;
+  top: 56px;
+  height: calc(100% - 40px);
+  left: 11px;
+  width: 1px;
+  composes: dividerColor from 'components/styles/colors.css';
+}
+
+.step:last-child > .line {
+  display: none;
+}
+
+.body {
+  padding: 16px 0 0 36px;
+  position: relative;
+}
