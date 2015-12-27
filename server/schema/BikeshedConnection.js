@@ -10,9 +10,14 @@ export default function getBikeshedConnection ({ types }) {
     connectionType: BikeshedConnectionType,
     edgeType: BikeshedEdgeType
   } = connectionDefinitions({
+    // connectionFields: {},
+    // edgeFields: {},
     name: 'Bikeshed',
     nodeType: types.BikeshedType
+    // resolveCursor () {},
+    // resolveNode () {}
   })
+
   Object.assign(types, {
     BikeshedConnectionType,
     BikeshedEdgeType
