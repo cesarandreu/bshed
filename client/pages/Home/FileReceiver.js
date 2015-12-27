@@ -2,7 +2,7 @@
  * FileReceiver shows up when you try dropping a file in the Home page
  * It will only show up if you can still drop images
  */
-import { MAXIMUM_IMAGE_COUNT } from 'bshed/shared/constants'
+import { MAXIMUM_IMAGE_COUNT } from 'bshed-constants'
 import React, { Component, PropTypes } from 'react'
 import { DropTarget } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
