@@ -45,7 +45,6 @@ textarea.input {
   background: transparent;
   composes: subhead from 'components/styles/typography.css';
   composes: textColorPrimary from 'components/styles/colors.css';
-  text-overflow: ellipsis;
 }
 
 .label {
@@ -53,14 +52,14 @@ textarea.input {
   top: 0;
   right: 0;
   left: 0;
-  composes: subhead from 'components/styles/typography.css';
+  composes: noWrap subhead from 'components/styles/typography.css';
 }
 
 .labelFloating {
-  width: 133%;
-  transform-origin: left top;
   transform: translateY(-75%) scale(0.75);
   transition: transform 0.25s;
+  transform-origin: left top;
+  width: 133%;
 }
 
 .labelFocused {
