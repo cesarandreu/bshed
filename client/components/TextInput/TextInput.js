@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import styles from './TextInput.css'
 
 // @TODO: Add tabindex?
+// @TODO: Add more types if needed
 export class TextInput extends Component {
   constructor (props, context) {
     super(props, context)
@@ -38,30 +39,6 @@ export class TextInput extends Component {
     this.input = input
   }
 
-  getLabelClassNames ({ hasError, hasFocus, hasValue }) {
-    return cn(styles.label, {
-      [styles.labelColored]: !hasError && !hasValue && !hasFocus,
-      [styles.labelError]: hasError,
-      [styles.labelFloating]: hasValue,
-      [styles.labelFocused]: !hasError && hasValue && hasFocus
-    })
-  }
-
-  getUnfocusedLineClassNames ({ disabled }) {
-    return cn(styles.unfocusedLine, {
-      [styles.unfocusedLineColored]: !disabled,
-      [styles.unfocusedLineDisabled]: disabled
-    })
-  }
-
-  getFocusedLineClassNames ({ hasError, hasFocus }) {
-    return cn(styles.focusedLine, {
-      [styles.focusedLineColored]: !hasError && hasFocus,
-      [styles.focusedLineError]: hasError,
-      [styles.focusedLineFocused]: hasError || hasFocus
-    })
-  }
-
   render () {
     const {
       autoFocus,
@@ -74,14 +51,10 @@ export class TextInput extends Component {
       value
     } = this.props
     const { focus } = this.state
-    const hasError = !!error
-    const hasFocus = !!focus
-    const hasValue = !!value || value === 0
 
     const inputProps = {
       autoComplete: 'off',
       autoFocus,
-      className: styles.input,
       disabled,
       name,
       onBlur: this._onBlur,
@@ -92,43 +65,57 @@ export class TextInput extends Component {
       value
     }
 
+    const inputClassNames = cn(styles.input, {
+      [styles.inputError]: error
+    })
+
+    const labelClassNames = cn(styles.label, styles.underline, {
+      // Colored label when there's no error and it's focused and it has a value
+      [styles.labelColored]: !error && focus && (value || value === 0),
+
+      // Red label when it has an error and a value
+      [styles.labelError]: error && (value || value === 0),
+
+      // Float when it has a value
+      [styles.labelFloat]: value || value === 0,
+
+      // Regular color when there's no error and no value
+      [styles.labelRegular]: !error && ((!value && value !== 0) || !focus),
+
+      // Red underline color when there's an error
+      [styles.underlineError]: error,
+
+      // Regular underline color if there's no error
+      [styles.underlineRegular]: !error,
+
+      // Show the underline if it has an error or focus and it's not disabled
+      [styles.underlineVisible]: !disabled && error || focus
+    })
+
+    const errorClassNames = cn(styles.error, {
+      [styles.hideError]: !error,
+      [styles.showError]: error
+    })
+
     return (
       <div
         className={styles.container}
         disabled={disabled}
       >
-        <div className={styles.labelPlaceholder}>
-          &nbsp;
-        </div>
+        <input
+          className={inputClassNames}
+          {...inputProps}
+        />
 
-        <div className={styles.content}>
-          <div
-            className={styles.innerContent}
-            style={{position: hasValue ? 'static' : 'relative'}}
-          >
-            <label
-              className={this.getLabelClassNames({ hasError, hasFocus, hasValue })}
-              htmlFor={name}
-            >
-              {label || name}
-            </label>
+        <label
+          className={labelClassNames}
+          htmlFor={name}
+        >
+          {label || name}
+        </label>
 
-            <input {...inputProps}/>
-          </div>
-        </div>
-
-        <div className={styles.underlines}>
-          <div className={this.getUnfocusedLineClassNames({ disabled })}/>
-          <div className={this.getFocusedLineClassNames({ hasError, hasFocus })}/>
-        </div>
-
-        <div className={styles.errorContainer}>
-          <div
-            className={styles.error}
-            style={{visibility: hasError ? 'visible' : 'hidden'}}
-          >
-            {error}
-          </div>
+        <div className={errorClassNames}>
+          {error}
         </div>
       </div>
     )
@@ -142,7 +129,7 @@ TextInput.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(['text']).isRequired, // @TODO: Add more if needed
+  type: PropTypes.oneOf(['text']).isRequired,
   value: PropTypes.string.isRequired
 }
 

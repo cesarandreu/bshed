@@ -1,27 +1,104 @@
 :root {
-  /* Grey 600 */
-  --color-gray-600: #757575;
+  --color-dark-disabled: rgba(0, 0, 0, 0.38);
+  --color-dark-divider: rgba(0, 0, 0, 0.12);
+  --color-error: #F44336;
+  --color-primary: #2196F3;
 }
 
 .container {
   display: block;
-  padding: 8px 0;
-}
-
-.container[disabled] {
-  pointer-events: none;
-  opacity: 0.33;
-}
-
-.content {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
+  margin: 0;
+  padding: 20px 0;
   position: relative;
 }
 
-.innerContent {
-  flex: 1 1 0.000000001px;
+.container[disabled] {
+  opacity: 0.33;
+  pointer-events: none;
+}
+
+.input {
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  outline: none;
+  padding: 4px 0 3px;
+  position: relative;
+  text-align: left;
+  width: 100%;
+
+  border-bottom: 1px solid var(--color-dark-divider);
+  composes: subhead from 'components/styles/typography.css';
+  composes: textColorPrimary from 'components/styles/colors.css';
+}
+
+.input[disabled] {
+  background-color: transparent;
+  border-bottom: 1px dashed var(--color-dark-disabled);
+}
+
+.inputError {
+  border-color: var(--color-error);
+}
+
+.label {
+  bottom: 0;
+  display: block;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  text-align: left;
+  top: 24px;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  composes: noWrap subhead from 'components/styles/typography.css';
+}
+
+.labelFloat {
+  font-size: 12px;
+  top: 4px;
+}
+
+.labelColored {
+  composes: textColorAppPrimary from 'components/styles/colors.css';
+}
+
+.labelError {
+  composes: textColorError from 'components/styles/colors.css';
+}
+
+.labelRegular {
+  composes: textColorSecondary from 'components/styles/colors.css';
+}
+
+.underline:after {
+  bottom: 20px;
+  content: '';
+  height: 2px;
+  left: 45%;
+  position: absolute;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  visibility: hidden;
+  width: 10px;
+}
+
+.underlineVisible:after {
+  left: 0;
+  visibility: visible;
+  width: 100%;
+}
+
+.underlineError:after {
+  background-color: var(--color-error);
+}
+
+.underlineRegular:after {
+  background-color: var(--color-primary);
 }
 
 /* Firefox sets a min-width on the input, which can cause layout issues */
@@ -29,114 +106,17 @@ input.input {
   min-width: 0;
 }
 
-textarea.input {
-  resize: none;
-}
-
-.input {
-  position: relative;
-  width: 100%;
-  padding: 0;
-  text-align: inherit;
-  box-shadow: none;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-  background: transparent;
-  composes: subhead from 'components/styles/typography.css';
-  composes: textColorPrimary from 'components/styles/colors.css';
-}
-
-.label {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  composes: noWrap subhead from 'components/styles/typography.css';
-}
-
-.labelFloating {
-  transform: translateY(-75%) scale(0.75);
-  transition: transform 0.25s;
-  transform-origin: left top;
-  width: 133%;
-}
-
-.labelFocused {
-  composes: textColorAppPrimary from 'components/styles/colors.css';
-}
-
-.labelColored {
-  composes: textColorSecondary from 'components/styles/colors.css';
-}
-
-.labelError {
-  composes: textColorError from 'components/styles/colors.css';
-}
-
-.line {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.errorContainer,
-.underlines {
-  position: relative;
-}
-
-.unfocusedLine {
-  composes: line;
-  height: 1px;
-}
-
-.unfocusedLineColored {
-  background-color: var(--color-gray-600);
-}
-
-.unfocusedLineDisabled {
-  border-bottom: 1px dashed var(--color-gray-600);
-}
-
-.focusedLine {
-  composes: line;
-  height: 2px;
-  transform: scale3d(0, 1, 1);
-  transform-origin: center center;
-}
-
-.focusedLineFocused {
-  transform: none;
-  transition: transform 0.25s;
-}
-
-.focusedLineColored {
-  composes: colorPrimary from 'components/styles/colors.css';
-}
-
-.focusedLineError {
-  composes: colorError from 'components/styles/colors.css';
-}
-
-.labelPlaceholder {
-  composes: caption from 'components/styles/typography.css';
-}
-
 .error {
-  /* @TODO: Remove if it looks bad */
-  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-
-  visibility: hidden;
-  display: inline-block;
+  margin-top: 3px;
   position: absolute;
-  left: 0;
-  right: 0;
   composes: caption from 'components/styles/typography.css';
   composes: textColorError from 'components/styles/colors.css';
 }
 
-.error[invalid] {
+.hideError {
+  visibility: hidden;
+}
+
+.showError {
   visibility: visible;
 }
