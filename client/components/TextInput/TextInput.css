@@ -45,6 +45,7 @@ textarea.input {
   background: transparent;
   composes: subhead from 'components/styles/typography.css';
   composes: textColorPrimary from 'components/styles/colors.css';
+  text-overflow: ellipsis;
 }
 
 .label {
