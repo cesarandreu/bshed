@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import React, { Component, PropTypes } from 'react'
 import styles from './TextInput.css'
 
@@ -38,41 +39,27 @@ export class TextInput extends Component {
   }
 
   getLabelClassNames ({ hasError, hasFocus, hasValue }) {
-    const labelClassNames = [styles.label]
-    if (hasValue) {
-      labelClassNames.push(styles.labelFloating)
-    }
-    if (hasError) {
-      labelClassNames.push(styles.labelError)
-    } else if (hasValue && hasFocus) {
-      labelClassNames.push(styles.labelFocused)
-    } else {
-      labelClassNames.push(styles.labelColored)
-    }
-    return labelClassNames.join(' ')
+    return cn(styles.label, {
+      [styles.labelColored]: !hasError && !hasValue && !hasFocus,
+      [styles.labelError]: hasError,
+      [styles.labelFloating]: hasValue,
+      [styles.labelFocused]: !hasError && hasValue && hasFocus
+    })
   }
 
   getUnfocusedLineClassNames ({ disabled }) {
-    const unfocusedLineClassNames = [styles.unfocusedLine]
-    if (disabled) {
-      unfocusedLineClassNames.push(styles.unfocusedLineDisabled)
-    } else {
-      unfocusedLineClassNames.push(styles.unfocusedLineColored)
-    }
-    return unfocusedLineClassNames.join(' ')
+    return cn(styles.unfocusedLine, {
+      [styles.unfocusedLineColored]: !disabled,
+      [styles.unfocusedLineDisabled]: disabled
+    })
   }
 
   getFocusedLineClassNames ({ hasError, hasFocus }) {
-    const focusedLineClassNames = [styles.focusedLine]
-    if (hasError || hasFocus) {
-      focusedLineClassNames.push(styles.focusedLineFocused)
-      if (hasError) {
-        focusedLineClassNames.push(styles.focusedLineError)
-      } else {
-        focusedLineClassNames.push(styles.focusedLineColored)
-      }
-    }
-    return focusedLineClassNames.join(' ')
+    return cn(styles.focusedLine, {
+      [styles.focusedLineColored]: !hasError && hasFocus,
+      [styles.focusedLineError]: hasError,
+      [styles.focusedLineFocused]: hasError || hasFocus
+    })
   }
 
   render () {
@@ -94,8 +81,8 @@ export class TextInput extends Component {
     const hasValue = !!value || value === 0
 
     const inputProps = {
-      autoFocus,
       autoComplete: 'off',
+      autoFocus,
       className: styles.input,
       disabled,
       name,
