@@ -44,7 +44,7 @@ export function AddImagesStep ({ images, onAddImage, removeFile, updateImage }) 
           add image
         </Button>
         <Hint className={styles.hint}>
-          JPEG/PNG 2MB/image
+          JPEG/PNG 3MB/image
         </Hint>
       </div>
     </Step>
