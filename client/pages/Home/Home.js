@@ -12,10 +12,8 @@ import {
 import { CreateBikeshedMutation } from 'client/mutations/CreateBikeshedMutation'
 import { Card } from 'components/Card'
 import { Layout, LayoutContent, LayoutToolbar } from 'components/Layout'
-import { Link } from 'components/Link'
 import { Page } from 'components/Page'
 import { Stepper } from 'components/Stepper'
-import { Hint } from 'components/Text'
 import React, { Component, PropTypes } from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -23,7 +21,6 @@ import Relay from 'react-relay'
 import { AddImagesStep } from './AddImagesStep'
 import { BuildStep } from './BuildStep'
 import { ConnectedFileReceiver } from './FileReceiver'
-import styles from './Home.css'
 import { TitleStep } from './TitleStep'
 
 const FILE_INPUT_ACCEPT = ALLOWED_MIMETYPES.join(',')
@@ -259,7 +256,6 @@ export class Home extends Component {
             />
           </Stepper>
         </Card>
-        <TermsHintText/>
       </Page>
     )
   }
@@ -274,14 +270,4 @@ Home.propTypes = {
   title: PropTypes.string.isRequired,
   updateImage: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired
-}
-
-function TermsHintText () {
-  return (
-    <div className={styles.terms}>
-      <Hint>
-        By uploading, you agree to our <Link to='/terms'>terms of service</Link>
-      </Hint>
-    </div>
-  )
 }
