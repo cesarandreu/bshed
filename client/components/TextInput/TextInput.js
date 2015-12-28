@@ -73,9 +73,7 @@ export class TextInput extends Component {
       type,
       value
     } = this.props
-    const {
-      focus
-    } = this.state
+    const { focus } = this.state
     const hasError = !!error
     const hasFocus = !!focus
     const hasValue = !!value || value === 0
