@@ -1,11 +1,8 @@
 /**
  * Users can create bikesheds from here
- * They give it a title, add images, and hit submit
- * @TODO: Animate card panels coming in and out
+ * They add images, give it a title, and build it
  * @TODO: Show toast message for invalid files
- * @TODO: Handle tall images by setting a maximum height
  * @TODO: Show loader when saving
- * @TODO: Disable submit until you add a title
  */
 import {
   ALLOWED_MIMETYPES,
@@ -13,25 +10,21 @@ import {
   MAXIMUM_IMAGE_SIZE
 } from 'bshed-constants'
 import { CreateBikeshedMutation } from 'client/mutations/CreateBikeshedMutation'
-// import { Button } from 'components/Button'
-// import { Card, CardActions } from 'components/Card'
 import { Card } from 'components/Card'
 import { Layout, LayoutContent, LayoutToolbar } from 'components/Layout'
 import { Link } from 'components/Link'
 import { Page } from 'components/Page'
+import { Stepper } from 'components/Stepper'
 import { Hint } from 'components/Text'
 import React, { Component, PropTypes } from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Relay from 'react-relay'
 import { AddImagesStep } from './AddImagesStep'
+import { BuildStep } from './BuildStep'
 import { ConnectedFileReceiver } from './FileReceiver'
 import styles from './Home.css'
-// import { ImagePanel } from './ImagePanel'
-// import { ImagesPanel } from './ImagesPanel'
-// import { InfoPanel } from './InfoPanel'
-import { Step, Steps } from './Step'
-// import { UploadImagePanel } from './UploadImagePanel'
+import { TitleStep } from './TitleStep'
 
 const FILE_INPUT_ACCEPT = ALLOWED_MIMETYPES.join(',')
 
@@ -163,6 +156,7 @@ export class HomeContainer extends Component {
   render () {
     const {
       images,
+      saving,
       title
     } = this.state
 
@@ -178,8 +172,9 @@ export class HomeContainer extends Component {
               clickFileInput={this.clickFileInput}
               images={images}
               removeFile={this.removeFile}
-              title={title}
+              saving={saving}
               submitForm={this.submitForm}
+              title={title}
               updateImage={this.updateImage}
               updateTitle={this.updateTitle}
               {...this.props}
@@ -229,8 +224,9 @@ export class Home extends Component {
       clickFileInput,
       images,
       removeFile,
-      title,
+      saving,
       submitForm,
+      title,
       updateImage,
       updateTitle
     } = this.props
@@ -239,72 +235,29 @@ export class Home extends Component {
     return (
       <Page>
         <Card>
-          <Steps>
-
+          <Stepper>
             <AddImagesStep
               images={images}
               onAddImage={clickFileInput}
-            />
-
-            <Step
-              active={false}
-              name='???'
-              number={2}
-            >
-              BODY~
-            </Step>
-
-            <Step
-              active={false}
-              name='Profit'
-              number={3}
-            >
-              BODY~
-            </Step>
-          </Steps>
-
-          {/*
-          <InfoPanel
-            title={title}
-            updateTitle={updateTitle}
-          />
-          */}
-
-          {/* User images or "bikes" */}
-          {/*
-          {images.map(({ fileName, name, src }) =>
-            <ImagePanel
-              fileName={fileName}
-              key={fileName}
-              name={name}
               removeFile={removeFile}
-              src={src}
+              saving={saving}
               updateImage={updateImage}
             />
-          )}
-          */}
 
-          {/* Only show this panel when we can add more images */}
-          {/*
-          {imageCount < MAXIMUM_IMAGE_COUNT && (
-            <UploadImagePanel
+            <TitleStep
               imageCount={imageCount}
-              onClick={clickFileInput}
+              saving={saving}
+              title={title}
+              updateTitle={updateTitle}
             />
-          )}
 
-          {imageCount === MAXIMUM_IMAGE_COUNT && (
-            <CardActions>
-              <div className={styles.submit}>
-                <Button
-                  onClick={submitForm}
-                >
-                  Submit
-                </Button>
-              </div>
-            </CardActions>
-          )}
-          */}
+            <BuildStep
+              imageCount={imageCount}
+              saving={saving}
+              submitForm={submitForm}
+              title={title}
+            />
+          </Stepper>
         </Card>
         <TermsHintText/>
       </Page>
@@ -316,8 +269,9 @@ Home.propTypes = {
   clickFileInput: PropTypes.func.isRequired,
   images: PropTypes.array.isRequired,
   removeFile: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
+  saving: PropTypes.bool.isRequired,
   submitForm: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
   updateImage: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired
 }
