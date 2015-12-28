@@ -47,6 +47,7 @@ export function Step ({ active, children, name, number }) {
 
 Step.propTypes = {
   active: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   number: PropTypes.number.isRequired
 }
