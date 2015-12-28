@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import { Caption, PrimaryText } from 'components/Text'
 import React, { PropTypes } from 'react'
+import Collapse from 'react-collapse'
 import styles from './Stepper.css'
 
 export function Stepper ({ children }) {
@@ -11,7 +12,7 @@ export function Stepper ({ children }) {
   )
 }
 
-// TODO: Add `complete` prop?
+// @TODO: Add complete property?
 export function Step ({ active, children, name, number }) {
   const circleClassNames = cn(styles.circle, {
     [styles.activeCircle]: active,
@@ -35,11 +36,13 @@ export function Step ({ active, children, name, number }) {
           {name}
         </PrimaryText>
       </div>
-      {active && (
+
+      <Collapse isOpened={active}>
         <div className={styles.body}>
           {children}
         </div>
-      )}
+      </Collapse>
+
       <div className={styles.line}/>
     </div>
   )
