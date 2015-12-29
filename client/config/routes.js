@@ -1,42 +1,40 @@
 /**
- * Routes
- * @flow
+ * Route definitions
  */
 import React from 'react'
-import { IndexRoute, Route } from 'react-router'
+import { IndexRedirect, IndexRoute, Route } from 'react-router'
+
+// Pages
+import Home from 'client/pages/Home'
+import Terms from 'client/pages/Terms'
+import BikeshedViewer from 'client/pages/BikeshedViewer'
 
 // Queries
-import ViewerQueries from '@client/queries/ViewerQueries'
-import BikeshedQueries from '@client/queries/BikeshedQueries'
-
-// Components
-import { AppContainer } from '@client/containers/App'
-import { BikeshedCreatorContainer } from '@client/containers/BikeshedCreator'
-import { BikeshedExplorerContainer } from '@client/containers/BikeshedExplorer'
-import { BikeshedViewerContainer } from '@client/containers/BikeshedViewer'
+import ViewerQueries from 'client/queries/ViewerQueries'
+import BikeshedQueries from 'client/queries/BikeshedQueries'
 
 export default (
   <Route
     path='/'
-    component={AppContainer}
-    queries={ViewerQueries}
   >
     <IndexRoute
-      component={BikeshedCreatorContainer}
+      component={Home}
       queries={ViewerQueries}
     />
 
-    <Route
-      path='/bikesheds'
-    >
-      <IndexRoute
-        component={BikeshedExplorerContainer}
-      />
+    <Route path='/bikesheds'>
+      <IndexRedirect to='/'/>
+
       <Route
+        component={BikeshedViewer}
         path=':bikeshedId'
-        component={BikeshedViewerContainer}
         queries={BikeshedQueries}
       />
     </Route>
+
+    <Route
+      component={Terms}
+      path='/terms'
+    />
   </Route>
 )
