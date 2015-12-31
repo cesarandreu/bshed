@@ -1,6 +1,5 @@
 :root {
   /*--mobile-margin: 16px;*/
-  --desktop-margin: 24px;
 }
 
 @custom-media --mobile-screen (max-width: 600px);
@@ -14,7 +13,7 @@
   /* @TODO: Experiment with other values */
   max-width: 720px;
   margin: 0 auto;
-  padding: var(--desktop-margin);
+  padding: 24px;
 }
 
 @media (--mobile-screen) {
