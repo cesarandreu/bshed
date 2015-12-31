@@ -1,5 +1,5 @@
 :root {
-  /*--mobile-margin: 16px;*/
+  --layout-toolbar-mobile-height: 56px;
 }
 
 @custom-media --mobile-screen (max-width: 600px);
