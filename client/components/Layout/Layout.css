@@ -44,7 +44,9 @@
 }
 
 @media (--layout-screen-threshold) {
-  height: var(--layout-toolbar-mobile-height);
+  .toolbar {
+    height: var(--layout-toolbar-mobile-height);
+  }
 }
 
 /* LayoutContent */
