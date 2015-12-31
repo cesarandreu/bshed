@@ -3,8 +3,7 @@
   --desktop-margin: 24px;
 }
 
-/* Mobile */
-@custom-media --mobile (max-width: 600px);
+@custom-media --mobile-screen (max-width: 600px);
 
 .page {
   overflow: auto;
@@ -17,7 +16,8 @@
   margin: 0 auto;
   padding: var(--desktop-margin);
 }
-@media (--mobile) {
+
+@media (--mobile-screen) {
   .page {
     /*padding: var(--mobile-margin);*/
     padding: 0;
