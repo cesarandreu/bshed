@@ -7,7 +7,7 @@
   --layout-screen-size-threshold: 600px;
 }
 
-@custom-media --layout-screen-threshold (max-width: 600px);
+@custom-media --mobile-screen (max-width: 600px);
 
 /* Layout */
 .container {
@@ -43,7 +43,7 @@
   height: var(--layout-toolbar-desktop-height);
 }
 
-@media (--layout-screen-threshold) {
+@media (--mobile-screen) {
   .toolbar {
     height: var(--layout-toolbar-mobile-height);
   }
