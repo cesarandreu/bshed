@@ -19,7 +19,7 @@
 
 @media (--mobile-screen) {
   .page {
-    /*padding: var(--mobile-margin);*/
+    min-height: calc(100vh - var(--layout-toolbar-mobile-height));
     padding: 0;
   }
 }
