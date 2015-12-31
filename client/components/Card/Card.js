@@ -4,11 +4,11 @@ import React, { PropTypes } from 'react'
 import styles from './Card.css'
 import cn from 'classnames'
 
-export function Card ({ children, elevation, heading }) {
+export function Card ({ children, className, elevation, heading }) {
   return (
     <div
       aria-label={heading}
-      className={cn(styles.card, styles[`elevation${elevation}`])}
+      className={cn(styles.card, styles[`elevation${elevation}`], className)}
     >
       {heading != null && (
         <CardHeader>
@@ -22,6 +22,7 @@ export function Card ({ children, elevation, heading }) {
 
 Card.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   elevation: PropTypes.oneOf([1]).isRequired,
   heading: PropTypes.string
 }
