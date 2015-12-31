@@ -14,6 +14,7 @@ import { Card } from 'components/Card'
 import { Layout, LayoutContent, LayoutToolbar } from 'components/Layout'
 import { Page } from 'components/Page'
 import { Stepper } from 'components/Stepper'
+import { Toolbar } from 'components/Toolbar'
 import React, { Component, PropTypes } from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -21,6 +22,7 @@ import Relay from 'react-relay'
 import { AddImagesStep } from './AddImagesStep'
 import { BuildStep } from './BuildStep'
 import { ConnectedFileReceiver } from './FileReceiver'
+import styles from './Home.css'
 import { TitleStep } from './TitleStep'
 
 const FILE_INPUT_ACCEPT = ALLOWED_MIMETYPES.join(',')
@@ -231,7 +233,7 @@ export class Home extends Component {
     const imageCount = images.length
     return (
       <Page>
-        <Card>
+        <Card className={styles.card}>
           <Stepper>
             <AddImagesStep
               images={images}
