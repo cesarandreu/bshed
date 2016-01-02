@@ -9,7 +9,7 @@ import 'babel-polyfill'
 import 'components/styles/resets.css'
 
 // Modules
-import { createHistory } from 'history'
+import { browserHistory } from 'react-router'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Relay from 'react-relay'
@@ -25,16 +25,13 @@ Relay.injectNetworkLayer(
   })
 )
 
-// Initialize dependencies
-const history = createHistory()
-
 // Create the app node appended to the body
 const app = document.body.appendChild(document.createElement('div'))
 
 // Mount the app
 ReactDOM.render(
   <RelayRouter
-    history={history}
+    history={browserHistory}
     routes={routes}
   />,
   app
