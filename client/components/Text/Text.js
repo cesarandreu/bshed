@@ -42,9 +42,9 @@ export function SecondaryText ({ children, className }) {
   )
 }
 
-export function Title ({ children }) {
+export function Title ({ children, className }) {
   return (
-    <div className={styles.title}>
+    <div className={cn(styles.title, className)}>
       {children}
     </div>
   )
