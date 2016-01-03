@@ -1,42 +1,35 @@
 /**
  * Vote model
+ * Constraints:
+ *  Must have a unique combination of [bikeshedId, userId, value]
+ * Fields:
+ *  bikeId {string} uuid for the associated bike
+ *  bikeshedId {string} uuid for the associated bikeshed
+ *  createdAt {timestamptz} When the vote was created
+ *  id {string} uuid for the vote
+ *  userId {string} uuid for the associated user
+ *  updatedAt {timestamptz} When the vote last updated
+ *  value {number} How much this vote is worth (Currently one of [0, 1, 2, 3, 4, 5])
+ * Indexes:
+ *  @TODO
  */
-import createModel from './model'
-import Joi from 'joi'
+export default function createVote (models) {
+  const Vote = models.bookshelf.Model.extend({
+    hasTimestamps: true,
+    tableName: 'bikes',
 
-const VoteBase = {
-  INDEXES: {
-    bikeshedId: 'bikeshedId',
-    userBikeshedVote (r) {
-      return r.table(VoteBase.TABLE).indexCreate(
-        'userBikeshedVote',
-        [r.row('userId'), r.row('bikeshedId')]
-      )
+    bike () {
+      return this.belongsTo(models.Bike)
     },
-    userId: 'userId'
-  },
 
-  SCHEMA: Joi.object({
-    bikeshedId: Joi.string().guid().required(),
-    createdAt: Joi.date(),
-    id: Joi.string().guid(),
-    ratings: Joi.array().length(2).unique().items(
-      Joi.any().valid([0, 1])
-    ).required(),
-    updatedAt: Joi.date(),
-    userId: Joi.string().guid().required()
-  }),
+    bikeshed () {
+      return this.belongsTo(models.Bikeshed)
+    },
 
-  TABLE: 'votes',
-
-  TYPE: 'Vote'
-}
-
-export default function createVote ({ r }) {
-  const BaseModel = createModel({ r }, VoteBase)
-  const Vote = Object.create(BaseModel, {
+    user () {
+      return this.belongsTo(models.User)
+    }
   })
+
   return Vote
 }
-
-Object.assign(createVote, VoteBase)
