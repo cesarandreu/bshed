@@ -1,3 +1,5 @@
+import raf from 'raf'
+
 /**
  * Create a raf-based animation class
  * paint is a callback that takes a value between [0, 1]
@@ -5,8 +7,6 @@
  * onStart is called when the animation starts
  * onComplete is called when the animation completes
  */
-import raf from 'raf'
-
 export function createAnimation (paint, duration, onStart, onComplete) {
   function loop (currentTime) {
     const delta = (currentTime - animation._startTime) / duration
