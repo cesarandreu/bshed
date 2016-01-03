@@ -4,8 +4,6 @@
 
 .wrapper {
   position: relative;
-  height: 100%;
-  width: 100%;
   overflow: hidden;
 }
 
@@ -24,56 +22,9 @@
 }
 
 .image {
-  height: auto;
-  width: auto;
-  max-height: none;
-  max-width: none;
   position: absolute;
 }
 
-.tallImage {
-  max-width: 100%;
-}
-
-.wideImage {
-  max-height: 100%;
-}
-
-.loaded {
-  animation: imageLoad 1.5s;
-}
-
-/**
- * opacity 0 => 2
- * grayscale 0 => 2.5
- * saturate 0 => 3
- */
-@keyframes imageLoad {
-  /**
-   * 0
-   */
-  0% {
-    filter: opacity(0%) grayscale(100%) saturate(20%);
-  }
-
-  /**
-   * 2
-   */
-  66% {
-    filter: opacity(100%) grayscale(20.5%) saturate(66%);
-  }
-
-  /**
-   * 2.5
-   */
-  83% {
-    filter: opacity(100%) grayscale(0%) saturate(83%);
-  }
-
-  /**
-   * 3
-   */
-  100% {
-    filter: opacity(100%) grayscale(0%) saturate(100%);
-  }
+.animating {
+  will-change: filter, -webkit-filter;
 }
