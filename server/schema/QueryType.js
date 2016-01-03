@@ -13,9 +13,9 @@ export default function getQueryType ({ types }) {
         node: types.nodeField,
 
         viewer: {
-          type: types.UserType,
-          resolve (_, args, { rootValue: { userId, loaders } }) {
-            return loaders.User.load(userId)
+          type: types.ViewerType,
+          resolve () {
+            return {}
           }
         }
       }
