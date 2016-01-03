@@ -28,7 +28,6 @@
   composes: listItem;
   composes: clickable resetButton from 'components/styles/mixins.css';
   position: relative;
-  width: 100%;
   border-radius: 2px;
   border: 2px dashed var(--color-dark-divider);
   display: flex;
