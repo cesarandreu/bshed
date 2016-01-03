@@ -2,6 +2,12 @@
   --color-light-secondary: rgba(255, 255, 255, 0.7);
 }
 
+.container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 .fileOverlay {
   display: flex;
   align-items: center;

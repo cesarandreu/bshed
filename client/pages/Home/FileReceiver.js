@@ -18,7 +18,7 @@ export class FileReceiver extends Component {
     } = this.props
 
     return connectDropTarget(
-      <div>
+      <div className={styles.container}>
         {canDrop && isOver && (
           <div className={styles.fileOverlay}>
             <div className={styles.fileTarget}>
