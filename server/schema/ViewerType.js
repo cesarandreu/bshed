@@ -1,11 +1,8 @@
 import {
-  // GraphQLBoolean,
   GraphQLObjectType
-  // GraphQLString
 } from 'graphql'
 import {
   connectionArgs
-  // globalIdField
 } from 'graphql-relay'
 
 export default function getViewerType ({ types }) {
