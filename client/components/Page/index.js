@@ -1,3 +1,3 @@
 export {
-  Page
+  PaperPageContainer
 } from './Page'
