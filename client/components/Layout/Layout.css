@@ -4,64 +4,80 @@
 :root {
   --layout-toolbar-desktop-height: 64px;
   --layout-toolbar-mobile-height: 56px;
-  --layout-screen-size-threshold: 600px;
 }
 
 @custom-media --mobile-screen (max-width: 600px);
 
-/* Layout */
+/* LayoutContainer */
 .container {
+  height: 100%;
   position: absolute;
   width: 100%;
-  height: 100%;
-}
-
-.layout {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
-  -webkit-overflow-scrolling: touch;
 }
 
 /* LayoutToolbar */
-.toolbar {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  flex: 0 0 auto;
-  padding: 0 16px;
-  right: 0;
-  left: 0;
-  z-index: 2;
-
-  composes: colorPrimary textColorPrimaryContrast from 'components/styles/colors.css';
-  composes: shadow2dp from 'components/styles/shadows.css';
+.toolbarSize {
   height: var(--layout-toolbar-desktop-height);
+  transition: height 0.18s ease-in;
+  width: 100%;
 }
 
 @media (--mobile-screen) {
-  .toolbar {
+  .toolbarSize {
     height: var(--layout-toolbar-mobile-height);
   }
 }
 
-/* LayoutContent */
-.content {
-  display: inline-block;
-  /*display: inline-flex;*/
-  overflow-y: auto;
-  overflow-x: hidden;
-  flex-grow: 1;
-  z-index: 1;
-  -webkit-overflow-scrolling: touch;
-  composes: colorBackground from 'components/styles/colors.css';
+.toolbar {
+  align-items: center;
+  composes: toolbarSize;
+  display: flex;
+  padding: 0 16px;
+  position: relative;
 }
 
-/* LayoutTitle */
-.title {
+.toolbarTitle {
   margin-left: 56px;
+}
+
+/* PageLayout */
+.page {
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  width: 100%;
+}
+
+.pageToolbar {
+  composes: colorPrimary textColorPrimaryContrast from 'components/styles/colors.css';
+  composes: toolbarSize;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+
+@media (--mobile-screen) {
+  .pageToolbar {
+    will-change: transform;
+  }
+}
+
+.pageToolbarShadow {
+  composes: shadow2dp from 'components/styles/shadows.css';
+}
+
+.pageContent {
+  composes: colorBackground from 'components/styles/colors.css';
+  display: flex;
+  min-height: 100%;
+  padding: var(--layout-toolbar-desktop-height) 0 0 0;
+  width: 100%;
+}
+
+@media (--mobile-screen) {
+  .pageContent {
+    padding: var(--layout-toolbar-mobile-height) 0 0 0;
+  }
 }

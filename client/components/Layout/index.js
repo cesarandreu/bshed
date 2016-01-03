@@ -1,6 +1,5 @@
 export {
-  Layout,
-  LayoutContent,
-  LayoutTitle,
-  LayoutToolbar
+  LayoutContainer,
+  LayoutToolbar,
+  PageLayoutContainer
 } from './Layout'
