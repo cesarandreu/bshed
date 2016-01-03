@@ -1,31 +1,34 @@
 /**
  * User model
+ * Fields:
+ *  createdAt {timestamptz} When the user was created
+ *  digest {string} Password digest
+ *  email {string} User email
+ *  id {string} uuid for the user
+ *  name {string} User name
+ *  registeredAt {timestamptz} When the user registered
+ *  updatedAt {timestamptz} When the user was last updated
+ * Indexes:
+ *  @TODO
  */
-import createModel from './model'
-import Joi from 'joi'
+export default function createUser (models) {
+  const User = models.bookshelf.Model.extend({
+    hasTimestamps: true,
+    tableName: 'users',
+    bikesheds () {
+      return this.hasMany(models.Bikeshed)
+    },
 
-const UserBase = {
-  INDEXES: {},
+    virtuals: {
+      isRegistered () {
+        return Boolean(this.get('registeredAt'))
+      }
+    },
 
-  SCHEMA: Joi.object({
-    createdAt: Joi.date(),
-    email: Joi.string().email().default('').allow(''),
-    id: Joi.string().guid(),
-    name: Joi.string().max(256).default('').allow(''),
-    registeredAt: Joi.date(),
-    updatedAt: Joi.date()
-  }),
-
-  TABLE: 'users',
-
-  TYPE: 'User'
-}
-
-export default function createUser ({ r }) {
-  const BaseModel = createModel({ r }, UserBase)
-  const User = Object.create(BaseModel, {
+    votes () {
+      return this.hasMany(models.Votes)
+    }
   })
+
   return User
 }
-
-Object.assign(createUser, UserBase)
