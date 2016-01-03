@@ -1,14 +1,9 @@
-:root {
-  --layout-toolbar-mobile-height: 56px;
-}
-
 @custom-media --mobile-screen (max-width: 600px);
 
 .page {
-  overflow: auto;
+  width: 100%;
   display: flex;
-  flex-flow: column nowrap;
-  flex: 1 1 auto;
+  align-items: flex-start;
 
   /* @TODO: Experiment with other values */
   max-width: 720px;
@@ -18,7 +13,31 @@
 
 @media (--mobile-screen) {
   .page {
-    min-height: calc(100vh - var(--layout-toolbar-mobile-height));
+    align-items: stretch;
     padding: 0;
+  }
+}
+
+.paperPage {
+  align-self: flex-start;
+  background-color: #FFF;
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 24px auto;
+  max-width: 720px;
+  position: relative;
+  width: calc(100% - 48px);
+}
+
+.paperPageShadow {
+  composes: shadow2dp from 'components/styles/shadows.css';
+  border-radius: 2px;
+}
+
+@media (--mobile-screen) {
+  .paperPage {
+    align-self: stretch;
+    margin: 0;
+    width: 100%;
   }
 }
