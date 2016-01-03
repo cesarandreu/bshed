@@ -10,11 +10,11 @@ import {
   MAXIMUM_IMAGE_SIZE
 } from 'bshed-constants'
 import { CreateBikeshedMutation } from 'client/mutations/CreateBikeshedMutation'
-import { Card } from 'components/Card'
-import { Layout, LayoutContent, LayoutToolbar } from 'components/Layout'
-import { Page } from 'components/Page'
+import { Link } from 'components/Link'
+import { LayoutToolbar, PageLayoutContainer } from 'components/Layout'
+import { PaperPageContainer } from 'components/Page'
 import { Stepper } from 'components/Stepper'
-import { Toolbar } from 'components/Toolbar'
+import { Hint } from 'components/Text'
 import React, { Component, PropTypes } from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -158,38 +158,40 @@ export class HomeContainer extends Component {
       saving,
       title
     } = this.state
-
     return (
       <ConnectedFileReceiver
         imageCount={images.length}
         receiveFiles={this.receiveFiles}
       >
-        <Layout>
-          <LayoutToolbar title='Bikeshed builder'/>
-          <LayoutContent>
-            <Home
-              clickFileInput={this.clickFileInput}
-              images={images}
-              removeFile={this.removeFile}
-              saving={saving}
-              submitForm={this.submitForm}
-              title={title}
-              updateImage={this.updateImage}
-              updateTitle={this.updateTitle}
-              {...this.props}
+        <PageLayoutContainer
+          toolbar={
+            <LayoutToolbar
+              title='Bikeshed builder'
             />
+          }
+        >
+          <Home
+            clickFileInput={this.clickFileInput}
+            images={images}
+            removeFile={this.removeFile}
+            saving={saving}
+            submitForm={this.submitForm}
+            title={title}
+            updateImage={this.updateImage}
+            updateTitle={this.updateTitle}
+            {...this.props}
+          />
 
-            {/* Hidden image input */}
-            <input
-              accept={FILE_INPUT_ACCEPT}
-              multiple
-              onChange={e => this.receiveFiles(e.target)}
-              ref={this.setFileInput}
-              style={{ display: 'none' }}
-              type='file'
-            />
-          </LayoutContent>
-        </Layout>
+          {/* Hidden image input */}
+          <input
+            accept={FILE_INPUT_ACCEPT}
+            multiple
+            onChange={e => this.receiveFiles(e.target)}
+            ref={this.setFileInput}
+            style={{ display: 'none' }}
+            type='file'
+          />
+        </PageLayoutContainer>
       </ConnectedFileReceiver>
     )
   }
@@ -200,11 +202,10 @@ HomeContainer.propTypes = {
   viewer: PropTypes.object.isRequired
 }
 
-// Connect HomeContainer so react-dnd will work
+// First we connect HomeContainer so react-dnd will work
 // This is needed because HomeContainer renders ConnectedFileReceiver
-const WrappedHomeContainer = DragDropContext(HTML5Backend)(HomeContainer)
-
-export default Relay.createContainer(WrappedHomeContainer, {
+// Then we let Relay create a container
+export default Relay.createContainer(DragDropContext(HTML5Backend)(HomeContainer), {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Viewer {
@@ -232,33 +233,32 @@ export class Home extends Component {
 
     const imageCount = images.length
     return (
-      <Page>
-        <Card className={styles.card}>
-          <Stepper>
-            <AddImagesStep
-              images={images}
-              onAddImage={clickFileInput}
-              removeFile={removeFile}
-              saving={saving}
-              updateImage={updateImage}
-            />
+      <PaperPageContainer>
+        <Stepper>
+          <AddImagesStep
+            images={images}
+            onAddImage={clickFileInput}
+            removeFile={removeFile}
+            saving={saving}
+            updateImage={updateImage}
+          />
 
-            <TitleStep
-              imageCount={imageCount}
-              saving={saving}
-              title={title}
-              updateTitle={updateTitle}
-            />
+          <TitleStep
+            imageCount={imageCount}
+            saving={saving}
+            title={title}
+            updateTitle={updateTitle}
+          />
 
-            <BuildStep
-              imageCount={imageCount}
-              saving={saving}
-              submitForm={submitForm}
-              title={title}
-            />
-          </Stepper>
-        </Card>
-      </Page>
+          <BuildStep
+            imageCount={imageCount}
+            saving={saving}
+            submitForm={submitForm}
+            title={title}
+          />
+        </Stepper>
+        <TermsHintText/>
+      </PaperPageContainer>
     )
   }
 }
@@ -272,4 +272,12 @@ Home.propTypes = {
   title: PropTypes.string.isRequired,
   updateImage: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired
+}
+
+function TermsHintText () {
+  return (
+    <Hint className={styles.terms}>
+      By uploading, you agree to our <Link to='/terms'>terms of service</Link>
+    </Hint>
+  )
 }
