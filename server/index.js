@@ -1,93 +1,148 @@
-#!/usr/bin/env node -r babel/register
-/**
- * Server loader
- */
-import koa from 'koa'
-import qs from 'koa-qs'
-import path from 'path'
+#!/usr/bin/env node -r bshed-requires
+import Koa from 'koa'
 import debug from 'debug'
-import send from 'koa-send'
+import convert from 'koa-convert'
 import session from 'koa-session'
-import fileServer from 'koa-static'
-import responseTime from 'koa-response-time'
+// import DataLoader from 'dataloader'
+const log = debug('server:loader')
 
-// Application imports
-import * as config from './config'
-import modelLoader from './models'
-import loadSchema from './data/schema'
-import createUploader from './lib/uploader'
-import GraphQLController from './lib/graphql'
-import * as middleware from './lib/middleware'
-import { getApplicationImageQueue } from './lib/image-queue'
+// Server libraries
+import assets from './lib/assets'
+import graphiql from './lib/graphiql'
+import graphqlHTTP from './lib/graphql'
+import imageProxy from './lib/imageProxy'
+import requestId from './lib/requestId'
+import Router from './lib/router'
+// import setCsrfToken from './lib/setCsrfToken'
+import setUser from './lib/setUser'
+import uploader from './lib/uploader'
 
-const ASSETS_PATH = path.resolve(__dirname, '../build/assets/')
+// Config, models, schema, queue
+import * as config from '../config'
+import createModels from './models'
+import createSchema from './schema'
+import Queue from 'bull'
 
-// Initialize models, uploader, and server
-const models = modelLoader(config)
-const uploader = createUploader(config.aws)
-const server = Object.assign(qs(koa()), {
-  keys: config.keys,
-  name: config.name,
-  env: config.env
+// Build models
+const { database } = config
+const models = createModels({ database })
+
+// Build queues
+const { PROCESS_IMAGE_WORKER_QUEUE, redis } = config
+const { port, host, ...redisConfig } = redis
+const processImageQueue = new Queue(PROCESS_IMAGE_WORKER_QUEUE, port, host, redisConfig)
+const queues = {
+  processImageQueue
+}
+
+// Build schema
+const schema = createSchema({
+  // models,
+  // queues
 })
 
-// Initialize image queue
-const applicationImageQueue = getApplicationImageQueue(config.redis, models)
-applicationImageQueue.start()
+// Create and configure server
+const app = new Koa()
+app.keys = config.keys
+app.env = config.env
+Object.assign(app.context, {
+  models,
+  schema,
+  queues
+})
 
-// Initialize GraphQL schema
-const schema = loadSchema(models)
+/**
+ * Global middleware
+ */
 
-// Add uploader, models, and graphql options to context
-server.context.uploader = uploader
-server.context.models = models
-server.context.graphql = {
-  schema: schema,
-  rootValue: {
-    IMAGE_ROOT: `//localhost:10001/${config.aws.bucket}`,
-    applicationImageQueue: applicationImageQueue
+// Log requests in development
+if (config.env === 'development') {
+  const logger = require('koa-logger')
+  app.use(logger())
+}
+
+// Expose errors outside of production
+if (config.env !== 'production') {
+  const { exposeError } = require('./lib/exposeError')
+  app.use(exposeError(config.env))
+}
+
+// Add unique id to each request
+app.use(requestId())
+
+// Cookie sessions
+app.use(convert(session({ key: 'bshed' }, app)))
+
+// Set session userId
+app.use(setUser())
+
+// Set csrf token cookie
+// @TODO: Add csrf token validator
+// @TODO: Enable csrf cookie setter
+// app.use(setCsrfToken())
+
+// Routes
+// @TODO: Clean this up
+const router = new Router()
+.addRoute({
+  methods: ['GET'],
+  path: '/images/:bikeshedId/:bikeKey/:size',
+  middleware: imageProxy(config.aws)
+})
+.addRoute({
+  methods: ['GET'],
+  path: '/graphiql',
+  middleware: graphiql({
+    enabled: true
+  })
+})
+.addRoute({
+  methods: ['GET', 'POST'],
+  path: '/graphql',
+  middleware: [
+    uploader(config.aws),
+    graphqlHTTP(getGraphqlOptions)
+  ]
+})
+
+function getGraphqlOptions (ctx) {
+  const rootValue = {
+    files: ctx.request.files || {},
+    // loaders: {
+    //   Bikeshed: new DataLoader(models.Bikeshed.batchLoad),
+    //   User: new DataLoader(models.User.batchLoad),
+    //   Vote: new DataLoader(models.Vote.batchLoad)
+    // },
+    models: models,
+    queues: queues,
+    requestId: ctx.request.requestId,
+    userId: ctx.session.userId
+  }
+  return {
+    rootValue,
+    schema
   }
 }
 
-// Middleware
-if (server.env === 'development') {
-  const logger = require('koa-logger')
-  server.use(logger())
+app.use(router.middleware())
+
+// Serve everything in assets folder, falling back to index.html
+// This will catch any request that's not handled by the router
+app.use(assets(config.ASSETS_PATH))
+
+app.init = function init (port = Number(process.env.PORT) || 3000) {
+  return new Promise(resolve => {
+    const instance = app.listen(port, () => {
+      log(`listening on port "${port}"`)
+      resolve(instance)
+    })
+  })
 }
 
-// X-RESPONSE-TIME
-server.use(responseTime())
-
-// Expose errors outside of production
-server.use(middleware.exposeError(config.env))
-
-// Set requestId
-server.use(middleware.setRequestId())
-
-// Cookie sessions
-server.use(session({ key: 'bshed' }, server))
-
-// Set user
-server.use(middleware.setUser())
-
-// Controllers
-server.use(GraphQLController())
-
-// File server
-server.use(fileServer(ASSETS_PATH))
-server.use(function * () {
-  yield send(this, 'index.html', { root: ASSETS_PATH })
-})
-
-// Server initializer
-const log = debug('app:server')
-export function init (port = config.port) {
-  log(`initializing server using port ${port}`)
-  server.instance = server.listen(port, () => log(`listening on port ${port}`))
-  return server.instance
-}
+export default app
 
 // Initialize server if called directly
 if (require.main === module) {
-  init()
+  log('auto-initializing')
+  app.init()
 }
