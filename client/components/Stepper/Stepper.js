@@ -37,10 +37,11 @@ export function Step ({ active, children, name, number }) {
         </PrimaryText>
       </div>
 
-      <Collapse isOpened={active}>
-        <div className={styles.body}>
-          {children}
-        </div>
+      <Collapse
+        className={styles.body}
+        isOpened={active}
+      >
+        {children}
       </Collapse>
 
       <div className={styles.line}/>
