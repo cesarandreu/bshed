@@ -16,15 +16,29 @@ import getBikeType from './BikeType'
 import getMutationType from './MutationType'
 import getQueryType from './QueryType'
 import getUserType from './UserType'
-// import getVoteType from './VoteType'
+import getViewerType from './ViewerType'
+const TYPES_LIST = [
+  getBikeshedType,
+  getBikeType,
+  getMutationType,
+  getQueryType,
+  getUserType,
+  getViewerType
+]
 
 // Connections
 import getBikeshedConnection from './BikeshedConnection'
+const CONNECTIONS_LIST = [
+  getBikeshedConnection
+]
 
 // Mutations
 import getCreateBikeshedMutation from './CreateBikeshedMutation'
+const MUTATIONS_LIST = [
+  getCreateBikeshedMutation
+]
 
-export function getSchema () {
+export default function createSchema () {
   // This will eventually hold all our GraphQL types
   const types = {}
 
@@ -32,22 +46,17 @@ export function getSchema () {
     async function idFetcher (globalId, { rootValue }) {
       const { type, id } = fromGlobalId(globalId)
       invariant(
-        ['Bikeshed', 'User', 'Vote'].includes(type),
+        ['Bike', 'Bikeshed', 'User'].includes(type),
         `Invalid type "${type}"`
       )
-      return await rootValue.loaders[type].load(id)
-    },
-    function typeResolver (instance) {
-      switch (instance && instance.TYPE) {
-        case 'Bikeshed':
-          return types.BikeshedType
-        case 'User':
-          return types.UserType
-        case 'Vote':
-          return types.VoteType
-        default:
-          return null
-      }
+
+      const Model = rootValue.models[type]
+      invariant(
+        Model,
+        `Invalid type "${type}"`
+      )
+
+      return new Model({ id }).fetch()
     }
   )
   Object.assign(types, {
@@ -55,19 +64,18 @@ export function getSchema () {
     nodeField
   })
 
-  // Types
-  getBikeshedType({ types })
-  getBikeType({ types })
-  getMutationType({ types })
-  getQueryType({ types })
-  getUserType({ types })
-  // getVoteType({ types })
+  // Initialize each list
+  const FINAL_LIST = [
+    // Types
+    ...TYPES_LIST,
 
-  // Connections
-  getBikeshedConnection({ types })
+    // Connections
+    ...CONNECTIONS_LIST,
 
-  // Mutations
-  getCreateBikeshedMutation({ types })
+    // Mutations
+    ...MUTATIONS_LIST
+  ]
+  FINAL_LIST.forEach(createType => createType({ types }))
 
   return new GraphQLSchema({
     mutation: types.MutationType,
