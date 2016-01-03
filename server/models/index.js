@@ -2,48 +2,64 @@
  * Model loader
  */
 import debug from 'debug'
-import redis from 'redis'
-import Redlock from 'redlock'
-import RethinkDB from 'rethinkdbdash'
-import * as config from 'bshed/config'
+import createKnex from 'knex'
+import createBookshelf from 'bookshelf'
+import { camelCase, snakeCase } from 'lodash'
+
 const log = debug('server:models')
 
+import Bike from './bike'
 import Bikeshed from './bikeshed'
 import User from './user'
 import Vote from './vote'
 
-export const MODELS = {
+const MODELS = {
+  Bike,
   Bikeshed,
   User,
   Vote
 }
 
-export const TABLES = Object.values(MODELS).map(model => model.TABLE)
+export default function createModels ({ database }) {
+  const knex = createKnex(database)
+  const bookshelf = createBookshelf(knex)
 
-export const INDEXES = Object.entries(MODELS).reduce((indexes, [modelName, model]) => {
-  indexes[model.TABLE] = model.INDEXES
-  return indexes
-}, {})
+  bookshelf.plugin('virtuals')
+  bookshelf.plugin(camelizeKeys)
 
-// Given a rethinkdbdash and redlock instance, instantiate each model
-export function createModels ({ r, redlock }) {
-  log('creating models')
-  return Object.entries(MODELS).reduce((instances, [name, createModel]) => {
+  return Object.entries(MODELS)
+  .reduce((models, [name, createModel]) => {
     log(`creating "${name}"`)
-    instances[name] = createModel({ r, redlock })
-    return instances
-  }, { r, redlock })
+    models[name] = createModel(models)
+    return models
+  }, {
+    bookshelf,
+    knex
+  })
 }
 
-// Get self-initialized model instances
-export function getModels () {
-  log('initializing rethinkdb')
-  const r = new RethinkDB(config.rethinkdb)
+/**
+ * Convert attributes to camelCase when they come out
+ * and to snake_case when they go in
+ */
+function camelizeKeys (bookshelf) {
+  bookshelf.Model = bookshelf.Model.extend({
+    // Convert attributes to camelCase when they come out
+    parse (attrs) {
+      return Object.entries(attrs)
+      .reduce((attrs, [attrName, attrValue]) => {
+        attrs[camelCase(attrName)] = attrValue
+        return attrs
+      }, {})
+    },
 
-  log('initializing redlock')
-  const redlock = new Redlock([
-    redis.createClient(config.redis)
-  ])
-
-  return createModels({ r, redlock })
+    // Convert keys to snake_case when they go in
+    format (attrs) {
+      return Object.entries(attrs)
+      .reduce((attrs, [attrName, attrValue]) => {
+        attrs[snakeCase(attrName)] = attrValue
+        return attrs
+      }, {})
+    }
+  })
 }
