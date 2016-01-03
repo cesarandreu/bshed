@@ -79,6 +79,7 @@
     "aws-sdk": "^2.2.26",
     "babel-relay-plugin": "0.6.0",
     "bcrypt": "^0.8.5",
+    "bezier-easing": "^1.1.1",
     "bookshelf": "^0.9.1",
     "bull": "^0.7.0",
     "classnames": "^2.2.1",
