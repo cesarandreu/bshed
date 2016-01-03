@@ -30,6 +30,8 @@ export function createImageUpdatesStream ({ imageUpdatesQueue, models, voteUpdat
   async function updateBikeshedStatus ({ job }) {
     const { data, jobId } = job
     log(`processing jobId=${jobId}`)
+    log(`data=${JSON.stringify(data, null, 2)}`)
+
     const result = await models.Bikeshed.updateBikeshedStatus(data)
     if (data.status === BIKESHED_STATUS.ACTIVE) {
       await pushVoteUpdate(voteUpdatesQueue, result)
@@ -45,7 +47,12 @@ export function createImageUpdatesStream ({ imageUpdatesQueue, models, voteUpdat
 // Use this to add a status update to the queue
 // @TODO: Document and validate queue data schema
 export function pushImageUpdate (imageUpdatesQueue, { data, error, result, status }) {
-  return imageUpdatesQueue.add({ data, error, result, status }, {
+  return imageUpdatesQueue.add({
+    bikeshedId: data.bikeshedId,
+    error,
+    result,
+    status
+  }, {
     attempts: 5,
     backoff: {
       type: 'exponential'
