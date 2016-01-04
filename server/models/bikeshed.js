@@ -107,13 +107,13 @@ export default function createBikeshed (models) {
 
         if (status === BIKESHED_STATUS.ACTIVE) {
           // Get the bike for a specific field, update its height and width
-          result.forEach(({ file, metadata }) => {
+          result.forEach(({ file, height, width }) => {
             const bikePromise = models.Bike.where({
               bikeshed_id: bikeshedId,
               field: file.field
             }).save({
-              height: metadata.height,
-              width: metadata.width
+              height: height,
+              width: width
             }, {
               method: 'update',
               patch: true,

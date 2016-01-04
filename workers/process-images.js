@@ -152,8 +152,8 @@ export function imageMapper ({ s3fs, file }) {
     imageThumbnail$,
     imageFull$,
     imagePipeline$
-  ], metadata => {
-    return { metadata, file }
+  ], ({ height, width }) => {
+    return { height, width, file }
   })
 }
 
