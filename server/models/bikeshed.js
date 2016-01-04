@@ -101,6 +101,7 @@ export default function createBikeshed (models) {
         }).save(nextProps, {
           method: 'update',
           patch: true,
+          require: false,
           transacting: t
         })
         promises.push(bikeshedPromise)
