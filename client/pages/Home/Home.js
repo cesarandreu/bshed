@@ -119,7 +119,7 @@ export class HomeContainer extends Component {
   // Upload the files and create the bikeshed
   // Navigates to the bikeshed if succesful
   submitForm () {
-    const { history } = this.props
+    const { router } = this.context
     const { duration, images, title } = this.state
     this.setState({ saving: true })
     Relay.Store.update(new CreateBikeshedMutation({ duration, images, title }), {
@@ -132,7 +132,7 @@ export class HomeContainer extends Component {
 
         // Navigate to newly created bikeshed page
         const bikeshedId = response.createBikeshed.bikeshed.id
-        history.pushState({ bikeshedId }, `/bikesheds/${bikeshedId}`)
+        router.push(`/bikesheds/${bikeshedId}`)
       }
     })
   }
@@ -197,8 +197,11 @@ export class HomeContainer extends Component {
   }
 }
 
+HomeContainer.contextTypes = {
+  router: PropTypes.object
+}
+
 HomeContainer.propTypes = {
-  history: PropTypes.object.isRequired,
   viewer: PropTypes.object.isRequired
 }
 
