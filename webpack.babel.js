@@ -2,7 +2,7 @@
  * Webpack configuration
  */
 import webpack from 'webpack'
-import cssnext from 'cssnext'
+import cssnext from 'postcss-cssnext'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 // import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
@@ -66,8 +66,7 @@ export function buildWebpackConfig () {
 
     postcss: [
       cssnext({
-        browsers: ['last 2 versions'],
-        import: false
+        browsers: ['last 2 versions']
       })
     ],
 
