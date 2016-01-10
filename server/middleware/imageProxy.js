@@ -3,7 +3,6 @@
  * This will download the image and pipe it to the user
  * @TODO: Make this proxy requests to avoid downloading every image?
  */
-import S3FS from 's3fs'
 import Joi from 'joi'
 
 const imageProxyParamsSchema = Joi.object({
@@ -12,8 +11,7 @@ const imageProxyParamsSchema = Joi.object({
   size: Joi.string().regex(/^(full|thumbnail)\.(png|jpeg)$/).required()
 })
 
-export default function imageProxy ({ bucket, ...awsConfig }) {
-  const s3fs = new S3FS(bucket, awsConfig)
+export default function imageProxy ({ s3fs }) {
   return async function imageProxyMiddleware (ctx) {
     // Validate url params
     const { error, value } = imageProxyParamsSchema.validate(ctx.params)
