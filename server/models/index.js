@@ -8,17 +8,13 @@ import { camelCase, snakeCase } from 'lodash'
 
 const log = debug('server:models')
 
+// Model classes
 import Bike from './bike'
 import Bikeshed from './bikeshed'
+import Score from './score'
 import User from './user'
 import Vote from './vote'
 
-const MODELS = {
-  Bike,
-  Bikeshed,
-  User,
-  Vote
-}
 
 export default function createModels ({ database }) {
   const knex = createKnex(database)
@@ -27,7 +23,13 @@ export default function createModels ({ database }) {
   bookshelf.plugin('virtuals')
   bookshelf.plugin(camelizeKeys)
 
-  return Object.entries(MODELS)
+  return Object.entries({
+    Bike,
+    Bikeshed,
+    Score,
+    User,
+    Vote
+  })
   .reduce((models, [name, createModel]) => {
     log(`creating "${name}"`)
     models[name] = createModel(models)

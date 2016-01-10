@@ -33,6 +33,10 @@ export default function createBike (models) {
       return `/images/${bikeshedId}/${key}/${size}.${extension}`
     },
 
+    scores () {
+      return this.hasMany(models.Score)
+    },
+
     virtuals: {
       extension () {
         return mime.extension(this.get('mimetype'))
@@ -40,10 +44,6 @@ export default function createBike (models) {
       ratio () {
         return this.get('width') / this.get('height')
       }
-    },
-
-    votes () {
-      return this.hasMany(models.Vote)
     }
   })
 

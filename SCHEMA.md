@@ -31,6 +31,15 @@ bikesheds {
   updated_at: !timestamptz
 }
 
+scores {
+  bike_id: !uuid
+  created_at: !timestamptz
+  *id: !uuid
+  updated_at: !timestamptz
+  value: !int
+  vote_id: !uuid
+}
+
 users {
   created_at: !timestamptz
   digest: text
@@ -42,12 +51,10 @@ users {
 }
 
 votes {
-  bike_id: !uuid
   bikeshed_id: !uuid
   created_at: !timestamptz
   *id: !uuid
   user_id: !uuid
   updated_at: !timestamptz
-  value: !int
 }
 ```
