@@ -7,39 +7,22 @@ import session from 'koa-session'
 const log = debug('server:loader')
 
 // Server libraries
-import assets from './lib/assets'
-import graphiql from './lib/graphiql'
-import graphqlHTTP from './lib/graphql'
-import imageProxy from './lib/imageProxy'
-import requestId from './lib/requestId'
-import Router from './lib/router'
-// import setCsrfToken from './lib/setCsrfToken'
-import setUser from './lib/setUser'
+import assets from './middleware/assets'
+import graphiql from './middleware/graphiql'
+import graphqlHTTP from './middleware/graphql'
+import imageProxy from './middleware/imageProxy'
+import requestId from './middleware/requestId'
+import Router from './middleware/router'
+// import setCsrfToken from './middleware/setCsrfToken'
+import setUser from './middleware/setUser'
 import uploader from './lib/uploader'
 
-// Config, models, schema, queue
+// Config, models, schema, queues
 import * as config from '../config'
-import createModels from './models'
-import createSchema from './schema'
-import Queue from 'bull'
-
-// Build models
-const { database } = config
-const models = createModels({ database })
-
-// Build queues
-const { PROCESS_IMAGE_WORKER_QUEUE, redis } = config
-const { port, host, ...redisConfig } = redis
-const processImageQueue = new Queue(PROCESS_IMAGE_WORKER_QUEUE, port, host, redisConfig)
-const queues = {
-  processImageQueue
-}
-
-// Build schema
-const schema = createSchema({
-  // models,
-  // queues
-})
+import models from './models'
+import queues from './services/queues'
+import s3fs from './services/s3fs'
+import schema from './schema'
 
 // Create and configure server
 const app = new Koa()
@@ -63,7 +46,7 @@ if (config.env === 'development') {
 
 // Expose errors outside of production
 if (config.env !== 'production') {
-  const { exposeError } = require('./lib/exposeError')
+  const { exposeError } = require('./middleware/exposeError')
   app.use(exposeError(config.env))
 }
 
@@ -87,7 +70,7 @@ const router = new Router()
 .addRoute({
   methods: ['GET'],
   path: '/images/:bikeshedId/:bikeKey/:size',
-  middleware: imageProxy(config.aws)
+  middleware: imageProxy(s3fs)
 })
 .addRoute({
   methods: ['GET'],
