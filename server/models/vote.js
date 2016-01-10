@@ -16,7 +16,7 @@
 export default function createVote (models) {
   const Vote = models.bookshelf.Model.extend({
     hasTimestamps: true,
-    tableName: 'bikes',
+    tableName: 'votes',
 
     bike () {
       return this.belongsTo(models.Bike)
