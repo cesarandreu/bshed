@@ -73,16 +73,7 @@ export default function createBikeshed (models) {
     },
 
     async voteCount () {
-      // @TODO: Use distinct user_id
-      // const totalCount = await this.votes().count()
-      // return totalCount / 2
-
-      // Maybe the following is better?
-      // const knex = this.votes.query()
-
-      return await this.votes().count(
-        models.knex.raw('distinct ??', 'votes.user_id')
-      )
+      return await this.votes().count()
     },
 
     votes () {
