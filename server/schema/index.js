@@ -58,21 +58,22 @@ export function createSchema () {
   // This will eventually hold all our GraphQL types
   const types = {}
 
+  // Model that can be fetched by global id
+  const validModelsTypes = new Set([
+    'Bike',
+    'Bikeshed',
+    'User'
+  ])
+
   const { nodeInterface, nodeField } = nodeDefinitions(
     async function idFetcher (globalId, { rootValue }) {
       const { type, id } = fromGlobalId(globalId)
-      invariant(
-        ['Bike', 'Bikeshed', 'User'].includes(type),
-        `Invalid type "${type}"`
-      )
+      invariant(validModelsTypes.has(type), `Invalid type "${type}"`)
 
-      const Model = rootValue.models[type]
-      invariant(
-        Model,
-        `Invalid type "${type}"`
-      )
+      const model = rootValue.models[type]
+      invariant(model, `Invalid type "${type}"`)
 
-      return new Model({ id }).fetch()
+      return model.forge({ id }).fetch()
     }
   )
   Object.assign(types, {
