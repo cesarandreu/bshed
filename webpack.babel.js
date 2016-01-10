@@ -2,7 +2,7 @@
  * Webpack configuration
  */
 import webpack from 'webpack'
-import cssnext from 'postcss-cssnext'
+import autoprefixer from 'autoprefixer'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 // import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
@@ -65,7 +65,7 @@ export function buildWebpackConfig () {
     },
 
     postcss: [
-      cssnext({
+      autoprefixer({
         browsers: ['last 2 versions']
       })
     ],

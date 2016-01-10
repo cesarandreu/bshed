@@ -127,6 +127,7 @@
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
+    "autoprefixer": "^6.2.3",
     "babel-cli": "^6.4.0",
     "babel-core": "^6.4.0",
     "babel-eslint": "^4.1.6",
@@ -145,7 +146,6 @@
     "nodemon": "^1.8.1",
     "npm-run-all": "^1.4.0",
     "onchange": "^2.0.0",
-    "postcss-cssnext": "^2.3.0",
     "postcss-loader": "^0.8.0",
     "react-addons-test-utils": "^0.14.6",
     "react-transform-catch-errors": "^1.0.1",
