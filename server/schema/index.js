@@ -70,10 +70,10 @@ export function createSchema () {
       const { type, id } = fromGlobalId(globalId)
       invariant(validModelsTypes.has(type), `Invalid type "${type}"`)
 
-      const model = rootValue.models[type]
-      invariant(model, `Invalid type "${type}"`)
+      const Model = rootValue.models[type]
+      invariant(Model, `Invalid type "${type}"`)
 
-      return model.forge({ id }).fetch()
+      return Model.where('id', id).fetch()
     }
   )
   Object.assign(types, {
