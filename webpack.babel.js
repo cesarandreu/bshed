@@ -36,7 +36,6 @@ export function buildWebpackConfig () {
       ? {}
       : {
         filename: '[name].js',
-        // publicPath: '/',
         publicPath: DEVELOPMENT ? 'http://localhost:9000/' : '/',
         pathinfo: DEVELOPMENT || TEST,
         path: __dirname + '/build/assets'
@@ -50,7 +49,6 @@ export function buildWebpackConfig () {
       loaders: [{
         test: /\.js$/,
         include: /(client|bshed-constants)/,
-        // ignore: /node_modules/,
         loader: 'babel'
       // }, {
       //   test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
