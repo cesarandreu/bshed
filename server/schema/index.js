@@ -38,7 +38,23 @@ const MUTATIONS_LIST = [
   getCreateBikeshedMutation
 ]
 
-export default function createSchema () {
+// Group all the lists in order
+const FINAL_LIST = [
+  // Types
+  ...TYPES_LIST,
+
+  // Connections
+  ...CONNECTIONS_LIST,
+
+  // Mutations
+  ...MUTATIONS_LIST
+]
+
+// Export a schema singleton by default
+export default createSchema()
+
+// createSchema can be used to create a new schema instance
+export function createSchema () {
   // This will eventually hold all our GraphQL types
   const types = {}
 
@@ -64,17 +80,7 @@ export default function createSchema () {
     nodeField
   })
 
-  // Initialize each list
-  const FINAL_LIST = [
-    // Types
-    ...TYPES_LIST,
-
-    // Connections
-    ...CONNECTIONS_LIST,
-
-    // Mutations
-    ...MUTATIONS_LIST
-  ]
+  // Initialize each list item
   FINAL_LIST.forEach(createType => createType({ types }))
 
   return new GraphQLSchema({

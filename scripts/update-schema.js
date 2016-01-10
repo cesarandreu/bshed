@@ -3,11 +3,10 @@
 import fs from 'fs'
 import path from 'path'
 import { graphql } from 'graphql'
-import createSchema from '../server/schema'
+import schema from '../server/schema'
 import { introspectionQuery, printSchema } from 'graphql/utilities'
 
 async function updateSchema () {
-  const schema = createSchema()
   console.log(`[update-schema]: Attempting to update schema.json and schema.graphql`)
 
   const result = await graphql(schema, introspectionQuery)

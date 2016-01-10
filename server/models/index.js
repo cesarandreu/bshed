@@ -5,6 +5,7 @@ import debug from 'debug'
 import createKnex from 'knex'
 import createBookshelf from 'bookshelf'
 import { camelCase, snakeCase } from 'lodash'
+import { database } from '../../config'
 
 const log = debug('server:models')
 
@@ -15,8 +16,11 @@ import Score from './score'
 import User from './user'
 import Vote from './vote'
 
+// Export a model singleton by default
+export default createModels({ database })
 
-export default function createModels ({ database }) {
+// createModels can be used to create a new set of model instances
+export function createModels ({ database }) {
   const knex = createKnex(database)
   const bookshelf = createBookshelf(knex)
 

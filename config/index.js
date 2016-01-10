@@ -19,8 +19,3 @@ export const aws = awsConfig[env]
 
 // Assets path
 export const ASSETS_PATH = path.resolve(__dirname, '../build/assets')
-
-// Queue names
-export const PROCESS_IMAGE_WORKER_QUEUE = 'PROCESS_IMAGE_WORKER_QUEUE'
-export const IMAGE_UPDATES_WORKER_QUEUE = 'IMAGE_UPDATES_WORKER_QUEUE'
-export const VOTE_UPDATES_WORKER_QUEUE = 'VOTE_UPDATES_WORKER_QUEUE'
