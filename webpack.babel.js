@@ -41,9 +41,10 @@ export function buildWebpackConfig () {
         path: __dirname + '/build/assets'
       },
 
+    // Switch to cheap-module-source-map if cheap-module-eval-source-map works poorly
     devtool: PRODUCTION
       ? 'source-map'
-      : 'cheap-module-source-map',
+      : 'cheap-module-eval-source-map',
 
     module: {
       loaders: [{
