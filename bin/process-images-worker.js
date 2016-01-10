@@ -4,10 +4,10 @@
  */
 import queues from '../server/services/queues'
 import s3fs from '../server/services/s3fs'
-import { processImagesWorker } from 'bshed-workers'
+import { ProcessImagesWorker } from 'bshed-workers'
 
 // Initialize worker
-processImagesWorker.initialize({
+ProcessImagesWorker.initialize({
   queues,
   s3fs
 })
