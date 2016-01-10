@@ -48,14 +48,19 @@ export function buildWebpackConfig () {
     module: {
       loaders: [{
         test: /\.js$/,
-        include: /(client|bshed-constants)/,
+        include: [
+          __dirname + '/client',
+          __dirname + '/lib'
+        ],
         loader: 'babel'
       // }, {
       //   test: /\.(png|jpg|jpeg|gif|svg|woff|ttf|eot)$/,
       //   loader: 'file'
       }, {
         test: /\.css$/,
-        include: /client/,
+        include: [
+          __dirname + '/client'
+        ],
         loaders: PRODUCTION
           ? ['style', 'css?modules&importLoaders=1', 'postcss']
           : ['style', 'css?modules&importLoaders=1&localIdentName=[name]-[local]', 'postcss']
