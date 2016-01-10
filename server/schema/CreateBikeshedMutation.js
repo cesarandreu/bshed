@@ -103,9 +103,9 @@ export default function getCreateBikeshedMutation ({ types }) {
           bikeList.map(bike => bikes.create(bike, { transacting: t }))
         )
 
-        // Queue the files for processing in processImageQueue
+        // Queue the files for processing in processImages
         const queueData = bikeshed.getAddBikeshedQueueData(bikes)
-        await ProcessImagesWorker.addBikeshed(queues.processImageQueue, queueData)
+        await ProcessImagesWorker.addBikeshed(queues.processImages, queueData)
 
         return {
           bikes,

@@ -2,28 +2,12 @@
 /**
  * Process images worker
  */
-import S3FS from 's3fs'
-import Queue from 'bull'
-import { ProcessImagesWorker } from 'bshed-workers'
-import {
-  aws,
-  IMAGE_UPDATES_WORKER_QUEUE,
-  redis,
-  PROCESS_IMAGE_WORKER_QUEUE
-} from '../config'
-
-// Initialize queue
-const { port, host, ...redisOptions } = redis
-const processImageQueue = new Queue(PROCESS_IMAGE_WORKER_QUEUE, port, host, redisOptions)
-const imageUpdatesQueue = new Queue(IMAGE_UPDATES_WORKER_QUEUE, port, host, redisOptions)
-
-// Initialize s3fs
-const { bucket, ...awsOptions } = aws
-const s3fs = new S3FS(bucket, awsOptions)
+import queues from '../server/services/queues'
+import s3fs from '../server/services/s3fs'
+import { processImagesWorker } from 'bshed-workers'
 
 // Initialize worker
-ProcessImagesWorker.initialize({
-  imageUpdatesQueue,
-  processImageQueue,
+processImagesWorker.initialize({
+  queues,
   s3fs
 })

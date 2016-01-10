@@ -14,16 +14,17 @@ import { BIKESHED_STATUS } from 'bshed-constants'
 const log = debug('worker:processImages')
 const pump$ = Rx.Observable.fromNodeCallback(pump)
 
-export function initialize ({ imageUpdatesQueue, processImageQueue, s3fs }) {
+export function initialize ({ queues, s3fs }) {
   log('initializing')
+  const { imageUpdates, processImages } = queues
 
-  processImageQueue
+  processImages
     .on('error', error => log('queue error', error))
 
-  const updateStream = createUpdateStream({ imageUpdatesQueue, processImageQueue })
+  const updateStream = createUpdateStream({ imageUpdates, processImages })
   updateStream.subscribe()
 
-  const jobStream = createJobProcessorStream({ processImageQueue, s3fs })
+  const jobStream = createJobProcessorStream({ processImages, s3fs })
   jobStream.subscribe()
 
   log('ready')
@@ -43,11 +44,11 @@ function getBikeshedStatus (event) {
 
 // Image processor update stream
 // @TODO: Handle progress updates?
-export function createUpdateStream ({ imageUpdatesQueue, processImageQueue }) {
+export function createUpdateStream ({ imageUpdates, processImages }) {
   log('creating job update stream')
 
   const streams = ['active', 'completed', 'failed'].map(event =>
-    Rx.Observable.fromEvent(processImageQueue, event, (job, payload) => ({
+    Rx.Observable.fromEvent(processImages, event, (job, payload) => ({
       error: event === 'failed' ? payload : null,
       job: job,
       result: event === 'completed' ? payload : null,
@@ -60,7 +61,7 @@ export function createUpdateStream ({ imageUpdatesQueue, processImageQueue }) {
       log(`update status=${status} jobId=${job.jobId}`)
     })
     .flatMap(({ error, job, result, status }) => {
-      return pushImageUpdate(imageUpdatesQueue, {
+      return pushImageUpdate(imageUpdates, {
         data: job.data,
         error: error,
         result: result,
@@ -70,10 +71,10 @@ export function createUpdateStream ({ imageUpdatesQueue, processImageQueue }) {
 }
 
 // Creates a job stream and processes each image
-export function createJobProcessorStream ({ processImageQueue, s3fs }) {
+export function createJobProcessorStream ({ processImages, s3fs }) {
   log('creating job processor stream')
 
-  return createJobStream(processImageQueue)
+  return createJobStream(processImages)
   .flatMap(({ job, done }) => {
     const { data, jobId } = job
     log(`processing jobId=${jobId}`)
@@ -170,9 +171,9 @@ const ADD_BIKESHED_SCHEMA = Joi.object({
 })
 
 // Add a bikeshed's data to the queue
-export function addBikeshed (processImageQueue, queueData) {
+export function addBikeshed (processImages, queueData) {
   Joi.assert(queueData, ADD_BIKESHED_SCHEMA)
-  return processImageQueue.add(queueData, {
+  return processImages.add(queueData, {
     attempts: 5,
     backoff: {
       type: 'exponential'

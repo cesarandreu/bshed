@@ -9,16 +9,17 @@ import { BIKESHED_STATUS } from 'bshed-constants'
 
 const log = debug('worker:imageUpdates')
 
-export function initialize ({ imageUpdatesQueue, models, voteUpdatesQueue }) {
+export function initialize ({ models, queues }) {
   log('initializing')
+  const { imageUpdates, voteUpdates } = queues
 
-  imageUpdatesQueue
+  imageUpdates
     .on('error', error => log('queue error', error))
 
   const imageUpdateStream = createImageUpdatesStream({
-    imageUpdatesQueue,
+    imageUpdates,
     models,
-    voteUpdatesQueue
+    voteUpdates
   })
   imageUpdateStream.subscribe()
 
@@ -26,7 +27,7 @@ export function initialize ({ imageUpdatesQueue, models, voteUpdatesQueue }) {
 }
 
 // Creates a job stream to update each bikeshed's status as its images are processed
-export function createImageUpdatesStream ({ imageUpdatesQueue, models, voteUpdatesQueue }) {
+export function createImageUpdatesStream ({ imageUpdates, models, voteUpdates }) {
   async function updateBikeshedStatus ({ job }) {
     const { data, jobId } = job
     log(`processing jobId=${jobId}`)
@@ -34,20 +35,20 @@ export function createImageUpdatesStream ({ imageUpdatesQueue, models, voteUpdat
 
     const result = await models.Bikeshed.updateBikeshedStatus(data)
     if (data.status === BIKESHED_STATUS.ACTIVE) {
-      await pushVoteUpdate(voteUpdatesQueue, result)
+      await pushVoteUpdate(voteUpdates, result)
     }
     return result
   }
 
   log('creating image updates stream')
-  return createJobStream(imageUpdatesQueue)
+  return createJobStream(imageUpdates)
     .flatMap(callDone(updateBikeshedStatus))
 }
 
 // Use this to add a status update to the queue
 // @TODO: Document and validate queue data schema
-export function pushImageUpdate (imageUpdatesQueue, { data, error, result, status }) {
-  return imageUpdatesQueue.add({
+export function pushImageUpdate (imageUpdates, { data, error, result, status }) {
+  return imageUpdates.add({
     bikeshedId: data.bikeshedId,
     error,
     result,
