@@ -80,12 +80,7 @@ export function buildWebpackConfig () {
         target: 'http://localhost:3000'
       }],
 
-      port: 9000,
-      stats: {
-        modules: false,
-        cached: false,
-        chunk: false
-      }
+      port: 9000
     },
 
     plugins: [
