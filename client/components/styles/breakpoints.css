@@ -1,0 +1,4 @@
+/**
+ * Screen breakpoints
+ */
+@value mobile: (max-width: 600px);
