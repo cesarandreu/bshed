@@ -76,7 +76,7 @@
     ]
   },
   "dependencies": {
-    "aws-sdk": "^2.2.28",
+    "aws-sdk": "^2.2.29",
     "babel-relay-plugin": "^0.6.3",
     "bcrypt": "^0.8.5",
     "bezier-easing": "^1.1.1",
@@ -84,7 +84,7 @@
     "bull": "^0.7.0",
     "classnames": "^2.2.3",
     "co-body": "^4.0.0",
-    "dataloader": "^1.0.0",
+    "dataloader": "^1.1.0",
     "debug": "^2.2.0",
     "graphql": "^0.4.14",
     "graphql-relay": "^0.3.6",
@@ -156,7 +156,7 @@
     "standard": "^5.4.1",
     "style-loader": "^0.13.0",
     "tape": "^4.4.0",
-    "webpack": "^1.12.10",
-    "webpack-dev-server": "^1.14.0"
+    "webpack": "^1.12.11",
+    "webpack-dev-server": "^1.14.1"
   }
 }
