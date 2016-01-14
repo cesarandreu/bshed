@@ -38,7 +38,6 @@ export function AddImagesStep ({ images, onAddImage, removeFile, updateImage }) 
         <Button
           disabled={imageCount === MAXIMUM_IMAGE_COUNT}
           onClick={onAddImage}
-          primary
           raised
         >
           add image
