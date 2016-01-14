@@ -39,10 +39,10 @@
 }
 
 .imageItem {
-  composes: listItem;
-  position: relative;
-  display: flex;
   align-items: center;
+  composes: listItem;
+  display: flex;
+  position: relative;
 }
 
 .imageWrapper {
