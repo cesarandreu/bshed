@@ -92,7 +92,7 @@
     "http-errors": "^1.3.1",
     "immutable": "^3.7.6",
     "invariant": "^2.2.0",
-    "joi": "^7.2.0",
+    "joi": "^7.2.1",
     "keymirror": "^0.1.1",
     "knex": "^0.9.0",
     "koa": "^2.0.0-alpha.3",
@@ -124,7 +124,7 @@
     "routington": "^1.0.3",
     "rx": "^4.0.7",
     "s3fs": "^2.4.3",
-    "sharp": "^0.12.1",
+    "sharp": "^0.12.2",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
@@ -145,7 +145,7 @@
     "link-package": "^0.1.0",
     "node-libs-browser": "^0.5.3",
     "nodemon": "^1.8.1",
-    "npm-run-all": "^1.4.0",
+    "npm-run-all": "^1.5.0",
     "onchange": "^2.0.0",
     "postcss-loader": "^0.8.0",
     "react-addons-test-utils": "^0.14.6",
