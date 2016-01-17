@@ -1,7 +1,8 @@
 /**
  * Ensure session.userId is set on every request
  * Create the user if they're don't have an id yet
- * Adds userId to request and req as well
+ * Adds userId to request and req
+ * Adds currentUser to ctx
  */
 import debug from 'debug'
 const log = debug('server:user')
@@ -16,7 +17,8 @@ export default function setUser () {
     }
 
     log(`User ID: "${ctx.session.userId}"`)
-    ctx.request.userId = ctx.req.userId = ctx.session.userId
+    const userId = ctx.request.userId = ctx.req.userId = ctx.session.userId
+    ctx.currentUser = await User.forge({ id: userId }).fetch()
     return next()
   }
 }
