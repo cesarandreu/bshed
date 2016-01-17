@@ -10,11 +10,11 @@ import { database } from '../../config'
 const log = debug('server:models')
 
 // Model classes
-import Bike from './bike'
-import Bikeshed from './bikeshed'
-import Score from './score'
-import User from './user'
-import Vote from './vote'
+import Bike from './Bike'
+import Bikeshed from './Bikeshed'
+import Score from './Score'
+import User from './User'
+import Vote from './Vote'
 
 // Export a model singleton by default
 export default createModels({ database })
