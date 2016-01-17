@@ -11,7 +11,7 @@ const imageProxyParamsSchema = Joi.object({
   size: Joi.string().regex(/^(full|thumbnail)\.(png|jpeg)$/).required()
 })
 
-export default function imageProxy ({ s3fs }) {
+export default function imageProxy (s3fs) {
   return async function imageProxyMiddleware (ctx) {
     // Validate url params
     const { error, value } = imageProxyParamsSchema.validate(ctx.params)
