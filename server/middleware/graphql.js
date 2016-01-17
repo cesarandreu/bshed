@@ -134,7 +134,7 @@ function getGraphQLParams (ctx, body = {}) {
   ctx.assert(query, 400, 'Must provide query string.')
 
   // Parse the variables if needed
-  const variables = getVariables(ctx.query.variables || body.variables)
+  const variables = tryParsingVariables(ctx.query.variables || body.variables)
 
   // Name of GraphQL operation to execute
   const operationName = ctx.query.operationName || body.operationName
@@ -144,16 +144,18 @@ function getGraphQLParams (ctx, body = {}) {
     query,
     variables
   }
+}
 
-  // Try parsing the variables JSON if there's any
-  function getVariables (variables) {
-    if (variables && typeof variables === 'string') {
-      try {
-        return JSON.parse(variables)
-      } catch (err) {
-        throw createError(400, 'Variables are invalid JSON.')
-      }
+// Try parsing the variables JSON if there's any
+function tryParsingVariables (variables) {
+  if (typeof variables === 'string') {
+    try {
+      return JSON.parse(variables)
+    } catch (err) {
+      throw createError(400, 'Variables are invalid JSON.')
     }
+  } else {
+    return variables
   }
 }
 
