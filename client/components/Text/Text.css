@@ -1,22 +1,24 @@
 /**
  * Text components
  */
+@value hint, primaryText, secondaryText from 'components/styles/colors.css';
+
 .headline {
   composes: headline from 'components/styles/typography.css';
 }
 
 .hint {
-  composes: textColorHint from 'components/styles/colors.css';
+  color: hint;
   composes: caption from 'components/styles/typography.css';
 }
 
 .primary {
-  composes: textColorPrimary from 'components/styles/colors.css';
+  color: primaryText;
   composes: body2 from 'components/styles/typography.css';
 }
 
 .secondary {
-  composes: textColorSecondary from 'components/styles/colors.css';
+  color: secondaryText;
   composes: body1 from 'components/styles/typography.css';
 }
 
