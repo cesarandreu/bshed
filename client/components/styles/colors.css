@@ -2,138 +2,45 @@
  * Colors
  */
 
-:root {
-  /* @TODO: Remove if these remain unused */
-  /* opacity for light text on a dark background */
-  /*--color-light-divider: 0.12;*/
-  /*--color-light-disabled: 0.3;*/ /* or hint text or icon */
-  /*--color-light-secondary: 0.7;*/
-  /*--color-light-primary: 1.0;*/
+/* Opacity for dark text on a light background */
+@value darkDivider: rgba(0, 0, 0, 0.12);
+@value darkDisabled: rgba(0, 0, 0, 0.38); /* or hint text or icon */
+@value darkSecondary: rgba(0, 0, 0, 0.54);
+@value darkPrimary: rgba(0, 0, 0, 0.87);
 
-  /* opacity for dark text on a light background */
-  --color-dark-divider: rgba(0, 0, 0, 0.12);
-  --color-dark-disabled: rgba(0, 0, 0, 0.38); /* or hint text or icon */
-  --color-dark-secondary: rgba(0, 0, 0, 0.54);
-  --color-dark-primary: rgba(0, 0, 0, 0.87);
+/* Opacity for light text or a dark background */
+@value lightSecondary: rgba(255, 255, 255, 0.7);
 
-  /* App bar */
-  /*--color-app-bar: #F5F5F5;*/
+/* Aliases */
+@value divider: rgba(0, 0, 0, 0.12);
+@value disabled: rgba(0, 0, 0, 0.38);
+@value hint: rgba(0, 0, 0, 0.38);
+@value icon: rgba(0, 0, 0, 0.38);
+@value secondaryText: rgba(0, 0, 0, 0.54);
+@value primaryText: rgba(0, 0, 0, 0.87);
 
-  /* Grey 50 */
-  --color-background: #FAFAFA;
+/* Grey 50 */
+@value background: #FAFAFA;
 
-  /* Blue 500 */
-  --color-primary: #2196F3;
+/* Blue 500 */
+@value primary: #2196F3;
 
-  /* Blue 700 */
-  --color-primary-dark: #1976D2;
+/* Blue 700 */
+@value primaryDark: #1976D2;
 
-  /* Red 500 */
-  --color-secondary: #F44336;
+/* Red 500 */
+@value secondary: #F44336;
 
-  /* Red 700 */
-  --color-secondary-dark: #D32F2F;
+/* Red 700 */
+@value secondaryDark: #D32F2F;
 
-  /* Red A200 */
-  --color-accent: #FF5252;
+/* Red A200 */
+@value accent: #FF5252;
 
-  /* Red 500 */
-  --color-error: #F44336;
-}
+/* Red 500 */
+@value error: #F44336;
 
-.textColorAppPrimary {
-  color: var(--color-primary);
-}
-
-.textColorAppSecondary {
-  color: var(--color-secondary);
-}
-
-/* Text color primary */
-.textColorPrimary {
-  color: var(--color-dark-primary);
-}
-
-.colorTextPrimary {
-  background-color: var(--color-dark-primary);
-}
-
-/* Text color secondary */
-.textColorSecondary {
-  color: var(--color-dark-secondary);
-}
-
-/* Text color disabled, hint, or icon */
-.textColorDisabled,
-.textColorHint,
-.textColorIcon {
-  color: var(--color-dark-disabled);
-}
-
-.colorDisabled {
-  background-color: var(--color-dark-disabled);
-}
-
-/* Divider color */
-.dividerColor {
-  background-color: var(--color-dark-divider);
-}
-
-/* Primary */
-.colorPrimary {
-  background-color: var(--color-primary);
-}
-
-/* Primary dark */
-.colorPrimaryDark {
-  background-color: var(--color-primary-dark);
-}
-
-/* Accent */
-.colorAccent {
-  background-color: var(--color-accent);
-}
-
-/* Background */
-.colorBackground {
-  background-color: var(--color-background);
-}
-
-/* Constrast */
-/* Color dark contrast: white */
-.colorPrimaryContrast,
-.colorAccentContrast {
-  background-color: #FFFFFF;
-}
-
-/* Text primary */
-/*.textColorPrimary {
-  color: var(--color-primary);
-}*/
-
-/* Text primary dark */
-/*.textColorPrimaryDark {
-  color: var(--color-primary-dark);
-}*/
-
-/* Text accent */
-.textColorAccent {
-  color: var(--color-accent);
-}
-
-/* Text contrast */
-/* Color dark contrast: white */
-.textColorAccentContrast,
-.textColorPrimaryContrast,
-.textColorSecondaryContrast {
-  color: #FFFFFF;
-}
-
-/* Text color error */
-.textColorError {
-  color: var(--color-error);
-}
-
-.colorError {
-  background-color: var(--color-error);
-}
+/* Contrast */
+@value accentContrast: #FFFFFF;
+@value primaryContrast: #FFFFFF;
+@value secondaryContrast: #FFFFFF;
