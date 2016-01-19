@@ -1,22 +1,9 @@
-:root {
-  --color-dark-divider: rgba(0, 0, 0, 0.12);
+/* Magic values from material design's button spec */
+@value disabledText: rgba(0, 0, 0, 0.26);
+@value activeButton: rgba(153, 153, 153, 0.40);
 
-  /* Magic values from material design's button spec */
-  --color-disabled-text: rgba(0, 0, 0, 0.26);
-  --color-active-button: rgba(153, 153, 153, 0.40);
-
-  /* Blue 500 */
-  --color-primary: #2196F3;
-
-  /* Blue 700 */
-  --color-primary-dark: #1976D2;
-
-  /* Red 500 */
-  --color-secondary: #F44336;
-
-  /* Red 700 */
-  --color-secondary-dark: #D32F2F;
-}
+@value colors: 'components/styles/colors.css';
+@value disabled, divider, primary, primaryContrast, primaryDark, primaryText, secondary, secondaryDark, secondaryContrast from colors;
 
 /**
  * Shared base values
@@ -69,39 +56,39 @@
 }
 
 .flat:disabled {
-  color: var(--color-disabled-text);
+  color: disabled;
 }
 
 .flat:focus {
-  background-color: var(--color-dark-divider);
+  background-color: divider;
 }
 
 .flat:active {
-  background-color: var(--color-active-button);
+  background-color: activeButton;
 }
 
 /**
  * Plain flat
  */
 .plainFlat {
+  color: primaryText;
   composes: flat;
-  composes: textColorPrimary from 'components/styles/colors.css';
 }
 
 /**
  * Primary flat
  */
 .primaryFlat {
+  color: primary;
   composes: flat;
-  composes: textColorAppPrimary from 'components/styles/colors.css';
 }
 
 /**
  * Secondary flat
  */
 .secondaryFlat {
+  color: secondary;
   composes: flat;
-  composes: textColorAppSecondary from 'components/styles/colors.css';
 }
 
 /**
@@ -118,8 +105,8 @@
 }
 
 .raised:disabled {
-  color: var(--color-disabled-text);
-  background-color: var(--color-dark-divider);
+  background-color: divider;
+  color: disabled;
 }
 
 .raised:active {
@@ -138,13 +125,14 @@
  * Plain raised
  */
 .plainRaised {
-  composes: raised;
   background: transparent;
-  composes: textColorPrimary from 'components/styles/colors.css';
+  /*color: primaryText;*/
+  color: primary;
+  composes: raised;
 }
 
 .plainRaised:focus {
-  background-color: var(--color-dark-divider);
+  background-color: divider;
 }
 
 .plainRaised:active {
@@ -154,32 +142,34 @@
  * Primary raised
  */
 .primaryRaised {
+  background-color: primary;
+  color: primaryContrast;
   composes: raised;
-  background-color: var(--color-primary);
-  composes: textColorPrimaryContrast from 'components/styles/colors.css';
 }
 
 .primaryRaised:focus {
-  background-color: color(var(--color-primary) shade(12%));
+  /*background-color: color(primary shade(12%));*/
+  background-color: primary; /* @TODO: Add shade */
 }
 
 .primaryRaised:active {
-  background-color: var(--color-primary-dark);
+  background-color: primaryDark;
 }
 
 /**
  * Secondary raised
  */
 .secondaryRaised {
+  background-color: secondary;
+  color: secondaryContrast;
   composes: raised;
-  background-color: var(--color-secondary);
-  composes: textColorSecondaryContrast from 'components/styles/colors.css';
 }
 
 .secondaryRaised:focus {
-  background-color: color(var(--color-secondary) shade(12%));
+  /*background-color: color(var(--color-secondary) shade(12%));*/
+  background-color: secondary; /* @TODO: Add shade */
 }
 
 .secondaryRaised:active {
-  background-color: var(--color-secondary-dark);
+  background-color: secondaryDark;
 }
