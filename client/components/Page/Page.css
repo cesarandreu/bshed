@@ -1,4 +1,4 @@
-@custom-media --mobile-screen (max-width: 600px);
+@value mobile from 'components/styles/breakpoints.css';
 
 .page {
   width: 100%;
@@ -11,7 +11,7 @@
   padding: 24px;
 }
 
-@media (--mobile-screen) {
+@media mobile {
   .page {
     align-items: stretch;
     padding: 0;
@@ -34,7 +34,7 @@
   border-radius: 2px;
 }
 
-@media (--mobile-screen) {
+@media mobile {
   .paperPage {
     align-self: stretch;
     margin: 0;
