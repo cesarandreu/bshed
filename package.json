@@ -76,7 +76,7 @@
     ]
   },
   "dependencies": {
-    "aws-sdk": "^2.2.31",
+    "aws-sdk": "^2.2.32",
     "babel-relay-plugin": "^0.6.3",
     "bcrypt": "^0.8.5",
     "bezier-easing": "^1.1.1",
@@ -141,7 +141,7 @@
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
-    "html-webpack-plugin": "^1.7.0",
+    "html-webpack-plugin": "^2.7.1",
     "link-package": "^0.1.0",
     "node-libs-browser": "^0.5.3",
     "nodemon": "^1.8.1",
