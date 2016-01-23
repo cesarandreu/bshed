@@ -1,6 +1,4 @@
-:root {
-  --color-light-secondary: rgba(255, 255, 255, 0.7);
-}
+@value lightSecondary from 'components/styles/colors.css';
 
 .container {
   position: absolute;
@@ -24,8 +22,8 @@
 .fileTarget {
   height: 80%;
   width: 80%;
-  border: 2px dashed var(--color-light-secondary);
-  color: var(--color-light-secondary);
+  border: 2px dashed lightSecondary;
+  color: lightSecondary;
   display: flex;
   align-items: center;
   justify-content: center;
