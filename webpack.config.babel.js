@@ -68,6 +68,15 @@ export function buildWebpackConfig () {
       }]
     },
 
+    // This is supposed to improve performance a little
+    resolve: {
+      moduleDirectories: ['node_modules'],
+      root: [
+        __dirname + '/client',
+        __dirname + '/shared'
+      ]
+    },
+
     postcss: [
       autoprefixer({
         browsers: ['last 2 versions']
