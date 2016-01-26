@@ -1,12 +1,12 @@
 /**
  * Layout
  */
-:root {
-  --layout-toolbar-desktop-height: 64px;
-  --layout-toolbar-mobile-height: 56px;
-}
+@value toolbarDesktopHeight: 64px;
+@value toolbarMobileHeight: 56px;
 
-@custom-media --mobile-screen (max-width: 600px);
+@value mobile from 'components/styles/breakpoints.css';
+@value colors: 'components/styles/colors.css';
+@value background, primary, primaryContrast from colors;
 
 /* LayoutContainer */
 .container {
@@ -17,14 +17,14 @@
 
 /* LayoutToolbar */
 .toolbarSize {
-  height: var(--layout-toolbar-desktop-height);
+  height: toolbarDesktopHeight;
   transition: height 0.18s ease-in;
   width: 100%;
 }
 
-@media (--mobile-screen) {
+@media mobile {
   .toolbarSize {
-    height: var(--layout-toolbar-mobile-height);
+    height: toolbarMobileHeight;
   }
 }
 
@@ -51,14 +51,15 @@
 }
 
 .pageToolbar {
-  composes: colorPrimary textColorPrimaryContrast from 'components/styles/colors.css';
+  background-color: primary;
+  color: primaryContrast;
   composes: toolbarSize;
   position: fixed;
   top: 0;
   z-index: 2;
 }
 
-@media (--mobile-screen) {
+@media mobile {
   .pageToolbar {
     will-change: transform;
   }
@@ -69,15 +70,15 @@
 }
 
 .pageContent {
-  composes: colorBackground from 'components/styles/colors.css';
+  background-color: background;
   display: flex;
   min-height: 100%;
-  padding: var(--layout-toolbar-desktop-height) 0 0 0;
+  padding: toolbarDesktopHeight 0 0 0;
   width: 100%;
 }
 
-@media (--mobile-screen) {
+@media mobile {
   .pageContent {
-    padding: var(--layout-toolbar-mobile-height) 0 0 0;
+    padding: toolbarMobileHeight 0 0 0;
   }
 }
