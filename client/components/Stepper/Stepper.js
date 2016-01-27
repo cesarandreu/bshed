@@ -1,7 +1,6 @@
 import cn from 'classnames'
 import { Caption, PrimaryText } from 'components/Text'
 import React, { PropTypes } from 'react'
-import Collapse from 'react-collapse'
 import styles from './Stepper.css'
 
 export function Stepper ({ children }) {
@@ -37,11 +36,9 @@ export function Step ({ active, children, name, number }) {
         </PrimaryText>
       </div>
 
-      <Collapse isOpened={active}>
-        <div className={styles.body}>
+      <div className={styles.body}>
         {children}
-        </div>
-      </Collapse>
+      </div>
 
       <div className={styles.line}/>
     </div>
