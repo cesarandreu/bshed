@@ -11,6 +11,10 @@ export function Stepper ({ children }) {
   )
 }
 
+Stepper.propTypes = {
+  children: PropTypes.node.isRequired
+}
+
 // @TODO: Add complete property?
 export function Step ({ active, children, name, number }) {
   const circleClassNames = cn(styles.circle, {
