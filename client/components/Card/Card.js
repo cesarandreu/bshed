@@ -1,8 +1,8 @@
 // @TODO: Add more elevations if needed
+import cn from 'classnames'
 import { Headline } from 'components/Text'
 import React, { PropTypes } from 'react'
 import styles from './Card.css'
-import cn from 'classnames'
 
 export function Card ({ children, className, elevation, heading }) {
   return (
