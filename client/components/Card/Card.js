@@ -45,9 +45,9 @@ CardHeader.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export function CardContent ({ children }) {
+export function CardContent ({ children, className }) {
   return (
-    <div className={styles.content}>
+    <div className={cn(styles.content, className)}>
       {children}
     </div>
   )
