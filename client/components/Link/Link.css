@@ -1,3 +1,5 @@
+@value accent from 'components/styles/colors.css';
+
 .link {
-  composes: textColorAccent from 'components/styles/colors.css';
+  color: accent;
 }
