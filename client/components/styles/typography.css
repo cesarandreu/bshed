@@ -1,5 +1,7 @@
 /**
  * Typography classes
+ * Unused styles are commented out and may be enabled again if I find a use-case for em
+ * They're kept as comments as a reminder that they exist and are easily accessible
  * Basically ripped from PolymerElements/paper-styles
  * SOURCES:
  *  - PolymerElements/paper-styles/classes/typography.html
@@ -15,22 +17,24 @@
   -webkit-font-smoothing: antialiased; /* OS X subpixel AA bleed bug */
 }
 
-/*
-"Line wrapping only applies to Body, Subhead, Headline, and the smaller Display
-styles. All other styles should exist as single lines."
-*/
+/**
+ * "Line wrapping only applies to Body, Subhead, Headline, and the smaller Display
+ * styles. All other styles should exist as single lines."
+ */
 .noWrap {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Opt for better kerning for headers & other short labels. */
+/**
+ * "Opt for better kerning for headers & other short labels."
+ */
 .legibility {
   text-rendering: optimizeLegibility;
 }
 
-.display4 {
+.Display4 {
   composes: commonBase noWrap legibility;
   font-size: 112px;
   font-weight: 300;
@@ -38,7 +42,7 @@ styles. All other styles should exist as single lines."
   line-height: 120px;
 }
 
-.display3 {
+.Display3 {
   composes: commonBase noWrap legibility;
   font-size: 56px;
   font-weight: 400;
@@ -46,7 +50,7 @@ styles. All other styles should exist as single lines."
   line-height: 60px;
 }
 
-.display2 {
+.Display2 {
   composes: commonBase legibility;
   font-size: 45px;
   font-weight: 400;
@@ -54,7 +58,7 @@ styles. All other styles should exist as single lines."
   line-height: 48px;
 }
 
-.display1 {
+.Display1 {
   composes: commonBase legibility;
   font-size: 34px;
   font-weight: 400;
@@ -62,7 +66,7 @@ styles. All other styles should exist as single lines."
   line-height: 40px;
 }
 
-.headline {
+.Headline {
   composes: commonBase legibility;
   font-size: 24px;
   font-weight: 400;
@@ -70,35 +74,35 @@ styles. All other styles should exist as single lines."
   line-height: 32px;
 }
 
-.title {
+.Title {
   composes: commonBase noWrap legibility;
   font-size: 20px;
   font-weight: 500;
   line-height: 28px;
 }
 
-.subhead {
+.Subhead {
   composes: commonBase legibility;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
 }
 
-.body2 {
+.Body2 {
   composes: commonBase;
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
 }
 
-.body1 {
+.Body1 {
   composes: commonBase;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
 }
 
-.caption {
+.Caption {
   composes: commonBase noWrap;
   font-size: 12px;
   font-weight: 400;
@@ -106,14 +110,16 @@ styles. All other styles should exist as single lines."
   line-height: 20px;
 }
 
-.menu {
+/*
+.Menu {
   composes: commonBase noWrap legibility;
   font-size: 13px;
   font-weight: 500;
   line-height: 24px;
 }
+*/
 
-.button {
+.Button {
   composes: commonBase noWrap legibility;
   font-size: 14px;
   font-weight: 500;
@@ -122,16 +128,18 @@ styles. All other styles should exist as single lines."
   text-transform: uppercase;
 }
 
-.code2 {
+/*
+.Code2 {
   composes: commonCode;
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
 }
 
-.code1 {
+.Code1 {
   composes: commonCode;
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
 }
+*/
