@@ -1,0 +1,43 @@
+@value colors: 'components/styles/colors.css';
+@value DarkBackground, LightBackground from colors;
+
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 16px 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.wrapper {
+}
+
+.example {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 16px;
+}
+
+.info {
+  margin: 0 0 8px 0;
+}
+
+.headline {
+  margin: 0 0 8px 0;
+}
+
+.body {
+  margin: 8px;
+}
+
+.dark {
+  background-color: DarkBackground;
+}
+
+.light {
+  background-color: LightBackground;
+}
