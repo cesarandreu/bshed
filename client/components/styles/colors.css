@@ -3,13 +3,66 @@
  */
 
 /* Opacity for dark text on a light background */
-@value darkDivider: rgba(0, 0, 0, 0.12);
-@value darkDisabled: rgba(0, 0, 0, 0.38); /* or hint text or icon */
-@value darkSecondary: rgba(0, 0, 0, 0.54);
-@value darkPrimary: rgba(0, 0, 0, 0.87);
+@value DarkDivider: rgba(0, 0, 0, 0.12);
+@value DarkDisabled: rgba(0, 0, 0, 0.38);
+@value DarkHint: rgba(0, 0, 0, 0.38);
+@value DarkSecondary: rgba(0, 0, 0, 0.54);
+@value DarkIcon: rgba(0, 0, 0, 0.54);
+@value DarkPrimary: rgba(0, 0, 0, 0.87);
 
-/* Opacity for light text or a dark background */
-@value lightSecondary: rgba(255, 255, 255, 0.7);
+/* Opacity for light text on a dark background */
+@value LightDivider: rgba(255, 255, 255, 0.12);
+@value LightDisabled: rgba(255, 255, 255, 0.3);
+@value LightHint: rgba(255, 255, 255, 0.3);
+@value LightSecondary: rgba(255, 255, 255, 0.7);
+@value LightIcon: rgba(255, 255, 255, 0.7);
+@value LightPrimary: rgba(255, 255, 255, 1.0);
+
+/**
+ * Light theme
+ * LightAppBar - Grey 100
+ * LightBackground - Grey 50
+ * LightCard / LightDialog - White
+ */
+@value LightAppBar: #F5F5F5;
+@value LightBackground: #FAFAFA;
+@value LightCard: #FFFFFF;
+@value LightDialog: #FFFFFF;
+
+/**
+ * Dark theme
+ * DarkAppBar - Grey 900
+ * DarkBackground
+ * DarkCard / DarkDialog - Grey 800
+ */
+@value DarkAppBar: #212121;
+@value DarkBackground: #303030;
+@value DarkCard: #424242;
+@value DarkDialog: #424242;
+
+/**
+ * Primary color palette
+ * Primary - Blue 500
+ * PrimaryDark - Blue 700
+ * PrimaryLight - Blue 100
+ * PrimaryContrast - White
+ */
+@value Primary: #2196F3;
+@value PrimaryDark: #1976D2;
+@value PrimaryLight: #BBDEFB;
+@value PrimaryContrast: #FFFFFF;
+
+/**
+ * Accent color palette
+ * Accent - Pink A200
+ * AccentDark - Pink A400
+ * AccentLight - Pink A100
+ * AccentContrast - White
+ */
+@value Accent: #FF4081;
+@value AccentDark: #F50057;
+@value AccentLight: #FF80AB;
+@value AccentContrast: #FFFFFF;
 
 /* Aliases */
 @value divider: rgba(0, 0, 0, 0.12);
@@ -19,6 +72,29 @@
 @value secondaryText: rgba(0, 0, 0, 0.54);
 @value primaryText: rgba(0, 0, 0, 0.87);
 
+/**
+ * Buttton
+ * DarkButtonPressed - 25% #CCCCCC
+ * DarkRaisedButtonDisabled - 12% #FFFFFF
+ * LightButtonDisabledText - 26% #000000
+ * LightButtonPressed - 40% #999999
+ * AccentShadeColoredButton - mix(#000000, Accent, 12%)
+ * PrimaryShadeColoredButton - mix(#000000, Primary, 12%)
+ */
+@value DarkButtonPressed: rgba(204, 204, 204, 0.25);
+@value DarkRaisedButtonDisabled: rgba(255, 255, 255, 0.12);
+@value LightButtonDisabledText: rgba(0, 0, 0, 0.26);
+@value LightButtonPressed: rgba(153, 153, 153, 0.4);
+@value AccentShadeColoredButton: #E03872;
+@value PrimaryShadeColoredButton: #1D84D6;
+
+/**
+ * Other
+ * Error - Red 500
+ */
+@value Error: #F44336;
+
+/* @TODO: Remove old values */
 /* Grey 50 */
 @value background: #FAFAFA;
 
@@ -41,6 +117,6 @@
 @value error: #F44336;
 
 /* Contrast */
-@value accentContrast: #FFFFFF;
-@value primaryContrast: #FFFFFF;
-@value secondaryContrast: #FFFFFF;
+@value AccentContrast: #FFFFFF;
+@value PrimaryContrast: #FFFFFF;
+@value SecondaryContrast: #FFFFFF;
