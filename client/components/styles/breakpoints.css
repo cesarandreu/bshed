@@ -2,3 +2,4 @@
  * Screen breakpoints
  */
 @value mobile: (max-width: 600px);
+@value desktop: (min-width: 601px);
