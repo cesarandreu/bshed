@@ -1,5 +1,5 @@
-@value accent from 'components/styles/colors.css';
+@value Accent from 'components/styles/colors.css';
 
 .link {
-  color: accent;
+  color: Accent;
 }
