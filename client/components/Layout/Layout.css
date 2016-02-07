@@ -4,9 +4,11 @@
 @value toolbarDesktopHeight: 64px;
 @value toolbarMobileHeight: 56px;
 
-@value mobile from 'components/styles/breakpoints.css';
+@value breakpoints: 'components/styles/breakpoints.css';
 @value colors: 'components/styles/colors.css';
-@value background, primary, primaryContrast from colors;
+
+@value mobile from breakpoints;
+@value LightBackground, Primary, PrimaryContrast from colors;
 
 /* LayoutContainer */
 .container {
@@ -51,8 +53,8 @@
 }
 
 .pageToolbar {
-  background-color: primary;
-  color: primaryContrast;
+  background-color: Primary;
+  color: PrimaryContrast;
   composes: toolbarSize;
   position: fixed;
   top: 0;
@@ -66,11 +68,11 @@
 }
 
 .pageToolbarShadow {
-  composes: shadow2dp from 'components/styles/shadows.css';
+  composes: ShadowElevation2 from 'components/styles/shadows.css';
 }
 
 .pageContent {
-  background-color: background;
+  background-color: LightBackground;
   display: flex;
   min-height: 100%;
   padding: toolbarDesktopHeight 0 0 0;

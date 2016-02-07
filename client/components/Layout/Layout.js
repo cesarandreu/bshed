@@ -80,16 +80,16 @@ class PageLayout extends Component {
   }
 
   render () {
-    const { children, isDesktop, isMobile, toolbar } = this.props
+    const { children, fixed, isDesktop, isMobile, toolbar } = this.props
     const { toolbarY } = this.state
-    const toolbarTransform = isMobile
+    const toolbarTransform = !fixed && isMobile
       ? `translate3d(0, ${toolbarY}px, 0)`
       : 'translate3d(0, 0, 0)'
 
     return (
       <div
         className={styles.page}
-        onScroll={this.onScroll}
+        onScroll={!fixed && this.onScroll}
         ref={this.setPage}
       >
         <div
@@ -113,6 +113,7 @@ class PageLayout extends Component {
 
 PageLayout.propTypes = {
   children: PropTypes.node.isRequired,
+  fixed: PropTypes.bool,
   isDesktop: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired,
   toolbar: PropTypes.element.isRequired
