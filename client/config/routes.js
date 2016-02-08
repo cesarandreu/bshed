@@ -40,5 +40,12 @@ export default (
       component={Terms}
       path='/terms'
     />
+
+    {process.env.NODE_ENV === 'development' && (
+      <Route
+        component={require('client/pages/Components').default}
+        path='/components'
+      />
+    )}
   </Route>
 )
