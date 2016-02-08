@@ -1,0 +1,52 @@
+/**
+ * Shared button styles
+ */
+
+/* Found in material-design-lite */
+.ButtonTransition {
+  transition: box-shadow .2s cubic-bezier(.4,0,1,1),
+              background-color .2s cubic-bezier(.4,0,.2,1),
+              color .2s cubic-bezier(.4,0,.2,1);
+}
+
+.BaseButton {
+  /* Resets */
+  border: none;
+  margin: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+  composes: Button from 'components/styles/typography.css';
+  composes: ButtonTransition;
+  display: inline-block;
+  position: relative;
+  height: 36px;
+  padding: 6px 8px; /* height 36px - line-height 24px => 12px total => 6px each */
+  text-align: center;
+  outline-width: 0;
+  border-radius: 3px;
+  user-select: none;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.BaseButton:-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.BaseButton:disabled {
+  cursor: auto;
+  pointer-events: none;
+}
+
+.BaseButton + .BaseButton {
+  margin-left: 8px;
+}

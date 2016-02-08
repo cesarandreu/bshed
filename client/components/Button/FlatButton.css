@@ -1,0 +1,72 @@
+@value colors: 'components/styles/colors.css';
+
+/* Accent colors */
+@value Accent from colors;
+
+/* Primary colors */
+@value Primary from colors;
+
+/* Dark theme colors */
+@value DarkDivider, DarkDisabled, DarkPrimary from colors;
+
+/* Light theme colors */
+@value LightDivider, LightDisabled, LightPrimary from colors;
+
+/* Dark theme colors */
+@value DarkButtonPressed, LightButtonDisabledText, LightButtonPressed from colors;
+
+.base {
+  background: transparent;
+  composes: BaseButton from 'components/Button/BaseButton.css';
+  min-width: 88px;
+}
+
+/**
+ * Text color
+ */
+.accent {
+  color: Accent;
+}
+
+.primary {
+  color: Primary;
+}
+
+/**
+ * Light theme
+ */
+.light:not(.accent):not(.primary):not(:disabled) {
+  color: DarkPrimary;
+}
+
+.light:focus, .light:hover {
+  background-color: DarkDivider;
+}
+
+.light:active {
+  background-color: LightButtonPressed;
+}
+
+.light:disabled {
+  /* @TODO: Evaluate using DarkDisabled vs LightButtonDisabledText */
+  color: LightButtonDisabledText;
+}
+
+/**
+ * Dark theme
+ */
+.dark:not(.accent):not(.primary):not(:disabled) {
+  color: LightPrimary;
+}
+
+.dark:focus, .dark:hover {
+  background-color: LightDivider;
+}
+
+.dark:active {
+  background-color: DarkButtonPressed;
+}
+
+.dark:disabled {
+  color: LightDisabled;
+}

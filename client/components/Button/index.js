@@ -1,3 +1,7 @@
 export {
-  Button
-} from './Button'
+  FlatButton
+} from './FlatButton'
+
+export {
+  RaisedButton
+} from './RaisedButton'

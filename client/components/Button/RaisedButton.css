@@ -1,0 +1,101 @@
+@value colors: 'components/styles/colors.css';
+
+/* Accent colors */
+@value Accent, AccentContrast, AccentDark from colors;
+
+/* Primary colors */
+@value Primary, PrimaryContrast, PrimaryDark from colors;
+
+/* Dark theme colors */
+@value DarkDivider from colors;
+
+/* Light theme colors */
+@value LightDisabled from colors;
+
+/* Button colors */
+@value DarkRaisedButtonDisabled, LightButtonDisabledText from colors;
+@value AccentShadeColoredButton, PrimaryShadeColoredButton from colors;
+
+.base {
+  /* zDepth=1 */
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12),
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  composes: BaseButton from 'components/Button/BaseButton.css';
+  composes: ShadowTransition from 'components/styles/shadows.css';
+  min-width: 88px;
+}
+
+.base:disabled {
+  /*box-shadow: none;*/
+}
+
+.base:hover {
+  /* zDepth=2 */
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+              0 1px 8px 0 rgba(0, 0, 0, 0.12),
+              0 3px 3px -2px rgba(0, 0, 0, 0.4);
+}
+
+.base:focus {
+  /* zDepth=3 */
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+              0 1px 18px 0 rgba(0, 0, 0, 0.12),
+              0 3px 5px -1px rgba(0, 0, 0, 0.4);
+}
+
+.base:active {
+  /* zDepth=4 */
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12),
+              0 5px 5px -3px rgba(0, 0, 0, 0.4);
+}
+
+/**
+ * Light theme
+ */
+.light:disabled {
+  background-color: DarkDivider;
+  color: LightButtonDisabledText;
+}
+
+/**
+ * Dark theme
+ */
+.dark:disabled {
+  background-color: DarkRaisedButtonDisabled;
+  color: LightDisabled;
+}
+
+/**
+ * Accent
+ */
+.accent {
+  background-color: Accent;
+  color: AccentContrast;
+}
+
+.accent:hover, .accent:focus {
+  background-color: AccentShadeColoredButton;
+}
+
+.accent:active {
+  background-color: AccentDark;
+}
+
+/**
+ * Primary
+ */
+.primary {
+  background-color: Primary;
+  color: PrimaryContrast;
+}
+
+.primary:hover, .primary:focus {
+  background-color: PrimaryShadeColoredButton;
+}
+
+.primary:active {
+  background-color: PrimaryDark;
+}
+
