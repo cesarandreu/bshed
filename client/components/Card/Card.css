@@ -1,17 +1,18 @@
-@value divider from  'components/styles/colors.css';
+@value colors: 'components/styles/colors.css';
+@value DarkDivider, LightCard from colors;
 
 .card {
   display: inline-block;
   position: relative;
-  background-color: #FFF;
+  background-color: LightCard;
   border-radius: 2px;
 }
 
-.elevation1 {
-  composes: shadow2dp from 'components/styles/shadows.css';
+.elevation2 {
+  composes: ShadowElevation2 from 'components/styles/shadows.css';
 }
 
-.header {
+.title {
   padding: 16px;
   position: relative;
   border-top-left-radius: inherit;
@@ -25,12 +26,12 @@
 }
 
 .content + .content,
-.header + .content {
-  border-top: 1px solid divider;
+.title + .content {
+  border-top: 1px solid DarkDivider;
 }
 
 .actions {
-  border-top: 1px solid divider;
-  padding: 5px 16px;
+  border-top: 1px solid DarkDivider;
+  padding: 8px;
   position: relative;
 }

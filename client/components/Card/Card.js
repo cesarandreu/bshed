@@ -1,19 +1,19 @@
 // @TODO: Add more elevations if needed
 import cn from 'classnames'
-import { Headline } from 'components/Text'
+import { Title } from 'components/Text'
 import React, { PropTypes } from 'react'
 import styles from './Card.css'
 
-export function Card ({ children, className, elevation, heading }) {
+export function Card ({ children, className, elevation, title }) {
   return (
     <div
-      aria-label={heading}
+      aria-label={title}
       className={cn(styles.card, styles[`elevation${elevation}`], className)}
     >
-      {heading != null && (
-        <CardHeader>
-          {heading}
-        </CardHeader>
+      {title != null && (
+        <CardTitle>
+          {title}
+        </CardTitle>
       )}
       {children}
     </div>
@@ -23,25 +23,25 @@ export function Card ({ children, className, elevation, heading }) {
 Card.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  elevation: PropTypes.oneOf([1]).isRequired,
-  heading: PropTypes.string
+  elevation: PropTypes.oneOf([2]).isRequired,
+  title: PropTypes.string
 }
 
 Card.defaultProps = {
-  elevation: 1
+  elevation: 2
 }
 
-export function CardHeader ({ children }) {
+export function CardTitle ({ children }) {
   return (
-    <div className={styles.header}>
-      <Headline>
+    <div className={styles.title}>
+      <Title dark primary>
         {children}
-      </Headline>
+      </Title>
     </div>
   )
 }
 
-CardHeader.propTypes = {
+CardTitle.propTypes = {
   children: PropTypes.node.isRequired
 }
 
