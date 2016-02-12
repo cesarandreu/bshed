@@ -1,6 +1,7 @@
 /**
  * Webpack configuration
  */
+import path from 'path'
 import webpack from 'webpack'
 import autoprefixer from 'autoprefixer'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
@@ -38,7 +39,7 @@ export function buildWebpackConfig () {
         filename: '[name].js',
         publicPath: DEVELOPMENT ? 'http://localhost:9000/' : '/',
         pathinfo: DEVELOPMENT || TEST,
-        path: __dirname + '/build/assets'
+        path: path.join(__dirname, 'build', 'assets')
       },
 
     // Switch to cheap-module-source-map if cheap-module-eval-source-map works poorly
@@ -50,8 +51,8 @@ export function buildWebpackConfig () {
       loaders: [{
         test: /\.js$/,
         include: [
-          __dirname + '/client',
-          __dirname + '/lib'
+          path.join(__dirname, 'client'),
+          path.join(__dirname, 'shared')
         ],
         loader: 'babel'
       // }, {
@@ -60,7 +61,7 @@ export function buildWebpackConfig () {
       }, {
         test: /\.css$/,
         include: [
-          __dirname + '/client'
+          path.join(__dirname, 'client')
         ],
         loaders: PRODUCTION
           ? ['style', 'css?modules&importLoaders=1', 'postcss']
@@ -70,10 +71,12 @@ export function buildWebpackConfig () {
 
     // This is supposed to improve performance a little
     resolve: {
-      moduleDirectories: ['node_modules'],
+      moduleDirectories: [
+        'node_modules'
+      ],
       root: [
-        __dirname + '/client',
-        __dirname + '/shared'
+        path.join(__dirname, 'client'),
+        path.join(__dirname, 'shared')
       ]
     },
 
@@ -84,7 +87,7 @@ export function buildWebpackConfig () {
     ],
 
     devServer: {
-      contentBase: __dirname + '/build/assets',
+      contentBase: path.join(__dirname, 'build', 'assets'),
 
       historyApiFallback: true,
 
