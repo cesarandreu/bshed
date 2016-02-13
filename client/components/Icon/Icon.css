@@ -1,8 +1,8 @@
 .icon {
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  display: inline-flex;
   fill: currentcolor;
-  stroke: none;
+  justify-content: center;
   pointer-events: none;
+  stroke: none;
 }
