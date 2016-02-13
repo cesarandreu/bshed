@@ -94,28 +94,6 @@
  */
 @value Error: #F44336;
 
-/* @TODO: Remove old values */
-/* Grey 50 */
-@value background: #FAFAFA;
-
-/* Blue 500 */
-@value primary: #2196F3;
-
-/* Blue 700 */
-@value primaryDark: #1976D2;
-
-/* Red 500 */
-@value secondary: #F44336;
-
-/* Red 700 */
-@value secondaryDark: #D32F2F;
-
-/* Red A200 */
-@value accent: #FF5252;
-
-/* Red 500 */
-@value error: #F44336;
-
 /* Contrast */
 @value AccentContrast: #FFFFFF;
 @value PrimaryContrast: #FFFFFF;
