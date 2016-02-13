@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
 import keymirror from 'keymirror'
+import React, { PropTypes } from 'react'
 import styles from './Icon.css'
 
 export const ICON_TYPES = keymirror({
@@ -9,9 +9,9 @@ export const ICON_TYPES = keymirror({
 })
 
 export const ICON_SIZES = {
-  SMALL: 18,
+  LARGE: 48,
   NORMAL: 24,
-  LARGE: 48
+  SMALL: 18
 }
 
 export function getIcon (type) {
