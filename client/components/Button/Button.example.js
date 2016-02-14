@@ -5,7 +5,7 @@ import styles from './Button.example.css'
 
 const COLORS = ['dark', 'light']
 
-const FLAT_BUTTONS = COLORS.map(color => ({
+const FLAT_BUTTONS = COLORS.map((color) => ({
   [color]: true,
   buttons: [{
     children: `${color} plain`
@@ -23,7 +23,7 @@ const FLAT_BUTTONS = COLORS.map(color => ({
   color: color
 }))
 
-const RAISED_BUTTONS = COLORS.map(color => ({
+const RAISED_BUTTONS = COLORS.map((color) => ({
   [color]: true,
   buttons: [{
     children: `${color} primary`,
