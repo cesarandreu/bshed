@@ -1,0 +1,29 @@
+.paper {
+  composes: ShadowTransition from 'components/styles/shadows.css';
+  display: block;
+  position: relative;
+}
+
+.elevation0 {
+  composes: ShadowElevation0 from 'components/styles/shadows.css';
+}
+
+.elevation1 {
+  composes: ShadowElevation2 from 'components/styles/shadows.css';
+}
+
+.elevation2 {
+  composes: ShadowElevation4 from 'components/styles/shadows.css';
+}
+
+.elevation3 {
+  composes: ShadowElevation6 from 'components/styles/shadows.css';
+}
+
+.elevation4 {
+  composes: ShadowElevation8 from 'components/styles/shadows.css';
+}
+
+.elevation5 {
+  composes: ShadowElevation16 from 'components/styles/shadows.css';
+}
