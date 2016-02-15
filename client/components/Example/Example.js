@@ -1,29 +1,32 @@
 import cn from 'classnames'
 import React, { PropTypes } from 'react'
-import { SecondaryText, Display1, Headline } from 'components/Text'
+import { Body1, Display1, Headline } from 'components/Text'
 import styles from './Example.css'
 
 export function Example ({ dark, children, className, description, light, title }) {
+  const useDark = light || (!dark && !light)
+  const useLight = dark
+
   return (
     <div
       className={cn(styles.example, {
-        [styles.dark]: dark,
-        [styles.light]: light
+        [styles.dark]: useLight,
+        [styles.light]: useDark
       })}
     >
       <div className={styles.info}>
         <Headline
           className={styles.headline}
-          dark={light || (!dark && !light)}
-          light={dark}
+          dark={useDark}
+          light={useLight}
           secondary
         >
           {title}
         </Headline>
         {description && (
-          <SecondaryText>
+          <Body1 dark={useDark} light={useLight} secondary>
             {description}
-          </SecondaryText>
+          </Body1>
         )}
       </div>
       <div className={cn(styles.body, className)}>
