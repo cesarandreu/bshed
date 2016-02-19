@@ -30,7 +30,7 @@
 }
 
 .paperPageShadow {
-  composes: shadow2dp from 'components/styles/shadows.css';
+  composes: ShadowElevation2 from 'components/styles/shadows.css';
   border-radius: 2px;
 }
 

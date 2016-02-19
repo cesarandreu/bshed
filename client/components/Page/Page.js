@@ -1,14 +1,15 @@
 import cn from 'classnames'
-import { DetectEnvironment } from 'client/utils/DetectEnvironment'
-import { MOBILE_SCREEN_MEDIA } from 'components/styles/constants'
+import { ScreenSelectors } from 'client/modules/Screen'
+import { connect } from 'react-redux'
 import React, { PropTypes } from 'react'
+import { createStructuredSelector } from 'reselect'
 import styles from './Page.css'
 
-function PaperPage ({ children, isDesktop }) {
+function PaperPage ({ children, isXSmall }) {
   return (
     <div
       className={cn(styles.paperPage, {
-        [styles.paperPageShadow]: isDesktop
+        [styles.paperPageShadow]: !isXSmall
       })}
     >
       {children}
@@ -18,7 +19,13 @@ function PaperPage ({ children, isDesktop }) {
 
 PaperPage.propTypes = {
   children: PropTypes.node.isRequired,
-  isDesktop: PropTypes.bool.isRequired
+  isXSmall: PropTypes.bool.isRequired
 }
 
-export const PaperPageContainer = DetectEnvironment(MOBILE_SCREEN_MEDIA)(PaperPage)
+const PaperPageContainerSelectors = createStructuredSelector({
+  isXSmall: ScreenSelectors.isXSmall
+})
+
+export const PaperPageContainer = connect(
+  PaperPageContainerSelectors
+)(PaperPage)
