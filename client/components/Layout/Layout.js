@@ -7,22 +7,6 @@ import styles from './Layout.css'
 import { DetectEnvironment } from 'client/utils/DetectEnvironment'
 
 /**
- * LayoutContainer is the base layout component
- * This is used in every page
- */
-export function LayoutContainer ({ children }) {
-  return (
-    <div className={styles.container}>
-      {children}
-    </div>
-  )
-}
-
-LayoutContainer.propTypes = {
-  children: PropTypes.node.isRequired
-}
-
-/**
  * PageLayout is our common page layout
  * It has a fixed header that disappears when you scroll on mobile
  */

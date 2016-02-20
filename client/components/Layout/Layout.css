@@ -7,15 +7,8 @@
 @value breakpoints: 'components/styles/breakpoints.css';
 @value colors: 'components/styles/colors.css';
 
-@value mobile from breakpoints;
+@value isXSmall from breakpoints;
 @value LightBackground, Primary, PrimaryContrast from colors;
-
-/* LayoutContainer */
-.container {
-  height: 100%;
-  position: absolute;
-  width: 100%;
-}
 
 /* LayoutToolbar */
 .toolbarSize {
@@ -24,7 +17,7 @@
   width: 100%;
 }
 
-@media mobile {
+@media isXSmall {
   .toolbarSize {
     height: toolbarMobileHeight;
   }
@@ -61,7 +54,7 @@
   z-index: 2;
 }
 
-@media mobile {
+@media isXSmall {
   .pageToolbar {
     will-change: transform;
   }
