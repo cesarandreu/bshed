@@ -64,14 +64,6 @@
 @value AccentLight: #FF80AB;
 @value AccentContrast: #FFFFFF;
 
-/* Aliases */
-@value divider: rgba(0, 0, 0, 0.12);
-@value disabled: rgba(0, 0, 0, 0.38);
-@value hint: rgba(0, 0, 0, 0.38);
-@value icon: rgba(0, 0, 0, 0.38);
-@value secondaryText: rgba(0, 0, 0, 0.54);
-@value primaryText: rgba(0, 0, 0, 0.87);
-
 /**
  * Buttton
  * DarkButtonPressed - 25% #CCCCCC
@@ -93,8 +85,3 @@
  * Error - Red 500
  */
 @value Error: #F44336;
-
-/* Contrast */
-@value AccentContrast: #FFFFFF;
-@value PrimaryContrast: #FFFFFF;
-@value SecondaryContrast: #FFFFFF;
