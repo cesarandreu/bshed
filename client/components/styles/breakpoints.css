@@ -1,5 +1,12 @@
 /**
  * Screen breakpoints
+ * xsmall 600
+ * small 920
+ * medium 1280
+ * large 1920
  */
-@value mobile: (max-width: 600px);
-@value desktop: (min-width: 601px);
+@value isXSmall: (max-width: 599px);
+@value isSmall: (min-width: 600px) and (max-width: 919px);
+@value isMedium: (min-width: 920px) and (max-width: 1279px);
+@value isLarge: (min-width: 1280px) and (max-width: 1919px);
+@value isXLarge: (min-width: 1920px);
