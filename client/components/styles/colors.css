@@ -6,24 +6,26 @@
 @value DarkDivider: rgba(0, 0, 0, 0.12);
 @value DarkDisabled: rgba(0, 0, 0, 0.38);
 @value DarkHint: rgba(0, 0, 0, 0.38);
+@value DarkIcon: rgba(0, 0, 0, 0.38);
 @value DarkSecondary: rgba(0, 0, 0, 0.54);
-@value DarkIcon: rgba(0, 0, 0, 0.54);
 @value DarkPrimary: rgba(0, 0, 0, 0.87);
 
 /* Opacity for light text on a dark background */
 @value LightDivider: rgba(255, 255, 255, 0.12);
-@value LightDisabled: rgba(255, 255, 255, 0.3);
-@value LightHint: rgba(255, 255, 255, 0.3);
+@value LightDisabled: rgba(255, 255, 255, 0.5);
+@value LightHint: rgba(255, 255, 255, 0.5);
+@value LightIcon: rgba(255, 255, 255, 0.5);
 @value LightSecondary: rgba(255, 255, 255, 0.7);
-@value LightIcon: rgba(255, 255, 255, 0.7);
 @value LightPrimary: rgba(255, 255, 255, 1.0);
 
 /**
  * Light theme
+ * LightStatusBar - Grey 300
  * LightAppBar - Grey 100
  * LightBackground - Grey 50
  * LightCard / LightDialog - White
  */
+@value LightStatusBar: #E0E0E0;
 @value LightAppBar: #F5F5F5;
 @value LightBackground: #FAFAFA;
 @value LightCard: #FFFFFF;
@@ -31,10 +33,12 @@
 
 /**
  * Dark theme
+ * DarkStatusBar - Black
  * DarkAppBar - Grey 900
  * DarkBackground
  * DarkCard / DarkDialog - Grey 800
  */
+@value DarkStatusBar: #000000;
 @value DarkAppBar: #212121;
 @value DarkBackground: #303030;
 @value DarkCard: #424242;
