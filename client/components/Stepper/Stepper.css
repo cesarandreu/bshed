@@ -1,6 +1,9 @@
 /**
  * @TODO: step bottom-padding should be 20px when inactive
  */
+@value colors: 'components/styles/colors.css';
+@value DarkDisabled, DarkDivider, Primary from colors;
+
 .stepper {
   padding: 0 24px;
 }
@@ -16,33 +19,28 @@
 }
 
 .activeCircle {
-  composes: colorPrimary from 'components/styles/colors.css';
+  background-color: Primary;
 }
 
 .inactiveCircle {
-  composes: colorDisabled from 'components/styles/colors.css';
+  background-color: DarkDisabled;
 }
 
 .circle {
-  composes: textColorPrimaryContrast from 'components/styles/colors.css';
+  transition: background-color 140ms;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   height: 24px;
   width: 24px;
+  align-self: flex-start;
 }
 
-.name {
+.label {
   padding: 0 12px;
-}
-
-.activeName {
-  composes: textColorPrimary from 'components/styles/colors.css';
-}
-
-.inactiveName {
-  composes: textColorDisabled from 'components/styles/colors.css';
+  display: inline-flex;
+  flex-flow: column nowrap;
 }
 
 .line {
@@ -51,7 +49,7 @@
   height: calc(100% - 40px);
   left: 11px;
   width: 1px;
-  composes: dividerColor from 'components/styles/colors.css';
+  background-color: DarkDivider;
 }
 
 .step:last-child > .line {

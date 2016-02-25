@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import { Caption, PrimaryText } from 'components/Text'
+import { Body2, Caption, Hint } from 'components/Text'
 import React, { PropTypes } from 'react'
 import styles from './Stepper.css'
 
@@ -16,28 +16,39 @@ Stepper.propTypes = {
 }
 
 // @TODO: Add complete property?
-export function Step ({ active, children, name, number }) {
+export function Step ({ active, children, name, number, summary }) {
   const circleClassNames = cn(styles.circle, {
     [styles.activeCircle]: active,
     [styles.inactiveCircle]: !active
-  })
-
-  const nameClassNames = cn(styles.name, {
-    [styles.activeName]: active,
-    [styles.inactiveName]: !active
   })
 
   return (
     <div className={styles.step}>
       <div className={styles.title}>
         <div className={circleClassNames}>
-          <Caption>
+          <Caption
+            light
+            primary
+          >
+            {/* @TODO: Change number for checkmark when done */}
             {number}
           </Caption>
         </div>
-        <PrimaryText className={nameClassNames}>
-          {name}
-        </PrimaryText>
+        <div className={styles.label}>
+          <Body2
+            className={styles.name}
+            dark
+            disabled={!active}
+            primary={active}
+          >
+            {name}
+          </Body2>
+          {summary && (
+            <Hint className={styles.summary}>
+              {summary}
+            </Hint>
+          )}
+        </div>
       </div>
 
       <div className={styles.body}>
@@ -53,5 +64,6 @@ Step.propTypes = {
   active: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired
+  number: PropTypes.number.isRequired,
+  summary: PropTypes.string
 }
