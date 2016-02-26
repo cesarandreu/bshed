@@ -1,7 +1,6 @@
 export {
+  default,
   ScreenActions,
-  ScreenReducer,
-  ScreenSagas,
   ScreenSelectors
 } from './ScreenModule'
 
