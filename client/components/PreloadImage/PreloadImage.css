@@ -1,6 +1,4 @@
-:root {
-  --color-dark-divider: rgba(0, 0, 0, 0.12);
-}
+@value DarkDivider from  'components/styles/colors.css';
 
 .wrapper {
   position: relative;
@@ -12,7 +10,7 @@
  * Source: http://blog.vjeux.com/2012/image/css-semi-transparent-border-on-images.html
  */
 .wrapper:after {
-  border: 1px solid var(--color-dark-divider);
+  border: 1px solid DarkDivider;
   content: '';
   position: absolute;
   top: 0;

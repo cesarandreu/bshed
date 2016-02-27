@@ -3,6 +3,7 @@ import cn from 'classnames'
 import { createAnimation } from 'client/utils/createAnimation'
 import React, { Component, PropTypes } from 'react'
 import styles from './PreloadImage.css'
+import { Motion, spring } from 'react-motion'
 
 const IMAGE_LOAD_DURATION = 1.5e3
 
@@ -62,7 +63,7 @@ export class PreloadImage extends Component {
   // Here we cast all the size and position numbers to integers
   // Handling of non-integer <number> values in css is inconsistent across browsers
   calculateImageStyles () {
-    const { grayscale, height, opacity, saturate, width } = this.state
+    const { height, width } = this.state
     const { size } = this.props
 
     // First take the smaller of the two dimensions
@@ -82,22 +83,18 @@ export class PreloadImage extends Component {
     // In css it would be `calc(50% - ${dimension / 2}px)`
     const halfSize = size / 2 | 0
 
-    // Animated filter appearance
-    const filter = `opacity(${opacity}) grayscale(${grayscale}) saturate(${saturate})`
-
     return {
-      filter: filter,
       height: h,
       left: halfSize - (w / 2) | 0,
       top: halfSize - (h / 2) | 0,
-      WebkitFilter: filter,
       width: w
     }
   }
 
   render () {
     const { size, src } = this.props
-    const { animating } = this.state
+    const { animating, opacity, grayscale, saturate } = this.state
+    const imageStyles = this.calculateImageStyles()
     const imageClassNames = cn(styles.image, {
       [styles.animating]: animating
     })
@@ -110,13 +107,30 @@ export class PreloadImage extends Component {
           width: size
         }}
       >
-        <img
-          className={imageClassNames}
-          onLoad={this._onLoad}
-          ref={this._getImage}
-          src={src}
-          style={this.calculateImageStyles()}
-        />
+        <Motion
+          style={{
+            opacity: spring(opacity),
+            grayscale: spring(grayscale),
+            saturate: spring(saturate)
+          }}
+        >
+          {({ opacity, grayscale, saturate }) => {
+            const filter = `opacity(${opacity}) grayscale(${grayscale}) saturate(${saturate})`
+            return (
+              <img
+                className={imageClassNames}
+                onLoad={this._onLoad}
+                ref={this._getImage}
+                src={src}
+                style={{
+                  ...imageStyles,
+                  filter: filter,
+                  WebkitFilter: filter
+                }}
+              />
+            )
+          }}
+        </Motion>
       </div>
     )
   }
