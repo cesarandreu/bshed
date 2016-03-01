@@ -1,9 +1,5 @@
-:root {
-  --color-dark-disabled: rgba(0, 0, 0, 0.38);
-  --color-dark-divider: rgba(0, 0, 0, 0.12);
-  --color-error: #F44336;
-  --color-primary: #2196F3;
-}
+@value colors: 'components/styles/colors.css';
+@value DarkDisabled, DarkDivider, Error, Primary, DarkPrimary, DarkSecondary from colors;
 
 .container {
   display: block;
@@ -21,30 +17,30 @@
   -webkit-appearance: none;
   background: none;
   border: none;
+  border-bottom: 1px solid DarkDivider;
   box-shadow: none;
+  color: DarkPrimary;
+  composes: Subhead from 'components/styles/typography.css';
   margin: 0;
   outline: none;
   padding: 4px 0 3px;
   position: relative;
   text-align: left;
   width: 100%;
-
-  border-bottom: 1px solid var(--color-dark-divider);
-  composes: subhead from 'components/styles/typography.css';
-  composes: textColorPrimary from 'components/styles/colors.css';
 }
 
 .input[disabled] {
   background-color: transparent;
-  border-bottom: 1px dashed var(--color-dark-disabled);
+  border-bottom: 1px dashed DarkDisabled;
 }
 
 .inputError {
-  border-color: var(--color-error);
+  border-color: Error;
 }
 
 .label {
   bottom: 0;
+  composes: noWrap Subhead from 'components/styles/typography.css';
   display: block;
   left: 0;
   pointer-events: none;
@@ -55,7 +51,6 @@
   transition-duration: 0.2s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
-  composes: noWrap subhead from 'components/styles/typography.css';
 }
 
 .labelFloat {
@@ -64,15 +59,15 @@
 }
 
 .labelColored {
-  composes: textColorAppPrimary from 'components/styles/colors.css';
+  color: Primary;
 }
 
 .labelError {
-  composes: textColorError from 'components/styles/colors.css';
+  color: Error;
 }
 
 .labelRegular {
-  composes: textColorSecondary from 'components/styles/colors.css';
+  color: DarkSecondary;
 }
 
 .underline:after {
@@ -94,11 +89,11 @@
 }
 
 .underlineError:after {
-  background-color: var(--color-error);
+  background-color: Error;
 }
 
 .underlineRegular:after {
-  background-color: var(--color-primary);
+  background-color: Primary;
 }
 
 /* Firefox sets a min-width on the input, which can cause layout issues */
@@ -107,10 +102,10 @@ input.input {
 }
 
 .error {
+  color: Error;
+  composes: Caption from 'components/styles/typography.css';
   margin-top: 3px;
   position: absolute;
-  composes: caption from 'components/styles/typography.css';
-  composes: textColorError from 'components/styles/colors.css';
 }
 
 .hideError {
