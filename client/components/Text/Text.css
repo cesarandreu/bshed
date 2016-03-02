@@ -1,31 +1,92 @@
 /**
  * Text components
  */
-@value hint, primaryText, secondaryText from 'components/styles/colors.css';
+@value colors: 'components/styles/colors.css';
 
-.headline {
-  composes: headline from 'components/styles/typography.css';
+/* Dark colors */
+@value DarkDisabled, DarkHint, DarkSecondary, DarkPrimary from colors;
+
+/* Light colors */
+@value LightDisabled, LightHint, LightSecondary, LightPrimary from colors;
+
+/**
+ * Base text components
+ */
+.Display4 {
+  composes: Display4 from 'components/styles/typography.css';
 }
 
-.hint {
-  color: hint;
-  composes: caption from 'components/styles/typography.css';
+.Display3 {
+  composes: Display3 from 'components/styles/typography.css';
 }
 
-.primary {
-  color: primaryText;
-  composes: body2 from 'components/styles/typography.css';
+.Display2 {
+  composes: Display2 from 'components/styles/typography.css';
 }
 
-.secondary {
-  color: secondaryText;
-  composes: body1 from 'components/styles/typography.css';
+.Display1 {
+  composes: Display1 from 'components/styles/typography.css';
 }
 
-.title {
-  composes: title from 'components/styles/typography.css';
+.Headline {
+  composes: Headline from 'components/styles/typography.css';
 }
 
-.caption {
-  composes: caption from 'components/styles/typography.css';
+.Title {
+  composes: Title from 'components/styles/typography.css';
+}
+
+.Subhead {
+  composes: Subhead from 'components/styles/typography.css';
+}
+
+.Body2 {
+  composes: Body2 from 'components/styles/typography.css';
+}
+
+.Body1 {
+  composes: Body1 from 'components/styles/typography.css';
+}
+
+.Caption {
+  composes: Caption from 'components/styles/typography.css';
+}
+
+.Button {
+  composes: Button from 'components/styles/typography.css';
+}
+
+/**
+ * Text colors
+ */
+.DarkSecondary {
+  color: DarkSecondary;
+}
+
+.DarkPrimary {
+  color: DarkPrimary;
+}
+
+.DarkHint {
+  color: DarkHint;
+}
+
+.DarkDisabled {
+  color: DarkDisabled;
+}
+
+.LightSecondary {
+  color: LightSecondary;
+}
+
+.LightPrimary {
+  color: LightPrimary;
+}
+
+.LightHint {
+  color: LightHint;
+}
+
+.LightDisabled {
+  color: LightDisabled;
 }
