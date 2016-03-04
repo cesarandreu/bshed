@@ -1,4 +1,4 @@
-@value lightSecondary from 'components/styles/colors.css';
+@value LightSecondary from 'components/styles/colors.css';
 
 .container {
   position: absolute;
@@ -22,10 +22,8 @@
 .fileTarget {
   height: 80%;
   width: 80%;
-  border: 2px dashed lightSecondary;
-  color: lightSecondary;
+  border: 2px dashed LightSecondary;
   display: flex;
   align-items: center;
   justify-content: center;
-  composes: display3 from 'components/styles/typography.css';
 }
