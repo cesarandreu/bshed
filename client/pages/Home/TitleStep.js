@@ -1,20 +1,22 @@
-import { MINIMUM_IMAGE_COUNT } from 'bshed-constants'
+import { MINIMUM_IMAGE_COUNT } from 'shared/constants'
 import { Step } from 'components/Stepper'
 import { TextInput } from 'components/TextInput'
 import React, { PropTypes } from 'react'
 
 export function TitleStep ({ imageCount, saving, title, updateTitle }) {
+  const active = imageCount >= MINIMUM_IMAGE_COUNT
+
   return (
     <Step
-      active={imageCount >= MINIMUM_IMAGE_COUNT}
+      active={active}
       name='Give it a title'
       number={2}
     >
       <TextInput
-        disabled={saving}
+        disabled={!active || saving}
         label='Title'
         name='title'
-        onChange={e => updateTitle(e.target.value)}
+        onChange={(e) => updateTitle(e.target.value)}
         value={title}
       />
     </Step>
