@@ -1,14 +1,11 @@
-:root {
-  --color-dark-divider: rgba(0, 0, 0, 0.12);
-  --color-dark-disabled: rgba(0, 0, 0, 0.38);
-  --image-size: 96px;
-}
+@value imageSize: 96px;
+@value DarkDisabled, DarkDivider, DarkHint from  'components/styles/colors.css';
 
 .action {
-  margin-top: 8px;
-  height: 48px;
-  display: inline-flex;
   align-items: center;
+  display: inline-flex;
+  height: 48px;
+  margin-top: 8px;
 }
 
 .hint {
@@ -16,7 +13,7 @@
 }
 
 .listItem {
-  height: var(--image-size);
+  height: imageSize;
   width: 100%;
 }
 
@@ -25,17 +22,22 @@
 }
 
 .missingImage {
-  composes: listItem;
-  composes: clickable resetButton from 'components/styles/mixins.css';
-  position: relative;
+  align-items: center;
   border-radius: 2px;
-  border: 2px dashed var(--color-dark-divider);
+  border: 2px dashed DarkDivider;
+  composes: clickable resetButton from 'components/styles/mixins.css';
+  composes: listItem;
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
   justify-content: center;
   padding: 16px;
+  position: relative;
   user-select: none;
+  width: 100%;
+}
+
+.missingImageIcon {
+  color: DarkHint;
 }
 
 .imageItem {
@@ -46,8 +48,8 @@
 }
 
 .imageWrapper {
-  flex: 0 0 var(--image-size);
-  height: var(--image-size);
+  flex: 0 0 imageSize;
+  height: imageSize;
 }
 
 .imageInfo {
@@ -56,12 +58,12 @@
 }
 
 .imageRemove {
-  composes: clickable resetButton from 'components/styles/mixins.css';
-  flex: 0 0 auto;
-  display: flex;
   align-items: center;
-  justify-content: center;
+  color: DarkDisabled;
+  composes: clickable resetButton from 'components/styles/mixins.css';
+  display: flex;
+  flex: 0 0 auto;
   height: 36px;
+  justify-content: center;
   width: 36px;
-  color: var(--color-dark-disabled);
 }

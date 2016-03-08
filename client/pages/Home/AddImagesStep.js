@@ -1,21 +1,23 @@
-import { MAXIMUM_IMAGE_COUNT, MINIMUM_IMAGE_COUNT } from 'bshed-constants'
-import { Button } from 'components/Button'
+import { MAXIMUM_IMAGE_COUNT, MINIMUM_IMAGE_COUNT } from 'shared/constants'
+import { RaisedButton } from 'components/Button'
 import { Icon, ICON_SIZES, ICON_TYPES } from 'components/Icon'
 import { PreloadImage } from 'components/PreloadImage'
 import { Step } from 'components/Stepper'
-import { Hint, SecondaryText } from 'components/Text'
+import { Hint, Body1 } from 'components/Text'
 import { TextInput } from 'components/TextInput'
 import React, { PropTypes } from 'react'
 import styles from './AddImagesStep.css'
 
 export function AddImagesStep ({ images, onAddImage, removeFile, updateImage }) {
   const imageCount = images.length
+
   return (
     <Step
       active
       name='Add images'
       number={1}
     >
+      {/* These are the images the user has added */}
       {images.map(({ fileName, name, src }) =>
         <ImageItem
           fileName={fileName}
@@ -35,15 +37,16 @@ export function AddImagesStep ({ images, onAddImage, removeFile, updateImage }) 
       )}
 
       <div className={styles.action}>
-        <Button
+        <RaisedButton
           disabled={imageCount === MAXIMUM_IMAGE_COUNT}
           onClick={onAddImage}
-          raised
+          primary
+          light
         >
           add image
-        </Button>
+        </RaisedButton>
         <Hint className={styles.hint}>
-          JPEG/PNG 3MB/image
+          JPEG or PNG only. 3MB per image.
         </Hint>
       </div>
     </Step>
@@ -73,7 +76,7 @@ function ImageItem ({ fileName, name, removeFile, src, updateImage }) {
         <TextInput
           label='Name'
           name='name'
-          onChange={e => updateImage({ fileName, value: e.target.value })}
+          onChange={(e) => updateImage({ fileName, value: e.target.value })}
           value={name}
         />
       </div>
@@ -106,15 +109,15 @@ function MissingImagesButton ({ imageCount, onAddImage }) {
       onClick={onAddImage}
       type='button'
     >
-      <Hint>
+      <div className={styles.missingImageIcon}>
         <Icon
           size={ICON_SIZES.LARGE}
           type={ICON_TYPES.IMAGE}
         />
-      </Hint>
-      <SecondaryText>
+      </div>
+      <Body1 dark secondary className={styles.missingImageBody}>
         {missingImageText(imageCount)}
-      </SecondaryText>
+      </Body1>
     </button>
   )
 }
