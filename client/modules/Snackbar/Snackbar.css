@@ -1,0 +1,33 @@
+@value SnackbarColor: #323232;
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* @TODO: Clean this up to avoid blocking actions at the bottom of the screen */
+.wrapper {
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  will-change: transform;
+}
+
+.snackbar {
+  align-items: center;
+  background-color: SnackbarColor;
+  border-radius: 2px;
+  composes: ShadowElevation6 from 'components/styles/shadows.css';
+  display: flex;
+  max-width: 568px;
+  min-height: 48px;
+  min-width: 288px;
+  padding: 14px 24px;
+}
+
+.hidden {
+  pointer-events: none;
+}
