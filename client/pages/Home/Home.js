@@ -1,14 +1,14 @@
 /**
  * Users can create bikesheds from here
  * They add images, give it a title, and build it
- * @TODO: Show toast message for invalid files
+ * @TODO: Show snackbar message for invalid files
  * @TODO: Show loader when saving
  */
 import {
   ALLOWED_MIMETYPES,
   MAXIMUM_IMAGE_COUNT,
   MAXIMUM_IMAGE_SIZE
-} from 'bshed-constants'
+} from 'shared/constants'
 import { CreateBikeshedMutation } from 'client/mutations/CreateBikeshedMutation'
 import { Link } from 'components/Link'
 import { LayoutToolbar, PageLayoutContainer } from 'components/Layout'
@@ -26,6 +26,7 @@ import styles from './Home.css'
 import { TitleStep } from './TitleStep'
 
 const FILE_INPUT_ACCEPT = ALLOWED_MIMETYPES.join(',')
+const allowedMimetypes = new Set(ALLOWED_MIMETYPES)
 
 // This container is responsible for managing the Home page's state
 export class HomeContainer extends Component {
@@ -49,50 +50,46 @@ export class HomeContainer extends Component {
     this.updateTitle = this.updateTitle.bind(this)
   }
 
-  // Add the list of new items to the images list
-  // Creates the object url for each file
-  addFiles (newFiles) {
-    const newImages = newFiles.map(file => ({
-      file: file,
-      fileName: file.name,
-      name: file.name,
-      src: global.URL.createObjectURL(file)
-    }))
-
-    this.setState({
-      images: [...this.state.images, ...newImages]
-    })
-  }
-
   clickFileInput () {
     this.fileInput.click()
   }
 
   // Destroy all url objects when we navigate away
   componentWillUnmount () {
-    this.state.images.forEach(image =>
+    this.state.images.forEach((image) =>
       global.URL.revokeObjectURL(image.src)
     )
   }
 
   // Gets the files from the event
+  // Add the list of new items to the images list
+  // Creates the object url for each file
   receiveFiles ({ files }) {
     const { images } = this.state
-    const imageNames = new Set(images.map(image => image.fileName))
+    const imageNames = new Set(images.map((image) => image.fileName))
 
-    const newFiles = Array.from(files)
-    .filter(file => file.size < MAXIMUM_IMAGE_SIZE)
-    .filter(file => ALLOWED_MIMETYPES.includes(file.type))
-    .reduce((newFiles, file) => {
+    const newImages = Array.from(files)
+    .filter((file) =>
+      file.size < MAXIMUM_IMAGE_SIZE &&
+      allowedMimetypes.has(file.type)
+    )
+    .reduce((newImages, file) => {
       if (!imageNames.has(file.name) && imageNames.size < MAXIMUM_IMAGE_COUNT) {
         imageNames.add(file.name)
-        return [...newFiles, file]
+        return newImages.concat({
+          file: file,
+          fileName: file.name,
+          name: file.name,
+          src: global.URL.createObjectURL(file)
+        })
       } else {
-        return newFiles
+        return newImages
       }
     }, [])
 
-    this.addFiles(newFiles)
+    this.setState({
+      images: images.concat(newImages)
+    })
   }
 
   // Remove the file and revoke its object url
@@ -103,7 +100,7 @@ export class HomeContainer extends Component {
         global.URL.revokeObjectURL(image.src)
         return images
       } else {
-        return [...images, image]
+        return images.concat(image)
       }
     }, [])
 
@@ -122,12 +119,12 @@ export class HomeContainer extends Component {
     const { router } = this.context
     const { duration, images, title } = this.state
     this.setState({ saving: true })
-    Relay.Store.update(new CreateBikeshedMutation({ duration, images, title }), {
-      // @TODO: Show a toast message
-      onFailure: transaction => {
+    Relay.Store.commitUpdate(new CreateBikeshedMutation({ duration, images, title }), {
+      // @TODO: Show a snackbar message
+      onFailure: (transaction) => {
         this.setState({ saving: false })
       },
-      onSuccess: response => {
+      onSuccess: (response) => {
         this.setState({ saving: false })
 
         // Navigate to newly created bikeshed page
@@ -140,7 +137,7 @@ export class HomeContainer extends Component {
   updateImage ({ fileName, value }) {
     const { images } = this.state
     this.setState({
-      images: images.map(image =>
+      images: images.map((image) =>
         image.fileName === fileName
           ? ({ ...image, name: value })
           : image
@@ -186,7 +183,7 @@ export class HomeContainer extends Component {
           <input
             accept={FILE_INPUT_ACCEPT}
             multiple
-            onChange={e => this.receiveFiles(e.target)}
+            onChange={(e) => this.receiveFiles(e.target)}
             ref={this.setFileInput}
             style={{ display: 'none' }}
             type='file'
