@@ -156,6 +156,7 @@
     "react-transform-hmr": "^1.0.2",
     "redbox-react": "^1.2.2",
     "s3rver": "0.0.13",
+    "shelljs": "^0.6.0",
     "standard": "^6.0.7",
     "style-loader": "^0.13.0",
     "tape": "^4.4.0",
