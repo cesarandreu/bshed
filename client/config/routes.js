@@ -4,8 +4,8 @@
 import React from 'react'
 import { IndexRedirect, IndexRoute, Route } from 'react-router'
 
-// Layout
-import { LayoutContainer } from 'components/Layout'
+// Containers
+import Application from 'client/containers/Application'
 
 // Pages
 import Home from 'client/pages/Home'
@@ -18,7 +18,7 @@ import BikeshedQueries from 'client/queries/BikeshedQueries'
 
 export default (
   <Route
-    component={LayoutContainer}
+    component={Application}
     path='/'
   >
     <IndexRoute
