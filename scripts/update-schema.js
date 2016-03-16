@@ -1,9 +1,10 @@
-#!/usr/bin/env node -r bshed-requires
-// Update schema.json and schema.graphql in bshed/data/
+#!/usr/bin/env node -r lib/requires
+// Update schema.json and schema.graphql in ../data/
+// @TODO~ fix this
 import fs from 'fs'
 import path from 'path'
 import { graphql } from 'graphql'
-import schema from '../server/schema'
+import schema from 'server/schema'
 import { introspectionQuery, printSchema } from 'graphql/utilities'
 
 async function updateSchema () {
