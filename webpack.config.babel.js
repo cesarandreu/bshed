@@ -39,7 +39,7 @@ export function buildWebpackConfig () {
         filename: '[name].js',
         publicPath: DEVELOPMENT ? 'http://localhost:9000/' : '/',
         pathinfo: DEVELOPMENT || TEST,
-        path: path.join(__dirname, 'build', 'assets')
+        path: path.join(__dirname, 'build', 'client')
       },
 
     // Switch to cheap-module-source-map if cheap-module-eval-source-map works poorly
@@ -87,7 +87,7 @@ export function buildWebpackConfig () {
     ],
 
     devServer: {
-      contentBase: path.join(__dirname, 'build', 'assets'),
+      contentBase: path.join(__dirname, 'build', 'client'),
 
       historyApiFallback: true,
 
