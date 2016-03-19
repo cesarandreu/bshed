@@ -5,7 +5,6 @@ import path from 'path'
 import webpack from 'webpack'
 import autoprefixer from 'autoprefixer'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-// import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 export function buildWebpackConfig () {
   // Environment
@@ -100,10 +99,6 @@ export function buildWebpackConfig () {
     },
 
     plugins: [
-      // new ExtractTextPlugin('[name].[hash].css', {
-      //   disable: DEVELOPMENT || TEST
-      // }),
-
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
       }),
