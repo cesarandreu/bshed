@@ -1,6 +1,0 @@
-{
-  "name": "bshed-constants",
-  "standard": {
-    "parser": "babel-eslint"
-  }
-}
