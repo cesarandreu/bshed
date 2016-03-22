@@ -1,10 +1,10 @@
-#!/usr/bin/env node -r bshed-requires
+#!/usr/bin/env node -r lib/requires
 /**
  * Process images worker
  */
-import queues from '../server/services/queues'
-import s3fs from '../server/services/s3fs'
-import { ProcessImagesWorker } from 'bshed-workers'
+import queues from 'server/services/queues'
+import s3fs from 'server/services/s3fs'
+import { ProcessImagesWorker } from 'workers'
 
 // Initialize worker
 ProcessImagesWorker.initialize({

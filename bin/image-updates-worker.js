@@ -1,10 +1,10 @@
-#!/usr/bin/env node -r bshed-requires
+#!/usr/bin/env node -r lib/requires
 /**
  * Image updates worker
  */
-import models from '../server/models'
-import queues from '../server/services/queues'
-import { ImageUpdatesWorker } from 'bshed-workers'
+import models from 'server/models'
+import queues from 'server/services/queues'
+import { ImageUpdatesWorker } from 'workers'
 
 // Initialize worker
 ImageUpdatesWorker.initialize({
