@@ -27,7 +27,7 @@ Relay.injectNetworkLayer(
 
 // Configure Relay's task scheduler to spread out task execution
 import raf from 'raf'
-Relay.injectTaskScheduler(task => raf(task))
+Relay.injectTaskScheduler((task) => raf(task))
 
 // Create the app node appended to the body
 const app = document.body.appendChild(document.createElement('div'))
