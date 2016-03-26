@@ -1,0 +1,6 @@
+{
+  "name": "shared",
+  "standard": {
+    "parser": "babel-eslint"
+  }
+}
