@@ -1,4 +1,4 @@
-@value mobile from 'components/styles/breakpoints.css';
+@value isXSmall from 'components/styles/breakpoints.css';
 
 .page {
   align-self: flex-start;
@@ -11,7 +11,7 @@
   width: calc(100% - 48px);
 }
 
-@media mobile {
+@media isXSmall {
   .page {
     align-self: stretch;
     margin: 0 16px;
