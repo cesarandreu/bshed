@@ -1,17 +1,19 @@
-#!/usr/bin/env node -r bshed-requires
+#! /usr/bin/env node
 
-// Create Postgres database unless it exists
-import childProcess from 'child_process'
-import { database } from '../config'
+/**
+ * Create Postgres database
+ */
+const config = require('server/config')
+const sh = require('shelljs')
 
-const databaseName = database.connection.database
-console.log(`[create-database]: "${databaseName}" database`)
-childProcess.exec(`createdb ${databaseName}`, (err, stdout, stderr) => {
-  if (stdout) {
-    console.log(stdout.trim())
-  }
-  if (stderr) {
-    console.log(stderr.trim())
-  }
-  process.exit(err ? 1 : 0)
-})
+const bshedConfig = config.get('bshed')
+sh.set('-e')
+
+if (!sh.which('createdb')) {
+  sh.echo('Error: this script requires `createdb`')
+  sh.exit(1)
+}
+
+const database = bshedConfig.drivers.pg.database
+sh.echo(`Creating "${database}" database`)
+sh.exec(`createdb ${database}`)

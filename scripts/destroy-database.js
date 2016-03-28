@@ -1,17 +1,19 @@
-#!/usr/bin/env node -r bshed-requires
+#! /usr/bin/env node
 
-// Destroy Postgres database if it exist
-import childProcess from 'child_process'
-import { database } from '../config'
+/**
+ * Destroy Postgres database if it exist
+ */
+const sh = require('shelljs')
+const config = require('server/config')
 
-const databaseName = database.connection.database
-console.log(`[destroy-database]: "${databaseName}" database`)
-childProcess.exec(`dropdb --if-exists ${databaseName}`, (err, stdout, stderr) => {
-  if (stdout) {
-    console.log(stdout.trim())
-  }
-  if (stderr) {
-    console.log(stderr.trim())
-  }
-  process.exit(err ? 1 : 0)
-})
+const bshedConfig = config.get('bshed')
+sh.set('-e')
+
+if (!sh.which('dropdb')) {
+  sh.echo('Error: this script requires `dropdb`')
+  sh.exit(1)
+}
+
+const database = bshedConfig.drivers.pg.database
+sh.echo(`Destroying "${database}" database`)
+sh.exec(`dropdb --if-exists ${config.get('bshed.drivers.pg.database')}`)
