@@ -1,0 +1,200 @@
+@value colors: 'components/styles/colors.css';
+
+/* Primary values */
+@value Primary, PrimaryDark, PrimaryLight, PrimaryContrast from colors;
+
+/* Accent values */
+@value Accent, AccentDark, AccentLight, AccentContrast from colors;
+
+/* Light theme values */
+@value LightStatusBar, LightAppBar, LightBackground, LightCard from colors;
+
+/* Dark theme values */
+@value DarkStatusBar, DarkAppBar, DarkBackground, DarkCard from colors;
+
+/* Dark text values */
+@value DarkDisabled, DarkSecondary, DarkPrimary from colors;
+
+/* Light text values */
+@value LightDisabled, LightSecondary, LightPrimary from colors;
+
+/* Icon values */
+/*@value DarkIcon, LightIcon from colors;*/
+
+/* Other values */
+@value Error from colors;
+
+/* Example values */
+@value DarkDivider from colors;
+
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.colorRectangle {
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 8px 16px;
+}
+
+.color {
+  position: relative;
+  composes: colorRectangle;
+  margin: 0 0 8px 0;
+}
+
+.color:after {
+  border: 1px solid DarkDivider;
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Primary colors */
+.Primary {
+  background-color: Primary;
+  color: LightPrimary;
+}
+
+.PrimaryDark {
+  background-color: PrimaryDark;
+  color: LightPrimary;
+}
+
+.PrimaryLight {
+  background-color: PrimaryLight;
+  color: DarkPrimary;
+}
+
+/* Accent colors */
+.Accent {
+  background-color: Accent;
+  color: LightPrimary;
+}
+
+.AccentDark {
+  background-color: AccentDark;
+  color: LightPrimary;
+}
+
+.AccentLight {
+  background-color: AccentLight;
+  color: LightPrimary;
+}
+
+/* Light theme colors */
+.LightThemeStatusBar {
+  background-color: LightStatusBar;
+  color: DarkSecondary;
+}
+
+.LightThemeAppBar {
+  background-color: LightAppBar;
+  color: DarkSecondary;
+}
+
+.LightThemeBackground {
+  background-color: LightBackground;
+  color: DarkSecondary;
+}
+
+.LightThemeCard {
+  background-color: LightCard;
+  color: DarkSecondary;
+}
+
+/* Dark theme colors */
+.DarkThemeStatusBar {
+  background-color: DarkStatusBar;
+  color: LightPrimary;
+}
+
+.DarkThemeAppBar {
+  background-color: DarkAppBar;
+  color: LightPrimary;
+}
+
+.DarkThemeBackground {
+  background-color: DarkBackground;
+  color: LightPrimary;
+}
+
+.DarkThemeCard {
+  background-color: DarkCard;
+  color: LightPrimary;
+}
+
+/* Dark text colors */
+.DarkTextPrimary {
+  background-color: LightStatusBar;
+  color: DarkPrimary;
+}
+
+.DarkTextSecondary {
+  background-color: LightStatusBar;
+  color: DarkSecondary;
+}
+
+.DarkTextDisabled {
+  background-color: LightStatusBar;
+  color: DarkDisabled;
+}
+
+/* Light text colors */
+.LightTextPrimary {
+  background-color: DarkAppBar;
+  color: LightPrimary;
+}
+
+.LightTextSecondary {
+  background-color: DarkAppBar;
+  color: LightSecondary;
+}
+
+.LightTextDisabled {
+  background-color: DarkAppBar;
+  color: LightDisabled;
+}
+
+/* Other colors */
+.OtherError {
+  background-color: Error;
+  color: LightPrimary;
+}
+
+/* Light icon colors */
+/*.LightIconDark {
+  background-color: DarkAppBar;
+  color: LightIcon;
+}
+
+.LightIconPrimary {
+  background-color: Primary;
+  color: LightIcon;
+}
+
+.LightIconAccent {
+  background-color: Accent;
+  color: LightIcon;
+}*/
+
+/* Dark icon colors */
+/*.DarkIconLight {
+  background-color: LightStatusBar;
+  color: DarkIcon;
+}
+
+.DarkIconPrimary {
+  background-color: Primary;
+  color: DarkIcon;
+}
+
+.DarkIconAccent {
+  background-color: Accent;
+  color: DarkIcon;
+}*/
