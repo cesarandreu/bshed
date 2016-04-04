@@ -1,0 +1,27 @@
+@value itemSize: 96px;
+
+.item {
+  width: 100%;
+  height: itemSize;
+}
+
+.item + .item {
+  margin-top: 8px;
+}
+
+.itemPreview {
+  align-items: center;
+  composes: item;
+  display: flex;
+  position: relative;
+}
+
+.itemPreviewImage {
+  flex: 0 0 itemSize;
+  height: itemSize;
+}
+
+.itemPreviewBody {
+  flex: 1 1 auto;
+  padding: 0 8px 0 16px;
+}
