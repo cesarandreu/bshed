@@ -1,0 +1,50 @@
+.panel {
+  width: 100%;
+  height: 240px;
+  display: flex;
+}
+
+.wrapper {
+
+}
+
+.bike {
+  flex: 1 1 50%;
+  height: 200px;
+  position: relative;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.bike:nth-child(even) {
+  margin-left: 4px;
+}
+
+.bike:nth-child(odd) {
+  margin-right: 4px;
+}
+
+.bike:nth-last-child(2):not(:nth-child(even)),
+.bike:last-child {
+  margin-bottom: 0px;
+}
+
+.image {
+  transform: translate(-50%, -50%);
+  height: auto;
+  width: auto;
+  max-height: none;
+  max-width: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.tallerImage {
+  max-width: 100%;
+}
+
+.widerImage {
+  max-height: 100%;
+}
