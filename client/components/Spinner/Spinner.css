@@ -1,0 +1,129 @@
+/**
+ * Basically ripped from PolymerElements
+ * https://github.com/PolymerElements/paper-spinner/blob/master/paper-spinner-styles.html
+ */
+@value Primary from 'components/styles/colors.css';
+
+
+.container {
+  width: 100%;
+  height: 100%;
+  direction: ltr;
+}
+
+.spinner {
+  display: inline-block;
+  position: relative;
+  height: 28px;
+  width: 28px;
+}
+
+.active {
+  animation: container-rotate 1568ms linear infinite;
+}
+
+.layer {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  white-space: nowrap;
+  border-color: Primary;
+}
+
+.activeLayer {
+  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+  opacity: 1;
+}
+
+.gapPatch {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 45%;
+  width: 10%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.circle {
+  box-sizing: border-box;
+  height: 100%;
+  border-width: 3px; /* STROKEWIDTH */
+  border-style: solid;
+  border-color: inherit;
+  /*border-bottom-color: transparent !important;*/
+  border-radius: 50%;
+  -webkit-animation: none;
+  animation: none;
+
+  /* @TODO */
+  /* @appply(--layout-fit) */
+}
+
+.circleClipper {
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.leftCircleClipper {
+  composes: circleClipper;
+}
+
+.rightCircleClippler {
+  composes: circleClipper;
+}
+
+.circleClipperCircle {
+  width: 200%;
+}
+
+.leftCircleActive {
+  animation: left-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+.rightCircleActive {
+  animation: right-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+}
+
+
+.cooldown {
+  animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@keyframes container-rotate {
+  to { transform: rotate(360deg) }
+}
+
+@keyframes fill-unfill-rotate {
+  12.5% { transform: rotate(135deg);  } /* 0.5 * ARCSIZE */
+  25%   { transform: rotate(270deg);  } /* 1   * ARCSIZE */
+  37.5% { transform: rotate(405deg);  } /* 1.5 * ARCSIZE */
+  50%   { transform: rotate(540deg);  } /* 2   * ARCSIZE */
+  62.5% { transform: rotate(675deg);  } /* 2.5 * ARCSIZE */
+  75%   { transform: rotate(810deg);  } /* 3   * ARCSIZE */
+  87.5% { transform: rotate(945deg);  } /* 3.5 * ARCSIZE */
+  to    { transform: rotate(1080deg); } /* 4   * ARCSIZE */
+}
+
+@keyframes left-spin {
+  from { transform: rotate(130deg); }
+  50% { transform: rotate(-5deg); }
+  to { transform: rotate(130deg); }
+}
+
+@keyframes right-spin {
+  from { transform: rotate(-130deg); }
+  50% { transform: rotate(5deg); }
+  to { transform: rotate(-130deg); }
+}
+
+@keyframes fade-out {
+  from { opacity: 0.99; }
+  to { opacity: 0; }
+}
