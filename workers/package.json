@@ -1,6 +1,0 @@
-{
-  "name": "bshed-workers",
-  "standard": {
-    "parser": "babel-eslint"
-  }
-}
