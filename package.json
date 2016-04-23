@@ -85,6 +85,7 @@
     "bull": "^0.7.2",
     "classnames": "^2.2.3",
     "co-body": "^4.0.0",
+    "d3-shape": "^0.5.1",
     "dataloader": "^1.1.0",
     "debug": "^2.2.0",
     "graphql": "^0.4.18",
