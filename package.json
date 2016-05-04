@@ -34,12 +34,10 @@
     "link:server": "link-package ./server server",
     "link:shared": "link-package ./shared shared",
     "schema": "./scripts/update-schema.js",
-    "server:api": "nodemon -w server -w config -w workers -r bshed-requires ./server",
-    "server:s3": "s3rver -d ./build/s3/ -p 10001",
-    "server:schema": "onchange 'server/**/*.js' -- npm run schema",
-    "worker:image-updates": "./bin/image-updates-worker.js",
-    "worker:process-images": "./bin/process-images-worker.js",
-    "worker:vote-updates": "./bin/vote-updates-worker.js"
+    "server:dev": "npm-run-all -p server:dev:*",
+    "server:dev:api": "nodemon -w server --exec babel-node -- ./server/index.js",
+    "server:dev:s3": "s3rver -d ./build/s3/ -p 10001",
+    "server:dev:schema": "onchange 'server/**/*.js' -- npm run schema"
   },
   "standard": {
     "parser": "babel-eslint"
