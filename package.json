@@ -21,8 +21,6 @@
     "db:create": "./scripts/create-database.js",
     "db:destroy": "./scripts/destroy-database.js",
     "db:migrate": "knex migrate:latest",
-    "link": "npm-run-all -p link:*",
-    "link:bshed": "link-package",
     "dev": "npm-run-all -p client:dev server:dev",
     "link:client": "link-package ./client client",
     "link:server": "link-package ./server server",
