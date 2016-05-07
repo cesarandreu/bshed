@@ -142,6 +142,7 @@
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.9.0",
     "link-package": "^0.1.0",
+    "node-fetch": "^1.5.1",
     "nodemon": "^1.9.1",
     "npm-run-all": "^1.5.1",
     "onchange": "^2.0.0",
