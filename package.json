@@ -16,8 +16,7 @@
     "url": "https://github.com/cesarandreu"
   },
   "scripts": {
-    "client:html": "BABEL_ENV=CLIENT_DEVELOPMENT webpack --watch",
-    "client:server": "BABEL_ENV=CLIENT_DEVELOPMENT webpack-dev-server --hot --inline",
+    "client:dev": "BABEL_ENV=CLIENT_DEVELOPMENT webpack-dev-server --hot --inline",
     "db:create": "./scripts/create-database.js",
     "db:destroy": "./scripts/destroy-database.js",
     "db:migrate": "knex migrate:latest",
