@@ -54,6 +54,10 @@
                     "module"
                   ]
                 }
+              ],
+              "factoryMethods": [
+                "React.createClass",
+                "Relay.createContainer"
               ]
             }
           ]
